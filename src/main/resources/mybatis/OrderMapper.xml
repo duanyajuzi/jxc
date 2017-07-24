@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="OrderMapper">
+
+	<resultMap id="mRetMapOrder" type="com.gesoft.model.OrderModel">
+        <result property="id" column="id"/>
+        <result property="orderNo" column="orderNo"/>
+        <result property="orderName" column="orderName"/>
+        <result property="orderTime" column="orderTime"/>
+        <result property="orderType" column="orderType"/>
+        <result property="orderStatus" column="orderStatus"/>
+        <result property="deliveryTime" column="deliveryTime"/>
+        <result property="deliveryAddress" column="deliveryAddress"/>
+        <result property="customerId" column="customerId"/>
+        <result property="ccontacts" column="ccontacts"/>
+        <result property="caddress" column="caddress"/>
+        <result property="ctel" column="ctel"/>
+        <result property="pcustomerId" column="pcustomerId"/>
+        <result property="pcontacts" column="pcontacts"/>
+        <result property="paddress" column="paddress"/>
+        <result property="ptel" column="ptel"/>
+        <result property="ctime" column="ctime"/>
+        <result property="cuserid" column="cuserid"/>
+        <result property="memo" column="memo"/>
+		<result property="customerName" column="customerName"/>
+		<result property="pcustomerName" column="pcustomerName"/>
+		<result property="name1" column="name1"/>
+		<result property="name2" column="name2"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="OrderMapper.columns">
+	    <![CDATA[
+		id,orderNo,orderName,orderTime,orderType,orderStatus,deliveryTime,deliveryAddress,customerId,ccontacts,caddress,ctel,pcustomerId,pcontacts,paddress,ptel,ctime,cuserid,memo
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="OrderMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_order (
+        	id ,
+        	orderNo ,
+        	orderName ,
+        	orderTime ,
+        	orderType ,
+        	orderStatus ,
+        	deliveryTime ,
+        	deliveryAddress ,
+        	customerId ,
+        	ccontacts ,
+        	caddress ,
+        	ctel ,
+        	pcustomerId ,
+        	pcontacts ,
+        	paddress ,
+        	ptel ,
+        	ctime ,
+        	cuserid ,
+        	memo 
+        ) VALUES (
+        	#{id} ,
+        	#{orderNo} ,
+        	#{orderName} ,
+        	#{orderTime} ,
+        	#{orderType} ,
+        	#{orderStatus} ,
+        	#{deliveryTime} ,
+        	#{deliveryAddress} ,
+        	#{customerId} ,
+        	#{ccontacts} ,
+        	#{caddress} ,
+        	#{ctel} ,
+        	#{pcustomerId} ,
+        	#{pcontacts} ,
+        	#{paddress} ,
+        	#{ptel} ,
+        	now() ,
+        	#{cuserid} ,
+        	#{memo} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="OrderMapper.update" >
+    <![CDATA[
+        UPDATE tab_order SET
+	        orderNo = #{orderNo} ,
+	        orderName = #{orderName} ,
+	        orderTime = #{orderTime} ,
+	        orderType = #{orderType} ,
+	        orderStatus = #{orderStatus} ,
+	        deliveryTime = #{deliveryTime} ,
+	        deliveryAddress = #{deliveryAddress} ,
+	        customerId = #{customerId} ,
+	        ccontacts = #{ccontacts} ,
+	        caddress = #{caddress} ,
+	        ctel = #{ctel} ,
+	        pcustomerId = #{pcustomerId} ,
+	        pcontacts = #{pcontacts} ,
+	        paddress = #{paddress} ,
+	        ptel = #{ptel} ,
+	        ctime = #{ctime} ,
+	        cuserid = #{cuserid} ,
+	        memo = #{memo} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <update id="OrderMapper.delete">
+    <![CDATA[
+        UPDATE tab_order set orderStatus=-1 WHERE  id=#{id}
+    ]]>
+    </update>
+    
+    <select id="OrderMapper.getById" resultMap="mRetMapOrder">
+		SELECT <include refid="OrderMapper.columns" />
+	    <![CDATA[
+		    FROM tab_order 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="OrderMapper.findPage.where">
+		<where>
+			A.orderType = #{orderType}
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND A.id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+				AND A.orderNo = #{orderNo}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
+				AND A.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+			</if>
+	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeBegin)">-->
+				<!--AND orderTime >= #{orderTimeBegin}-->
+		   <!--</if>-->
+		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeEnd)">-->
+				<!--AND orderTime &lt;= #{orderTimeEnd}-->
+		   <!--</if>-->
+	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(orderType)">-->
+				<!--AND A.orderType = #{orderType}-->
+			<!--</if>-->
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderStatus)">
+				AND A.orderStatus = #{orderStatus}
+			</if>
+	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryTimeBegin)">-->
+				<!--AND deliveryTime >= #{deliveryTimeBegin}-->
+		   <!--</if>-->
+		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryTimeEnd)">-->
+				<!--AND deliveryTime &lt;= #{deliveryTimeEnd}-->
+		   <!--</if>-->
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryAddress)">
+				AND A.deliveryAddress = #{deliveryAddress}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(customerName)">
+				AND B.customerName LIKE CONCAT(CONCAT('%', #{customerName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(ccontacts)">
+				AND A.ccontacts = #{ccontacts}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(caddress)">
+				AND A.caddress = #{caddress}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(ctel)">
+				AND A.ctel = #{ctel}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(pcustomerName)">
+				AND D.customerName LIKE CONCAT(CONCAT('%', #{pcustomerName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(pcontacts)">
+				AND A.pcontacts = #{pcontacts}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(paddress)">
+				AND A.paddress = #{paddress}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(ptel)">
+				AND A.ptel = #{ptel}
+			</if>
+	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeBegin)">-->
+				<!--AND ctime >= #{ctimeBegin}-->
+		   <!--</if>-->
+		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeEnd)">-->
+				<!--AND ctime &lt;= #{ctimeEnd}-->
+		   <!--</if>-->
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(cuserid)">
+				AND cuserid = #{cuserid}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
+				AND memo = #{memo}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="OrderMapper.count" resultType="long">
+		SELECT 	COUNT(*)
+		from tab_order A
+		left join tab_customer B on A.customerId=B.id
+		left JOIN tab_customer D on A.pcustomerId=D.id
+		<include refid="OrderMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="OrderMapper.list" resultMap="mRetMapOrder">
+		SELECT 	A.id ,
+		A.orderNo ,
+		A.orderName ,
+		date_format(A.orderTime,'%Y-%m-%d %T') as orderTime,
+		A.orderType ,
+		A.orderStatus ,
+		date_format(A.deliveryTime,'%Y-%m-%d %T') as deliveryTime,
+		A.deliveryAddress ,
+		A.customerId ,
+		B.customerName name1,
+		A.ccontacts ,
+		A.caddress ,
+		A.ctel ,
+		A.pcustomerId ,
+		D.customerName name2,
+		A.pcontacts ,
+		A.paddress ,
+		A.ptel ,
+		date_format(A.ctime,'%Y-%m-%d %T') as ctime,
+		A.cuserid ,
+		A.memo
+		from tab_order A
+		left join tab_customer B on A.customerId=B.id
+		left JOIN tab_customer D on A.pcustomerId=D.id
+		<include refid="OrderMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+	<select id="OrderMapper.queryMaterialNum" resultMap="mRetMapOrder">
+		SELECT id,materialNum
+		FROM tab_goods_customer
+	</select>
+
+</mapper>
+

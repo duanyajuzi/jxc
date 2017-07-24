@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="RoleMapper">
+
+	<resultMap id="mRetMapRole" type="com.gesoft.model.RoleModel">
+        <result property="id" column="id"/>
+        <result property="roleName" column="roleName"/>
+        <result property="roleMemo" column="roleMemo"/>
+		<result property="powerId" column="powerId"/>
+		<result property="roleId" column="roleId"/>
+		<result property="pid" column="pid"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="RoleMapper.columns">
+	    <![CDATA[
+		id,roleName,roleMemo
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="RoleMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_role (
+        	id ,
+        	roleName ,
+        	roleMemo 
+        ) VALUES (
+        	#{id} ,
+        	#{roleName} ,
+        	#{roleMemo} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="RoleMapper.update" >
+    <![CDATA[
+        UPDATE tab_role SET
+	        roleName = #{roleName} ,
+	        roleMemo = #{roleMemo} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <delete id="RoleMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_role WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+
+	<delete id="RoleMapper.deleteRolePower">
+		<![CDATA[
+        DELETE  FROM tab_rolepower WHERE
+        roleId = #{roleId}
+         ]]>
+	</delete>
+
+	<insert id="RoleMapper.addRolePower" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+        INSERT INTO tab_rolepower (
+        	roleId,
+        	pid
+        ) VALUES (
+        	#{id},
+        	#{powerId}
+        )
+    ]]>
+	</insert>
+
+	<select id="RoleMapper.queryRolePower" resultMap="mRetMapRole">
+	  SELECT trp.roleId,trp.pid
+      from tab_rolepower trp
+      where trp.roleId=#{id}
+	</select>
+
+    <select id="RoleMapper.getById" resultMap="mRetMapRole">
+		SELECT <include refid="RoleMapper.columns" />
+	    <![CDATA[
+		    FROM tab_role 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="RoleMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(roleName)">
+				AND roleName  LIKE CONCAT(CONCAT('%', #{roleName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(roleMemo)">
+				AND roleMemo = #{roleMemo}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="RoleMapper.count" resultType="long">
+        SELECT count(*) FROM tab_role 
+		<include refid="RoleMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="RoleMapper.list" resultMap="mRetMapRole">
+    	SELECT <include refid="RoleMapper.columns" />
+	    FROM tab_role 
+		<include refid="RoleMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+	<select id="RoleMapper.roleList" resultMap="mRetMapRole">
+		SELECT id,roleName
+		from tab_role
+	</select>
+
+	<select id="RoleMapper.queryId" resultType="int">
+		SELECT id
+		FROM tab_role
+		WHERE
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(roleName)">
+		 roleName LIKE CONCAT(CONCAT('%', #{roleName}), '%')
+		</if>
+	</select>
+
+</mapper>
+

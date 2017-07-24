@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DwrMapper">
+	
+	<resultMap id="mRetDwrMap" 			type="dwrModel">
+		<result property="msgKey"  		column="msgKey"/>
+		<result property="msgVal"  		column="msgVal"/>
+	</resultMap>
+
+
+	<!--加载定制类型 -->
+	<select id="DwrMapper.queryDictInfo" 		resultMap="mRetDwrMap">
+		<![CDATA[
+			SELECT A.dictNo AS msgKey, A.dictName AS msgVal
+			FROM tab_dict A
+			WHERE dmbm=#{dmbm}
+		]]>
+	</select>
+	
+	<!--加载定制类型 -->
+	<select id="DwrMapper.queryCustomInfo" 		resultMap="mRetDwrMap">
+		<![CDATA[
+			SELECT A.CUSTOM_ID AS msgKey, A.CUSTOM_NAME AS msgVal
+			FROM tab_custom_type A
+		]]>
+	</select>
+	
+	
+	<!--加载新闻类型 -->
+	<select id="DwrMapper.queryNewsTypeInfo" 		resultMap="mRetDwrMap">
+		<![CDATA[
+			SELECT A.TYPE_ID AS msgKey, A.TYPE_NAME AS msgVal
+			FROM tab_news_type A
+			WHERE A.CUSTOM_ID = #{customId}
+		]]>
+	</select>
+	
+	
+	<!--加载经典案例类型 -->
+	<select id="DwrMapper.queryCaseTypeInfo" 		resultMap="mRetDwrMap">
+		<![CDATA[
+			SELECT A.TYPE_ID AS msgKey, A.TYPE_NAME AS msgVal
+			FROM tab_case_type A
+			WHERE A.CUSTOM_ID = #{customId}
+		]]>
+	</select>
+	
+	
+	<!--加载产品中心类型 -->
+	<select id="DwrMapper.queryProduceTypeInfo" 		resultMap="mRetDwrMap">
+		<![CDATA[
+			SELECT A.TYPE_ID AS msgKey, A.TYPE_NAME AS msgVal
+			FROM tab_produce_type A
+			WHERE A.CUSTOM_ID = #{customId}
+		]]>
+	</select>
+
+	<!--加载产品中心类型 -->
+	<select id="DwrMapper.queryGoodsInfo" 		resultMap="mRetDwrMap">
+		<![CDATA[
+			SELECT A.ID AS msgKey, A.goodsName AS msgVal
+			FROM TAB_GOODS A
+		]]>
+		<where>
+			<if test="page != null and page >= 0">
+				AND A.businessId= #{page}
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="BlueprintMapper">
+
+	<resultMap id="mRetMapBlueprint" type="com.gesoft.model.BlueprintModel">
+        <result property="id" column="id"/>
+        <result property="goodsId" column="goodsId"/>
+        <result property="goodsNum" column="goodsNum"/>
+        <result property="price" column="price"/>
+        <result property="unit" column="unit"/>
+        <result property="pname" column="pname"/>
+        <result property="memo" column="memo"/>
+		<result property="goodsName" column="goodsName"/>
+		<result property="dictName" column="dictName"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="BlueprintMapper.columns">
+	    <![CDATA[
+		id,goodsId,goodsNum,price,unit,pname,memo
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="BlueprintMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_blueprint (
+        	id ,
+        	goodsId ,
+        	goodsNum ,
+        	price ,
+        	unit ,
+        	pname ,
+        	memo 
+        ) VALUES (
+        	#{id} ,
+        	#{goodsId} ,
+        	#{goodsNum} ,
+        	#{price} ,
+        	#{unit} ,
+        	#{pname} ,
+        	#{memo} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="BlueprintMapper.update" >
+    <![CDATA[
+        UPDATE tab_blueprint SET
+	        goodsId = #{goodsId} ,
+	        goodsNum = #{goodsNum} ,
+	        price = #{price} ,
+	        unit = #{unit} ,
+	        pname = #{pname} ,
+	        memo = #{memo} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <delete id="BlueprintMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_blueprint WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="BlueprintMapper.getById" resultMap="mRetMapBlueprint">
+		SELECT <include refid="BlueprintMapper.columns" />
+	    <![CDATA[
+		    FROM tab_blueprint 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="BlueprintMapper.findPage.where">
+		<where>
+			 A.goodsId = #{goodsId}
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND A.id = #{id}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(goodsId)">
+				AND A.goodsId = #{goodsId}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(goodsName)">
+				AND B.goodsName LIKE CONCAT(CONCAT('%', #{goodsName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(goodsNum)">
+				AND A.goodsNum = #{goodsNum}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(price)">
+				AND A.price = #{price}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(unit)">
+				AND A.unit = #{unit}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(pname)">
+				AND A.pname LIKE CONCAT(CONCAT('%', #{pname}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
+				AND A.memo = #{memo}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="BlueprintMapper.count" resultType="long">
+		SELECT 	count(*)
+		FROM tab_blueprint A
+		left join tab_goods B on A.goodsId=B.id
+		left join tab_dict D on A.unit=D.dictNo
+		<include refid="BlueprintMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="BlueprintMapper.list" resultMap="mRetMapBlueprint">
+		SELECT 	A.id,
+		A.goodsId,
+		B.goodsName,
+		A.goodsNum,
+		A.price,
+		A.unit,
+		D.dictName,
+		A.pname,
+		A.memo
+		FROM tab_blueprint A
+		left join tab_goods B on A.goodsId=B.id
+		left join tab_dict D on A.unit=D.dictNo
+		<include refid="BlueprintMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+</mapper>
+

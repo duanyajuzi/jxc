@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="GoodsMapper">
+
+	<resultMap id="mRetMapGoods" type="com.gesoft.model.GoodsModel">
+        <result property="id" column="id"/>
+        <result property="materialNum" column="materialNum"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="unitPrice" column="unitPrice"/>
+        <result property="unit" column="unit"/>
+        <result property="spec" column="spec"/>
+        <result property="specUnit" column="specUnit"/>
+        <result property="customerId" column="customerId"/>
+        <result property="storage" column="storage"/>
+        <result property="status" column="status"/>
+        <result property="businessId" column="businessId"/>
+        <result property="memo" column="memo"/>
+		<result property="customerName" column="customerName"></result>
+		<result property="business" column="business"/>
+		<result property="name1" column="name1"/>
+		<result property="name2" column="name2"/>
+		<result property="goodId" column="goodId"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="GoodsMapper.columns">
+	    <![CDATA[
+		id,materialNum,goodsName,unitPrice,unit,spec,specUnit,customerId,storage,status,businessId,memo
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="GoodsMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_goods (
+        	id ,
+        	materialNum ,
+        	goodsName ,
+        	unitPrice ,
+        	unit ,
+        	spec ,
+        	specUnit ,
+        	customerId ,
+        	storage ,
+        	businessId ,
+        	memo 
+        ) VALUES (
+        	#{id} ,
+        	#{materialNum} ,
+        	#{goodsName} ,
+        	#{unitPrice} ,
+        	#{unit} ,
+        	#{spec} ,
+        	#{specUnit} ,
+        	#{customerId} ,
+        	#{storage} ,
+        	#{businessId} ,
+        	#{memo} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="GoodsMapper.update" >
+    <![CDATA[
+        UPDATE tab_goods SET
+	        materialNum = #{materialNum} ,
+	        goodsName = #{goodsName} ,
+	        unitPrice = #{unitPrice} ,
+	        unit = #{unit} ,
+	        spec = #{spec} ,
+	        specUnit = #{specUnit} ,
+	        customerId = #{customerId} ,
+	        storage = #{storage} ,
+	        businessId = #{businessId} ,
+	        memo = #{memo} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+	<update id="GoodsMapper.delete" >
+		<![CDATA[
+        UPDATE tab_goods SET status = 1
+        WHERE
+	        id = #{id}
+    ]]>
+	</update>
+    
+    <select id="GoodsMapper.getById" resultMap="mRetMapGoods">
+		SELECT <include refid="GoodsMapper.columns" />
+	    <![CDATA[
+		    FROM tab_goods 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="GoodsMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND A.id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+				AND A.materialNum  LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(goodsName)">
+				AND A.goodsName LIKE CONCAT(CONCAT('%', #{goodsName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(unitPrice)">
+				AND A.unitPrice = #{unitPrice}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(unit)">
+				AND A.unit = #{unit}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(spec)">
+				AND A.spec = #{spec}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(specUnit)">
+				AND A.specUnit = #{specUnit}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(customerName)">
+				AND B.customerName LIKE CONCAT(CONCAT('%', #{customerName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(storage)">
+				AND A.storage = #{storage}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(status)">
+				AND A.status = #{status}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(business)">
+				AND D.business LIKE CONCAT(CONCAT('%', #{business}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
+				AND A.memo = #{memo}
+			</if>
+				AND A.status=0
+		</where>
+	</sql>
+		
+    <select id="GoodsMapper.count" resultType="long">
+        SELECT count(*) FROM tab_goods A
+		left join tab_customer B on A.customerId=B.id
+		left join tab_business D on A.businessId=D.id
+		left join tab_dict G on A.unit=G.dictNo
+		left join tab_dict E on  A.specUnit=E.dictNo
+		left join tab_dm F on F.bm=E.dmbm
+		<include refid="GoodsMapper.findPage.where"/>
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="GoodsMapper.list" resultMap="mRetMapGoods">
+		SELECT 	A.id,
+		A.materialNum,
+		A.goodsName,
+		A.unitPrice,
+		A.unit,
+		G.dictName name1,
+		A.spec,
+		A.specUnit,
+		E.dictName name2,
+		A.customerId,
+		B.customerName,
+		A.storage,
+		A.businessId,
+		D.business,
+		A.memo
+		FROM tab_goods A
+		left join tab_customer B on A.customerId=B.id
+		left join tab_business D on A.businessId=D.id
+		left join tab_dict G on  A.unit=G.dictNo
+		left join tab_dict E on  A.specUnit=E.dictNo
+		left join tab_dm F on F.bm=E.dmbm
+		<include refid="GoodsMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+	<select id="GoodsMapper.queryGoodsList" resultMap="mRetMapGoods">
+		SELECT id,goodsName
+		FROM tab_goods
+	</select>
+
+	<select id="GoodsMapper.queryMaterialNum" resultMap="mRetMapGoods">
+		SELECT id,materialNum
+		FROM tab_good_customer
+		WHERE  goodId = #{goodId}
+	</select>
+
+	<!--修改厂商商品的货存-->
+	<update id="GoodsMapper.updateStorage" >
+		update tab_good_customer set storage = storage -  #{esgouNum}
+		where id = #{id}
+	</update>
+</mapper>
+

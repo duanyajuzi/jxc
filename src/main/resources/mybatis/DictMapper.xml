@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="DictMapper">
+
+	<resultMap id="mRetMapDict" type="com.gesoft.model.DictModel">
+        <result property="id" column="id"/>
+        <result property="dmbm" column="dmbm"/>
+        <result property="dictNo" column="dictNo"/>
+        <result property="dictName" column="dictName"/>
+        <result property="dictIndex" column="dictIndex"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="DictMapper.columns">
+	    <![CDATA[
+		id,dmbm,dictNo,dictName,dictIndex
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="DictMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_dict (
+        	id ,
+        	dmbm ,
+        	dictNo ,
+        	dictName ,
+        	dictIndex 
+        ) VALUES (
+        	#{id} ,
+        	#{dmbm} ,
+        	#{dictNo} ,
+        	#{dictName} ,
+        	#{dictIndex} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="DictMapper.update" >
+    <![CDATA[
+        UPDATE tab_dict SET
+	        dmbm = #{dmbm} ,
+	        dictNo = #{dictNo} ,
+	        dictName = #{dictName} ,
+	        dictIndex = #{dictIndex} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <delete id="DictMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_dict WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="DictMapper.getById" resultMap="mRetMapDict">
+		SELECT <include refid="DictMapper.columns" />
+	    <![CDATA[
+		    FROM tab_dict 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="DictMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND dict.id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(nr)">
+				AND dm.nr LIKE CONCAT(CONCAT('%', #{nr}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(dictNo)">
+				AND dict.dictNo = #{dictNo}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(dictName)">
+				AND dict.dictName LIKE CONCAT(CONCAT('%', #{dictName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(dictIndex)">
+				AND dict.dictIndex = #{dictIndex}
+			</if>
+			AND
+				dict.dmbm=dm.bm
+		</where>
+	</sql>
+		
+    <select id="DictMapper.count" resultType="long">
+        SELECT count(*) FROM tab_dict dict ,tab_dm dm
+		<include refid="DictMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="DictMapper.list" resultMap="mRetMapDict">
+    	SELECT dict.id ,
+		dm.nr,
+		dict.dictNo ,
+		dict.dictName ,
+		dict.dictIndex
+		FROM tab_dict dict,tab_dm dm
+		<include refid="DictMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+</mapper>
+

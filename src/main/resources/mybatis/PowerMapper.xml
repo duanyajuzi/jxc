@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="PowerMapper">
+
+	<resultMap id="mRetMapPower" type="com.gesoft.model.PowerModel">
+        <result property="id" column="id"/>
+        <result property="powerName" column="powerName"/>
+        <result property="powerNo" column="powerNo"/>
+        <result property="pid" column="pid"/>
+        <result property="url" column="url"/>
+        <result property="leaf" column="leaf"/>
+        <result property="icon" column="icon"/>
+		<result property="dictName" column="dictName"/>
+		<result property="name1" column="name1"/>
+		<result property="name2" column="name2"/>
+		<!--<result property="children" column="children"/>-->
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PowerMapper.columns">
+	    <![CDATA[
+		id,powerName,powerNo,pid,url,leaf,icon
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="PowerMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_power (
+        	id ,
+        	powerName ,
+        	powerNo ,
+        	pid ,
+        	url ,
+        	leaf ,
+        	icon 
+        ) VALUES (
+        	#{id} ,
+        	#{name1} ,
+        	#{powerNo} ,
+        	#{pid} ,
+        	#{url} ,
+        	#{leaf} ,
+        	#{icon} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="PowerMapper.update" >
+    <![CDATA[
+        UPDATE tab_power SET
+	        powerName = #{name1} ,
+	        powerNo = #{powerNo} ,
+	        pid = #{pid} ,
+	        url = #{url} ,
+	        leaf = #{leaf} ,
+	        icon = #{icon} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <delete id="PowerMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_power WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="PowerMapper.getById" resultMap="mRetMapPower">
+		SELECT <include refid="PowerMapper.columns" />
+	    <![CDATA[
+		    FROM tab_power 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="PowerMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(powerName)">
+				AND A.powerName  LIKE CONCAT(CONCAT('%', #{powerName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(powerNo)">
+				AND A.powerNo   LIKE CONCAT(CONCAT('%', #{powerNo}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(pid)">
+				AND pid = #{pid}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(url)">
+				AND url = #{url}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(leaf)">
+				AND leaf= #{leaf}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(icon)">
+				AND icon = #{icon}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="PowerMapper.count" resultType="long">
+		SELECT count(*)
+		FROM tab_power
+		<include refid="PowerMapper.findPage.where"/>    
+    </select>
+    
+    <!--&lt;!&ndash; 分页查询 &ndash;&gt;-->
+    <!--<select id="PowerMapper.list" resultMap="mRetMapPower">-->
+    	<!--SELECT <include refid="PowerMapper.columns" />-->
+	    <!--FROM tab_power -->
+		<!--<include refid="PowerMapper.findPage.where"/>-->
+		<!--<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">-->
+			<!--ORDER BY ${sortColumns}-->
+		<!--</if>-->
+		<!--LIMIT #{startNum}, #{pageSize}-->
+    <!--</select>-->
+
+	<select id="PowerMapper.powerList" resultMap="mRetMapPower">
+		SELECT A.id ,
+		A.powerName name1,
+		A.powerNo ,
+		B.id pid2,
+		B.powerName name2 ,
+		A.pid,
+		A.url ,
+		A.leaf ,
+		A.icon
+		FROM tab_power A
+		left join tab_power B on B.id=A.pid
+		<include refid="PowerMapper.findPage.where"/>
+	</select>
+
+	<select id="PowerMapper.powerIdName" resultMap="mRetMapPower">
+		SELECT powerName
+		FROM tab_power
+		WHERE id=#{pid}
+	</select>
+
+	<!--<select id="PowerMapper.parentList" resultMap="mRetMapPower">-->
+		<!--SELECT <include refid="PowerMapper.columns" />-->
+		<!--FROM tab_power-->
+		<!--WHERE leaf=0-->
+	<!--</select>-->
+
+	<!--<select id="PowerMapper.childrenList" resultMap="mRetMapPower">-->
+		<!--SELECT <include refid="PowerMapper.columns" />-->
+		<!--FROM tab_power-->
+		<!--WHERE pid=#{id} AND leaf=1-->
+	<!--</select>-->
+
+	<select id="PowerMapper.queryPowerNo" resultType="int">
+		select count(*)
+		FROM tab_power
+		WHERE
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(powerNo)">
+			powerNo=#{powerNo}
+		</if>
+	</select>
+</mapper>
+

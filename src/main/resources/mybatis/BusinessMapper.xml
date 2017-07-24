@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="BusinessMapper">
+
+	<resultMap id="mRetMapBusiness" type="com.gesoft.model.BusinessModel">
+        <result property="id" column="id"/>
+        <result property="business" column="business"/>
+        <result property="memo" column="memo"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="BusinessMapper.columns">
+	    <![CDATA[
+		id,business,memo
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="BusinessMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_business (
+        	id ,
+        	business ,
+        	memo 
+        ) VALUES (
+        	#{id} ,
+        	#{business} ,
+        	#{memo} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="BusinessMapper.update" >
+    <![CDATA[
+        UPDATE tab_business SET
+	        business = #{business} ,
+	        memo = #{memo} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <delete id="BusinessMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_business WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="BusinessMapper.getById" resultMap="mRetMapBusiness">
+		SELECT <include refid="BusinessMapper.columns" />
+	    <![CDATA[
+		    FROM tab_business 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="BusinessMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(business)">
+				AND business LIKE CONCAT(CONCAT('%', #{business}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
+				AND memo = #{memo}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="BusinessMapper.count" resultType="long">
+        SELECT count(*) FROM tab_business 
+		<include refid="BusinessMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="BusinessMapper.list" resultMap="mRetMapBusiness">
+    	SELECT <include refid="BusinessMapper.columns" />
+	    FROM tab_business 
+		<include refid="BusinessMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+	<!--查询业务id,名称-->
+	<select id="BusinessMapper.queryBusinessList" resultMap="mRetMapBusiness">
+		SELECT id,business
+		FROM tab_business
+	</select>
+	
+</mapper>
+

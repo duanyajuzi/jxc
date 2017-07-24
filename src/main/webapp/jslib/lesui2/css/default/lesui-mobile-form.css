@@ -1,0 +1,42 @@
+body{
+	padding: 0;
+	margin: 0;
+	border: 0;
+	overflow: hidden; 
+	overflow-y:auto;
+}
+.mobile_form_div{
+	width:99%;
+	padding-left:2px;
+}
+/*表单样式调整*/
+.hfv{
+	font-size:16px;
+	border-right:none;
+	border-left:none;
+	margin-top:4px;
+	margin-bottom:12px;
+}
+.hfv-item{
+	border-right:none;
+	
+}
+.hcal{
+	width:95%;
+}
+.hcal *{
+	font-size:16px;	
+}
+.hcal td{
+	height:32px;
+}
+.ym{
+	height:36px;
+	line-height:36px;
+}
+.ny,.py,.pm,.nm{
+	display:inline-block;
+	width:48px;
+	height:32px;
+	line-height:32px;
+}

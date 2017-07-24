@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="UserMapper">
+
+	<resultMap id="mRetMapUser" type="com.gesoft.model.UserModel">
+        <result property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="userPwd" column="userPwd"/>
+		<result property="realName" column="realName"/>
+		<result property="roleId" column="roleId"/>
+		<result property="roleName" column="roleName"/>
+        <result property="position" column="position"/>
+        <result property="tel" column="tel"/>
+        <result property="memo" column="memo"/>
+
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="UserMapper.columns">
+	    <![CDATA[
+		id,userName,userPwd,realName,roleId,position,tel,memo
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="UserMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_user (
+        	id ,
+        	userName ,
+        	userPwd ,
+        	realName ,
+        	roleId ,
+        	position ,
+        	tel ,
+        	memo 
+        ) VALUES (
+        	#{id} ,
+        	#{userName} ,
+        	#{userPwd} ,
+        	#{realName} ,
+        	#{roleId} ,
+        	#{position} ,
+        	#{tel} ,
+        	#{memo} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="UserMapper.update" >
+    <![CDATA[
+        UPDATE tab_user SET
+	        userName = #{userName} ,
+	        userPwd = #{userPwd} ,
+	        realName = #{realName} ,
+	        roleId = #{roleId} ,
+	        position = #{position} ,
+	        tel = #{tel} ,
+	        memo = #{memo} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <delete id="UserMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_user WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="UserMapper.getById" resultMap="mRetMapUser">
+		SELECT <include refid="UserMapper.columns" />
+	    <![CDATA[
+		    FROM tab_user 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="UserMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(userName)">
+				AND userName  LIKE CONCAT(CONCAT('%', #{userName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(userPwd)">
+				AND userPwd = #{userPwd}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(realName)">
+				AND realName  LIKE CONCAT(CONCAT('%', #{realName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(roleId)">
+				AND roleId  = #{roleId}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(position)">
+				AND position = #{position}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(tel)">
+				AND tel  LIKE CONCAT(CONCAT('%', #{tel}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
+				AND memo = #{memo}
+			</if>
+			AND A.roleId=role.id
+		</where>
+	</sql>
+		
+    <select id="UserMapper.count" resultType="long">
+        SELECT count(*) FROM tab_user A,tab_role role
+		<include refid="UserMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="UserMapper.list" resultMap="mRetMapUser">
+    	SELECT A.id,A.userName,A.userPwd,A.realName,A.roleId,role.roleName,A.position,A.tel,A.memo
+	    FROM tab_user A,tab_role role
+		<include refid="UserMapper.findPage.where"/>
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+	
+</mapper>
+

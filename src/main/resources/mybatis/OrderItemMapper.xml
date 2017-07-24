@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="OrderItemMapper">
+
+    <resultMap id="mRetMapOrderItem" type="com.gesoft.model.OrderItemModel">
+        <result property="id" column="id"/>
+        <result property="orderId" column="orderId"/>
+        <result property="orderName" column="orderName"/>
+        <result property="customerGoodId" column="customerGoodId"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="esgouNum" column="esgouNum"/>
+        <result property="goodsUnit" column="goodsUnit"/>
+        <result property="unitPrice" column="unitPrice"/>
+        <result property="totalMoney" column="totalMoney"/>
+
+        <result property="goodsId" column="goodsId"/>
+        <result property="goodsNum" column="goodsNum"/>
+        <result property="price" column="price"/>
+        <result property="unit" column="unit"/>
+        <result property="pname" column="pname"/>
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="OrderItemMapper.columns">
+        <![CDATA[
+		id,
+		orderId,
+		customerGoodId,
+		esgouNum,
+		unitPrice
+	    ]]>
+    </sql>
+
+    <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+    <insert id="OrderItemMapper.insert" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+        INSERT INTO tab_orderitem (
+        id,
+		orderId,
+		customerGoodId,
+		esgouNum,
+		unitPrice
+        ) VALUES (
+        	#{id} ,
+        	#{orderId} ,
+        	#{customerGoodId} ,
+        	#{esgouNum} ,
+        	#{unitPrice}
+        )
+    ]]>
+    </insert>
+
+    <update id="OrderItemMapper.update" >
+        <![CDATA[
+        UPDATE tab_orderitem SET
+	        customerGoodId = #{customerGoodId} ,
+	        esgouNum = #{esgouNum} ,
+	        unitPrice = #{unitPrice}
+        WHERE
+	        id = #{id}
+    ]]>
+    </update>
+
+    <delete id="OrderItemMapper.delete" >
+        <![CDATA[
+        DELETE FROM tab_orderitem WHERE
+        id = #{id}
+    ]]>
+    </delete>
+
+    <select id="OrderItemMapper.getById" resultMap="mRetMapOrderItem">
+        SELECT <include refid="OrderItemMapper.columns" />
+        <![CDATA[
+		    FROM tab_orderitem
+	        WHERE
+		        id = #{id}
+	    ]]>
+    </select>
+
+    <sql id="OrderItemMapper.findPage.where">
+        <where>
+            A.orderId =  #{orderId}
+            <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+                AND A.id = #{id}
+            </if>
+            <if test="@com.gesoft.util.Ognl@isNotEmpty(customerGoodId)">
+                AND A.customerGoodId = #{customerGoodId}
+            </if>
+            <if test="@com.gesoft.util.Ognl@isNotEmpty(unitPrice)">
+                AND A.unitPrice = #{unitPrice}
+            </if>
+            <if test="@com.gesoft.util.Ognl@isNotEmpty(esgouNum)">
+                AND A.esgouNum = #{esgouNum}
+            </if>
+        </where>
+    </sql>
+
+    <select id="OrderItemMapper.count" resultType="long">
+        SELECT count(*)
+        FROM tab_orderitem A
+        left join tab_order B on  A.orderId=B.id
+        left join tab_good_customer F on A.customerGoodId=F.id
+        left join tab_goods D on F.goodId=D.id
+        left join tab_dict E on D.specUnit=E.dictNo
+        <include refid="OrderItemMapper.findPage.where"/>
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="OrderItemMapper.list" resultMap="mRetMapOrderItem">
+        SELECT A.id,
+        A.orderId,
+        B.orderName,
+        A.customerGoodId,
+        D.goodsName,
+        F.materialNum,
+        A.esgouNum,
+        A.unitPrice,
+        D.specUnit,
+        E.dictName,
+        A.esgouNum*A.unitPrice as totalMoney
+        FROM tab_orderitem A
+        left join tab_order B on  A.orderId=B.id
+        left join tab_good_customer F on A.customerGoodId=F.id
+        left join tab_goods D on F.goodId=D.id
+        left join tab_dict E on D.specUnit=E.dictNo
+        <include refid="OrderItemMapper.findPage.where"/>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+        LIMIT #{startNum}, #{pageSize}
+    </select>
+
+    <select id="OrderItemMapper.queryNumInfo" resultMap="mRetMapOrderItem">
+    select A.id,A.materialNum,B.goodsName,A.unit,D.dictName,A.unitPrice,A.storage
+    from tab_good_customer A
+    left join tab_goods B on A.goodId=B.id
+    left join tab_dict D on A.unit=D.dictNo
+    where A.id=#{id}
+    </select>
+
+  <select id="OrderItemMapper.goodsPlan" resultMap="mRetMapOrderItem">
+	  SELECT A.id,
+	  A.pname,
+      A.goodsId,
+      A.goodsNum,
+      A.price,
+      A.unit
+      FROM tab_blueprint A
+      WHERE A.goodsId = #{goodsId}
+  </select>
+</mapper>

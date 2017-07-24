@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="CustomerMapper">
+
+	<resultMap id="mRetMapCustomer" type="com.gesoft.model.CustomerModel">
+        <result property="id" column="id"/>
+        <result property="customerName" column="customerName"/>
+        <result property="contacts" column="contacts"/>
+        <result property="address" column="address"/>
+        <result property="tel" column="tel"/>
+        <result property="consigneeName" column="consigneeName"/>
+        <result property="consigneeTel" column="consigneeTel"/>
+        <result property="creditCode" column="creditCode"/>
+        <result property="billingAddress" column="billingAddress"/>
+        <result property="openBank" column="openBank"/>
+        <result property="bankAccount" column="bankAccount"/>
+        <result property="openTel" column="openTel"/>
+        <result property="memo" column="memo"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="CustomerMapper.columns">
+	    <![CDATA[
+		id,customerName,contacts,address,tel,consigneeName,consigneeTel,creditCode,billingAddress,openBank,bankAccount,openTel,memo
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="CustomerMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_customer (
+        	id ,
+        	customerName ,
+        	contacts ,
+        	address ,
+        	tel ,
+        	consigneeName ,
+        	consigneeTel ,
+        	creditCode ,
+        	billingAddress ,
+        	openBank ,
+        	bankAccount ,
+        	openTel ,
+        	memo 
+        ) VALUES (
+        	#{id} ,
+        	#{customerName} ,
+        	#{contacts} ,
+        	#{address} ,
+        	#{tel} ,
+        	#{consigneeName} ,
+        	#{consigneeTel} ,
+        	#{creditCode} ,
+        	#{billingAddress} ,
+        	#{openBank} ,
+        	#{bankAccount} ,
+        	#{openTel} ,
+        	#{memo} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="CustomerMapper.update" >
+    <![CDATA[
+        UPDATE tab_customer SET
+	        customerName = #{customerName} ,
+	        contacts = #{contacts} ,
+	        address = #{address} ,
+	        tel = #{tel} ,
+	        consigneeName = #{consigneeName} ,
+	        consigneeTel = #{consigneeTel} ,
+	        creditCode = #{creditCode} ,
+	        billingAddress = #{billingAddress} ,
+	        openBank = #{openBank} ,
+	        bankAccount = #{bankAccount} ,
+	        openTel = #{openTel} ,
+	        memo = #{memo} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <delete id="CustomerMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_customer WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="CustomerMapper.getById" resultMap="mRetMapCustomer">
+		SELECT <include refid="CustomerMapper.columns" />
+	    <![CDATA[
+		    FROM tab_customer 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="CustomerMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(customerName)">
+				AND customerName LIKE CONCAT(CONCAT('%', #{customerName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(contacts)">
+				AND contacts LIKE CONCAT(CONCAT('%', #{contacts}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(address)">
+				AND address = #{address}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(tel)">
+				AND tel LIKE CONCAT(CONCAT('%', #{tel}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(consigneeName)">
+				AND consigneeName LIKE CONCAT(CONCAT('%', #{consigneeName}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(consigneeTel)">
+				AND consigneeTel  LIKE CONCAT(CONCAT('%', #{consigneeTel}), '%')
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(creditCode)">
+				AND creditCode = #{creditCode}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(billingAddress)">
+				AND billingAddress = #{billingAddress}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(openBank)">
+				AND openBank = #{openBank}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(bankAccount)">
+				AND bankAccount = #{bankAccount}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(openTel)">
+				AND openTel = #{openTel}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
+				AND memo = #{memo}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="CustomerMapper.count" resultType="long">
+        SELECT count(*) FROM tab_customer 
+		<include refid="CustomerMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="CustomerMapper.list" resultMap="mRetMapCustomer">
+    	SELECT <include refid="CustomerMapper.columns" />
+	    FROM tab_customer 
+		<include refid="CustomerMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+	<!--查询客户id,名称列表-->
+	<select id="CustomerMapper.queryCustomerList" resultMap="mRetMapCustomer">
+		SELECT id,customerName
+		FROM tab_customer
+	</select>
+
+	<select id="CustomerMapper.queryOtherInfoList" resultMap="mRetMapCustomer">
+		SELECT id ,
+        	customerName ,
+        	contacts ,
+        	address ,
+        	tel
+        FROM tab_customer
+        WHERE id=#{id}
+	</select>
+</mapper>
+

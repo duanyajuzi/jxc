@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="DmMapper">
+
+	<resultMap id="mRetMapDm" type="com.gesoft.model.DmModel">
+        <result property="bm" column="bm"/>
+        <result property="nr" column="nr"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="DmMapper.columns">
+	    <![CDATA[
+		bm,nr
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="DmMapper.insert" useGeneratedKeys="true" keyProperty="bm">
+    <![CDATA[
+        INSERT INTO tab_dm (
+        	bm ,
+        	nr 
+        ) VALUES (
+        	#{bm} ,
+        	#{nr} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="DmMapper.update" >
+    <![CDATA[
+        UPDATE tab_dm SET
+	        nr = #{nr} 
+        WHERE 
+	        bm = #{bm} 
+    ]]>
+	</update>
+
+    <delete id="DmMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_dm WHERE
+        bm = #{bm}
+    ]]>
+    </delete>
+    
+    <select id="DmMapper.getById" resultMap="mRetMapDm">
+		SELECT <include refid="DmMapper.columns" />
+	    <![CDATA[
+		    FROM tab_dm 
+	        WHERE 
+		        bm = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="DmMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(bm)">
+				AND bm = #{bm}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(nr)">
+				AND nr  LIKE CONCAT(CONCAT('%', #{nr}), '%')
+			</if>
+		</where>
+	</sql>
+		
+    <select id="DmMapper.count" resultType="long">
+        SELECT count(*) FROM tab_dm 
+		<include refid="DmMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="DmMapper.list" resultMap="mRetMapDm">
+    	SELECT <include refid="DmMapper.columns" />
+	    FROM tab_dm 
+		<include refid="DmMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+	<!--查询列表-->
+	<select id="DmMapper.dmList" resultMap="mRetMapDm">
+		SELECT bm,nr
+		FROM tab_dm
+	</select>
+</mapper>
+

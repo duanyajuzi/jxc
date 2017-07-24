@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="BillMapper">
+
+	<resultMap id="mRetMapBill" type="com.gesoft.model.BillModel">
+        <result property="id" column="id"/>
+        <result property="billNo" column="billNo"/>
+        <result property="customerId" column="customerId"/>
+        <result property="billTime" column="billTime"/>
+        <result property="prePayTime" column="prePayTime"/>
+        <result property="businessId" column="businessId"/>
+        <result property="billType" column="billType"/>
+        <result property="payState" column="payState"/>
+        <result property="payTime" column="payTime"/>
+        <result property="payConfirmUser" column="payConfirmUser"/>
+        <result property="cuserId" column="cuserId"/>
+        <result property="ctime" column="ctime"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="BillMapper.columns">
+	    <![CDATA[
+		id,billNo,customerId,billTime,prePayTime,businessId,billType,payState,payTime,payConfirmUser,cuserId,ctime
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="BillMapper.insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO tab_bill (
+        	id ,
+        	billNo ,
+        	customerId ,
+        	billTime ,
+        	prePayTime ,
+        	businessId ,
+        	billType ,
+        	payState ,
+        	payTime ,
+        	payConfirmUser ,
+        	cuserId ,
+        	ctime 
+        ) VALUES (
+        	#{id} ,
+        	#{billNo} ,
+        	#{customerId} ,
+        	#{billTime} ,
+        	#{prePayTime} ,
+        	#{businessId} ,
+        	#{billType} ,
+        	#{payState} ,
+        	#{payTime} ,
+        	#{payConfirmUser} ,
+        	#{cuserId} ,
+        	#{ctime} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="BillMapper.update" >
+    <![CDATA[
+        UPDATE tab_bill SET
+	        billNo = #{billNo} ,
+	        customerId = #{customerId} ,
+	        billTime = #{billTime} ,
+	        prePayTime = #{prePayTime} ,
+	        businessId = #{businessId} ,
+	        billType = #{billType} ,
+	        payState = #{payState} ,
+	        payTime = #{payTime} ,
+	        payConfirmUser = #{payConfirmUser} ,
+	        cuserId = #{cuserId} ,
+	        ctime = #{ctime} 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</update>
+
+    <delete id="BillMapper.delete">
+    <![CDATA[
+        DELETE FROM tab_bill WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="BillMapper.getById" resultMap="mRetMapBill">
+		SELECT <include refid="BillMapper.columns" />
+	    <![CDATA[
+		    FROM tab_bill 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="BillMapper.findPage.where">
+		<where>	      				
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND id = #{id}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(billNo)">
+				AND billNo = #{billNo}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(customerId)">
+				AND customerId = #{customerId}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(billTimeBegin)">
+				AND billTime >= #{billTimeBegin}
+		   </if>
+		   <if test="@com.gesoft.util.Ognl@isNotEmpty(billTimeEnd)">
+				AND billTime &lt;= #{billTimeEnd}
+		   </if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(prePayTimeBegin)">
+				AND prePayTime >= #{prePayTimeBegin}
+		   </if>
+		   <if test="@com.gesoft.util.Ognl@isNotEmpty(prePayTimeEnd)">
+				AND prePayTime &lt;= #{prePayTimeEnd}
+		   </if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+				AND businessId = #{businessId}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(billType)">
+				AND billType = #{billType}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(payState)">
+				AND payState = #{payState}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(payTimeBegin)">
+				AND payTime >= #{payTimeBegin}
+		   </if>
+		   <if test="@com.gesoft.util.Ognl@isNotEmpty(payTimeEnd)">
+				AND payTime &lt;= #{payTimeEnd}
+		   </if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(payConfirmUser)">
+				AND payConfirmUser = #{payConfirmUser}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(cuserId)">
+				AND cuserId = #{cuserId}
+			</if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeBegin)">
+				AND ctime >= #{ctimeBegin}
+		   </if>
+		   <if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeEnd)">
+				AND ctime &lt;= #{ctimeEnd}
+		   </if>
+		</where>
+	</sql>
+		
+    <select id="BillMapper.count" resultType="long">
+        SELECT count(*) FROM tab_bill 
+		<include refid="BillMapper.findPage.where"/>    
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="BillMapper.list" resultMap="mRetMapBill">
+    	SELECT <include refid="BillMapper.columns" />
+	    FROM tab_bill 
+		<include refid="BillMapper.findPage.where"/>
+		
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		
+		LIMIT #{startNum}, #{pageSize}
+    </select>
+
+	
+</mapper>
+
