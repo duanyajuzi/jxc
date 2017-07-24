@@ -2,7 +2,7 @@
 <%String name=request.getParameter("username");%>
 <html>
 <head>
-    <title>测试</title>
+    <title>鼐威欣贸易信息管理系统</title>
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
     <link href="<c:url value='/jslib/theme/sea/mainframe.css'/>" rel="stylesheet" type="text/css"/>
 
@@ -94,58 +94,61 @@
         }
         *{
             padding:0;
-            margin:0;
+            /*margin:0;
             font-family: "Microsoft YaHei";
             font-size:16px;
             list-style: none;
-            color: #bbbbbb;
+            color: #bbbbbb;*/
         }
         ol{
-            width:180px;
             cursor: pointer;
-            background: #233738;
-            padding:8px 4px;
         }
         .nav1,.nav2,.nav3{
             display:none;
         }
         ol>li{
             transition: background 0.6s;
-            margin:4px;
-            padding:4px;
-            border-radius: 6px;
+            color:#ffffff;
+            list-style-type: none;
+            font-size: 16px;
+            text-align: center;
         }
-        ol>li:hover{
-            background: #35404d;
+        ol>li>div:hover{
+            background: #43AAD7;
         }
-        .nav1>li,.nav2>li,.nav3>li {
+        .nav1>li {
             background: #35404d;
-            padding-left: 48px;
             display: block;
             line-height: 30px;
             transition: color 0.6s;
-            border-radius: 6px;
         }
-        span {
+        /*span {
             width: 163px;
             padding-left:4px;
             line-height: 30px;
             padding-bottom:4px;
             transition: color 0.3s;
             color: #fafafa;
-        }
+        }*/
         img{
             margin-left:10px;
             margin-bottom:-2px;
         }
+        .nav1 li{
+            padding:4px 0;
+            font-size: 14px;
+        }
+        .nav1 li:hover{
+            background: #43AAD7;
+        }
         .current{
-            background: #35404d;
+            background: #43AAD7 !important;
         }
     </style>
 </head>
 <body style="margin:0;padding:0;overflow:hidden;">
 
-<table id="toptab">
+<table id="toptab" style="background:rgba(0,36,78,.9);">
     <tbody>
     <tr>
         <td id="top_left" style="height:48px;width:530px;">
@@ -194,22 +197,28 @@
 </div>
 <div id="menudiv"
      style="position:absolute;top:0;left:0;z-index:1;width:1px;height:1px;overflow:hidden;overflow-y:auto;border-right:1px solid #ccc;">
-<<<<<<< .mine
     <div class="mCSB_container menu_container">
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/dict.jsp"/>')" style="color: white; cursor: pointer;">字典</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/dm.jsp"/>')" style="color: white; cursor: pointer;">编码</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/power.jsp"/>')" style="color: white; cursor: pointer;">权限</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/user.jsp"/>')" style="color: white; cursor: pointer;">用户</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/role.jsp"/>')" style="color: white; cursor: pointer;">角色</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/business.jsp"/>')" style="color: white; cursor: pointer;">业务类型</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/customer.jsp"/>')" style="color: white; cursor: pointer;">客户</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/goods.jsp"/>')" style="color: white; cursor: pointer;">商品</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/blueprint.jsp"/>')" style="color: white; cursor: pointer;">商品销售单价方案</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order.jsp?orderType=0"/>')" style="color: white; cursor: pointer;">采购订单</div>
-        <div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order.jsp?orderType=1"/>')" style="color: white; cursor: pointer;">出货订单</div>
+        <ol>
+            <c:forEach items="${powerList}" var="power">
+                <c:if test="${power.leaf == 1}">
+                <li class="pli">
+                    <div style="padding: 6px 0;">
+                        <img src="<c:url value='/jslib/theme/sea/images/sy.png'/>" >
+                        <span id="span1">${power.powerName}</span>
+                    </div>
+                    <ul class="nav1">
+                    <c:forEach items="${powerList}" var="leafPower">
+                        <c:if test="${power.id == leafPower.pid}">
+                            <li onclick="PageMain.funAddTab(this, '<c:url value="${leafPower.url}"/>')">${leafPower.powerName}</li>
+                        </c:if>
+                    </c:forEach>
+                    </ul>
+                </li>
+                </c:if>
+            </c:forEach>
+        </ol>
     </div>
 
-=======
     <%--<div class="mCSB_container menu_container">--%>
         <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/dict.jsp"/>')" style="color: white; cursor: pointer;">字典</div>--%>
         <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/dm.jsp"/>')" style="color: white; cursor: pointer;">编码</div>--%>
@@ -224,37 +233,7 @@
         <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order.jsp?orderType=1"/>')" style="color: white; cursor: pointer;">出货订单</div>--%>
         <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order_add.jsp"/>')" style="color: white; cursor: pointer;">订单详情</div>--%>
     <%--</div>--%>
-        <ol>
-            <li id="nav_sy">
-                <img src="<c:url value='/jslib/theme/sea/images/sy.png'/>" alt="1">
-                <span id="span1">系统管理</span>
-                <ul class="nav1">
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/user.jsp"/>')">用户管理</li>
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/role.jsp"/>')">角色管理</li>
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/power.jsp"/>')">权限管理</li>
-                </ul>
-            </li>
-            <li id="nav_bu">
-                <img src="<c:url value='/jslib/theme/sea/images/bu.png'/>" alt="1">
-                <span id="span2">业务管理</span>
-                <ul class="nav2">
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/goods.jsp"/>')">商品管理</li>
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order.jsp?orderType=0"/>')">采购订单管理</li>
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order.jsp?orderType=1"/>')">出货订单管理</li>
-                </ul>
-            </li>
-            <li id="nav_ba">
-                <img src="<c:url value='/jslib/theme/sea/images/ba.png'/>" alt="1">
-                <span id="span3">基础管理</span>
-                <ul class="nav3">
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/dm.jsp"/>')">代码项管理</li>
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/customer.jsp"/>')">厂商管理</li>
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/dict.jsp"/>')">字典管理</li>
-                    <li onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/business.jsp"/>')">业务类型管理</li>
-                </ul>
-            </li>
-        </ol>
->>>>>>> .r36
+
 </div>
 
 <div id="pagediv" style="position:absolute;z-index:2;width:100%;height:100%;overflow:hidden;">
@@ -262,45 +241,6 @@
     </div>
 </div>
 </body>
-<%--leftmenu javascript --%>
-<script>
-    $(document).ready(function () {
-        $("#nav_sy").click(function () {
-//                $("ol>li:first").css("background","#35404D")
-//                $("ol>li:eq(1)").css("background","#233738")
-//                $("ol>li:eq(2)").css("background","#233738")
-            $(".nav1").slideDown("600")
-            $(".nav2").slideUp("600")
-            $(".nav3").slideUp("600")
-        });
-        $("#nav_bu").click(function () {
-            $(".nav2").slideDown("600")
-            $(".nav1").slideUp("600")
-            $(".nav3").slideUp("600")
-        });
-        $("#nav_ba").click(function () {
-            $(".nav3").slideDown("600")
-            $(".nav2").slideUp("600")
-            $(".nav1").slideUp("600")
-        });
-        $("#span1,#span2,#span3").mouseover(function(){
-            $(this).css("color","#ffffff")
-        })
-        $("#span1,#span2,#span3").mouseout(function(){
-            $(this).css("color","#fafafa")
-        })
-        $(".nav1>li,.nav2>li,.nav3>li").mouseover(function(){
-            $(this).css("color","#ffb18b")
-        })
-        $(".nav1>li,.nav2>li,.nav3>li").mouseout(function(){
-            $(this).css("color","#bbbbbb")
-        })
-        $("ol>li").click(function(){
-            $(this).addClass('current')
-            $(this).siblings().removeClass('current')
-        })
-    })
-</script>
 
 <script>
     var username1=<%=name%>;
@@ -311,6 +251,23 @@
             var me = this;
             $(window).resize(function(){
                 me.funResize();
+            });
+
+            $(".pli div").bind("click", function(){
+                if($(this).attr("tag") == "true")
+                {
+                    $(this).attr("tag", false);
+                    $(this).parent().find("ul").hide();
+                }
+                else
+                {
+                    $(this).attr("tag", true);
+                    $(this).parent().find("ul").show();
+                }
+            });
+            $(".nav1 li").bind("click", function(){
+                $(".nav1 li").removeClass("current");
+                $(this).addClass("current");
             });
             me.funResize();
 

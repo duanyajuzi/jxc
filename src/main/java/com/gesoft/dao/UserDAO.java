@@ -21,4 +21,16 @@ public class UserDAO extends EntityDAOImpl<UserModel, Long>
     {
         return "UserMapper";
     }
+
+    /**
+     * 描述信息：根据用户名加载用户信息
+     * 创建时间：2015年1月31日 上午9:27:47
+     * @author WCL (ln_admin@yeah.net)
+     * @param model
+     * @return
+     */
+    public UserModel getByName(UserModel model)
+    {
+        return getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".getByName", model);
+    }
 }

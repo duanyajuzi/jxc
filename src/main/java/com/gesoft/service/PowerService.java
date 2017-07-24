@@ -42,10 +42,13 @@ public class PowerService extends EntityService<PowerModel, Long>
 	}
 
 
-//	public List<PowerModel> queryList1(PowerModel model){
-//		return powerDAO.queryList2(model);
-//	}
-//	public List<PowerModel> queryList2(PowerModel model){
-//		return powerDAO.queryList2(model);
-//	}
+	public List<PowerModel> queryRolePowerList(int roleId){
+		return powerDAO.queryRolePowerList(roleId);
+	}
+
+	@Override
+	public long save(PowerModel entity) {
+		powerDAO.updateParentPower(entity);
+		return super.save(entity);
+	}
 }

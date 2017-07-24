@@ -30,7 +30,6 @@
 	cursor: pointer;
 	text-align: center;
 	position: relative;
-	background: #ffffff;
 }
 .user-logo {
 	float: left;
@@ -58,7 +57,7 @@
 	/*line-height: 35px;*/
 	height:50%;
 	line-height: 28px;
-	color: #233738;
+	color: #ffffff;
 }
 #jt{
 	border-bottom: 10px solid #fff;
@@ -181,14 +180,13 @@
 }
 
 #menudiv {
-	/*background: #33475F;*/
-	background: #233738;
+	background: rgba(0,36,78,.9);
 }
 #xtname {
 	display: block;
 	width: 530px;
 	height: 50px;
-	background: url(images/logo_text.png) no-repeat 20px 6px;
+	background: url(images/logo_text.png) no-repeat 20px 0px;
 	/*line-height: 48px;
 	color: #fff;
 	font-family: 楷体, 微软雅黑, 宋体;

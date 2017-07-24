@@ -42,7 +42,7 @@
         	#{powerNo} ,
         	#{pid} ,
         	#{url} ,
-        	#{leaf} ,
+        	0 ,
         	#{icon} 
         )
     ]]>
@@ -55,10 +55,18 @@
 	        powerNo = #{powerNo} ,
 	        pid = #{pid} ,
 	        url = #{url} ,
-	        leaf = #{leaf} ,
-	        icon = #{icon} 
+	        icon = #{icon}
         WHERE 
 	        id = #{id} 
+    ]]>
+	</update>
+
+	<update id="PowerMapper.updateParentPower" >
+		<![CDATA[
+        UPDATE tab_power SET
+	        leaf = 1
+        WHERE
+	        id = #{pid}
     ]]>
 	</update>
 
@@ -142,18 +150,6 @@
 		WHERE id=#{pid}
 	</select>
 
-	<!--<select id="PowerMapper.parentList" resultMap="mRetMapPower">-->
-		<!--SELECT <include refid="PowerMapper.columns" />-->
-		<!--FROM tab_power-->
-		<!--WHERE leaf=0-->
-	<!--</select>-->
-
-	<!--<select id="PowerMapper.childrenList" resultMap="mRetMapPower">-->
-		<!--SELECT <include refid="PowerMapper.columns" />-->
-		<!--FROM tab_power-->
-		<!--WHERE pid=#{id} AND leaf=1-->
-	<!--</select>-->
-
 	<select id="PowerMapper.queryPowerNo" resultType="int">
 		select count(*)
 		FROM tab_power
@@ -161,6 +157,14 @@
 		<if test="@com.gesoft.util.Ognl@isNotEmpty(powerNo)">
 			powerNo=#{powerNo}
 		</if>
+	</select>
+
+	<!--权限-->
+	<select id="PowerMapper.queryRolePowerList" resultMap="mRetMapPower">
+		select a.*, '' as name1,''  as name2
+		from tab_power a
+		left join tab_rolepower b on a.id=b.pid
+		where b.roleId =#{roleId}
 	</select>
 </mapper>
 

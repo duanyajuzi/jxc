@@ -7,12 +7,11 @@
  **/
 package com.gesoft.dao;
 
-import org.springframework.stereotype.Repository;
+ import com.gesoft.common.EntityDAOImpl;
+ import com.gesoft.model.PowerModel;
+ import org.springframework.stereotype.Repository;
 
-import com.gesoft.common.EntityDAOImpl;
-import com.gesoft.model.PowerModel;
-
-import java.util.List;
+ import java.util.List;
 
 
  @Repository
@@ -33,14 +32,13 @@ public class PowerDAO extends EntityDAOImpl<PowerModel, Long>
         return getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".queryPowerNo",model);
     }
 
-//
-//    public List<PowerModel> queryList1(PowerModel model)
-//    {
-//        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".parentList", model);
-//    }
-//
-//    public List<PowerModel> queryList2(PowerModel model){
-//        return getSqlSession().selectList(getMybatisSqlMapNamespace()+".childrenList",model);
-//    }
+    public int updateParentPower(PowerModel model)
+    {
+        return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateParentPower", model);
+    }
+
+    public List<PowerModel> queryRolePowerList(int roleId) {
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryRolePowerList", roleId);
+    }
 
 }

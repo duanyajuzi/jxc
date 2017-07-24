@@ -74,7 +74,9 @@
 	<select id="RoleMapper.queryRolePower" resultMap="mRetMapRole">
 	  SELECT trp.roleId,trp.pid
       from tab_rolepower trp
+      inner join tab_power p on p.id=trp.pid
       where trp.roleId=#{id}
+      and p.leaf = 0
 	</select>
 
     <select id="RoleMapper.getById" resultMap="mRetMapRole">

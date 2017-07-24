@@ -49,7 +49,6 @@
     <div title="east" region="east"  width="200" showSplit="false" showSplitIcon="false"  showHeader="false" style="border:1px solid #ccc;" >
         <div id="powerTree" class="mini-tree"  showTreeIcon="true" expandOnLoad="true" parentField="pid" resultAsTree="false"
              url="${pageContext.request.contextPath}/power/queryList"  textField="name1" idField="id"
-             <%--url="<c:url value='/pages/sysinfo/js/tt.txt'/>"  textField="name" idField="id"--%>
               showCheckBox="true" checkRecursive="false" autoCheckParent="true" ></div>
     </div>
 </div>

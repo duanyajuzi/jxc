@@ -48,7 +48,16 @@
         )
     ]]>
 	</insert>
-    
+
+	<select id="UserMapper.getByName" resultMap="mRetMapUser">
+		SELECT <include refid="UserMapper.columns" />
+		<![CDATA[
+		    FROM tab_user
+	        WHERE
+		        userName = #{userName}
+	    ]]>
+	</select>
+
 	<update id="UserMapper.update" >
     <![CDATA[
         UPDATE tab_user SET

@@ -66,8 +66,9 @@ var PageRole = function(){
         funSave:function () {
             var me=this;
             var row=this.roleGrid.getSelected();
+
             if(row){
-                var value=me.tree.getValue(false);
+                var value=me.tree.getValue();
                 $.ajax({
                     url:me.basePath+"/role/saveRolePower",
                     type:"post",
