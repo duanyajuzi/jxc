@@ -48,9 +48,8 @@
                     <td class="form-label" style="text-align: right;width:16%;">所属商品：</td>
                     <td style="width:32%;">
                         <input name="goodId" id="goodId" class="mini-combobox" style="width:200px;"  required="true" allowInput="true"
-                               textField="msgVal"  valueField="msgKey"  emptyText="请选择"
+                               textField="msgVal"  valueField="msgKey" emptyText="请选择"
                                maxlength="50" requiredErrorText="所属商品不能为空"/>
-
                     </td>
                 </tr>
                 <tr>
@@ -74,6 +73,14 @@
                         <input name="unit" id="unit" class="mini-combobox" style="width:75px;"  required="true"
                                textField="msgVal"  valueField="msgKey"  emptyText="请选择"
                                maxlength="50" requiredErrorText="单位不能为空"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">库存量：</td>
+                    <td style="width:32%;">
+                        <input name="storage" id="storage" class="mini-textbox" style="width:200px;"  required="true"
+                               textField="msgVal"  valueField="msgKey"
+                               maxlength="50" requiredErrorText="库存量不能为空"/>
                     </td>
                 </tr>
             </table>

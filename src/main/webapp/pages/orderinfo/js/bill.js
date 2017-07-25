@@ -3,19 +3,28 @@ var PageBill = function(){
     return {
         defaultOption: {
             basePath:"",
-            billGrid : null
+            billGrid : null,
+            type:null
         },
         init :function ()
         {
             mini.parse();
             this.basePath = PageMain.basePath;
             this.billGrid = mini.get("billGrid");
-            this.funSearch();
+            this.billGrid.load();
+            this.type=PageBill.getUrlParam("billType");
+        },
+        getUrlParam:function(name){
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURIComponent(r[2]); return null;
         },
         funSearch : function()
         {
         	var billForm = new mini.Form("billForm");
-        	this.billGrid.load(billForm.getData());
+        	this.billGrid.load(billForm.getData(),function (res) {
+                
+            });
         },
         funReset : function()
         {
@@ -26,7 +35,7 @@ var PageBill = function(){
         },
         funAdd : function()
         {
-        	var paramData = {action: "add", row:{}, title:"新增数据"};
+        	var paramData = {action: "add",row:{billType:this.type}, title:"新增数据"};
             this.funOpenInfo(paramData);
         },
         funModify : function()
@@ -34,6 +43,7 @@ var PageBill = function(){
         	var row = this.billGrid.getSelected();
             if(row)
             {
+                row.billType=this.type;
             	var paramData = {action: "modify", row: row, title:"编辑数据"};
                 this.funOpenInfo(paramData);
             }
@@ -49,7 +59,7 @@ var PageBill = function(){
                 url: this.basePath + "/pages/orderinfo/bill_add.jsp",
                 title: paramData.title,
                 width: 400,
-                height: 30 *  12 + 65,
+                height: 300,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageBillAdd.funSetData(paramData);

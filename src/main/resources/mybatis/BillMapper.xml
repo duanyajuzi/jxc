@@ -37,7 +37,6 @@
         	prePayTime ,
         	businessId ,
         	billType ,
-        	payState ,
         	payTime ,
         	payConfirmUser ,
         	cuserId ,
@@ -50,7 +49,6 @@
         	#{prePayTime} ,
         	#{businessId} ,
         	#{billType} ,
-        	#{payState} ,
         	#{payTime} ,
         	#{payConfirmUser} ,
         	#{cuserId} ,
@@ -68,7 +66,6 @@
 	        prePayTime = #{prePayTime} ,
 	        businessId = #{businessId} ,
 	        billType = #{billType} ,
-	        payState = #{payState} ,
 	        payTime = #{payTime} ,
 	        payConfirmUser = #{payConfirmUser} ,
 	        cuserId = #{cuserId} ,
@@ -95,28 +92,29 @@
 	</select>
 	
 	<sql id="BillMapper.findPage.where">
-		<where>	      				
+		<where>
+			A.billType = #{billType}
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
 				AND id = #{id}
 			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(billNo)">
-				AND billNo = #{billNo}
+				AND billNo LIKE CONCAT(CONCAT('%', #{billNo}), '%')
 			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(customerId)">
 				AND customerId = #{customerId}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(billTimeBegin)">
-				AND billTime >= #{billTimeBegin}
-		   </if>
-		   <if test="@com.gesoft.util.Ognl@isNotEmpty(billTimeEnd)">
-				AND billTime &lt;= #{billTimeEnd}
-		   </if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(prePayTimeBegin)">
-				AND prePayTime >= #{prePayTimeBegin}
-		   </if>
-		   <if test="@com.gesoft.util.Ognl@isNotEmpty(prePayTimeEnd)">
-				AND prePayTime &lt;= #{prePayTimeEnd}
-		   </if>
+	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(billTimeBegin)">-->
+				<!--AND billTime >= #{billTimeBegin}-->
+		   <!--</if>-->
+		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(billTimeEnd)">-->
+				<!--AND billTime &lt;= #{billTimeEnd}-->
+		   <!--</if>-->
+	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(prePayTimeBegin)">-->
+				<!--AND prePayTime >= #{prePayTimeBegin}-->
+		   <!--</if>-->
+		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(prePayTimeEnd)">-->
+				<!--AND prePayTime &lt;= #{prePayTimeEnd}-->
+		   <!--</if>-->
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
 				AND businessId = #{businessId}
 			</if>
@@ -126,36 +124,55 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(payState)">
 				AND payState = #{payState}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(payTimeBegin)">
-				AND payTime >= #{payTimeBegin}
-		   </if>
-		   <if test="@com.gesoft.util.Ognl@isNotEmpty(payTimeEnd)">
-				AND payTime &lt;= #{payTimeEnd}
-		   </if>
+	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(payTimeBegin)">-->
+				<!--AND payTime >= #{payTimeBegin}-->
+		   <!--</if>-->
+		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(payTimeEnd)">-->
+				<!--AND payTime &lt;= #{payTimeEnd}-->
+		   <!--</if>-->
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(payConfirmUser)">
 				AND payConfirmUser = #{payConfirmUser}
 			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(cuserId)">
 				AND cuserId = #{cuserId}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeBegin)">
-				AND ctime >= #{ctimeBegin}
-		   </if>
-		   <if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeEnd)">
-				AND ctime &lt;= #{ctimeEnd}
-		   </if>
+	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeBegin)">-->
+				<!--AND ctime >= #{ctimeBegin}-->
+		   <!--</if>-->
+		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeEnd)">-->
+				<!--AND ctime &lt;= #{ctimeEnd}-->
+		   <!--</if>-->
 		</where>
 	</sql>
 		
     <select id="BillMapper.count" resultType="long">
-        SELECT count(*) FROM tab_bill 
+        SELECT count(*)
+		FROM tab_bill	A
+		left join tab_customer B on A.customerId=B.id
+		left join tab_business D on A.businessId=D.id
 		<include refid="BillMapper.findPage.where"/>    
     </select>
     
     <!-- 分页查询 -->
     <select id="BillMapper.list" resultMap="mRetMapBill">
-    	SELECT <include refid="BillMapper.columns" />
-	    FROM tab_bill 
+		SELECT
+		A.id ,
+		A.billNo ,
+		A.customerId ,
+		B.customerName,
+		date_format(billTime,'%Y-%m-%d %T') as billTime ,
+		date_format(prePayTime,'%Y-%m-%d %T') as prePayTime ,
+		A.businessId ,
+		D.business,
+		A.billType ,
+		A.payState ,
+		date_format(payTime,'%Y-%m-%d %T') as payTime ,
+		A.payConfirmUser ,
+		A.cuserId ,
+		date_format(ctime,'%Y-%m-%d %T')  as ctime
+		FROM tab_bill	A
+		left join tab_customer B on A.customerId=B.id
+		left join tab_business D on A.businessId=D.id
 		<include refid="BillMapper.findPage.where"/>
 		
 		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">

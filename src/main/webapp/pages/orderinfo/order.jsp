@@ -64,7 +64,7 @@
                         <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageOrder.funModify()">修改</a>
                         <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageOrder.funDelete()">删除</a>
                         <a  class="mini-button block-button hide" iconCls="icon-node" id="set" onclick="PageOrder.funSetOrder()">设置订单内容</a>
-                        <a class="mini-button block-button hide" iconCls="icon-filter" id="delivery" onclick="">出货</a>
+                        <a class="mini-button block-button hide" iconCls="icon-filter" id="delivery" onclick="PageOrder.funOpenInout()">出货</a>
                     </td>
                 </tr>
             </table>
@@ -200,36 +200,6 @@
     var type = <%=type%>;
     var orderGrid=mini.get("orderGrid");
     orderGrid.setUrl("${pageContext.request.contextPath}/order/query?orderType="+type);
-
-   <%--function  onShowRowDetail(e) {--%>
-        <%--var row=e.record;--%>
-        <%--var detailForm=document.getElementById("detailForm");--%>
-        <%--//将detailForm元素，加入行详细单元格内--%>
-        <%--var td = orderGrid.getRowDetailCellEl(row);--%>
-        <%--td.appendChild(detailForm);--%>
-       <%--detailForm.style.display = "";--%>
-        <%--//表单加载员工信息--%>
-        <%--var form = new mini.Form("detailForm");--%>
-        <%--if (orderGrid.isNewRow(row)) {--%>
-            <%--form.reset();--%>
-        <%--} else {--%>
-          <%--orderGrid.loading();--%>
-            <%--$.ajax({--%>
-                <%--url: "${pageContext.request.contextPath}/order/query",--%>
-                <%--data:{orderType:type,id:row.id},--%>
-                <%--type:"post",--%>
-                <%--dataType:"json",--%>
-                <%--success: function (text) {--%>
-                    <%--var o = mini.decode(text.data[0]);--%>
-                    <%--form.setData(o);--%>
-                    <%--orderGrid.unmask();--%>
-                <%--},--%>
-                <%--error:function () {--%>
-                <%--}--%>
-            <%--});--%>
-        <%--}--%>
-    <%--}--%>
-
     function funSetButton() {
         var button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
                 '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +

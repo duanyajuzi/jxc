@@ -50,7 +50,7 @@ var PageGoods = function(){
                 url: this.basePath + "/pages/orderinfo/goods_add.jsp",
                 title: paramData.title,
                 width: 400,
-                height: 30 *  12 + 65,
+                height: 280,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageGoodsAdd.funSetData(paramData);
@@ -59,30 +59,6 @@ var PageGoods = function(){
                 	me.goodsGrid.reload();
                 }
             })
-        },
-        funManageSchemes:function(){
-            var row = this.goodsGrid.getSelected();
-            if(row){
-                var data=JSON.stringify(row.id);
-                var paramData = {goodsId: data};
-            mini.open({
-                url:this.basePath+"/pages/orderinfo/blueprint.jsp",
-                title:row.goodsName+"的方案管理",
-                width:600,
-                height:400,
-                onload:function () {
-                    var iframe=this.getIFrameEl();
-                    iframe.contentWindow.PageBlueprint.funSearch(paramData);
-                    iframe.contentWindow.PageBlueprint.funGetData(paramData);
-                },
-                ondestroy:function () {
-                    
-                }
-            });
-            }else
-            {
-                PageMain.funShowMessageBox("请先选择商品");
-            }
         },
         funDelete : function()
         {

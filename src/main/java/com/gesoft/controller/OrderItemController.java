@@ -144,4 +144,27 @@ public class OrderItemController extends BaseController
         }
         return planList;
     }
+
+    //已出库商品数量
+    @RequestMapping(value = "updateOrderItem")
+    @ResponseBody
+    public void updateOrderItem(OrderItemModel model){
+        try{
+            orderItemService.updateInoutNum(model);
+        }
+        catch (Exception e) {
+            logger.error("OrderItemController updateOrderItem error：", e);
+        }
+    }
+
+    //添加出库入库表信息
+    @RequestMapping(value = "insertTabInoutStock")
+    @ResponseBody
+    public void insertInoutStock(OrderItemModel model){
+        try{
+            orderItemService.insertInoutStock(model);
+        }catch (Exception e){
+            logger.error("OrderItemController insertInoutStock error：", e);
+        }
+    }
 }

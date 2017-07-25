@@ -27,7 +27,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="GoodsMapper.columns">
 	    <![CDATA[
-		id,materialNum,goodsName,unitPrice,unit,spec,specUnit,customerId,storage,status,businessId,memo
+		id,goodsName,spec,specUnit,storage,status,businessId,memo
 	    ]]>
 	</sql>
 
@@ -36,27 +36,19 @@
     <![CDATA[
         INSERT INTO tab_goods (
         	id ,
-        	materialNum ,
         	goodsName ,
-        	unitPrice ,
-        	unit ,
         	spec ,
         	specUnit ,
-        	customerId ,
         	storage ,
-        	businessId ,
-        	memo 
+        	businessId,
+        	memo
         ) VALUES (
         	#{id} ,
-        	#{materialNum} ,
         	#{goodsName} ,
-        	#{unitPrice} ,
-        	#{unit} ,
         	#{spec} ,
         	#{specUnit} ,
-        	#{customerId} ,
         	#{storage} ,
-        	#{businessId} ,
+        	#{businessId},
         	#{memo} 
         )
     ]]>
@@ -65,15 +57,11 @@
 	<update id="GoodsMapper.update" >
     <![CDATA[
         UPDATE tab_goods SET
-	        materialNum = #{materialNum} ,
 	        goodsName = #{goodsName} ,
-	        unitPrice = #{unitPrice} ,
-	        unit = #{unit} ,
 	        spec = #{spec} ,
 	        specUnit = #{specUnit} ,
-	        customerId = #{customerId} ,
 	        storage = #{storage} ,
-	        businessId = #{businessId} ,
+	        businessId = #{businessId},
 	        memo = #{memo} 
         WHERE 
 	        id = #{id} 
@@ -102,17 +90,8 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
 				AND A.id = #{id}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
-				AND A.materialNum  LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
-			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(goodsName)">
 				AND A.goodsName LIKE CONCAT(CONCAT('%', #{goodsName}), '%')
-			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(unitPrice)">
-				AND A.unitPrice = #{unitPrice}
-			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(unit)">
-				AND A.unit = #{unit}
 			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(spec)">
 				AND A.spec = #{spec}
@@ -120,17 +99,11 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(specUnit)">
 				AND A.specUnit = #{specUnit}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(customerName)">
-				AND B.customerName LIKE CONCAT(CONCAT('%', #{customerName}), '%')
-			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(storage)">
 				AND A.storage = #{storage}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(status)">
-				AND A.status = #{status}
-			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(business)">
-				AND D.business LIKE CONCAT(CONCAT('%', #{business}), '%')
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+				AND A.businessId = #{businessId}
 			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
 				AND A.memo = #{memo}
@@ -140,10 +113,9 @@
 	</sql>
 		
     <select id="GoodsMapper.count" resultType="long">
-        SELECT count(*) FROM tab_goods A
-		left join tab_customer B on A.customerId=B.id
-		left join tab_business D on A.businessId=D.id
-		left join tab_dict G on A.unit=G.dictNo
+        SELECT count(*)
+		FROM tab_goods A
+		LEFT join tab_business B on A.businessId=B.id
 		left join tab_dict E on  A.specUnit=E.dictNo
 		left join tab_dm F on F.bm=E.dmbm
 		<include refid="GoodsMapper.findPage.where"/>
@@ -152,24 +124,16 @@
     <!-- 分页查询 -->
     <select id="GoodsMapper.list" resultMap="mRetMapGoods">
 		SELECT 	A.id,
-		A.materialNum,
 		A.goodsName,
-		A.unitPrice,
-		A.unit,
-		G.dictName name1,
 		A.spec,
 		A.specUnit,
 		E.dictName name2,
-		A.customerId,
-		B.customerName,
 		A.storage,
-		A.businessId,
-		D.business,
+		A. businessId,
+		B.business,
 		A.memo
 		FROM tab_goods A
-		left join tab_customer B on A.customerId=B.id
-		left join tab_business D on A.businessId=D.id
-		left join tab_dict G on  A.unit=G.dictNo
+		LEFT join tab_business B on A.businessId=B.id
 		left join tab_dict E on  A.specUnit=E.dictNo
 		left join tab_dm F on F.bm=E.dmbm
 		<include refid="GoodsMapper.findPage.where"/>

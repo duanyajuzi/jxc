@@ -53,7 +53,7 @@ var PageGoodCustomer = function(){
                 url: this.basePath + "/pages/orderinfo/goodCustomer_add.jsp",
                 title: paramData.title,
                 width: 400,
-                height: 30 * 5 + 75,
+                height: 30 * 5 + 85,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageGoodCustomerAdd.funSetData(paramData);
@@ -98,6 +98,30 @@ var PageGoodCustomer = function(){
             else
             {
                 mini.alert("请先选择要删除的记录");
+            }
+        },
+        funManageSchemes:function(){
+            var row = this.goodCustomerGrid.getSelected();
+            if(row){
+                var data=JSON.stringify(row.id);
+                var paramData = {goodsId: data};
+                mini.open({
+                    url:this.basePath+"/pages/orderinfo/blueprint.jsp",
+                    title:row.goodsName+"的方案管理",
+                    width:650,
+                    height:450,
+                    onload:function () {
+                        var iframe=this.getIFrameEl();
+                        iframe.contentWindow.PageBlueprint.funSearch(paramData);
+                        iframe.contentWindow.PageBlueprint.funGetData(paramData);
+                    },
+                    ondestroy:function () {
+
+                    }
+                });
+            }else
+            {
+                PageMain.funShowMessageBox("请先选择商品");
             }
         }
     }

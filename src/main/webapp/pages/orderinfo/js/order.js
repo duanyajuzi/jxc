@@ -144,17 +144,22 @@ var PageOrder = function(){
             });
         },
         funOpenInout:function () {
-            mini.open({
-                url:this.basePath+"pages/orderinfo/inoutStock.jsp",
-                width:400,
-                height:400,
-                onload:function () {
-                    
-                },
-                ondestroy:function () {
-                    
-                }
-            });
+            var row = this.orderGrid.getSelected();
+            if (row) {
+                var data={orderId:row.id};
+                mini.open({
+                    url: this.basePath + "/pages/orderinfo/inoutStock.jsp",
+                    width: 800,
+                    height: 500,
+                    onload: function () {
+                        var iframe = this.getIFrameEl();
+                        iframe.contentWindow.PageInoutStock.funSearch(data);
+                    },
+                    ondestroy: function () {
+
+                    }
+                });
+            }
         }
     }
     

@@ -35,7 +35,7 @@
             <div id="blueprintGrid" class="mini-datagrid"
                   idField="id" allowResize="false"
                  url="${pageContext.request.contextPath}/blueprint/query"
-                 pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
+                 pagesize="10" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
                     <div field="pname" width="120" headerAlign="center" allowSort="true">方案名称</div>

@@ -151,12 +151,13 @@
 	</select>
 
 	<select id="PowerMapper.queryPowerNo" resultType="int">
+		<![CDATA[
 		select count(*)
 		FROM tab_power
 		WHERE
-		<if test="@com.gesoft.util.Ognl@isNotEmpty(powerNo)">
-			powerNo=#{powerNo}
-		</if>
+			powerNo = #{powerNo}
+		AND id <> #{id}
+	    ]]>
 	</select>
 
 	<!--权限-->

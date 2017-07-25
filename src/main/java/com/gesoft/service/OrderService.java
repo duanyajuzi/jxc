@@ -9,6 +9,7 @@ package com.gesoft.service;
 
 import javax.annotation.Resource;
 
+import com.gesoft.dao.OrderItemDAO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,4 +31,5 @@ public class OrderService extends EntityService<OrderModel, Long>
 	{
 		return this.orderDAO;
 	}
+
 }

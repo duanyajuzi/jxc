@@ -39,6 +39,7 @@
                         <a  class="mini-button block-button" iconCls="icon-add" onclick="PageGoodCustomer.funAdd()">新增</a>
                         <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageGoodCustomer.funModify()">修改</a>
                         <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageGoodCustomer.funDelete()">删除</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-collapse" id="expand" onclick="PageGoodCustomer.funManageSchemes()">方案管理</a>
                     </td>
                 </tr>
             </table>
@@ -55,7 +56,7 @@
 					 <div field="materialNum" width="120" headerAlign="center" allowSort="true">物料号</div>
 					 <div field="unitPrice" width="120" headerAlign="center" allowSort="true">单价</div>
 					 <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
-					 <%--<div field="storage" width="120" headerAlign="center" allowSort="true">库存量（只显示，界面上不做修改，同时）</div>--%>
+					 <div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>
                     <%--<div field="show_plan" width="10%" headerAlign="center" allowSort="false"
                          align="left">操作
                     </div>--%>

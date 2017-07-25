@@ -37,30 +37,19 @@
                 	<input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">物料号：</td>
-                    <td style="width:32%;">
-                        <input name="materialNum" id="materialNum" class="mini-textbox" style="width:200px;"
-                               required="true" maxlength="30" requiredErrorText="物料号不能为空"
-                               onvalidation="onCheckmaterialNum"
-                        />
-                    </td>
-                </tr>
-                <tr>
                     <td class="form-label" style="text-align: right;width:16%;">商品名称：</td>
                     <td style="width:32%;">
                         <input name="goodsName" id="goodsName" class="mini-textbox" style="width:200px;"  required="true" maxlength="100" requiredErrorText="商品名称不能为空"/>
                     </td>
                 </tr>
-                <tr >
-                    <td class="form-label" style="text-align: right;width:16%;">单价：</td>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
                     <td style="width:32%;">
-                        <input name="unitPrice" id="unitPrice" class="mini-textbox" style="width:120px;" vtype="float;maxlength:12"  required="true"  requiredErrorText="单价不能为空"/>
-                        <input name="unit" id="unit" class="mini-combobox" style="width:75px;"  required="true"
-                               textField="msgVal"  valueField="msgKey"  emptyText="请选择"
-                               maxlength="50" requiredErrorText="单位不能为空"/>
+                        <input name="businessId" id="businessId" class="mini-combobox" style="width:200px;"
+                               idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
+                               required="true" maxlength="15" requiredErrorText="商品名称不能为空"/>
                     </td>
                 </tr>
-
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">规格：</td>
                     <td style="width:32%;">
@@ -69,28 +58,14 @@
                                textField="msgVal"  valueField="msgKey"  emptyText="请选择" maxlength="30" />
                     </td>
                 </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">所属客户：</td>
-                    <td style="width:32%;">
-                        <input name="customerId" id="customerId" class="mini-combobox" allowInput="true"
-                               idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                               style="width:200px;"  required="true" maxlength="10" requiredErrorText="所属客户不能为空"/>
-                    </td>
-                </tr>
+
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">库存量：</td>
                     <td style="width:32%;">
                         <input name="storage" id="storage" class="mini-textbox" style="width:200px;"  required="true" vtype="float;maxlength:12" requiredErrorText="库存量（只显示，界面上不做修改，同时）不能为空"/>
                     </td>
                 </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
-                    <td style="width:32%;">
-                        <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
-                               idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                               style="width:200px;"  required="true" maxlength="10" requiredErrorText="业务类型不能为空"/>
-                    </td>
-                </tr>
+
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">备注：</td>
                     <td style="width:32%;">

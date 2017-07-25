@@ -24,6 +24,13 @@ public class OrderItemModel extends BaseModel{
     private String unit;
     private String pname;
     private Float storage;
+//tab_inout_stock
+    private Long orderItemId;
+    private String stime;
+    private Float goodNum;
+    private Integer isBIll;
+    private Integer orderType;
+
 
     public Long getId() {
         return id;
@@ -184,6 +191,51 @@ public class OrderItemModel extends BaseModel{
 
     public OrderItemModel setStorage(Float storage) {
         this.storage = storage;
+        return this;
+    }
+
+    public Long getOrderItemId() {
+        return orderItemId;
+    }
+
+    public OrderItemModel setOrderItemId(Long orderItemId) {
+        this.orderItemId = orderItemId;
+        return this;
+    }
+
+    public String getStime() {
+        return stime;
+    }
+
+    public OrderItemModel setStime(String stime) {
+        this.stime = stime;
+        return this;
+    }
+
+    public Float getGoodNum() {
+        return goodNum;
+    }
+
+    public OrderItemModel setGoodNum(Float goodNum) {
+        this.goodNum = goodNum;
+        return this;
+    }
+
+    public Integer getIsBIll() {
+        return isBIll;
+    }
+
+    public OrderItemModel setIsBIll(Integer isBIll) {
+        this.isBIll = isBIll;
+        return this;
+    }
+
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public OrderItemModel setOrderType(Integer orderType) {
+        this.orderType = orderType;
         return this;
     }
 }

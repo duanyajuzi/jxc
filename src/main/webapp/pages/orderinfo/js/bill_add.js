@@ -4,7 +4,8 @@ var PageBillAdd = function(){
         defaultOption: {
             basePath:"",
             action : "",
-            billForm : null
+            billForm : null,
+            pbillType:null
             
         },
         init :function ()
@@ -16,6 +17,7 @@ var PageBillAdd = function(){
         funSetData : function(data)
         {
         	var row = data.row;
+            this.pbillType=row.billType;
         	this.action = data.action;
         	this.billForm.setData(row);
         },
@@ -34,6 +36,7 @@ var PageBillAdd = function(){
             
             var me = this;
             var obj = this.billForm.getData(true);
+            obj.billType=this.pbillType;
             $.ajax({
                url : me.basePath + "/bill/" + me.action + "?a="+Math.random(),
                type : 'POST',

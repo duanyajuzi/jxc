@@ -185,8 +185,8 @@ var PageOrderItem = function(){
             var storage=mini.get("storage");
             var materialNumValue=materialNum.getValue();
             var esgouNumValue=esgouNum.getValue();
-            var storageValue=storage.getValue();
-            if(esgouNumValue>storageValue){
+            var storageValue=storage.getValue()
+            if(parseFloat(esgouNumValue)>parseFloat(storageValue)){
                 mini.alert("货存量不足，请修改");
                 this.orderItemSave.disable();
             }else{

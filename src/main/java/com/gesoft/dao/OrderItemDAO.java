@@ -22,4 +22,13 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
     public List<OrderItemModel> queryGoodPLan(OrderItemModel model){
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".goodsPlan", model);
     }
+
+    //修改详细订单的已出库数量
+    public int updateInoutNum(OrderItemModel model){
+        return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateInoutNum", model);
+    }
+
+    public int insertInoutStock(OrderItemModel model){
+        return getSqlSession().insert(getMybatisSqlMapNamespace() + ".updateInoutNum", model);
+    }
 }

@@ -32,4 +32,12 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
     public List<OrderItemModel> queryGoodPrint(OrderItemModel model){
      return orderItemDAO.queryGoodPLan(model);
     }
+
+    public int updateInoutNum(OrderItemModel model){
+        return orderItemDAO.updateInoutNum(model);
+    }
+
+    public int insertInoutStock(OrderItemModel model){
+        return orderItemDAO.insertInoutStock(model);
+    }
 }

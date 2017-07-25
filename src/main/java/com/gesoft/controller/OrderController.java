@@ -117,26 +117,8 @@ public class OrderController extends BaseController
 		MsgModel msgModel = new MsgModel();
 //		model.setCuserid(getSessionUserId(request));//类型不匹配
 		model.setCuserid(123);
-
-//		List<String> is = new ArrayList<String>();
-//		for(int i = 0; i < sessionId.length(); i++) {
-//			final char c = sessionId.charAt(i);
-//			if(Character.isDigit(c)) {
-//				is.add(String.valueOf(c));
-//			}
-//		}
-//		for(String i : is) {
-//			System.out.println(i);
-//		}
-
-//		 int i=Integer.parseInt(number);
-//		 int j=Integer.valueOf(number).intValue();
 		try
 		{
-//			model.setId(20L);
-//			model.setOrderNo(UUID.randomUUID().toString());
-//			model.setOrderNo(getStringOrderNo());
-//			setSessionUserId(model, request);
 			if (orderService.save(model) > 0)
 			{
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);

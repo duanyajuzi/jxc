@@ -5,7 +5,6 @@ var PageGoodCustomerAdd = function(){
             basePath:"",
             action : "",
             goodCustomerForm : null
-            
         },
         init :function ()
         {
@@ -23,11 +22,16 @@ var PageGoodCustomerAdd = function(){
         {
         	var row = data.row;
         	this.action = data.action;
+            var storage=mini.get("storage");
+            if(this.action == "add"){
+                this.goodCustomerForm.setData(row);
+            }
             if(this.action == "modify")
             {
                 PageMain.funLoadGoodsByBussinessId("goodId", false, "", row.businessId);
+                this.goodCustomerForm.setData(row);
+                storage.disable();
             }
-        	this.goodCustomerForm.setData(row);
         },
         funSave : function()
         {

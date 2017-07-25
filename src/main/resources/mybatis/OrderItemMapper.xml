@@ -20,6 +20,12 @@
         <result property="price" column="price"/>
         <result property="unit" column="unit"/>
         <result property="pname" column="pname"/>
+       <!-- tab_inout_stock-->
+        <result property="orderItemId" column="orderItemId"/>
+        <result property="stime" column="stime"/>
+        <result property="goodNum" column="goodNum"/>
+        <result property="isBIll" column="isBIll"/>
+        <result property="orderType" column="orderType"/>
     </resultMap>
 
     <!-- 用于select查询公用抽取的列 -->
@@ -52,12 +58,42 @@
     ]]>
     </insert>
 
+    <!--添加出库信息-->
+    <insert id="OrderItemMapper.insertInoutStock" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+        INSERT INTO tab_inout_stock(
+        id,
+		orderItemId,
+		stime,
+		isBIll,
+		goodNum,
+		orderType
+        ) VALUES (
+        	#{id} ,
+        	#{orderItemId} ,
+        	#{stime},
+        	#{isBill} ,
+        	#{goodNum} ,
+        	#{orderType}
+        )
+    ]]>
+    </insert>
+
     <update id="OrderItemMapper.update" >
         <![CDATA[
         UPDATE tab_orderitem SET
 	        customerGoodId = #{customerGoodId} ,
 	        esgouNum = #{esgouNum} ,
 	        unitPrice = #{unitPrice}
+        WHERE
+	        id = #{id}
+    ]]>
+    </update>
+
+    <update id="OrderItemMapper.updateInoutNum">
+        <![CDATA[
+        UPDATE tab_orderitem SET
+	        tmpNum = tmpNum + #{tmpNum}
         WHERE
 	        id = #{id}
     ]]>

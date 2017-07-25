@@ -62,6 +62,7 @@
 			FROM TAB_GOODS A
 		]]>
 		<where>
+			A.status = 0
 			<if test="page != null and page >= 0">
 				AND A.businessId= #{page}
 			</if>

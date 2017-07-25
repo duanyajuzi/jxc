@@ -25,8 +25,11 @@ import com.gesoft.model.BillModel;
 import com.gesoft.model.MsgModel;
 import com.gesoft.service.BillService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-@Controller
+
+ @Controller
 @RequestMapping("/bill")
 public class BillController extends BaseController
 {	
@@ -73,7 +76,10 @@ public class BillController extends BaseController
 		MsgModel msgModel = new MsgModel();
 		try
 		{
-			setSessionUserId(model, request);
+//			setSessionUserId(model, request);
+			model.setPayConfirmUser(getSessionUserId(request));
+			model.setCuserId(getSessionUserId(request));
+			model.setCtime((new SimpleDateFormat("yyyyMMddhhmmss")).format(new Date()));
 			if (billService.save(model) > 0)
 			{
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
@@ -100,7 +106,8 @@ public class BillController extends BaseController
 		MsgModel msgModel = new MsgModel();
 		try
 		{
-			setSessionUserId(model, request);
+//			setSessionUserId(model, request);
+			model.setCuserId(getSessionUserId(request));
 			if (billService.update(model) > 0)
 			{
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);

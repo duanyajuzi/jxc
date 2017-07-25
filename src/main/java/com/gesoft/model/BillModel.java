@@ -24,15 +24,17 @@ public class BillModel extends BaseModel
 	private java.lang.Long id;
 	private java.lang.String billNo;
 	private java.lang.Long customerId;
-	private java.util.Date billTime;
-	private java.util.Date prePayTime;
+	private String customerName;
+	private String billTime;
+	private String prePayTime;
 	private java.lang.Long businessId;
+	private String business;
 	private Integer billType;
 	private Integer payState;
-	private java.util.Date payTime;
+	private String payTime;
 	private java.lang.Long payConfirmUser;
 	private java.lang.Long cuserId;
-	private java.util.Date ctime;
+	private String ctime;
 
 	public void setId(java.lang.Long value) 
 	{
@@ -61,48 +63,44 @@ public class BillModel extends BaseModel
 	{
 		return this.customerId;
 	}
-	public String getBillTimeString() 
-	{
-		return DateConvertUtils.format(getBillTime(), FORMAT_BILL_TIME);
+//	public String getBillTimeString()
+//	{
+//		return DateConvertUtils.format(getBillTime(), FORMAT_BILL_TIME);
+//	}
+//	public void setBillTimeString(String value)
+//	{
+//		setBillTime(DateConvertUtils.parse(value, FORMAT_BILL_TIME,java.util.Date.class));
+//	}
+
+	public String getBillTime() {
+		return billTime;
 	}
-	public void setBillTimeString(String value) 
-	{
-		setBillTime(DateConvertUtils.parse(value, FORMAT_BILL_TIME,java.util.Date.class));
+
+	public BillModel setBillTime(String billTime) {
+		this.billTime = billTime;
+		return this;
 	}
-	
-	public void setBillTime(java.util.Date value) 
-	{
-		this.billTime = value;
+
+//	public String getPrePayTimeString()
+//	{
+//		return DateConvertUtils.format(getPrePayTime(), FORMAT_PRE_PAY_TIME);
+//	}
+//	public void setPrePayTimeString(String value)
+//	{
+//		setPrePayTime(DateConvertUtils.parse(value, FORMAT_PRE_PAY_TIME, java.util.Date.class));
+//	}
+
+
+	public String getPrePayTime() {
+		return prePayTime;
 	}
-	
-	public java.util.Date getBillTime() 
-	{
-		return this.billTime;
+
+	public BillModel setPrePayTime(String prePayTime) {
+		this.prePayTime = prePayTime;
+		return this;
 	}
-	public String getPrePayTimeString() 
-	{
-		return DateConvertUtils.format(getPrePayTime(), FORMAT_PRE_PAY_TIME);
-	}
-	public void setPrePayTimeString(String value) 
-	{
-		setPrePayTime(DateConvertUtils.parse(value, FORMAT_PRE_PAY_TIME, java.util.Date.class));
-	}
-	
-	public void setPrePayTime(java.util.Date value) 
-	{
-		this.prePayTime = value;
-	}
-	
-	public java.util.Date getPrePayTime() 
-	{
-		return this.prePayTime;
-	}
-	public void setBusinessId(java.lang.Long value) 
-	{
-		this.businessId = value;
-	}
-	
-	public java.lang.Long getBusinessId() 
+
+	public java.lang.Long getBusinessId()
 	{
 		return this.businessId;
 	}
@@ -124,25 +122,26 @@ public class BillModel extends BaseModel
 	{
 		return this.payState;
 	}
-	public String getPayTimeString() 
-	{
-		return DateConvertUtils.format(getPayTime(), FORMAT_PAY_TIME);
+//	public String getPayTimeString()
+//	{
+//		return DateConvertUtils.format(getPayTime(), FORMAT_PAY_TIME);
+//	}
+//	public void setPayTimeString(String value)
+//	{
+//		setPayTime(DateConvertUtils.parse(value, FORMAT_PAY_TIME,java.util.Date.class));
+//	}
+
+
+	public String getPayTime() {
+		return payTime;
 	}
-	public void setPayTimeString(String value) 
-	{
-		setPayTime(DateConvertUtils.parse(value, FORMAT_PAY_TIME,java.util.Date.class));
+
+	public BillModel setPayTime(String payTime) {
+		this.payTime = payTime;
+		return this;
 	}
-	
-	public void setPayTime(java.util.Date value) 
-	{
-		this.payTime = value;
-	}
-	
-	public java.util.Date getPayTime() 
-	{
-		return this.payTime;
-	}
-	public void setPayConfirmUser(java.lang.Long value) 
+
+	public void setPayConfirmUser(java.lang.Long value)
 	{
 		this.payConfirmUser = value;
 	}
@@ -160,24 +159,44 @@ public class BillModel extends BaseModel
 	{
 		return this.cuserId;
 	}
-	public String getCtimeString() 
-	{
-		return DateConvertUtils.format(getCtime(), FORMAT_CTIME);
-	}
-	public void setCtimeString(String value) 
-	{
-		setCtime(DateConvertUtils.parse(value, FORMAT_CTIME,java.util.Date.class));
-	}
-	
-	public void setCtime(java.util.Date value) 
-	{
-		this.ctime = value;
-	}
-	
-	public java.util.Date getCtime() 
-	{
-		return this.ctime;
+//	public String getCtimeString()
+//	{
+//		return DateConvertUtils.format(getCtime(), FORMAT_CTIME);
+//	}
+//	public void setCtimeString(String value)
+//	{
+//		setCtime(DateConvertUtils.parse(value, FORMAT_CTIME,java.util.Date.class));
+//	}
+	public String getCtime() {
+		return ctime;
 	}
 
+	public BillModel setCtime(String ctime) {
+		this.ctime = ctime;
+		return this;
+	}
+
+	public BillModel setBusinessId(Long businessId) {
+		this.businessId = businessId;
+		return this;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public BillModel setCustomerName(String customerName) {
+		this.customerName = customerName;
+		return this;
+	}
+
+	public String getBusiness() {
+		return business;
+	}
+
+	public BillModel setBusiness(String business) {
+		this.business = business;
+		return this;
+	}
 }
 

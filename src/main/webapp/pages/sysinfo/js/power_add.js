@@ -23,10 +23,6 @@ var PagePowerAdd = function(){
                 row.name2 = "所有权限";
             }
             if(this.action=="add"){
-                // $("#pid").val(row.powerName);
-                // $("#pid").attr("value",row.powerName);
-                // var values =$("#pid").val();
-                // $("#pid").attr("disabled",false);
                 $("#pid").attr("attr-pid",row.pid);
                  this.pidValue =$("#pid").attr("attr-pid");
                 pid.setValue(row.powerName);
@@ -57,7 +53,7 @@ var PagePowerAdd = function(){
             $.ajax({
                 url:me.basePath+"/power/queryPowerNoNum",
                 type:'post',
-                data:{"powerNo":obj.powerNo},
+                data:{"powerNo":obj.powerNo,"id":obj.id},
                 dataType: 'json',
                 success:function (result) {
                     if(result==0){
