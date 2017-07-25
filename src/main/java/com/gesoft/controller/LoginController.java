@@ -82,7 +82,7 @@ public class LoginController extends BaseController
 					model.addAttribute("loginUser", mLoginModel);
 
 					session = request.getSession(true);
-					session.setAttribute("OnLineUser", loginService);
+					session.setAttribute("OnLineUser", mLoginModel);
 					session.setAttribute(SESSION_KEY_ISLOGIN, GLOBAL_YES);
 					session.setAttribute(SESSION_KEY_LOGINNAME, mLoginModel.getUserName());
 					session.setAttribute(SESSION_KEY_UID, mLoginModel.getUserId());

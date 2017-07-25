@@ -36,7 +36,7 @@
         <div class="mini-fit">
             <div id="powerGrid" class="mini-treegrid"
                   idField="id" allowResize="false" treeColumn="taskname" showTreeIcon="true" expandOnLoad="true"
-                 parentField="pid" resultAsTree="false" expandOnNodeClick="true"  url="${pageContext.request.contextPath}/power/queryList"
+                 parentField="pid" resultAsTree="false" expandOnNodeClick="false"  url="${pageContext.request.contextPath}/power/queryList"
                   <%--nodesField="children"--%>
                  sortMode="client" style="height: 100%;">
                 <div property="columns">

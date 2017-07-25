@@ -5,100 +5,11 @@
     <title>鼐威欣贸易信息管理系统</title>
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
     <link href="<c:url value='/jslib/theme/sea/mainframe.css'/>" rel="stylesheet" type="text/css"/>
-
+    <link href="<c:url value='/jslib/scroll/jquery.mCustomScrollbar.css'/>" rel="stylesheet" type="text/css"/>
+    <script src="<c:url value='/jslib/scroll/jquery.mCustomScrollbar.js'/>"></script>
     <style>
-        /*新增右下角弹窗样式*/
-        .window {
-            /*position: fixed;
-            bottom: 10px;
-            right: 10px;*/
-            width: 100%;
-            background-color: #fbfdff;
-            /*box-shadow: 0 0 8px 2px #c7c7c7;*/
-            font-family: "微软雅黑";
-            font-size: 14px;
-        }
-
-        .window-title {
-            height: 35px;
-            line-height: 35px;
-            margin: 0;
-            background-color: #509be1;
-        }
-
-        .window-title-icon {
-            display: inline-block;
-            height: 18px;
-            width: 18px;
-            margin-bottom: -3px;
-            margin-left: 13px;
-            margin-right: 5px;
-        }
-
-        .window-title-text {
-            color: #fff;
-            font-size: 16px;
-            padding-right: 10px;
-        }
-
-        .window-icon {
-            float: right;
-            width: 35px;
-            height: 35px;
-        }
-
-        .window-icon:hover {
-            background-color: #d44027;
-        }
-
-        .window-content {
-            padding: 10px;
-            line-height: 23px;
-        }
-
-        .td-label {
-            width: 70px;
-            text-align: right;
-            font-weight: 700;
-            color: #fa4a03;
-            vertical-align: top;
-        }
-
-        .color-green {
-            color: #24ca07;
-        }
-
-        .window-foot {
-            overflow: hidden;
-            text-align: right;
-            background: url(/aj-zhyy/app/index1/img/split-line.png) left top no-repeat;
-            padding: 10px;
-        }
-
-        a.window-foot-link {
-            float: right;
-            color: #fff;
-            text-decoration: none;
-            background-color: #509be1;
-            padding: 5px 15px;
-            margin-right: 15px;
-            border-radius: 8px;
-        }
-
-        .window-foot-link:hover {
-            color: #000;
-        }
-
-        .mini-tabs-bodys{
-            border:0px;
-        }
         *{
             padding:0;
-            /*margin:0;
-            font-family: "Microsoft YaHei";
-            font-size:16px;
-            list-style: none;
-            color: #bbbbbb;*/
         }
         ol{
             cursor: pointer;
@@ -122,14 +33,6 @@
             line-height: 30px;
             transition: color 0.6s;
         }
-        /*span {
-            width: 163px;
-            padding-left:4px;
-            line-height: 30px;
-            padding-bottom:4px;
-            transition: color 0.3s;
-            color: #fafafa;
-        }*/
         img{
             margin-left:10px;
             margin-bottom:-2px;
@@ -158,29 +61,16 @@
         <td id="top_right" style="height:100%;width:130px;">
             <div id="user">
                 <div class="user-logo"></div>
-
                 <b id="jt"></b>
-
                 <div class="user-info">
-
                     <input type="hidden" value="" id="lesuserid">
-
-                    <p id="username"><%=name%></p>
-
-                    <p id="realname">(沈云)</p>
-
-
+                    <p id="username">${OnLineUser.userName}</p>
+                    <p id="realname">(${OnLineUser.realName})</p>
                 </div>
                 <div class="userid">
                     <ul id="userManage">
-
-
-                        <li class="config" id="set_user">
-                            设置
-                        </li>
-                        <li id="exit">
-                            退出
-                        </li>
+                        <li class="config" id="set_user">设置 </li>
+                        <li id="exit">退出</li>
                     </ul>
                 </div>
             </div>
@@ -197,7 +87,7 @@
 </div>
 <div id="menudiv"
      style="position:absolute;top:0;left:0;z-index:1;width:1px;height:1px;overflow:hidden;overflow-y:auto;border-right:1px solid #ccc;">
-    <div class="mCSB_container menu_container">
+    <div class="menu_container">
         <ol>
             <c:forEach items="${powerList}" var="power">
                 <c:if test="${power.leaf == 1}">
@@ -205,6 +95,7 @@
                     <div style="padding: 6px 0;">
                         <img src="<c:url value='/jslib/theme/sea/images/sy.png'/>" >
                         <span id="span1">${power.powerName}</span>
+                        <img class="ge_img" src="<c:url value='/jslib/theme/sea/images/next_0.png'/>" style="float: right;padding:6px;">
                     </div>
                     <ul class="nav1">
                     <c:forEach items="${powerList}" var="leafPower">
@@ -218,22 +109,6 @@
             </c:forEach>
         </ol>
     </div>
-
-    <%--<div class="mCSB_container menu_container">--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/dict.jsp"/>')" style="color: white; cursor: pointer;">字典</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/dm.jsp"/>')" style="color: white; cursor: pointer;">编码</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/power.jsp"/>')" style="color: white; cursor: pointer;">权限</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/user.jsp"/>')" style="color: white; cursor: pointer;">用户</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/sysinfo/role.jsp"/>')" style="color: white; cursor: pointer;">角色</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/business.jsp"/>')" style="color: white; cursor: pointer;">业务类型</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/baseinfo/customer.jsp"/>')" style="color: white; cursor: pointer;">客户</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/goods.jsp"/>')" style="color: white; cursor: pointer;">商品</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/blueprint.jsp"/>')" style="color: white; cursor: pointer;">商品销售单价方案</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order.jsp?orderType=0"/>')" style="color: white; cursor: pointer;">采购订单</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order.jsp?orderType=1"/>')" style="color: white; cursor: pointer;">出货订单</div>--%>
-        <%--<div onclick="PageMain.funAddTab(this, '<c:url value="/pages/orderinfo/order_add.jsp"/>')" style="color: white; cursor: pointer;">订单详情</div>--%>
-    <%--</div>--%>
-
 </div>
 
 <div id="pagediv" style="position:absolute;z-index:2;width:100%;height:100%;overflow:hidden;">
@@ -243,8 +118,8 @@
 </body>
 
 <script>
-    var username1=<%=name%>;
     var PageMain = {
+        menuFlag:true,
         init : function()
         {
             this.menu_state = 1;
@@ -258,10 +133,12 @@
                 {
                     $(this).attr("tag", false);
                     $(this).parent().find("ul").hide();
+                    $(this).find(".ge_img").attr("src", "<c:url value='/jslib/theme/sea/images/next_0.png'/>");
                 }
                 else
                 {
                     $(this).attr("tag", true);
+                    $(this).find(".ge_img").attr("src", "<c:url value='/jslib/theme/sea/images/next_1.png'/>");
                     $(this).parent().find("ul").show();
                 }
             });
@@ -286,6 +163,34 @@
                 //$(window).resize();
                 me.funResize();
             });
+
+
+            $("#userManage,.user-logo").bind("mouseover", function(){
+                PageMain.menuFlag = false;
+            });
+            $("#userManage,.user-logo").bind("mouseout", function(){
+                PageMain.menuFlag = true;
+                PageMain.funMenuInfo();
+            });
+            $(".user-logo").bind("click", function(){
+              $("#userManage").show();
+              $("#jt").css("display", "inline");
+                PageMain.funMenuInfo();
+            });
+            $("#exit").bind("click", function(){
+               window.location.href = "<c:url value='/user/logout'/>";
+            });
+           $(".menu_container").mCustomScrollbar();
+        },
+        funMenuInfo : function()
+        {
+            window.setTimeout(function(){
+                if(PageMain.menuFlag)
+                {
+                    $("#userManage").hide();
+                    $("#jt").css("display", "none");
+                }
+            },1000);
         },
         funResize : function()
         {

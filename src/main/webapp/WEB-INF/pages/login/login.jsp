@@ -20,7 +20,7 @@
             <div>
                 <form>
                     <input type="text" id="userName" value="${userName}"  name="userName">
-                    <input type="password" id="userPwd" value="" name="userPwd">
+                    <input type="password" id="userPwd" value="" name="userPwd" onkeyup="searchSuggest(event);" >
                 </form>
             </div>
             <div>
@@ -54,6 +54,13 @@
             return true;
         }
 
+        function searchSuggest(evn)
+        {
+            if (evn.keyCode == "13")
+            {
+                funLogin();
+            }
+        }
 
         $(function(){
             <c:if test="${not empty errorinfo}">

@@ -1,11 +1,10 @@
 <%@ include file="/WEB-INF/pages/common/taglibs-include.jsp" %>
 
 <script src="<c:url value='/jslib/miniui/boot.js'/>"></script>
-<script src="<c:url value='/jslib/lesui2/les.ui2.global.js'/>"></script>
+<%--<script src="<c:url value='/jslib/lesui2/les.ui2.global.js'/>"></script>--%>
 <script src="<c:url value='/jslib/echarts.min.js'/>"></script>
 <script src="<c:url value='/jslib/jquery.gesoft-1.0.js'/>"></script>
 
-<link href="<c:url value='/jslib/css/common.css'/>" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/dwr/interface/loadDwr.js'/>"></script>
