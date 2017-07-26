@@ -8,6 +8,7 @@
 <script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/dwr/interface/loadDwr.js'/>"></script>
+<link href="<c:url value='/jslib/css/common.css'/>" rel="stylesheet" type="text/css"/>
 
 <script type="text/javascript">
 <!--
