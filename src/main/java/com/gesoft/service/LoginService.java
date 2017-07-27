@@ -10,6 +10,7 @@ package com.gesoft.service;
 import com.gesoft.dao.UserDAO;
 import com.gesoft.model.UserModel;
 import com.gesoft.util.Constants;
+import com.gesoft.util.DataTypeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +42,7 @@ public class LoginService implements Constants
 		UserModel mUserModel = userDAO.getByName(model);
 		if (mUserModel != null)
 		{
+			//if(mUserModel.getUserPwd().equals(DataTypeUtil.MD5(model.getUserPwd())))
 			if (mUserModel.getUserPwd() == null || (!mUserModel.getUserPwd().equals(model.getUserPwd())))
 			{
 
