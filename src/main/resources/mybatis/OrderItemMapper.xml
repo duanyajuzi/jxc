@@ -13,19 +13,33 @@
         <result property="esgouNum" column="esgouNum"/>
         <result property="goodsUnit" column="goodsUnit"/>
         <result property="unitPrice" column="unitPrice"/>
+        <result property="tmpNum" column="tmpNum"/>
+        <result property="afterNum" column="afterNum"/>
+        <result property="itemState" column="itemState"/>
         <result property="totalMoney" column="totalMoney"/>
 
-        <result property="goodsId" column="goodsId"/>
-        <result property="goodsNum" column="goodsNum"/>
-        <result property="price" column="price"/>
-        <result property="unit" column="unit"/>
-        <result property="pname" column="pname"/>
+        <result property="goodsId"/>
+        <result property="goodsNum"/>
+        <result property="price"/>
+        <result property="unit"/>
+        <result property="pname"/>
        <!-- tab_inout_stock-->
-        <result property="orderItemId" column="orderItemId"/>
-        <result property="stime" column="stime"/>
-        <result property="goodNum" column="goodNum"/>
-        <result property="isBIll" column="isBIll"/>
-        <result property="orderType" column="orderType"/>
+        <result property="stime"/>
+        <result property="businessId"/>
+        <result property="business"/>
+        <result property="isBIll"/>
+        <result property="orderType"/>
+        <!--tab_inout_stock_item-->
+        <result property="inout_stock_id"/>
+        <result property="orderItemId"/>
+        <result property="goodNum"/>
+        <result property="goodId"/>
+        <result property="customerGoodId"/>
+        <result property="goodsName"/>
+        <result property="text"/>
+
+        <result property="stimeBegin"/>
+        <result property="stimeEnd"/>
     </resultMap>
 
     <!-- 用于select查询公用抽取的列 -->
@@ -63,18 +77,37 @@
         <![CDATA[
         INSERT INTO tab_inout_stock(
         id,
-		orderItemId,
 		stime,
-		isBIll,
-		goodNum,
-		orderType
+		orderType,
+		businessId,
+		createUserId,
+		createTime,
+		modifyUserId,
+		modifyTime
         ) VALUES (
         	#{id} ,
-        	#{orderItemId} ,
-        	#{stime},
-        	#{isBill} ,
-        	#{goodNum} ,
-        	#{orderType}
+            #{stime},
+            #{orderType},
+        	#{businessId},
+        	#{createUserId},
+		    #{createTime},
+		    #{modifyUserId},
+		    #{modifyTime}
+        )
+    ]]>
+    </insert>
+
+    <!--添加出库细项表信息-->
+    <insert id="OrderItemMapper.insertInoutStockItem" useGeneratedKeys="true" keyProperty="id">
+         <![CDATA[
+        INSERT INTO tab_inout_stock_item(
+		inout_stock_id,
+		orderItemId,
+		goodNum
+        ) VALUES (
+            #{inout_stock_id},
+            #{orderItemId},
+        	#{goodNum}
         )
     ]]>
     </insert>
@@ -90,12 +123,21 @@
     ]]>
     </update>
 
-    <update id="OrderItemMapper.updateInoutNum">
-        <![CDATA[
-        UPDATE tab_orderitem SET
-	        tmpNum = tmpNum + #{tmpNum}
+    <update id="OrderItemMapper.updateInoutStock">
+          <![CDATA[
+        UPDATE tab_inout_stock SET
+		isBIll = #{isBIll},
+		modifyUserId = #{modifyUserId},
+		modifyTime = #{modifyTime},
+		businessId =# {businessId}
         WHERE
 	        id = #{id}
+    ]]>
+    </update>
+
+    <update id="OrderItemMapper.updateInoutNum">
+     <![CDATA[
+        UPDATE tab_orderitem SET tmpNum = tmpNum + #{tmpNum} WHERE id = #{id}
     ]]>
     </update>
 
@@ -105,6 +147,14 @@
         id = #{id}
     ]]>
     </delete>
+
+    <delete id="OrderItemMapper.deleteInoutStock" >
+        <![CDATA[
+        DELETE FROM tab_inout_stock WHERE
+        id = #{id}
+    ]]>
+    </delete>
+
 
     <select id="OrderItemMapper.getById" resultMap="mRetMapOrderItem">
         SELECT <include refid="OrderItemMapper.columns" />
@@ -133,6 +183,7 @@
         </where>
     </sql>
 
+    <!--订单细项总数-->
     <select id="OrderItemMapper.count" resultType="long">
         SELECT count(*)
         FROM tab_orderitem A
@@ -143,24 +194,47 @@
         <include refid="OrderItemMapper.findPage.where"/>
     </select>
 
-    <!-- 分页查询 -->
+    <!--出货总数-->
+    <select id="OrderItemMapper.countInout" resultType="long">
+        SELECT count(*)
+        FROM tab_inout_stock A
+        left join tab_business B on A.businessId=B.id
+        WHERE A.orderType = #{orderType}
+    </select>
+
+    <!--出货细项总数-->
+    <select id="OrderItemMapper.countInoutItem" resultType="long">
+        select count(*)
+        from tab_inout_stock_item A
+        left join tab_orderitem B on A.orderItemId=B.id
+        left join tab_good_customer F on B.customerGoodId=F.id
+        left join tab_goods D on F.goodId=D.id
+        WHERE A.inout_stock_id = #{inout_stock_id}
+    </select>
+
+    <!-- 分页查询订单细项-->
     <select id="OrderItemMapper.list" resultMap="mRetMapOrderItem">
         SELECT A.id,
         A.orderId,
         B.orderName,
         A.customerGoodId,
+        D.id goodsId,
         D.goodsName,
         F.materialNum,
+        F.storage,
         A.esgouNum,
         A.unitPrice,
         D.specUnit,
         E.dictName,
+        D.businessId,
+        G.business,
         A.esgouNum*A.unitPrice as totalMoney
         FROM tab_orderitem A
         left join tab_order B on  A.orderId=B.id
         left join tab_good_customer F on A.customerGoodId=F.id
         left join tab_goods D on F.goodId=D.id
         left join tab_dict E on D.specUnit=E.dictNo
+        left join tab_business G on G.id=D.businessId
         <include refid="OrderItemMapper.findPage.where"/>
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}
@@ -168,6 +242,49 @@
         LIMIT #{startNum}, #{pageSize}
     </select>
 
+    <!--分页查询出库订单信息-->
+    <select id="OrderItemMapper.queryInoutStock" resultMap="mRetMapOrderItem">
+        SELECT A.id,
+        DATE_FORMAT(A.stime,'%Y-%m-%d %T') as stime,
+        A.isBIll,
+        A.businessId,
+        B.business
+        FROM tab_inout_stock A
+        left join tab_business B on A.businessId=B.id
+        WHERE A.orderType = #{orderType}
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeBegin)">
+        AND A.stime>= #{stimeBegin}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeEnd)">
+        AND A.stime &lt;= #{stimeEnd}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+        LIMIT #{startNum}, #{pageSize}
+    </select>
+
+    <!--分页查询出库订单细项信息-->
+    <select id="OrderItemMapper.queryInoutStockItem" resultMap="mRetMapOrderItem">
+        select A.id,
+        A.orderItemId,
+        B.customerGoodId,
+        F.materialNum,
+        F.goodId,
+        D.goodsName,
+        A.goodNum
+        from tab_inout_stock_item A
+        left join tab_orderitem B on A.orderItemId=B.id
+        left join tab_good_customer F on B.customerGoodId=F.id
+        left join tab_goods D on F.goodId=D.id
+        WHERE A.inout_stock_id = #{inout_stock_id}
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+        LIMIT #{startNum}, #{pageSize}
+    </select>
+
+    <!--查询物料号-->
     <select id="OrderItemMapper.queryNumInfo" resultMap="mRetMapOrderItem">
     select A.id,A.materialNum,B.goodsName,A.unit,D.dictName,A.unitPrice,A.storage
     from tab_good_customer A
@@ -186,4 +303,54 @@
       FROM tab_blueprint A
       WHERE A.goodsId = #{goodsId}
   </select>
+
+    <!--查询订单树父节点-->
+    <select id="OrderItemMapper.queryOrderTree" resultMap="mRetMapOrderItem">
+      SELECT A.id,A.orderName text
+      FROM tab_order A
+      LEFT JOIN tab_orderitem B on A.id=B.orderId
+      left join tab_good_customer D on B.customerGoodId=D.id
+      left join tab_goods E on E.id=D.goodId
+      WHERE (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)
+      AND A.orderType = #{orderType}
+      AND E.businessId= #{businessId}
+      GROUP BY A.id
+    </select>
+
+    <!--查询订单树子节点-->
+    <select id="OrderItemMapper.queryOrderTree2" resultMap="mRetMapOrderItem">
+        SELECT B.id,D.goodsName ,F.materialNum,B.esgouNum,B.tmpNum,(B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,
+		concat( D.goodsName, '-' ,F.materialNum,'(',CONVERT(B.esgouNum-B.tmpNum,char),')') as text,B.orderId
+        FROM tab_orderitem B
+        left join tab_order A on A.id=B.orderId
+		left join tab_good_customer F on B.customerGoodId=F.id
+        left join tab_goods D on F.goodId=D.id
+        where B.orderId = #{orderId}
+        AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)
+        AND B.esgouNum != B.tmpNum
+    </select>
+
+    <update id="OrderItemMapper.updateOutOrderStatus">
+        <![CDATA[
+        UPDATE tab_order
+        SET orderStatus=2
+        WHERE id = #{orderId}
+    ]]>
+    </update>
+
+    <update id="OrderItemMapper.updateInOrderStatus">
+        <![CDATA[
+        UPDATE tab_order
+        SET orderStatus=3
+        WHERE id = #{orderId}
+    ]]>
+    </update>
+
+    <update id="OrderItemMapper.updateOrderBillStatus">
+        <![CDATA[
+        UPDATE tab_order
+        SET orderStatus=4
+        WHERE id = #{orderId}
+    ]]>
+    </update>
 </mapper>

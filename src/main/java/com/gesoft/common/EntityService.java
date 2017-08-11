@@ -81,7 +81,6 @@ public abstract class EntityService<E, PK extends Serializable>
 		{
 			recordCount = findListCnt((E) model);	
 		}
-		
 		//分页加载数据
 		if (recordCount > 0)
 		{
@@ -105,6 +104,10 @@ public abstract class EntityService<E, PK extends Serializable>
 	 */
 	protected void setPageModel(long recordCount, BaseModel handerModel) 
 	{
+
+		//计算开始记录数
+		handerModel.setStartNum((handerModel.getPageIndex() ) * handerModel.getPageSize());
+
 		if (handerModel.getPageIndex() <= 0)
 		{
 			handerModel.setPageIndex(1);
@@ -114,9 +117,7 @@ public abstract class EntityService<E, PK extends Serializable>
 		{
 			handerModel.setPageSize(10);
 		}
-		
-		//计算开始、结束记录数
-		handerModel.setStartNum((handerModel.getPageIndex() -1) * handerModel.getPageSize());
+		//记录结束记录数
 		if (recordCount >= handerModel.getPageIndex() * handerModel.getPageSize())
 		{
 			handerModel.setEndNum(handerModel.getPageIndex() * handerModel.getPageSize());

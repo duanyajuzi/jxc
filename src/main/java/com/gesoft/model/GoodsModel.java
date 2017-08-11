@@ -33,6 +33,16 @@ public class GoodsModel extends BaseModel
 	private String name2;
 	private Long goodId;
 	private Float esgouNum;
+	private  String goodsId;
+
+	public String getGoodsId() {
+		return goodsId;
+	}
+
+	public GoodsModel setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+		return this;
+	}
 
 	public String getName1() {
 		return name1;

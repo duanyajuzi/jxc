@@ -17,6 +17,35 @@
         <result property="payConfirmUser" column="payConfirmUser"/>
         <result property="cuserId" column="cuserId"/>
         <result property="ctime" column="ctime"/>
+
+		<result property="stime" />
+		<result property="pcustomerId" />
+		<result property="pcontacts" />
+		<result property="paddress" />
+		<result property="ptel"/>
+		<result property="orderTime" />
+		<result property="orderType" />
+		<result property="isBIll"/>
+		<result property="billId"/>
+		<result property="stockId"/>
+		<result property="goodId" />
+		<result property="goodsName"/>
+		<result property="goodNum" />
+		<result property="orderStatus" />
+		<result property="orderId"/>
+		<result property="orderName"/>
+		<result property="pcustomerName"/>
+		<result property="contacts"/>
+		<result property="address"/>
+		<result property="tel"/>
+		<result property="billItemId"/>
+
+		<!--<result property=""/>-->
+		<!--<result property=""/>-->
+		<!--<result property=""/>-->
+		<!--<result property=""/>-->
+		<!--<result property=""/>-->
+		<!--<result property=""/>-->
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
@@ -46,7 +75,7 @@
         	#{billNo} ,
         	#{customerId} ,
         	#{billTime} ,
-        	#{prePayTime} ,
+        	#{prePayTime},
         	#{businessId} ,
         	#{billType} ,
         	#{payTime} ,
@@ -56,20 +85,33 @@
         )
     ]]>
 	</insert>
-    
+
+	<insert id="BillMapper.insertBillItem" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+        INSERT INTO tab_bill_inout_stock (
+        	billId,
+        	stockId
+        ) VALUES (
+        	#{billId} ,
+        	#{stockId}
+        )
+    ]]>
+	</insert>
+
+	<!--billNo = #{billNo} ,
+	customerId = #{customerId} ,
+	billTime = #{billTime} ,
+	prePayTime = #{prePayTime} ,
+	businessId = #{businessId} ,
+	billType = #{billType} ,
+	payConfirmUser = #{payConfirmUser} ,
+	cuserId = #{cuserId} ,
+	ctime = #{ctime} -->
 	<update id="BillMapper.update" >
     <![CDATA[
         UPDATE tab_bill SET
-	        billNo = #{billNo} ,
-	        customerId = #{customerId} ,
-	        billTime = #{billTime} ,
-	        prePayTime = #{prePayTime} ,
-	        businessId = #{businessId} ,
-	        billType = #{billType} ,
-	        payTime = #{payTime} ,
-	        payConfirmUser = #{payConfirmUser} ,
-	        cuserId = #{cuserId} ,
-	        ctime = #{ctime} 
+	         payState=1,
+	         payTime = #{payTime}
         WHERE 
 	        id = #{id} 
     ]]>
@@ -81,6 +123,25 @@
         id = #{id} 
     ]]>
     </delete>
+
+	<delete id="BillMapper.deleteBefore">
+	<![CDATA[
+        DELETE FROM tab_bill_inout_stock WHERE
+        billId = #{billId}
+    ]]>
+	</delete>
+
+	<update id="BillMapper.updateBefore">
+		<![CDATA[
+        UPDATE tab_bill SET
+	         customerId = #{customerId},
+	         billTime = #{billTime},
+	         prePayTime = #{prePayTime},
+	         businessId = #{businessId}
+        WHERE
+	        id = #{id}
+    ]]>
+	</update>
     
     <select id="BillMapper.getById" resultMap="mRetMapBill">
 		SELECT <include refid="BillMapper.columns" />
@@ -160,28 +221,151 @@
 		A.billNo ,
 		A.customerId ,
 		B.customerName,
-		date_format(billTime,'%Y-%m-%d %T') as billTime ,
-		date_format(prePayTime,'%Y-%m-%d %T') as prePayTime ,
+		date_format(A.billTime,'%Y-%m-%d %T') as billTime ,
+		date_format(A.prePayTime,'%Y-%m-%d %T') as prePayTime ,
 		A.businessId ,
 		D.business,
 		A.billType ,
 		A.payState ,
-		date_format(payTime,'%Y-%m-%d %T') as payTime ,
+		date_format(A.payTime,'%Y-%m-%d %T') as payTime ,
 		A.payConfirmUser ,
 		A.cuserId ,
-		date_format(ctime,'%Y-%m-%d %T')  as ctime
+		date_format(A.ctime,'%Y-%m-%d %T')  as ctime
 		FROM tab_bill	A
 		left join tab_customer B on A.customerId=B.id
 		left join tab_business D on A.businessId=D.id
 		<include refid="BillMapper.findPage.where"/>
-		
 		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
 			ORDER BY ${sortColumns}
 		</if>
-		
 		LIMIT #{startNum}, #{pageSize}
     </select>
 
-	
+	<select id="BillMapper.queryInoutCnt" resultType="long">
+		SELECT COUNT(*)
+		FROM tab_inout_stock A
+		WHERE A.orderType = #{orderType} AND A.isBIll=0 AND A.businessId = #{businessId}
+	</select>
+
+	<select id="BillMapper.queryInout" resultMap="mRetMapBill">
+		SELECT A.id,A.businessId,B.business,
+		date_format(A.stime,'%Y-%m-%d %T') as stime,
+		F.pcustomerId,G.customerName pcustomerName,F.pcontacts,F.paddress,F.ptel,
+		<!--G.consigneeName pconsigneeName,G.consigneeTel pconsigneeTel,G.billingAddress billingAddress,-->
+		F.customerId,K.customerName,F.ccontacts contacts,F.caddress address,F.ctel tel,
+		<!--K.consigneeName,K.consigneeTel,K.billingAddress,-->
+		E.orderId,F.orderName,
+		D.goodNum,H.goodId,J.goodsName,
+		date_format(F.orderTime,'%Y-%m-%d %T') as orderTime
+		FROM tab_inout_stock A
+		left join tab_business B on B.id=A.businessId
+		left join tab_inout_stock_item D on D.inout_stock_id=A.id
+		left join tab_orderitem E on E.id=D.orderItemId
+		LEFT JOIN tab_good_customer H on H.id=E.customerGoodId
+		LEFT JOIN tab_goods J on J.id=H.goodId
+		left join tab_order F on F.id=E.orderId
+		left join tab_customer K on K.id=F.customerId
+		left join tab_customer G on G.id=F.pcustomerId
+		WHERE A.orderType = #{orderType} AND A.isBIll=0 AND A.businessId = #{businessId}
+		GROUP BY A.id
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		LIMIT #{startNum}, #{pageSize}
+	</select>
+
+	<!--入库-开票-->
+	<!--<select id="BillMapper.queryInoutTypeIn" resultMap="mRetMapBill">-->
+		<!--SELECT A.id,A.businessId,B.business,-->
+		<!--date_format(A.stime,'%Y-%m-%d %T') as stime,-->
+		<!--F.pcustomerId,G.customerName pcustomerName,F.pcontacts,F.paddress,F.ptel,-->
+		<!--F.customerId,K.customerName,F.ccontacts contacts,F.caddress address,F.ctel tel,-->
+		<!--E.orderId,F.orderName,D.goodNum,H.goodId,J.goodsName,-->
+		<!--date_format(F.orderTime,'%Y-%m-%d %T') as orderTime-->
+		<!--FROM tab_inout_stock A-->
+		<!--left join tab_business B on B.id=A.businessId-->
+		<!--left join tab_inout_stock_item D on D.inout_stock_id=A.id-->
+		<!--left join tab_orderitem E on E.id=D.orderItemId-->
+		<!--LEFT JOIN tab_good_customer H on H.id=E.customerGoodId-->
+		<!--LEFT JOIN tab_goods J on J.id=H.goodId-->
+		<!--left join tab_order F on F.id=E.orderId-->
+		<!--left join tab_customer G on G.id=F.pcustomerId-->
+		<!--left join tab_customer K on K.id=F.customerId-->
+		<!--WHERE A.orderType = #{orderType} AND A.isBIll=0 AND A.businessId = #{businessId}-->
+		<!--GROUP BY A.id-->
+		<!--<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">-->
+			<!--ORDER BY ${sortColumns}-->
+		<!--</if>-->
+		<!--LIMIT #{startNum}, #{pageSize}-->
+	<!--</select>-->
+
+	<update id="BillMapper.updateBillStatus" >
+		<![CDATA[
+        UPDATE tab_inout_stock SET
+	        isBIll = 1
+        WHERE
+	        id = #{stockId}
+    ]]>
+	</update>
+
+	<update id="BillMapper.updateUnBillStatus">
+		<![CDATA[
+        UPDATE tab_inout_stock SET
+	        isBIll = 0
+        WHERE
+	        id = #{stockId}
+    ]]>
+	</update>
+
+	<select id="BillMapper.queryInoutItemCnt" resultType="long">
+		SELECT COUNT(*)
+		FROM tab_bill_inout_stock A
+		left join tab_bill L on L.id=A.billId
+		WHERE A.billId= #{billId}
+	</select>
+
+	<select id="BillMapper.queryInoutItem" resultMap="mRetMapBill">
+		SELECT A.id billItemId,B.businessId,H.business,F.goodId,G.goodsName,D.goodNum,B.id,
+		E.orderId,J.orderName,J.pcustomerId,K.customerName pcustomerName,J.pcontacts,J.paddress,J.ptel,
+		L.customerId,M.customerName,M.contacts,M.address,M.tel,
+		date_format(B.stime,'%Y-%m-%d %T') as stime,
+		date_format(L.billTime,'%Y-%m-%d %T') as billTime,
+		date_format(L.prePayTime,'%Y-%m-%d %T') as prePayTime,
+		date_format(J.orderTime,'%Y-%m-%d %T') as orderTime
+		FROM tab_bill_inout_stock A
+		left join tab_bill L on L.id=A.billId
+		left join tab_customer M on L.customerId=M.id
+		LEFT JOIN tab_inout_stock B on B.id=A.stockId
+		LEFT JOIN tab_inout_stock_item D on D.inout_stock_id=B.id
+		LEFT JOIN tab_orderitem E on E.id=D.orderItemId
+		left join tab_order J on J.id=E.orderId
+		left join tab_customer K on K.id=J.pcustomerId
+		LEFT JOIN tab_good_customer F on F.id=E.customerGoodId
+		LEFT JOIN tab_goods G on G.id=F.goodId
+		LEFT JOIN tab_business H on H.id=B.businessId and H.id=G.businessId
+		WHERE A.billId= #{billId}
+		GROUP BY A.id
+		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+		LIMIT #{startNum}, #{pageSize}
+	</select>
+
+	<update id="BillMapper.updatePayState" >
+		<![CDATA[
+        UPDATE tab_bill SET
+	        payState = 1
+        WHERE
+	        id = #{id}
+    ]]>
+	</update>
+
+	<update id="BillMapper.updateOrderFinalStatus">
+		<![CDATA[
+        UPDATE tab_order
+        SET orderStatus=5
+        WHERE id = #{orderId}
+    ]]>
+	</update>
 </mapper>
 

@@ -78,7 +78,6 @@ public class OrderController extends BaseController
 	@Resource
 	private OrderService orderService;
 	
-
 	/**
 	 * 描述信息：分页查询
 	 * 创建时间：2017-06-28 11:58:20
@@ -184,5 +183,13 @@ public class OrderController extends BaseController
 		return msgModel;
 	}
 
-
+	@RequestMapping(value = "/updateOrderStatus")
+	@ResponseBody
+	public void  updateOrderStatus(OrderModel model){
+		try {
+			orderService.updateOrderStatus(model);
+		}catch (Exception e){
+			logger.error("OrderController updateOrderStatus error：", e);
+		}
+	}
 }

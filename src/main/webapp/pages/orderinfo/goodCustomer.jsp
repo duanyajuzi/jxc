@@ -13,17 +13,16 @@
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="goodCustomerForm">
 				<lable class="form-label">业务类型：</lable>
-                <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
+                <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"emptyText="请输入或选择"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                       style="width:100px;" onvaluechanged="PageGoodCustomer.funBusValuechanged"   maxlength="10" />
+                       style="width:100px;" onvaluechanged="PageGoodCustomer.funBusValuechanged"   maxlength="20" />
                 <lable class="form-label">所属商品：</lable>
                 <input name="goodId" id="goodId" class="mini-combobox" style="width:100px;"  allowInput="true"
-                       textField="msgVal"  valueField="msgKey"  emptyText="请选择"
-                       maxlength="50" requiredErrorText="所属商品不能为空"/>
+                       textField="msgVal"  valueField="msgKey"  emptyText="请输入或选择" maxlength="50"/>
 				<lable class="form-label">所属客户：</lable>
-                <input name="customerId" id="customerId" class="mini-combobox" allowInput="true"
+                <input name="customerId" id="customerId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
                        idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                       style="width:100px;"  required="true" maxlength="10" requiredErrorText="所属客户不能为空"/>
+                       style="width:100px;"  maxlength="20" />
 				<lable class="form-label">物料号：</lable>
                 <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="物料号"  style="width:100px;"/>
                 <a class="mini-button" iconCls="icon-search" onclick="PageGoodCustomer.funSearch()" plain="true"><label>查询</label></a>
@@ -48,16 +47,17 @@
             <div id="goodCustomerGrid" class="mini-datagrid"
                   idField="id" allowResize="false"
                  url="${pageContext.request.contextPath}/goodCustomer/query"
-                 pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
+                 pagesize="10" sizeList="[10,20,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
+                    <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
 					 <div field="goodsName" width="120" headerAlign="center" allowSort="true">所属商品</div>
 					 <div field="customerName" width="120" headerAlign="center" allowSort="true">所属客户</div>
 					 <div field="materialNum" width="120" headerAlign="center" allowSort="true">物料号</div>
 					 <div field="unitPrice" width="120" headerAlign="center" allowSort="true">单价</div>
 					 <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
-					 <div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>
-                    <%--<div field="show_plan" width="10%" headerAlign="center" allowSort="false"
+					 <%--<div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>--%>
+                    <%--<div field="acion" width="10%" headerAlign="center" allowSort="false"
                          align="left">操作
                     </div>--%>
                 </div>

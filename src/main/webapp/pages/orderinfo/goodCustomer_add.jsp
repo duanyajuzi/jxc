@@ -39,7 +39,7 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
                     <td style="width:32%;">
-                        <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
+                        <input name="businessId" id="businessId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
                                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
                                style="width:200px;" onvaluechanged="PageGoodCustomerAdd.funBusValuechanged"  required="true" maxlength="10" requiredErrorText="业务类型不能为空"/>
                     </td>
@@ -55,7 +55,7 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">所属客户：</td>
                     <td style="width:32%;">
-                        <input name="customerId" id="customerId" class="mini-combobox" allowInput="true"
+                        <input name="customerId" id="customerId" class="mini-combobox" allowInput="true"  emptyText="请输入或选择"
                                idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
                                style="width:200px;"  required="true" maxlength="10" requiredErrorText="所属客户不能为空"/>
                     </td>
@@ -75,14 +75,14 @@
                                maxlength="50" requiredErrorText="单位不能为空"/>
                     </td>
                 </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">库存量：</td>
-                    <td style="width:32%;">
-                        <input name="storage" id="storage" class="mini-textbox" style="width:200px;"  required="true"
-                               textField="msgVal"  valueField="msgKey"
-                               maxlength="50" requiredErrorText="库存量不能为空"/>
-                    </td>
-                </tr>
+                <%--<tr>--%>
+                    <%--<td class="form-label" style="text-align: right;width:16%;">库存量：</td>--%>
+                    <%--<td style="width:32%;">--%>
+                        <%--<input name="storage" id="storage" class="mini-textbox" style="width:200px;"  required="true"--%>
+                               <%--textField="msgVal"  valueField="msgKey"--%>
+                               <%--maxlength="50" requiredErrorText="库存量不能为空"/>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
             </table>
          </div>
             

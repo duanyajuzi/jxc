@@ -64,7 +64,6 @@
                         <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageOrder.funModify()">修改</a>
                         <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageOrder.funDelete()">删除</a>
                         <a  class="mini-button block-button hide" iconCls="icon-node" id="set" onclick="PageOrder.funSetOrder()">设置订单内容</a>
-                        <a class="mini-button block-button hide" iconCls="icon-filter" id="delivery" onclick="PageOrder.funOpenInout()">出货</a>
                     </td>
                 </tr>
             </table>
@@ -97,7 +96,7 @@
 					 <%--<div field="ctime" width="120" headerAlign="center" allowSort="true">创建时间</div>--%>
 					 <%--<div field="cuserid" width="120" headerAlign="center" allowSort="true">创建人</div>--%>
 					 <%--<div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>--%>
-                    <div field="button" width="10%" headerAlign="center" allowSort="false"
+                    <div field="button" width="10%" headerAlign="center"
                          renderer="funSetButton">操作</div>
                 </div>
             </div>
@@ -200,13 +199,21 @@
     var type = <%=type%>;
     var orderGrid=mini.get("orderGrid");
     orderGrid.setUrl("${pageContext.request.contextPath}/order/query?orderType="+type);
-    function funSetButton() {
-        var button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
-                '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
-                'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>' +
-                '<a class="mini-button mini-button " href="javascript:void(0)">' +
-                '<span class="mini-button-text  mini-button-icon icon-filter" style="height: auto" ' +
-                'onclick="">下发订单</span></a>';
+    function funSetButton(e) {
+        var button;
+        var orderStatus = e.row.orderStatus;
+        if(orderStatus==0){
+            button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
+                    '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
+                    'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>' +
+                    '<a class="mini-button mini-button " href="javascript:void(0)">' +
+                    '<span class="mini-button-text  mini-button-icon icon-filter" style="height: auto" ' +
+                    'onclick="PageOrder.funUpdateOrderStatus()">下发订单</span></a>';
+        }else {
+            button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
+                    '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
+                    'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>';
+        }
         return button;
     }
 

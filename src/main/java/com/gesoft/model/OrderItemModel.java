@@ -1,5 +1,7 @@
 package com.gesoft.model;
 
+import java.util.List;
+
 /**
  * Created by admin on 2017-07-18.
  */
@@ -12,6 +14,9 @@ public class OrderItemModel extends BaseModel{
     private String goodsName;
     private Float esgouNum;
     private Float unitPrice;
+    private Float tmpNum;
+    private Float afterNum;
+    private Integer itemState;
     private String goodsUnit;
     private String materialNum;
     private String specUnit;
@@ -25,12 +30,54 @@ public class OrderItemModel extends BaseModel{
     private String pname;
     private Float storage;
 //tab_inout_stock
-    private Long orderItemId;
     private String stime;
-    private Float goodNum;
+    private String stimeBegin;
+    private String stimeEnd;
     private Integer isBIll;
     private Integer orderType;
+    private Long createUserId;
+    private String createTime;
+    private Long modifyUserId;
+    private String modifyTime;
+    private Long businessId;
+    private String business;
 
+//tab_inout_stock_item
+    private Long inout_stock_id;
+    private Long orderItemId;
+    private Float goodNum;
+    private Long goodId;
+    private String text;
+    private List<OrderItemModel> children;
+    private String data;
+
+
+    public String getData() {
+        return data;
+    }
+
+    public OrderItemModel setData(String data) {
+        this.data = data;
+        return this;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public OrderItemModel setText(String text) {
+        this.text = text;
+        return this;
+    }
+
+    public List<OrderItemModel> getChildren() {
+        return children;
+    }
+
+    public OrderItemModel setChildren(List<OrderItemModel> children) {
+        this.children = children;
+        return this;
+    }
 
     public Long getId() {
         return id;
@@ -236,6 +283,123 @@ public class OrderItemModel extends BaseModel{
 
     public OrderItemModel setOrderType(Integer orderType) {
         this.orderType = orderType;
+        return this;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public OrderItemModel setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+        return this;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public OrderItemModel setCreateTime(String createTime) {
+        this.createTime = createTime;
+        return this;
+    }
+
+    public Long getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public OrderItemModel setModifyUserId(Long modifyUserId) {
+        this.modifyUserId = modifyUserId;
+        return this;
+    }
+
+    public Long getBusinessId() {
+        return businessId;
+    }
+
+    public OrderItemModel setBusinessId(Long businessId) {
+        this.businessId = businessId;
+        return this;
+    }
+
+    public Long getInout_stock_id() {
+        return inout_stock_id;
+    }
+
+    public OrderItemModel setInout_stock_id(Long inout_stock_id) {
+        this.inout_stock_id = inout_stock_id;
+        return this;
+    }
+
+    public Long getGoodId() {
+        return goodId;
+    }
+
+    public OrderItemModel setGoodId(Long goodId) {
+        this.goodId = goodId;
+        return this;
+    }
+
+    public String getBusiness() {
+        return business;
+    }
+
+    public OrderItemModel setBusiness(String business) {
+        this.business = business;
+        return this;
+    }
+
+    public Float getTmpNum() {
+        return tmpNum;
+    }
+
+    public OrderItemModel setTmpNum(Float tmpNum) {
+        this.tmpNum = tmpNum;
+        return this;
+    }
+
+    public Integer getItemState() {
+        return itemState;
+    }
+
+    public OrderItemModel setItemState(Integer itemState) {
+        this.itemState = itemState;
+        return this;
+    }
+
+    public Float getAfterNum() {
+        return afterNum;
+    }
+
+    public OrderItemModel setAfterNum(Float afterNum) {
+        this.afterNum = afterNum;
+        return this;
+    }
+
+    public String getModifyTime() {
+        return modifyTime;
+    }
+
+    public OrderItemModel setModifyTime(String modifyTime) {
+        this.modifyTime = modifyTime;
+        return this;
+    }
+
+    public String getStimeBegin() {
+        return stimeBegin;
+    }
+
+    public OrderItemModel setStimeBegin(String stimeBegin) {
+        this.stimeBegin = stimeBegin;
+        return this;
+    }
+
+    public String getStimeEnd() {
+        return stimeEnd;
+    }
+
+    public OrderItemModel setStimeEnd(String stimeEnd) {
+        this.stimeEnd = stimeEnd;
         return this;
     }
 }

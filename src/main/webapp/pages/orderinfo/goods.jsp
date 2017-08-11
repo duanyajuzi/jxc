@@ -13,7 +13,7 @@
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="goodsForm">
                 <lable class="form-label">业务类型：</lable>
-                <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
+                <input name="businessId" id="businessId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
                        style="width:100px;"   maxlength="10" />
 				<lable class="form-label">商品名称：</lable>
@@ -46,7 +46,7 @@
                      <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
 					 <div field="spec" width="120" headerAlign="center" allowSort="true">规格</div>
 					 <div field="name2" width="120" headerAlign="center" allowSort="true">规格单位</div>
-					 <div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>
+					 <%--<div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>--%>
 					 <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
                 </div>
             </div>

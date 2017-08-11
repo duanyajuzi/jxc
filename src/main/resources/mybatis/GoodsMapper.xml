@@ -17,11 +17,12 @@
         <result property="status" column="status"/>
         <result property="businessId" column="businessId"/>
         <result property="memo" column="memo"/>
-		<result property="customerName" column="customerName"></result>
+		<result property="customerName" column="customerName"/>
 		<result property="business" column="business"/>
 		<result property="name1" column="name1"/>
 		<result property="name2" column="name2"/>
 		<result property="goodId" column="goodId"/>
+		<result property="goodsId" column="goodsId"/>
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
@@ -39,7 +40,6 @@
         	goodsName ,
         	spec ,
         	specUnit ,
-        	storage ,
         	businessId,
         	memo
         ) VALUES (
@@ -47,7 +47,6 @@
         	#{goodsName} ,
         	#{spec} ,
         	#{specUnit} ,
-        	#{storage} ,
         	#{businessId},
         	#{memo} 
         )
@@ -60,7 +59,6 @@
 	        goodsName = #{goodsName} ,
 	        spec = #{spec} ,
 	        specUnit = #{specUnit} ,
-	        storage = #{storage} ,
 	        businessId = #{businessId},
 	        memo = #{memo} 
         WHERE 
@@ -146,8 +144,10 @@
     </select>
 
 	<select id="GoodsMapper.queryGoodsList" resultMap="mRetMapGoods">
-		SELECT id,goodsName
+		SELECT id goodsId,goodsName
 		FROM tab_goods
+		where status=0
+		and businessId = #{businessId}
 	</select>
 
 	<select id="GoodsMapper.queryMaterialNum" resultMap="mRetMapGoods">

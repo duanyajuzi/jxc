@@ -60,17 +60,7 @@
                                nullValue="null"  emptyText="交货时间" allowInput="false"/>
                     </td>
                 </tr>
-                <%--<tr>--%>
-                    <%--<td class="form-label" style="text-align: right;width:16%;">订单类型：（0采购订单；1：出货订单）：</td>--%>
-                    <%--<td style="width:32%;">--%>
-                        <%--<input name="orderType" id="orderType" class="mini-textbox" style="width:200px;"  required="true" maxlength="5" requiredErrorText="订单类型：（0采购订单；1：出货订单）不能为空"/>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
                 <tr>
-                    <%--<td class="form-label" style="text-align: right;width:16%;">订单状态：</td>--%>
-                    <%--<td style="width:32%;">--%>
-                        <%--<input name="orderStatus" id="orderStatus" class="mini-textbox" style="width:200px;"  required="true" maxlength="5" requiredErrorText="订单状态不能为空"/>--%>
-                    <%--</td>--%>
                     <td class="form-label" style="text-align: right;width:16%;">交货地址：</td>
                     <td style="width:32%;">
                         <input name="deliveryAddress" id="deliveryAddress" class="mini-textbox" style="width:520px;"  required="true" maxlength="200" requiredErrorText="交货地址不能为空"/>

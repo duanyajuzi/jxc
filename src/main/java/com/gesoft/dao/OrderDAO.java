@@ -21,4 +21,8 @@ public class OrderDAO extends EntityDAOImpl<OrderModel, Long>
     {
         return "OrderMapper";
     }
+
+    public int  updateOrderStatus(OrderModel model){
+        return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateOrderStatus",model);
+    }
 }

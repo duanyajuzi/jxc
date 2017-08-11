@@ -36,45 +36,45 @@
        
                 	<input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">票据编号：</td>
-                    <td style="width:32%;">
-                        <input name="billNo" id="billNo" class="mini-textbox" style="width:200px;"  required="true" maxlength="255"
-                               requiredErrorText="票据编号不能为空"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">所属企业：</td>
-                    <td style="width:32%;">
-                        <input name="customerId" id="customerId" class="mini-combobox" style="width:200px;"
-                               idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                               allowInput="true"  required="true" maxlength="19" requiredErrorText="所属企业不能为空"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">开票时间：</td>
-                    <td style="width:32%;">
-                    	<input name="billTime" id="billTime" class="mini-datepicker" style="width:200px;"
-                               format="yyyy-MM-dd HH:mm:ss" timeFormat="HH:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"
-                               nullValue="null"  emptyText="开始时间" allowInput="false"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">预付款时间：</td>
-                    <td style="width:32%;">
-                    	<input name="prePayTime" id="prePayTime" class="mini-datepicker" style="width:200px;"
-                               format="yyyy-MM-dd HH:mm:ss" timeFormat="HH:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"
-                               nullValue="null"  emptyText="开始时间" allowInput="false"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
-                    <td style="width:32%;">
-                        <input name="businessId" id="businessId" class="mini-combobox" style="width:200px;" allowInput="true"
-                               idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                               required="true" maxlength="19" requiredErrorText="业务类型不能为空"/>
-                    </td>
-                </tr>
+                <%--<tr>--%>
+                    <%--<td class="form-label" style="text-align: right;width:16%;">票据编号：</td>--%>
+                    <%--<td style="width:32%;">--%>
+                        <%--<input name="billNo" id="billNo" class="mini-textbox" style="width:200px;"  required="true" maxlength="255"--%>
+                               <%--requiredErrorText="票据编号不能为空"/>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<td class="form-label" style="text-align: right;width:16%;">所属企业：</td>--%>
+                    <%--<td style="width:32%;">--%>
+                        <%--<input name="customerId" id="customerId" class="mini-combobox" style="width:200px;"--%>
+                               <%--idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"--%>
+                               <%--allowInput="true"  required="true" maxlength="19" requiredErrorText="所属企业不能为空"/>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<td class="form-label" style="text-align: right;width:16%;">开票时间：</td>--%>
+                    <%--<td style="width:32%;">--%>
+                    	<%--<input name="billTime" id="billTime" class="mini-datepicker" style="width:200px;"--%>
+                               <%--format="yyyy-MM-dd HH:mm:ss" timeFormat="HH:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"--%>
+                               <%--nullValue="null"  emptyText="开始时间" allowInput="false"/>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<td class="form-label" style="text-align: right;width:16%;">预付款时间：</td>--%>
+                    <%--<td style="width:32%;">--%>
+                    	<%--<input name="prePayTime" id="prePayTime" class="mini-datepicker" style="width:200px;"--%>
+                               <%--format="yyyy-MM-dd HH:mm:ss" timeFormat="HH:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"--%>
+                               <%--nullValue="null"  emptyText="开始时间" allowInput="false"/>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<td class="form-label" style="text-align: right;width:16%;">业务类型：</td>--%>
+                    <%--<td style="width:32%;">--%>
+                        <%--<input name="businessId" id="businessId" class="mini-combobox" style="width:200px;" allowInput="true"--%>
+                               <%--idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"--%>
+                               <%--required="true" maxlength="19" requiredErrorText="业务类型不能为空"/>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
                 <%--<tr>--%>
                     <%--<td class="form-label" style="text-align: right;width:16%;">付款状态：</td>--%>
                     <%--<td style="width:32%;">--%>

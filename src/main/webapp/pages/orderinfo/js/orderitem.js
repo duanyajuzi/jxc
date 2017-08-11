@@ -22,11 +22,16 @@ var PageOrderItem = function(){
             this.orderItemAddForm=new mini.Form("orderItemAddForm");
             this.orderItemSave=mini.get("orderItemSave");
             this.orderItemReset=mini.get("orderItemReset");
+            PageMain.funLoadGoodsByBussinessId("goodsId", false, "", -1)
             this.funSearch();
             this.funLabelModel();
         },
         funGetData:function (data) {
             this.orderData=data;
+        },
+        funBusValuechanged : function(e)
+        {
+            PageMain.funLoadGoodsByBussinessId("goodsId", false, "", e.value)
         },
         funSetData:function (data) {
             this.action=data.action;
@@ -38,6 +43,7 @@ var PageOrderItem = function(){
                 if (row) {
                     this.goodsNumId=row.customerGoodId;
                     this.goodsNumBefore=row.esgouNum;
+                    PageMain.funLoadGoodsByBussinessId("goodsId", false, "", row.businessId);
                     this.orderItemAddForm.setData(row);
                     this.funInputModel();
                 } else {
@@ -45,11 +51,11 @@ var PageOrderItem = function(){
                 }
             }
         },
-        funSearch : function(data)
+        funSearch:function(data)
         {
             this.orderItemGrid.load(data);
         },
-        funReset : function()
+        funReset:function()
         {
             var orderItemAddForm = new mini.Form("orderItemAddForm");
             orderItemAddForm.setData();
@@ -134,10 +140,29 @@ var PageOrderItem = function(){
             this.orderItemSave.enable();
             this.orderItemReset.enable();
         },
+        //根据业务类型设置商品
+        onGoodsNameChanged:function () {
+            var businessId=mini.get("businessId");
+            var goodsId=mini.get("goodsId");
+            var value=businessId.getValue();
+            $.ajax({
+                url: this.basePath + "/goods/queryGoodsList",
+                type: "post",
+                data: {businessId:value},
+                dataType: "json",
+                success: function (result) {
+                    goodsId.setData(result);
+                },
+                error: function () {
+                    mini.alert("queryGoodsList error");
+                }
+            });
+        },
+        //根据商品设置物料号
         onMaterialNumChanged:function () {
-            var goodsName=mini.get("goodsName");
+            var goodsId=mini.get("goodsId");
             var materialNum=mini.get("materialNum");
-            var value=goodsName.getValue();
+            var value=goodsId.getValue();
             materialNum.setValue("");
             $.ajax({
                 url: this.basePath + "/goods/queryMaterialNum",
@@ -154,6 +179,7 @@ var PageOrderItem = function(){
                 }
             });
         },
+        //g
         //根据物料号设置price
         onPriceChanged:function () {
             var unitPrice=mini.get("unitPrice");
@@ -248,7 +274,7 @@ var PageOrderItem = function(){
             if(obj!="") {
                 obj.customerGoodId = obj.materialNum;
                 if (me.action == "modify") {
-                    obj.customerGoodId = this.goodsNumId;
+                    // obj.customerGoodId = this.goodsNumId;
                     esgouNumFinal=obj.esgouNum - this.goodsNumBefore;
                 }
             }

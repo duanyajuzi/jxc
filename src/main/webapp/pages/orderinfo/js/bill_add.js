@@ -5,8 +5,8 @@ var PageBillAdd = function(){
             basePath:"",
             action : "",
             billForm : null,
-            pbillType:null
-            
+            pbillType:null,
+            orderId:null
         },
         init :function ()
         {
@@ -18,6 +18,7 @@ var PageBillAdd = function(){
         {
         	var row = data.row;
             this.pbillType=row.billType;
+            this.orderId=row.orderId;
         	this.action = data.action;
         	this.billForm.setData(row);
         },
@@ -37,6 +38,7 @@ var PageBillAdd = function(){
             var me = this;
             var obj = this.billForm.getData(true);
             obj.billType=this.pbillType;
+            obj.orderId=this.orderId;
             $.ajax({
                url : me.basePath + "/bill/" + me.action + "?a="+Math.random(),
                type : 'POST',

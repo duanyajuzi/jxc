@@ -45,7 +45,7 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
                     <td style="width:32%;">
-                        <input name="businessId" id="businessId" class="mini-combobox" style="width:200px;"
+                        <input name="businessId" id="businessId" class="mini-combobox" style="width:200px;" allowInput="true" emptyText="请输入或选择"
                                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
                                required="true" maxlength="15" requiredErrorText="商品名称不能为空"/>
                     </td>
@@ -59,12 +59,12 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">库存量：</td>
-                    <td style="width:32%;">
-                        <input name="storage" id="storage" class="mini-textbox" style="width:200px;"  required="true" vtype="float;maxlength:12" requiredErrorText="库存量（只显示，界面上不做修改，同时）不能为空"/>
-                    </td>
-                </tr>
+                <%--<tr>--%>
+                    <%--<td class="form-label" style="text-align: right;width:16%;">库存量：</td>--%>
+                    <%--<td style="width:32%;">--%>
+                        <%--<input name="storage" id="storage" class="mini-textbox" style="width:200px;"  required="true" vtype="float;maxlength:12" requiredErrorText="库存量（只显示，界面上不做修改，同时）不能为空"/>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
 
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">备注：</td>

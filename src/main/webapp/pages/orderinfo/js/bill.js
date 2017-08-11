@@ -11,7 +11,7 @@ var PageBill = function(){
             mini.parse();
             this.basePath = PageMain.basePath;
             this.billGrid = mini.get("billGrid");
-            this.billGrid.load();
+            // this.billGrid.load();
             this.type=PageBill.getUrlParam("billType");
         },
         getUrlParam:function(name){
@@ -45,7 +45,11 @@ var PageBill = function(){
             {
                 row.billType=this.type;
             	var paramData = {action: "modify", row: row, title:"编辑数据"};
-                this.funOpenInfo(paramData);
+                if(row.payTime == null || row.payTime == ""){
+                    this.funOpenInfo(paramData);
+                }else {
+                    PageMain.funShowMessageBox("已付款，不可修改");
+                }
             }
             else
             {
@@ -69,6 +73,49 @@ var PageBill = function(){
                 }
             })
         },
+        funOpenSetBill:function () {
+          var paramData={"orderType":this.type};
+          mini.open({
+              url:this.basePath+"/pages/orderinfo/setBill.jsp",
+              title:"开票",
+              width:1150,
+              height:600,
+              onload:function () {
+                  var iframe=this.getIFrameEl();
+                  iframe.contentWindow.PageSetBill.funGetData(paramData);
+              },
+              ondestroy:function () {
+              }
+          });  
+        },
+        funModifySetBill:function () {
+            var row=this.billGrid.getSelected();
+            var paramData={"orderType":this.type,"row":row,"action":"modify"};
+            if(row){
+                // if(row.payTime==null || row.payTime=="") {
+                    mini.open({
+                        url: this.basePath + "/pages/orderinfo/setBill.jsp",
+                        title: "开票",
+                        width: 1150,
+                        height: 600,
+                        onload: function () {
+                            var iframe = this.getIFrameEl();
+                            iframe.contentWindow.PageSetBill.funGetData(paramData);
+                            iframe.contentWindow.PageSetBill.funSetBillRight(paramData);
+                        },
+                        ondestroy: function () {
+                            // this.billGrid.reload();
+                        }
+                        // }
+                    });
+
+                // }else{
+                //     mini.alert("订单已付款，不可修改票据内容");
+                // }
+            }else{
+                mini.alert("请先选择所需修改的票据记录");
+            }
+        },
         funDelete : function()
         {
             var row = this.billGrid.getSelected();
@@ -91,7 +138,6 @@ var PageBill = function(){
                             			 me.billGrid.reload();
                                     }
                                 });
-                                
                             },
                             error: function ()
                             {

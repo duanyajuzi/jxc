@@ -31,7 +31,6 @@ var PageOrderAdd = function(){
                         orderNo.setValue("DD" + result);
                     },
                     error: function () {
-
                     }
                 });
             }

@@ -13,7 +13,7 @@
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="dictForm">
 
-				<lable class="form-label">代码编码名称：</lable>
+				<lable class="form-label">代码名称：</lable>
                 <input name="nr" id="nr" class="mini-combobox" emptyText="代码名称"  style="width:100px;" allowInput="true"
                        url="${pageContext.request.contextPath}/dm/queryDmList" textField="nr" idField="bm" />
 				<lable class="form-label">字典名称：</lable>
@@ -43,7 +43,7 @@
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-					 <div field="nr" width="120" headerAlign="center" allowSort="true">代码编码</div>
+					 <div field="nr" width="120" headerAlign="center" allowSort="true">代码名称</div>
 					 <div field="dictNo" width="120" headerAlign="center" allowSort="true">字典编号</div>
 					 <div field="dictName" width="120" headerAlign="center" allowSort="true">字典名称</div>
 					 <%--<div field="dictIndex" width="120" headerAlign="center" allowSort="true"> 排序</div>--%>

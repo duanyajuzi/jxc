@@ -35,16 +35,14 @@
         	customerId ,
         	materialNum ,
         	unitPrice ,
-        	unit ,
-        	storage 
+        	unit
         ) VALUES (
         	#{id} ,
         	#{goodId} ,
         	#{customerId} ,
         	#{materialNum} ,
         	#{unitPrice} ,
-        	#{unit} ,
-        	#{storage} 
+        	#{unit}
         )
     ]]>
 	</insert>
@@ -56,9 +54,8 @@
 	        customerId = #{customerId} ,
 	        materialNum = #{materialNum} ,
 	        unitPrice = #{unitPrice} ,
-	        unit = #{unit} ,
-	        storage = #{storage} 
-        WHERE 
+	        unit = #{unit}
+        WHERE
 	        id = #{id} 
     ]]>
 	</update>
@@ -120,17 +117,13 @@
     
     <!-- 分页查询 -->
     <select id="GoodCustomerMapper.list" resultMap="mRetMapGoodCustomer">
-		SELECT A1.*, A2.businessId, A2.goodsName, A3.business, A4.customerName, A5.dictName
-    <!--	SELECT A1.*, A2.goodsName,  A4.customerName, A5.dictName-->
+		SELECT A1.*, A2.businessId,A3.business,A2.goodsName, A3.business, A4.customerName, A5.dictName
 		FROM tab_good_customer A1
 		INNER JOIN tab_goods A2 ON A1.GOODID=A2.ID
 		LEFT JOIN tab_business A3 ON A3.ID=A2.businessId
 		LEFT JOIN tab_customer A4 ON A4.ID=A1.customerId
 		LEFT JOIN tab_dict A5 ON A5.dictNo=A1.unit
-
-
 		<include refid="GoodCustomerMapper.findPage.where"/>
-		
 		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
 			ORDER BY ${sortColumns}
 		</if>

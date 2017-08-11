@@ -32,4 +32,7 @@ public class OrderService extends EntityService<OrderModel, Long>
 		return this.orderDAO;
 	}
 
+	public int  updateOrderStatus(OrderModel orderModel){
+		return orderDAO.updateOrderStatus(orderModel);
+	}
 }

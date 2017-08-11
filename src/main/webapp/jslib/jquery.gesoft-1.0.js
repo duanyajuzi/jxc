@@ -41,6 +41,7 @@ var PageMain = function(){
             {
                 var obj = mini.get(paramId);
                 obj.setData(data);
+                console.log(data);
                 if (flag)
                 {
                     obj.setValue(defaultVal);

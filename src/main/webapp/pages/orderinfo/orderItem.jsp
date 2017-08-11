@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="300" showHeader="false"
+    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="345" showHeader="false"
          style="border: none">
         <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
             <table style="width:100%;">
@@ -44,14 +44,26 @@
             <input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
                 <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
+                    <td style="width:32%;">
+                        <input name="businessId" id="businessId" class="mini-combobox" style="width:150px;"
+                               required="true" vtype="float;maxlength:10" allowInput="true"
+                               onvaluechanged="PageOrderItem.funBusValuechanged"
+                               <%--onvaluechanged="PageOrderItem.onGoodsNameChanged()"--%>
+                               idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"/>
+                    </td>
                     <td class="form-label" style="text-align: right;width:16%;">商品名称：</td>
                     <td style="width:32%;">
-                        <input name="goodsName" id="goodsName" class="mini-combobox" style="width:150px;"
-                               url="${pageContext.request.contextPath}/goods/queryGoodsList"  idField="id" textField="goodsName"
+                        <input name="goodsId" id="goodsId" class="mini-combobox" style="width:150px;"
+                               <%--url="${pageContext.request.contextPath}/goods/queryGoodsList"  --%>
+                               textField="msgVal"  valueField="msgKey"
+                               <%--valueField="goodsId" textField="goodsName"--%>
                                onvaluechanged="PageOrderItem.onMaterialNumChanged()"
                                required="true" maxlength="100"
                                requiredErrorText="商品名称不能为空"/>
                     </td>
+                </tr>
+                <tr>
                     <td class="form-label" style="text-align: right;width:16%;">物料号：</td>
                     <td style="width:32%;">
                         <input name="materialNum" id="materialNum" class="mini-combobox" style="width:150px;" allowInput="true"
@@ -60,26 +72,29 @@
                                onvaluechanged="PageOrderItem.onPriceChanged()"
                                required="true" maxlength="19" requiredErrorText="物料号不能为空" />
                     </td>
-                    </tr>
-                    <tr>
                     <td class="form-label" style="text-align: right;width:16%;">采购数量：</td>
                     <td style="width:32%;">
                         <input name="esgouNum" id="esgouNum" class="mini-textbox" style="width:150px;"
-                                 onvaluechanged="PageOrderItem.onPriceChangedByNum()"
-                                 required="true" vtype="float;maxlength:19" requiredErrorText="数量不能为空"/>
+                               onvaluechanged="PageOrderItem.onPriceChangedByNum()"
+                               required="true" vtype="float;maxlength:19" requiredErrorText="数量不能为空"/>
                     </td>
+                    </tr>
+                    <tr>
+
                     <td class="form-label" style="text-align: right;width:16%;">单价：</td>
                     <td style="width:32%;">
                         <input name="unitPrice" id="unitPrice" class="mini-textbox" style="width:150px;"
                                 required="true" vtype="float;maxlength:10" requiredErrorText="单价不能为空"/>
                     </td>
+                        <td class="form-label" style="text-align: right;width:16%;">货存量：</td>
+                        <td style="width:32%;">
+                            <input name="storage" id="storage" class="mini-textbox" style="width:150px;"
+                                   required="true" vtype="float;maxlength:10" requiredErrorText="单价不能为空"/>
+                        </td>
+
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">货存量：</td>
-                    <td style="width:32%;">
-                        <input name="storage" id="storage" class="mini-textbox" style="width:150px;"
-                               required="true" vtype="float;maxlength:10" requiredErrorText="单价不能为空"/>
-                    </td>
+
                     <td>
                         <a id="orderItemSave" class="mini-button" iconCls="icon-save" onclick="PageOrderItem.funSave()" plain="true"><label>保存</label></a>
                     </td>

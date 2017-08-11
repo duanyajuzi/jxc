@@ -3,53 +3,130 @@ var PageInoutStock=function () {
     return {
         defaultOption: {
             basePath: "",
-            orderItemInfoGrid: null
+            inoutGrid:null,
+            orderType:null
         },
         init: function () {
             mini.parse();
-            this.orderItemInfoGrid = mini.get("orderItemInfoGrid");
-        },
-        funSearch: function (data) {
-            this.orderItemInfoGrid.load(data);
-        },
-        //商品出库
-        funInoutStock:function () {
-            var inoutNum=mini.get("inoutNum");
-            var inoutNumValue=inoutNum.getValue();
-            var row=this.orderItemInfoGrid.getSelected(); 
-            var esgouNumvalue=row.esgouNum;
-            if(parseFloat(inoutNumValue)>parseFloat(esgouNumvalue)){
-                mini.alert("超出最大采购数量，请重新输入");
+            this.basePath = PageMain.basePath;
+            this.inoutGrid=mini.get("inoutGrid");
+            // var stimeBegin=mini.get("stimeBegin");
+            PageInoutStock.defaultOption.orderType=PageInoutStock.getUrlParam("orderType");
+            if(PageInoutStock.defaultOption.orderType==0){
+                this.inoutGrid.updateColumn("stime", {header: "入库时间"});
+                
+                // var i=stimeSearch.getEl();
+                $("label#stimeSearch").val("入库时间");
+                // var j=stimeSearch.getElementById();
+            }else if(PageInoutStock.defaultOption.orderType==1){
+                this.inoutGrid.updateColumn("stime", {header: "出库时间"});
+                $("#stimeSearch").val("出库时间");
             }
-            if(row){
-                $.ajax({
-                    url:this.basePath+"/orderItem/updateOrderItem",
-                    data:{orderItem:inoutNumValue},
-                    type:"post",
-                    dataType:"json",
-                    success:function () {
-                        
-                    },
-                    error:function () {
-
-                    }
-                });
-                var paramData={};
-                $.ajax({
-                    url:this.basePath+"/orderItem/insertTabInoutStock",
-                    data:paramData,
-                    type:'post',
-                    dataType:"json",
-                    success:function () {
-                        
-                    },
-                    error:function () {
-                        
-                    }
-                });
-            }else{
-                mini.alert("请选择一条商品记录")
+        },
+        getUrlParam:function(name){
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURIComponent(r[2]); return null;
+        },
+        funSearch: function () {
+            var stimeBegin=mini.get("stimeBegin");
+            var stimeEnd=mini.get("stimeEnd");
+            var paramData={"stimeBegin":stimeBegin.text,"stimeEnd":stimeEnd.text};
+            this.inoutGrid.load(paramData, function(res){
+                console.log(res);
+            });
+        },
+        funReset:function () {
+            var inoutStockForm=new mini.Form("inoutStockForm");
+            inoutStockForm.setData();
+            this.inoutGrid.load();
+        },
+        funAdd : function()
+        {
+            var paramData = {action: "insertTabInoutStock",row:{orderType:PageInoutStock.defaultOption.orderType}, title:"新增数据"};
+            this.funOpenInfo(paramData);
+        },
+        funModify : function()
+        {
+            var row = this.inoutGrid.getSelected();
+            if(row)
+            {
+                row.orderType=PageInoutStock.defaultOption.orderType;
+                var paramData = {action: "updateTabInoutStock", row: row, title:"编辑数据"};
+                this.funOpenInfo(paramData);
             }
+            else
+            {
+                PageMain.funShowMessageBox("请选择一条记录");
+            }
+        },
+        funOpenInfo : function(paramData)
+        {
+            var me = this;
+            mini.open({
+                url: this.basePath + "/pages/orderinfo/inoutStock_add.jsp",
+                title: paramData.title,
+                width: 320,
+                height: 120,
+                onload:function(){
+                    var iframe=this.getIFrameEl();
+                    iframe.contentWindow.PageInoutStockAdd.funSetData(paramData);
+                },
+                ondestroy:function(action){
+                    me.inoutGrid.reload();
+                }
+            })
+        },
+        funDelete:function () {
+            var row = this.inoutGrid.getSelected();
+            var me = this;
+            if(row)
+            {
+                mini.confirm("确定要删除这条记录?", "提醒", function (action) {
+                    if (action == "ok")
+                    {
+                        $.ajax({
+                            url : me.basePath + "/orderItem/deleteTabInoutStock",
+                            type: 'POST',
+                            data: {"id": row.id},
+                            dataType: 'json',
+                            success: function (data)
+                            {
+                                mini.alert(data.msg, "提醒", function(){
+                                    if(data.success)
+                                    {
+                                        me.inoutGrid.reload();
+                                    }
+                                });
+                            },
+                            error: function ()
+                            {
+                                mini.alert("删除记录失败");
+                            }
+                        });
+                    }
+                })
+            }
+            else
+            {
+                mini.alert("请先选择要删除的记录");
+            }
+        },
+        //商品出库数量
+        funSetInoutStockNum: function () {
+            var data={orderType:PageInoutStock.defaultOption.orderType}
+           mini.open({
+               url:this.basePath+"/pages/orderinfo/setInoutStock.jsp",
+               height:500,
+               width:900,
+               onload:function () {
+                   var iframe=this.getIFrameEl();
+                   iframe.contentWindow.PageSetInoutStock.funGetData(data);
+               },
+               ondestroy:function () {
+                   
+               }
+           });
         }
     }
 } ();

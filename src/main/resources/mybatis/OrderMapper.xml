@@ -46,7 +46,6 @@
         	orderName ,
         	orderTime ,
         	orderType ,
-        	orderStatus ,
         	deliveryTime ,
         	deliveryAddress ,
         	customerId ,
@@ -66,7 +65,6 @@
         	#{orderName} ,
         	#{orderTime} ,
         	#{orderType} ,
-        	#{orderStatus} ,
         	#{deliveryTime} ,
         	#{deliveryAddress} ,
         	#{customerId} ,
@@ -91,7 +89,6 @@
 	        orderName = #{orderName} ,
 	        orderTime = #{orderTime} ,
 	        orderType = #{orderType} ,
-	        orderStatus = #{orderStatus} ,
 	        deliveryTime = #{deliveryTime} ,
 	        deliveryAddress = #{deliveryAddress} ,
 	        customerId = #{customerId} ,
@@ -115,6 +112,12 @@
         UPDATE tab_order set orderStatus=-1 WHERE  id=#{id}
     ]]>
     </update>
+	<!--下发订单时更改订单状态-->
+	<update id="OrderMapper.updateOrderStatus">
+		<![CDATA[
+        UPDATE tab_order set orderStatus=1 WHERE  id=#{id}
+    ]]>
+	</update>
     
     <select id="OrderMapper.getById" resultMap="mRetMapOrder">
 		SELECT <include refid="OrderMapper.columns" />
