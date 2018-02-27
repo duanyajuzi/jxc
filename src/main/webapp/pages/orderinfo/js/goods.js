@@ -50,7 +50,7 @@ var PageGoods = function(){
                 url: this.basePath + "/pages/orderinfo/goods_add.jsp",
                 title: paramData.title,
                 width: 400,
-                height: 280,
+                height: 220,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageGoodsAdd.funSetData(paramData);

@@ -20,7 +20,31 @@ var PageBillAdd = function(){
             this.pbillType=row.billType;
             this.orderId=row.orderId;
         	this.action = data.action;
+            row.payState=PageBillAdd.onPayState(row.payState);
         	this.billForm.setData(row);
+            PageBillAdd.labelModel(this.action);
+        },
+        onPayState:function(e){
+        var Genders=[{id:0,text:"未付款"}, {id:1,text:"已付款"}];
+        for (var i = 0, l = Genders.length; i < l; i++) {
+            var g = Genders[i];
+            if (g.id == e) return g.text;
+        }
+        return "";
+        },
+        //文本只读
+        labelModel:function(action){
+            var form = new mini.Form("billFormAdd");
+            var payTime=mini.get("payTime");
+            var fields = form.getFields();
+            for (var i = 0, l = fields.length; i < l; i++) {
+                var c = fields[i];
+                if (c.setReadOnly) c.setReadOnly(true);     //只读
+                if (c.setIsValid) c.setIsValid(true);      //去除错误提示
+            }
+            if(action=="modify"){
+                payTime.setReadOnly(false);
+            }
         },
         funSave : function()
         {
@@ -34,7 +58,6 @@ var PageBillAdd = function(){
                      return;
                  }
             }
-            
             var me = this;
             var obj = this.billForm.getData(true);
             obj.billType=this.pbillType;

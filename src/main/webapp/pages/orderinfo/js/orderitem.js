@@ -9,10 +9,13 @@ var PageOrderItem = function(){
             action:null,
             orderItemSave:null,
             orderItemReset:null,
-            //厂商商品Id(因为下拉框设置显示的不是id,getdata时取的不是id.)
+            //厂商商品Id
             goodsNumId:null,
             //修改之前的商品采购数量
-            goodsNumBefore:null
+            goodsNumBefore:null,
+            //
+            businessId:null,
+            orderType:null
         },
         init :function ()
         {
@@ -28,6 +31,8 @@ var PageOrderItem = function(){
         },
         funGetData:function (data) {
             this.orderData=data;
+            this.businessId=data.businessId;
+            this.orderType=data.orderType;
         },
         funBusValuechanged : function(e)
         {
@@ -35,8 +40,10 @@ var PageOrderItem = function(){
         },
         funSetData:function (data) {
             this.action=data.action;
+            var paramData={"businessId":this.businessId};
             if(this.action=="add"){
-                this.orderItemAddForm.setData();
+                this.orderItemAddForm.setData(paramData);
+                PageMain.funLoadGoodsByBussinessId("goodsId", false, "", this.businessId);
                 this.funInputModel();
             }else if(this.action=="modify") {
                 var row = this.orderItemGrid.getSelected();
@@ -54,6 +61,10 @@ var PageOrderItem = function(){
         funSearch:function(data)
         {
             this.orderItemGrid.load(data);
+            var businessId=mini.get("businessId");
+            if(data!=null){
+                businessId.setValue(data.businessId);
+            }
         },
         funReset:function()
         {
@@ -92,7 +103,9 @@ var PageOrderItem = function(){
                                     {
                                         me.funReset();
                                         me.orderItemGrid.reload();
-                                        me.funUpdateStorage(goodsData);
+                                        if(me.orderType==1) {
+                                            me.funUpdateStorage(goodsData);
+                                        }
                                     }
                                 });
 
@@ -113,8 +126,6 @@ var PageOrderItem = function(){
         //form不可用
         funLabelModel:function () {
             var form=new mini.Form("orderItemAddForm");
-            var materialNum=mini.get("materialNum");
-            // materialNum.select(0);
             var fields=form.getFields();
             for (var i = 0, l = fields.length; i < l; i++) {
                 var c = fields[i];
@@ -129,11 +140,13 @@ var PageOrderItem = function(){
             var form=new mini.Form("orderItemAddForm");
             var unitPrice=mini.get("unitPrice");
             var storage=mini.get("storage");
+            var businessId=mini.get("businessId");
             var fields = form.getFields();
             for (var i = 0, l = fields.length; i < l; i++) {
                 var c = fields[i];
                 if (c.setReadOnly) c.setReadOnly(false);
             }
+            businessId.disable();
             unitPrice.disable();
             storage.disable();
             mini.repaint(document.body);
@@ -211,12 +224,14 @@ var PageOrderItem = function(){
             var storage=mini.get("storage");
             var materialNumValue=materialNum.getValue();
             var esgouNumValue=esgouNum.getValue();
-            var storageValue=storage.getValue()
-            if(parseFloat(esgouNumValue)>parseFloat(storageValue)){
-                mini.alert("货存量不足，请修改");
-                this.orderItemSave.disable();
-            }else{
-                this.orderItemSave.enable();
+            var storageValue=storage.getValue();
+            if(this.orderType==1) {
+                if (parseFloat(esgouNumValue) > parseFloat(storageValue)) {
+                    mini.alert("货存量不足，请修改");
+                    this.orderItemSave.disable();
+                } else {
+                    this.orderItemSave.enable();
+                }
             }
             if (this.action == "modify") {
                     materialNumValue = this.goodsNumId;
@@ -298,8 +313,10 @@ var PageOrderItem = function(){
                     if(me.action=="modify"){
                         me.funLabelModel();
                     }
-                    me.funUpdateStorage(goodsData);
-                    me.orderItemGrid.reload();
+                    if(me.orderType==1) {
+                        me.funUpdateStorage(goodsData);
+                    }
+                        me.orderItemGrid.reload();
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {

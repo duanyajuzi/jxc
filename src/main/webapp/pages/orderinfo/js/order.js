@@ -43,7 +43,7 @@ var PageOrder = function(){
         	var row = this.orderGrid.getSelected();
             if(row)
             {
-                row.orderType=this.type;
+                // row.orderType=this.type;
             	var paramData = {action: "modify", row: row, title:"编辑数据"};
                 if(row.orderStatus==0) {
                     this.funOpenInfo(paramData);
@@ -113,7 +113,7 @@ var PageOrder = function(){
         funSetOrder:function () {
             var row = this.orderGrid.getSelected();
             if(row){
-                var paramData = {orderId: row.id};
+                var paramData = {orderId: row.id,businessId:row.businessId,orderType:row.orderType};
                 if(row.orderStatus==0) {
                     mini.open({
                         url: this.basePath + "/pages/orderinfo/orderItem.jsp",

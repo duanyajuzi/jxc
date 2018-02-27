@@ -4,23 +4,23 @@ var PageInoutStock=function () {
         defaultOption: {
             basePath: "",
             inoutGrid:null,
-            orderType:null
+            orderType:null,
+            inoutItemGrid:null
         },
         init: function () {
             mini.parse();
             this.basePath = PageMain.basePath;
             this.inoutGrid=mini.get("inoutGrid");
-            // var stimeBegin=mini.get("stimeBegin");
+            this.inoutItemGrid=mini.get("inoutItemGrid");
             PageInoutStock.defaultOption.orderType=PageInoutStock.getUrlParam("orderType");
             if(PageInoutStock.defaultOption.orderType==0){
                 this.inoutGrid.updateColumn("stime", {header: "入库时间"});
-                
-                // var i=stimeSearch.getEl();
                 $("label#stimeSearch").val("入库时间");
-                // var j=stimeSearch.getElementById();
+                this.inoutItemGrid.updateColumn("goodNum", {header: "入库数量"});
             }else if(PageInoutStock.defaultOption.orderType==1){
                 this.inoutGrid.updateColumn("stime", {header: "出库时间"});
                 $("#stimeSearch").val("出库时间");
+                this.inoutItemGrid.updateColumn("goodNum", {header: "出库数量"});
             }
         },
         getUrlParam:function(name){

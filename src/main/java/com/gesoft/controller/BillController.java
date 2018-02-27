@@ -95,31 +95,31 @@ public class BillController extends BaseController
 				}
 			}else {
 				billService.updateBefore(model);
-				try{
-					String str = model.getData();
-					String left = model.getLeftData();
-					BillModel billModel=new BillModel();
+			}
+			try{
+				String str = model.getData();
+				String left = model.getLeftData();
+				BillModel billModel=new BillModel();
+				billModel.setBillId(model.getId());
+				billService.deleteBefore(billModel);
+				List<Map<String, Object>> list = (List<Map<String, Object>>) JSONUtils.parse(str);
+				List<Map<String, Object>> leftlist = (List<Map<String, Object>>) JSONUtils.parse(left);
+				//修改出票状态，并保存数据到tab_bill_inout_stock
+				for (int i = 0; i < list.size(); i++) {
+					Object obj = list.get(i).get("id");
 					billModel.setBillId(model.getId());
-					billService.deleteBefore(billModel);
-					List<Map<String, Object>> list = (List<Map<String, Object>>) JSONUtils.parse(str);
-					List<Map<String, Object>> leftlist = (List<Map<String, Object>>) JSONUtils.parse(left);
-					//修改出票状态，并保存数据到tab_bill_inout_stock
-					for (int i = 0; i < list.size(); i++) {
-						Object obj = list.get(i).get("id");
-						billModel.setBillId(model.getId());
-						billModel.setStockId(Long.valueOf(String.valueOf(obj)));
-						billService.insertBillItem(billModel);
-						billService.updateBillStatus(billModel);
-					}
-					//修改之前已出票的数据出票状态
-					for (int i = 0; i < leftlist.size(); i++) {
-						Object obj = leftlist.get(i).get("id");
-						billModel.setStockId(Long.valueOf(String.valueOf(obj)));
-						billService.updateUnBillStatus(billModel);
-					}
-				}catch (Exception e){
-					logger.error("BillController insertBillItem error：", e);
+					billModel.setStockId(Long.valueOf(String.valueOf(obj)));
+					billService.insertBillItem(billModel);
+					billService.updateBillStatus(billModel);
 				}
+				//修改之前已出票的数据出票状态
+				for (int i = 0; i < leftlist.size(); i++) {
+					Object obj = leftlist.get(i).get("id");
+					billModel.setStockId(Long.valueOf(String.valueOf(obj)));
+					billService.updateUnBillStatus(billModel);
+				}
+			}catch (Exception e){
+				logger.error("BillController insertBillItem error：", e);
 			}
 		}
 		catch (Exception e)

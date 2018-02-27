@@ -48,7 +48,7 @@
                     <td style="width:32%;">
                         <input name="businessId" id="businessId" class="mini-combobox" style="width:150px;"
                                required="true" vtype="float;maxlength:10" allowInput="true"
-                               onvaluechanged="PageOrderItem.funBusValuechanged"
+                               <%--onvaluechanged="PageOrderItem.funBusValuechanged"--%>
                                <%--onvaluechanged="PageOrderItem.onGoodsNameChanged()"--%>
                                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"/>
                     </td>

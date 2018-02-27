@@ -11,6 +11,7 @@
         <result property="orderTime" column="orderTime"/>
         <result property="orderType" column="orderType"/>
         <result property="orderStatus" column="orderStatus"/>
+		<result property="businessId" column="businessId"/>
         <result property="deliveryTime" column="deliveryTime"/>
         <result property="deliveryAddress" column="deliveryAddress"/>
         <result property="customerId" column="customerId"/>
@@ -24,10 +25,11 @@
         <result property="ctime" column="ctime"/>
         <result property="cuserid" column="cuserid"/>
         <result property="memo" column="memo"/>
-		<result property="customerName" column="customerName"/>
-		<result property="pcustomerName" column="pcustomerName"/>
-		<result property="name1" column="name1"/>
-		<result property="name2" column="name2"/>
+		<result property="customerName"/>
+		<result property="pcustomerName"/>
+		<result property="name1"/>
+		<result property="name2"/>
+		<result property="business"/>
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
@@ -46,6 +48,7 @@
         	orderName ,
         	orderTime ,
         	orderType ,
+        	businessId,
         	deliveryTime ,
         	deliveryAddress ,
         	customerId ,
@@ -65,6 +68,7 @@
         	#{orderName} ,
         	#{orderTime} ,
         	#{orderType} ,
+        	#{businessId},
         	#{deliveryTime} ,
         	#{deliveryAddress} ,
         	#{customerId} ,
@@ -89,6 +93,7 @@
 	        orderName = #{orderName} ,
 	        orderTime = #{orderTime} ,
 	        orderType = #{orderType} ,
+	        businessId = #{businessId},
 	        deliveryTime = #{deliveryTime} ,
 	        deliveryAddress = #{deliveryAddress} ,
 	        customerId = #{customerId} ,
@@ -216,6 +221,8 @@
 		date_format(A.orderTime,'%Y-%m-%d %T') as orderTime,
 		A.orderType ,
 		A.orderStatus ,
+		A.businessId ,
+		E.business,
 		date_format(A.deliveryTime,'%Y-%m-%d %T') as deliveryTime,
 		A.deliveryAddress ,
 		A.customerId ,
@@ -233,12 +240,10 @@
 		A.memo
 		from tab_order A
 		left join tab_customer B on A.customerId=B.id
-		left JOIN tab_customer D on A.pcustomerId=D.id
+		left join tab_customer D on A.pcustomerId=D.id
+		left join tab_business E on A.businessId=E.id
 		<include refid="OrderMapper.findPage.where"/>
-		
-		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
-			ORDER BY ${sortColumns}
-		</if>
+		order by A.orderTime desc
 		LIMIT #{startNum}, #{pageSize}
     </select>
 

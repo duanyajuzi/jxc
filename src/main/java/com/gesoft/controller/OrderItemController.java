@@ -188,9 +188,15 @@ public class OrderItemController extends BaseController
             for(int i=0;i<list.size();i++){
                 Object obj=list.get(i).get("id");
                 Object obj1=list.get(i).get("tmpNum");
+                Object obj2=list.get(i).get("customerGoodId");
+                Object obj3=list.get(i).get("goodId");
                 model.setId(Long.valueOf(String.valueOf(obj)));
+                model.setGoodId(Long.valueOf(String.valueOf(obj3)));
+                model.setCustomerGoodId(Long.valueOf(String.valueOf(obj2)));
                 model.setTmpNum(Float.parseFloat(obj1.toString()));
                 orderItemService.updateInoutNum(model);
+                orderItemService.updateTabGoodsStorage(model);
+                orderItemService.updateTabGoodCustomerStorage(model);
             }
         }
         catch (Exception e) {

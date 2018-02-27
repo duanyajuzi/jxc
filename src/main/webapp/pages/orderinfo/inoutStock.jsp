@@ -44,7 +44,7 @@
         <div class="mini-fit">
             <div id="inoutGrid" class="mini-datagrid"
                  idField="id" allowResize="false" onshowrowdetail="onShowRowDetail"
-                 pagesize="10" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
+                 pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="expandcolumn" >详情</div>
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
@@ -64,7 +64,7 @@
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center">商品名称</div>
                     <div field="materialNum" width="120" allowSort="true" headerAlign="center">物料号</div>
-                    <div field="goodNum" width="120" allowSort="true">入/出库商品数量</div>
+                    <div field="goodNum" name="goodNum" width="120" allowSort="true">入/出库商品数量</div>
                 </div>
             </div>
         </div>

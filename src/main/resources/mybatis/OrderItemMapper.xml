@@ -23,6 +23,7 @@
         <result property="price"/>
         <result property="unit"/>
         <result property="pname"/>
+        <result property="storage"/>
        <!-- tab_inout_stock-->
         <result property="stime"/>
         <result property="businessId"/>
@@ -258,9 +259,7 @@
         <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeEnd)">
         AND A.stime &lt;= #{stimeEnd}
         </if>
-        <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
-            ORDER BY ${sortColumns}
-        </if>
+       order by A.stime desc
         LIMIT #{startNum}, #{pageSize}
     </select>
 
@@ -319,7 +318,7 @@
 
     <!--查询订单树子节点-->
     <select id="OrderItemMapper.queryOrderTree2" resultMap="mRetMapOrderItem">
-        SELECT B.id,D.goodsName ,F.materialNum,B.esgouNum,B.tmpNum,(B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,
+        SELECT B.id,B.customerGoodId,F.goodId,D.goodsName ,F.materialNum,B.esgouNum,B.tmpNum,(B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,
 		concat( D.goodsName, '-' ,F.materialNum,'(',CONVERT(B.esgouNum-B.tmpNum,char),')') as text,B.orderId
         FROM tab_orderitem B
         left join tab_order A on A.id=B.orderId
@@ -351,6 +350,22 @@
         UPDATE tab_order
         SET orderStatus=4
         WHERE id = #{orderId}
+    ]]>
+    </update>
+    
+    <update id="OrderItemMapper.updateTabGoodsStorage">
+        <![CDATA[
+        UPDATE tab_goods
+        SET storage = storage + #{tmpNum}
+        WHERE id = #{goodId}
+    ]]>
+    </update>
+
+    <update id="OrderItemMapper.updateTabGoodCustomerStorage">
+        <![CDATA[
+        UPDATE tab_good_customer
+        SET storage = storage + #{tmpNum}
+        WHERE id = #{customerGoodId}
     ]]>
     </update>
 </mapper>

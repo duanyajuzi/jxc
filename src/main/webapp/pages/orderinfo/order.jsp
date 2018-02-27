@@ -84,7 +84,8 @@
                           renderer="onStatusRenderer" allowSort="true">订单状态</div>
 					 <div field="deliveryTime" width="120" headerAlign="center" allowSort="true"
                           dateFormat="yyyy-MM-dd HH:mm:ss">交货时间</div>
-					 <div field="deliveryAddress" width="120" headerAlign="center" allowSort="true">交货地址</div>
+                     <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
+					 <%--<div field="deliveryAddress" width="120" headerAlign="center" allowSort="true">交货地址</div>--%>
 					 <%--<div field="name1" width="120" headerAlign="center" allowSort="true">厂商</div>--%>
 					 <%--<div field="ccontacts" width="120" headerAlign="center" allowSort="true">厂商联系人</div>--%>
 					 <%--<div field="caddress" width="120" headerAlign="center" allowSort="true">厂商联系地址</div>--%>

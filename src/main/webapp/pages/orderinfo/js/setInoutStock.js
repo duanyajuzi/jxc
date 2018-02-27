@@ -20,21 +20,16 @@ var PageSetInoutStock = function () {
                 this.orderType = data.orderType;
                 var inEdit = mini.get("inEdit");
                 var outEdit = mini.get("outEdit");
-                // var tmpNum=mini.get()
                 if (this.orderType == 1) {
                     inEdit.hide();
                     this.datagrid.updateColumn("tmpNum", {header: "出库数量"});
                     $("#stimeLabel").html("出库时间");
-
                 } else if (this.orderType == 0) {
                     outEdit.hide();
                     this.datagrid.updateColumn("tmpNum", {header: "入库数量"});
                     $("#stimeLabel").html("入库时间");
                 }
             }
-        },
-        funHideButton:function () {
-
         },
         funSearch:function () {
             var param=this.searchForm.getData();
@@ -44,29 +39,39 @@ var PageSetInoutStock = function () {
             var valueList = new Array();
             var data = new Array();
             var values = this.orderTree.getValue(false);
-            valueList = values.split(",");
-            var valueLength = valueList.length;
-            for (var i = 0; i < valueLength; i++) {
-                data[i] = this.orderTree.getNode(valueList[i]);
+            var node = this.orderTree.getSelectedNode();
+            if(values.length>0) {
+                valueList = values.split(",");
+                var valueLength = valueList.length;
+                for (var i = 0; i < valueLength; i++) {
+                    data[i] = this.orderTree.getNode(valueList[i]);
+                }
+                for (var i = 0; i < data.length; i++) {
+                    data[i].tmpNum = data[i].afterNum;
+                    PageSetInoutStock.funSetTable(data[i]);
+                }
+            }else if(values.length==0 && node!=null){
+                    node.tmpNum=node.afterNum;
+                    PageSetInoutStock.funSetTable(node);
+            }else {
+                mini.alert("请选择所要入库的商品");
             }
-            for(var i = 0; i < data.length; i++){
-                data[i].tmpNum = data[i].afterNum;
-                PageSetInoutStock.funSetTable(data[i]);
-            }
-            PageSetInoutStock.funUncheckTree();
+                PageSetInoutStock.funUncheckTree();
+
         },
         onEditNum: function () {
             var node = this.orderTree.getSelectedNode();
             this.beforeTmpNum = node.tmpNum;
-            var unique = node.orderId + "-" + node.id;
-            mini.prompt("请输入出货数量", "出库数量",
+            mini.prompt("请输数量", "数量",
                 function (action, value) {
                     if (action == "ok") {
                         var pattern=/^[0-9]*$/;
                         if(pattern.test(value)){
                             if (value > node.afterNum) {
-                                PageMain.funShowMessageBox("出货数量大于商品订购数量,请重新输入");
-                            } else {
+                                PageMain.funShowMessageBox("数量大于商品订购数量,请重新输入");
+                            } else if(value=="" || value==null){
+                                PageMain.funShowMessageBox("请输入数量");
+                            }else{
                                 node.tmpNum = value;
                                 PageSetInoutStock.funSetTable(node);
                                 PageSetInoutStock.funUncheckTree();
@@ -126,6 +131,8 @@ var PageSetInoutStock = function () {
                         "orderId":data.orderId,
                         "orderName": data.orderName,
                         "id":data.id,
+                        "customerGoodId":data.customerGoodId,
+                        "goodId":data.goodId,
                         "goodsName": data.goodsName,
                         "materialNum": data.materialNum,
                         "tmpNum": data.tmpNum,
@@ -162,7 +169,6 @@ var PageSetInoutStock = function () {
                 success: function () {
                 },
                 error: function () {
-
                 }
             });
         }

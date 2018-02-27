@@ -16,8 +16,8 @@
                 <lable class="form-label">业务类型：</lable>
                 <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                       style="width:100px;"   maxlength="10" />
-                <a class="mini-button" iconCls="icon-search" style="height: auto" onclick="PageSetInoutStock.funSearch()" plain="true"></a>
+                       style="width:100px;"   maxlength="10"
+                       onvaluechanged="PageSetInoutStock.funSearch()"/>
             </div>
         </div>
         <div id="orderTree" class="mini-tree"  style="width:100%;height: 380px"
@@ -43,6 +43,8 @@
                 <div field="orderId" visible="false">订单ID</div>
                 <div field="orderName" width="100" headerAlign="center" allowSort="true">订单名称</div>
                 <div field="id" visible="false">orderItemId</div>
+                <div field="customerGoodId" visible="false">customerGoodId</div>
+                <div field="goodId" visible="false">goodId</div>
                 <div field="goodsName" width="80" headerAlign="center" allowSort="true">商品名称</div>
                 <div field="materialNum" width="120" headerAlign="center" allowSort="true">商品物料号</div>
                 <div field="tmpNum" name="tmpNum" width="100" headerAlign="center" allowSort="true">入\出库数量</div>

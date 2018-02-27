@@ -86,4 +86,12 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
     public int updateOrderBillStatus(OrderItemModel model){
         return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateOrderBillStatus", model);
     }
+
+    public int updateTabGoodsStorage(OrderItemModel model){
+        return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateTabGoodsStorage", model);
+    }
+
+    public int updateTabGoodCustomerStorage(OrderItemModel model){
+        return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateTabGoodCustomerStorage", model);
+    }
 }

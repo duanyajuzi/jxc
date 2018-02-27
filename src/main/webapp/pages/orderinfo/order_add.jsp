@@ -53,19 +53,27 @@
                                format="yyyy-MM-dd HH:mm:ss" timeFormat="HH:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"
                                nullValue="null"  emptyText="订单时间" allowInput="false"  />
                     </td>
+                    <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
+                    <td style="width:32%;">
+                        <input name="businessId" id="businessId" class="mini-combobox" style="width:200px; "
+                               idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
+                               required="true" maxlength="15" requiredErrorText="业务类型不能为空"
+                                emptyText="请输入或选择" allowInput="true"/>
+                    </td>
+                </tr>
+                <tr>
                     <td class="form-label" style="text-align: right;width:16%;">交货时间：</td>
                     <td style="width:32%;">
                         <input name="deliveryTime" id="deliveryTime" class="mini-datepicker" style="width:200px; "
                                format="yyyy-MM-dd HH:mm:ss" timeFormat="HH:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"
                                nullValue="null"  emptyText="交货时间" allowInput="false"/>
                     </td>
-                </tr>
-                <tr>
                     <td class="form-label" style="text-align: right;width:16%;">交货地址：</td>
                     <td style="width:32%;">
-                        <input name="deliveryAddress" id="deliveryAddress" class="mini-textbox" style="width:520px;"  required="true" maxlength="200" requiredErrorText="交货地址不能为空"/>
+                        <input name="deliveryAddress" id="deliveryAddress" class="mini-textbox" style="width:200px;"  required="true" maxlength="200" requiredErrorText="交货地址不能为空"/>
                     </td>
                 </tr>
+                <tr>
                     <td class="form-label" style="text-align: right;width:16%;">厂商：</td>
                     <td style="width:32%;">
                         <input name="customerId" id="customerId" class="mini-combobox" style="width:200px;"  required="true" maxlength="10"

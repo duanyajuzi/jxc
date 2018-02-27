@@ -4,15 +4,24 @@ var PageBill = function(){
         defaultOption: {
             basePath:"",
             billGrid : null,
-            type:null
+            type:null,
+            billItemGrid:null
         },
         init :function ()
         {
             mini.parse();
             this.basePath = PageMain.basePath;
             this.billGrid = mini.get("billGrid");
+            this.billItemGrid=mini.get("billItemGrid");
             // this.billGrid.load();
             this.type=PageBill.getUrlParam("billType");
+            if(this.type==0){
+                this.billItemGrid.updateColumn("stime", {header: "入库时间"});
+                this.billItemGrid.updateColumn("goodNum", {header: "入库数量"});
+            }else if(this.type==1){
+                this.billItemGrid.updateColumn("stime", {header: "出库时间"});
+                this.billItemGrid.updateColumn("goodNum", {header: "出库数量"});
+            }
         },
         getUrlParam:function(name){
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -63,7 +72,7 @@ var PageBill = function(){
                 url: this.basePath + "/pages/orderinfo/bill_add.jsp",
                 title: paramData.title,
                 width: 400,
-                height: 300,
+                height: 400,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageBillAdd.funSetData(paramData);
@@ -87,6 +96,24 @@ var PageBill = function(){
               ondestroy:function () {
               }
           });  
+        },
+        funView:function () {
+          var row=this.billGrid.getSelected();
+          if(row){
+              mini.open({
+                  url:this.basePath+"/pages/orderinfo/bill_add.jsp",
+                  title:"查看详情",
+                  width: 400,
+                  height: 380,
+                  onload:function () {
+                      var iframe=this.getIFrameEl();
+                      var data={"row":row,"action":"view"};
+                      iframe.contentWindow.PageBillAdd.funSetData(data);
+                  },
+                  ondestroy:function () {
+                  }
+              });
+          }
         },
         funModifySetBill:function () {
             var row=this.billGrid.getSelected();

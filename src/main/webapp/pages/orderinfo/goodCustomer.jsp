@@ -47,7 +47,7 @@
             <div id="goodCustomerGrid" class="mini-datagrid"
                   idField="id" allowResize="false"
                  url="${pageContext.request.contextPath}/goodCustomer/query"
-                 pagesize="10" sizeList="[10,20,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
+                 pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
                     <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>

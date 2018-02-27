@@ -29,6 +29,8 @@ package com.gesoft.model;
 	private Integer orderStatus;
 //	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private String deliveryTime;
+	private Long businessId;
+	private String business;
 	private java.lang.String deliveryAddress;
 	private java.lang.Integer customerId;
 	private java.lang.String ccontacts;
@@ -285,6 +287,24 @@ package com.gesoft.model;
 
 	public OrderModel setPcustomerName(String pcustomerName) {
 		this.pcustomerName = pcustomerName;
+		return this;
+	}
+
+	public Long getBusinessId() {
+		return businessId;
+	}
+
+	public OrderModel setBusinessId(Long businessId) {
+		this.businessId = businessId;
+		return this;
+	}
+
+	public String getBusiness() {
+		return business;
+	}
+
+	public OrderModel setBusiness(String business) {
+		this.business = business;
 		return this;
 	}
 }

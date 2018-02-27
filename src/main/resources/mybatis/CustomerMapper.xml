@@ -171,7 +171,9 @@
         	customerName ,
         	contacts ,
         	address ,
-        	tel
+        	tel,
+        	consigneeName,
+        	consigneeTel
         FROM tab_customer
         WHERE id=#{id}
 	</select>

@@ -8,8 +8,7 @@ var PageSetBill = function () {
             billAddForm:null,
             searchForm:null,
             billId:null,
-            action:null,
-            // businessIdValue:null
+            action:null
         },
         init: function () {
             mini.parse();
@@ -23,54 +22,27 @@ var PageSetBill = function () {
             this.orderType=data.orderType;
             var inoutGrid = mini.get("inoutGrid");
             var detailGrid = mini.get("detailGrid");
-            // var tdCustomer=mini.get("tdCustomer");
             if(this.orderType==0){
                 inoutGrid.updateColumn("stime",{header:"入库时间"});
                 inoutGrid.updateColumn("goodNum", {header: "入库数量"});
-                inoutGrid.updateColumn("pcustomerName",{header:"厂商"});
                 detailGrid.updateColumn("stime",{header:"入库时间"});
                 detailGrid.updateColumn("goodNum", {header: "入库数量"});
-                detailGrid.updateColumn("pcustomerName",{header:"厂商"});
-                // $("td#tdCustomer").innerText("厂商");
-                // tdCustomer.innerText("厂商");
-                // document.getElementById("tdCustomer").innerText("厂商");
+                $("#consigneeNameLabel").html("发货人姓名：");
+                $("#deliveryAddressLabel").html("发货地址：");
             }else if(this.orderType==1){
                 inoutGrid.updateColumn("stime",{header:"出库时间"});
                 inoutGrid.updateColumn("goodNum", {header: "出库数量"});
-                inoutGrid.updateColumn("pcustomerName",{header:"采购公司"});
                 detailGrid.updateColumn("stime",{header:"出库时间"});
                 detailGrid.updateColumn("goodNum", {header: "出库数量"});
-                detailGrid.updateColumn("pcustomerName",{header:"采购公司"});
+                $("#consigneeNameLabel").html("收货人姓名：");
+                $("#deliveryAddressLabel").html("收货地址：");
             }
         },
         funSearch:function () {
             var param=this.searchForm.getData();
             var inoutGrid=mini.get("inoutGrid");
-            var type=this.orderType;
-            // inoutGrid.setUrl(this.basePath+"/bill/queryInoutList?orderType="+this.orderType+"&businessId="+param.businessId);
-            // inoutGrid.load();
-            $.ajax({
-                url: this.basePath + "/bill/queryInoutList",
-                data: {"orderType": this.orderType,"businessId":param.businessId},
-                type: "post",
-                dataType: "json",
-                success: function (paramData) {
-                    console.log(paramData);
-                    var result=paramData.data;
-                    var data=[];
-                    for(var i=0;i<result.length;i++) {
-                        if (type == 1) {
-                            data.push(PageSetBill.funGetOutDetailData(result[i]));
-                        } else if (type == 0) {
-                            data.push(PageSetBill.funGetInDetailData(result[i]));
-                        }
-                    }
-                    inoutGrid.setData(data);
-                },
-                error: function () {
-                    mini.alert("queryInoutList error");
-                }
-            });
+            inoutGrid.setUrl(this.basePath+"/bill/queryInoutList?orderType="+this.orderType+"&businessId="+param.businessId);
+            inoutGrid.load();
         },
         funSetBillRight:function (data) {
             var row=data.row;
@@ -92,23 +64,19 @@ var PageSetBill = function () {
                     if(result.length!=0) {
                         var data = [];
                         for (var i = 0; i < result.length; i++) {
-                            if (type == 1) {
-                                data.push(PageSetBill.funGetOutDetailData(result[i]));
-                            } else if (type == 0) {
-                                data.push(PageSetBill.funGetInDetailData(result[i]));
-                            }
-                            billAddForm.setData(result[i]);
-                            detailGrid.setData(data);
+                            data.push(PageSetBill.funGetOutDetailData(result[i]));
                         }
-                        businessIdValue = result[0].businessId;
-                        inoutGrid.setUrl(me.basePath + "/bill/queryInoutList?orderType=" + type + "&businessId=" + businessIdValue);
-                        inoutGrid.load();
+                            var change=PageSetBill.funChangeInfo(type,result[0]);
+                            billAddForm.setData(change);
+                            detailGrid.setData(data);
+                            businessIdValue = result[0].businessId;
+                            inoutGrid.setUrl(me.basePath + "/bill/queryInoutList?orderType=" + type + "&businessId=" + businessIdValue);
+                            inoutGrid.load();
                     }
                 },
                 error:function () {
                 }
             });
-
         },
         funGetOutDetailData:function (data) {
             var paramData = {
@@ -124,38 +92,17 @@ var PageSetBill = function () {
                 "stime":data.stime,
                 "pcustomerId": data.pcustomerId,
                 "pcustomerName": data.pcustomerName,
-                "pcontacts": data.pcontacts,
-                "paddress": data.paddress,
-                "ptel": data.ptel,
-                "orderTime": data.orderTime,
-                "action": "<a href='javascript:void(0);' onclick='PageSetBill.delRight(this)'>删除</a>"
-            };
-            return paramData;
-        },
-        funGetInDetailData:function (data) {
-            var paramData = {
-                "id":data.id,
-                "billItemId":data.billItemId,
-                "orderId":data.orderId,
-                "orderName":data.orderName,
-                "goodId":data.goodId,
-                "goodsName":data.goodsName,
-                "goodNum":data.goodNum,
-                "businessId":data.businessId,
-                "business": data.business,
-                "stime":data.stime,
-                "pcustomerId": data.customerId,
-                "pcustomerName": data.customerName,
-                "pcontacts": data.contacts,
-                "paddress": data.address,
-                "ptel": data.tel,
+                "pconsigneeName": data.pconsigneeName,
+                "consigneeName": data.consigneeName,
+                "deliveryAddress": data.deliveryAddress,
+                "pconsigneeTel": data.pconsigneeTel,
+                "consigneeTel": data.consigneeTel,
                 "orderTime": data.orderTime,
                 "action": "<a href='javascript:void(0);' onclick='PageSetBill.delRight(this)'>删除</a>"
             };
             return paramData;
         },
         setDetailGrid: function () {
-            var rows=this.inoutGrid.getSelecteds();
             var items=this.inoutGrid.getSelecteds();
             var beforeData=this.detailGrid.getData();
             var length=items.length;
@@ -165,36 +112,39 @@ var PageSetBill = function () {
                     beforeData.push(paramData);
                 }
                 this.detailGrid.setData(beforeData);
-                items[0].customerId = items[0].pcustomerId;
-                items[0].customerName = items[0].pcustomerName;
-                items[0].contacts = items[0].pcontacts;
-                items[0].address = items[0].paddress;
-                items[0].tel = items[0].ptel;
-                if(this.action != "modify") {
-                    this.billAddForm.setData(items[0]);
-                }
-                // if(this.action == "modify"){
-                //     this.billAddForm.setData(items[0]);
-                // }
-                this.inoutGrid.removeRows(rows);
+               var data=PageSetBill.funChangeInfo(this.orderType,items[0]);
+                this.billAddForm.setData(data);
+                this.inoutGrid.removeRows(items);
             }
+        },
+        funChangeInfo:function (type,data) {
+            if(type==0){
+                data.customerId = data.customerId;
+                data.customerName = data.customerName;
+                data.consigneeName = data.consigneeName;
+                data.consigneeTel = data.consigneeTel;
+            }else if(this.orderType==1){
+                data.customerId = data.pcustomerId;
+                data.customerName = data.pcustomerName;
+                data.consigneeName = data.pconsigneeName;
+                data.consigneeTel = data.pconsigneeTel;
+            }
+            return data;
         },
         onDeptChanged:function () {
             var customerId = mini.get("customerId");
-            var contacts=mini.get("contacts");
-            var address=mini.get("address");
-            var tel=mini.get("tel");
-            var id2=customerId.getValue();
-            if(id2!="") {
+            var consigneeName=mini.get("consigneeName");
+            var consigneeTel=mini.get("consigneeTel");
+            var id=customerId.getValue();
+            if(id!="") {
                 $.ajax({
                     url: this.basePath + "/customer/queryOtherInfoList",
                     type: "post",
-                    data: {id: id2},
+                    data: {id: id},
                     dataType: "json",
                     success: function (result) {
-                        contacts.setValue(result[0].contacts);
-                        address.setValue(result[0].address);
-                        tel.setValue(result[0].tel);
+                        consigneeName.setValue(result[0].consigneeName);
+                        consigneeTel.setValue(result[0].consigneeTel);
                     },
                     error: function () {
                         mini.alert("id2 error");

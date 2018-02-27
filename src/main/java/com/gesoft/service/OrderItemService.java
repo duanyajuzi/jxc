@@ -114,4 +114,12 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
     public int updateOrderBillStatus(OrderItemModel model){
         return orderItemDAO.updateOrderBillStatus(model);
     }
+
+    public int updateTabGoodsStorage(OrderItemModel model){
+        return  orderItemDAO.updateTabGoodsStorage(model);
+    }
+
+    public int updateTabGoodCustomerStorage(OrderItemModel model){
+        return  orderItemDAO.updateTabGoodCustomerStorage(model);
+    }
 }

@@ -25,6 +25,9 @@ public class BillModel extends BaseModel
 	private java.lang.String billNo;
 	private java.lang.Long customerId;
 	private String customerName;
+	private String consigneeName;
+	private String consigneeTel;
+	private String deliveryAddress;
 	private String billTime;
 	private String prePayTime;
 	private java.lang.Long businessId;
@@ -48,10 +51,6 @@ public class BillModel extends BaseModel
 	private String tel;
 	private String pconsigneeName;
 	private String pconsigneeTel;
-	private String pbillingAddress;
-	private String consigneeName;
-	private String consigneeTel;
-	private String billingAddress;
 	private String orderTime;
 	private Integer orderType;
 	private Integer isBIll;
@@ -458,15 +457,6 @@ public class BillModel extends BaseModel
 		return this;
 	}
 
-	public String getPbillingAddress() {
-		return pbillingAddress;
-	}
-
-	public BillModel setPbillingAddress(String pbillingAddress) {
-		this.pbillingAddress = pbillingAddress;
-		return this;
-	}
-
 	public String getConsigneeName() {
 		return consigneeName;
 	}
@@ -485,12 +475,12 @@ public class BillModel extends BaseModel
 		return this;
 	}
 
-	public String getBillingAddress() {
-		return billingAddress;
+	public String getDeliveryAddress() {
+		return deliveryAddress;
 	}
 
-	public BillModel setBillingAddress(String billingAddress) {
-		this.billingAddress = billingAddress;
+	public BillModel setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
 		return this;
 	}
 }

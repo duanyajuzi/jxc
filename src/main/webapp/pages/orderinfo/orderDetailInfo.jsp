@@ -46,13 +46,25 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">订单状态：</td>
                     <td style="width:32%;">
-                        <input name="orderStatus" id="orderStatus" class="mini-textbox" style="width:200px;"  required="true" maxlength="5" requiredErrorText="订单状态不能为空"/>
+                        <input name="orderStatus" id="orderStatus" class="mini-textbox" style="width:200px;"
+                               required="true" maxlength="5" requiredErrorText="订单状态不能为空"/>
                     </td>
-                    <td class="form-label" style="text-align: right;width:16%;">交货地址：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
                     <td style="width:32%;">
-                        <input name="deliveryAddress" id="deliveryAddress" class="mini-textbox" style="width:200px;"  required="true" maxlength="200" requiredErrorText="交货地址不能为空"/>
+                        <input name="businessId" id="businessId" class="mini-combobox" style="width:200px; "
+                               idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
+                               required="true" maxlength="15" requiredErrorText="业务类型不能为空"
+                               emptyText="请输入或选择" allowInput="true"/>
                     </td>
                 </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">交货地址：</td>
+                    <td style="width:32%;">
+                        <input name="deliveryAddress" id="deliveryAddress" class="mini-textbox" style="width:200px;"
+                               required="true" maxlength="200" requiredErrorText="交货地址不能为空"/>
+                    </td>
+                </tr>
+                <tr>
                 <td class="form-label" style="text-align: right;width:16%;">厂商：</td>
                 <td style="width:32%;">
                     <input name="customerId" id="customerId" class="mini-combobox" style="width:200px;"  required="true" maxlength="10"

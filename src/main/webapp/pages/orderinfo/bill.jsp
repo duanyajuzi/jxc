@@ -51,17 +51,20 @@
                     <div type="expandcolumn" >详情</div>
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
 					 <div field="billNo" width="120" headerAlign="center" allowSort="true">票据编号</div>
-					 <div field="customerName" width="120" headerAlign="center" allowSort="true">所属企业</div>
+					 <%--<div field="customerName" width="120" headerAlign="center" allowSort="true">所属企业</div>--%>
+                    <%--<div type="consigneeName" headerAlign="center"  width="120">收货人姓名</div>--%>
+                    <%--<div field="consigneeTel" width="120" headerAlign="center" allowSort="true">收货人电话</div>--%>
+                    <%--<div field="deliveryAddress" width="120" headerAlign="center" allowSort="true">收货地址</div>--%>
 					 <div field="billTime" width="120" headerAlign="center"
                           dateFormat="yyyy-MM-dd HH:mm:ss"allowSort="true">开票时间</div>
 					 <div field="prePayTime" width="120" headerAlign="center"
                           dateFormat="yyyy-MM-dd HH:mm:ss" allowSort="true">预付款时间</div>
-					 <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
-					 <div field="payState" width="120" headerAlign="center"
+					 <div field="business" width="100" headerAlign="center" allowSort="true">业务类型</div>
+					 <div field="payState" width="50" headerAlign="center"
                           renderer="onStatusRenderer" allowSort="true">付款状态</div>
 					 <div field="payTime" width="120" headerAlign="center"
                           dateFormat="yyyy-MM-dd HH:mm:ss" allowSort="true">付款时间</div>
-                    <div field="action" width="120"headerAlign="center"
+                    <div field="action" width="140"headerAlign="center"
                          renderer="funSetButton">操作</div>
                 </div>
             </div>
@@ -74,8 +77,8 @@
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
                     <div field="business" width="120" allowSort="true" headerAlign="center">业务类型</div>
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center">商品名称</div>
-                    <div field="goodNum" width="120" allowSort="true" headerAlign="center">入\出商品数量</div>
-                    <div field="stime" width="120"dateFormat="yyyy-MM-dd HH:mm:ss" allowSort="true">入\出货时间</div>
+                    <div field="goodNum" name="goodNum" width="120" allowSort="true" headerAlign="center">入\出商品数量</div>
+                    <div field="stime" name="stime" width="120"dateFormat="yyyy-MM-dd HH:mm:ss" allowSort="true">入\出货时间</div>
                 </div>
             </div>
         </div>
@@ -108,6 +111,9 @@
     }
     function funSetButton() {
         var button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
+        '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
+        'onclick="PageBill.funView()">详情</span></a>' +
+                '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
                 '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
                 'onclick="PageBill.funModifySetBill()">修改票据内容</span></a>' ;
         return button;
