@@ -9,7 +9,12 @@
 <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/dwr/interface/loadDwr.js'/>"></script>
 <link href="<c:url value='/jslib/css/common.css'/>" rel="stylesheet" type="text/css"/>
-
+<style>
+	body{
+		padding:0px;
+		margin:0px;
+	}
+</style>
 <script type="text/javascript">
 <!--
 	var _ctx_ = "${ctx}";
