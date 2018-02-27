@@ -24,6 +24,7 @@ public class BlueprintModel extends BaseModel
 	private java.lang.String memo;
 	private String goodsName;
 	private String dictName;
+	private java.lang.Long materialNum;
 
 	public void setId(java.lang.Long value) 
 	{
@@ -105,6 +106,15 @@ public class BlueprintModel extends BaseModel
 	public BlueprintModel setDictName(String dictName) {
 		this.dictName = dictName;
 		return this;
+	}
+
+	public void setMaterialNum(java.lang.Long value)
+	{
+		this.materialNum = value;
+	}
+	public java.lang.Long getMaterialNum()
+	{
+		return this.materialNum;
 	}
 }
 

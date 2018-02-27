@@ -107,8 +107,8 @@ var PageGoodCustomer = function(){
                 var paramData = {goodsId: data};
                 mini.open({
                     url:this.basePath+"/pages/orderinfo/blueprint.jsp",
-                    title:row.goodsName+"的方案管理",
-                    width:650,
+                    title:row.goodsName+"的客户管理",
+                    width:850,
                     height:450,
                     onload:function () {
                         var iframe=this.getIFrameEl();

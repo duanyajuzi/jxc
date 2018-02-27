@@ -19,12 +19,12 @@
                 <lable class="form-label">所属商品：</lable>
                 <input name="goodId" id="goodId" class="mini-combobox" style="width:100px;"  allowInput="true"
                        textField="msgVal"  valueField="msgKey"  emptyText="请输入或选择" maxlength="50"/>
-				<lable class="form-label">所属客户：</lable>
+				<lable class="form-label">所属工厂：</lable>
                 <input name="customerId" id="customerId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
                        idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
                        style="width:100px;"  maxlength="20" />
-				<lable class="form-label">物料号：</lable>
-                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="物料号"  style="width:100px;"/>
+				<lable class="form-label">原厂料号：</lable>
+                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="原厂料号"  style="width:100px;"/>
                 <a class="mini-button" iconCls="icon-search" onclick="PageGoodCustomer.funSearch()" plain="true"><label>查询</label></a>
                 <a class="mini-button" iconCls="icon-reset" onclick="PageGoodCustomer.funReset()" plain="true"><label>重置</label></a>
             </div>
@@ -38,7 +38,7 @@
                         <a  class="mini-button block-button" iconCls="icon-add" onclick="PageGoodCustomer.funAdd()">新增</a>
                         <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageGoodCustomer.funModify()">修改</a>
                         <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageGoodCustomer.funDelete()">删除</a>
-                        <a  class="mini-button block-button hide" iconCls="icon-collapse" id="expand" onclick="PageGoodCustomer.funManageSchemes()">方案管理</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-collapse" id="expand" onclick="PageGoodCustomer.funManageSchemes()">客户管理</a>
                     </td>
                 </tr>
             </table>
@@ -52,9 +52,9 @@
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
                     <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
 					 <div field="goodsName" width="120" headerAlign="center" allowSort="true">所属商品</div>
-					 <div field="customerName" width="120" headerAlign="center" allowSort="true">所属客户</div>
-					 <div field="materialNum" width="120" headerAlign="center" allowSort="true">物料号</div>
-					 <div field="unitPrice" width="120" headerAlign="center" allowSort="true">单价</div>
+					 <div field="customerName" width="120" headerAlign="center" allowSort="true">所属工厂</div>
+					 <div field="materialNum" width="120" headerAlign="center" allowSort="true">原厂料号</div>
+					 <div field="unitPrice" width="120" headerAlign="center" allowSort="true">采购未税价</div>
 					 <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
 					 <%--<div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>--%>
                     <%--<div field="acion" width="10%" headerAlign="center" allowSort="false"

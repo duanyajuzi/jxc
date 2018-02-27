@@ -53,7 +53,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">所属客户：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">所属工厂：</td>
                     <td style="width:32%;">
                         <input name="customerId" id="customerId" class="mini-combobox" allowInput="true"  emptyText="请输入或选择"
                                idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
@@ -61,13 +61,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">物<span style="padding: 0 3px;"></span>料<span style="padding: 0 3px;"></span>号：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">原厂料号：</td>
                     <td style="width:32%;">
                         <input name="materialNum" id="materialNum" class="mini-textbox" style="width:200px;"  required="true" maxlength="100" requiredErrorText="物料号不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">单<span style="padding: 0 12px;"></span>价：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">采购未税价：</td>
                     <td style="width:32%;">
                         <input name="unitPrice" id="unitPrice" class="mini-textbox" style="width:120px;" vtype="float;maxlength:12"  required="true"  requiredErrorText="单价不能为空"/>
                         <input name="unit" id="unit" class="mini-combobox" style="width:75px;"  required="true"

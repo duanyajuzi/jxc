@@ -14,12 +14,13 @@
         <result property="memo" column="memo"/>
 		<result property="goodsName" column="goodsName"/>
 		<result property="dictName" column="dictName"/>
+		<result property="materialNum" column="materialNum"/>
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="BlueprintMapper.columns">
 	    <![CDATA[
-		id,goodsId,goodsNum,price,unit,pname,memo
+		id,goodsId,goodsNum,price,unit,pname,memo,materialNum
 	    ]]>
 	</sql>
 
@@ -33,7 +34,8 @@
         	price ,
         	unit ,
         	pname ,
-        	memo 
+        	memo ,
+        	materialNum
         ) VALUES (
         	#{id} ,
         	#{goodsId} ,
@@ -41,7 +43,8 @@
         	#{price} ,
         	#{unit} ,
         	#{pname} ,
-        	#{memo} 
+        	#{memo} ,
+        	#{materialNum}
         )
     ]]>
 	</insert>
@@ -54,7 +57,8 @@
 	        price = #{price} ,
 	        unit = #{unit} ,
 	        pname = #{pname} ,
-	        memo = #{memo} 
+	        memo = #{memo} ,
+	        materialNum = #{materialNum}
         WHERE 
 	        id = #{id} 
     ]]>
@@ -124,7 +128,8 @@
 		A.unit,
 		D.dictName,
 		A.pname,
-		A.memo
+		A.memo,
+		A.materialNum
 		FROM tab_blueprint A
 		left join tab_goods B on A.goodsId=B.id
 		left join tab_dict D on A.unit=D.dictNo

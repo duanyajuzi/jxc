@@ -37,7 +37,7 @@
                 	<input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">方案名称：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">客户名称：</td>
                     <td style="width:32%;">
                         <input name="pname" id="pname" class="mini-textbox" style="width:200px;"  required="true" maxlength="100" requiredErrorText="方案名称不能为空"/>
                     </td>
@@ -58,7 +58,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">单价：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">客户料号：</td>
+                    <td style="width:32%;">
+                        <input name="materialNum" id="materialNum" class="mini-textbox" style="width:200px;"
+                               required="true" requiredErrorText="客户料号不能为空"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">销售未税价：</td>
                     <td style="width:32%;">
                         <input name="price" id="price" class="mini-textbox" style="width:120px;"  required="true" maxlength="12" requiredErrorText="单价不能为空"/>
                         <input name="unit" id="unit" class="mini-combobox" style="width:75px;"

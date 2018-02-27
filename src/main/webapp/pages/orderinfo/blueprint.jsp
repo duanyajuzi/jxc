@@ -12,8 +12,8 @@
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;height:100%"
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="blueprintForm">
-                <lable class="form-label">方案名称：</lable>
-                <input name="pname" id="pname" class="mini-textbox" emptyText="方案名称"  style="width:100px;"/>
+                <lable class="form-label">客户名称：</lable>
+                <input name="pname" id="pname" class="mini-textbox" emptyText="客户名称"  style="width:100px;"/>
                 <a class="mini-button" iconCls="icon-search" onclick="PageBlueprint.funSearchInfo()" plain="true"><label>查询</label></a>
                 <a class="mini-button" iconCls="icon-reset" onclick="PageBlueprint.funReset()" plain="true"><label>重置</label></a>
             </div>
@@ -38,12 +38,12 @@
                  pagesize="10" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-                    <div field="pname" width="120" headerAlign="center" allowSort="true">方案名称</div>
-					 <%--<div field="goodsName" width="120" headerAlign="center" allowSort="true">商品名称</div>--%>
-					 <div field="goodsNum" width="120" headerAlign="center" allowSort="true">数量</div>
-					 <div field="price" width="120" headerAlign="center" allowSort="true">单价</div>
-					 <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
-					 <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
+                    <div field="pname" width="120" headerAlign="center" allowSort="true">客户名称</div>
+                    <div field="goodsNum" width="120" headerAlign="center" allowSort="true">数量</div>
+                    <div field="materialNum" width="120" headerAlign="center" allowSort="true">客户料号</div>
+                    <div field="price" width="120" headerAlign="center" allowSort="true">销售未税价</div>
+                    <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
+                    <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
                 </div>
             </div>
         </div>

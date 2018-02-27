@@ -71,7 +71,7 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">备注：</td>
                     <td style="width:32%;">
-                        <input name="memo" id="memo" class="mini-textArea" style="width:200px;"  required="true" maxlength="100" requiredErrorText="备注不能为空"/>
+                        <input name="memo" id="memo" class="mini-textArea" style="width:200px;" maxlength="100"/>
                     </td>
                 </tr>
             </table>
