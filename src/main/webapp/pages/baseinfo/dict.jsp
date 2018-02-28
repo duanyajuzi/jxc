@@ -42,11 +42,11 @@
                  url="${pageContext.request.contextPath}/dict/query"
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-					 <div field="nr" width="120" headerAlign="center" allowSort="true">代码名称</div>
-					 <div field="dictNo" width="120" headerAlign="center" allowSort="true">字典编号</div>
-					 <div field="dictName" width="120" headerAlign="center" allowSort="true">字典名称</div>
-					 <%--<div field="dictIndex" width="120" headerAlign="center" allowSort="true"> 排序</div>--%>
+                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+					 <div field="nr" width="120" headerAlign="center" align="center" allowSort="true">代码名称</div>
+					 <div field="dictNo" width="120" headerAlign="center" align="center" allowSort="true">字典编号</div>
+					 <div field="dictName" width="120" headerAlign="center" align="center" allowSort="true">字典名称</div>
+					 <%--<div field="dictIndex" width="120" headerAlign="center" align="center" allowSort="true"> 排序</div>--%>
                     <%--<div field="show_plan" width="10%" headerAlign="center" allowSort="false"--%>
                          <%--align="left">操作--%>
                     <%--</div>--%>

@@ -40,9 +40,9 @@
                  url="${pageContext.request.contextPath}/business/query"
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-					 <div field="business" width="120" headerAlign="center" allowSort="true">业务名称</div>
-					 <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
+                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+					 <div field="business" width="120" headerAlign="center" align="center" allowSort="true">业务名称</div>
+					 <div field="memo" width="120" headerAlign="center" align="center" allowSort="true">备注</div>
                     <%--<div field="show_plan" width="10%" headerAlign="center" allowSort="false"--%>
                          <%--align="left">操作--%>
                     <%--</div>--%>

@@ -39,9 +39,9 @@
                  onselectionchanged="PageRole.onSelectionChanged()"
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-					 <div field="roleName" width="120" headerAlign="center" allowSort="true">角色名称</div>
-					 <div field="roleMemo" width="120" headerAlign="center" allowSort="true">备注</div>
+                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+					 <div field="roleName" width="120" headerAlign="center" align="center" allowSort="true">角色名称</div>
+					 <div field="roleMemo" width="120" headerAlign="center" align="center" allowSort="true">备注</div>
                 </div>
             </div>
         </div>

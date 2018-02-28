@@ -49,13 +49,13 @@
                  url="${pageContext.request.contextPath}/goodCustomer/query"
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-                    <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
-                    <div field="goodsName" width="120" headerAlign="center" allowSort="true">所属商品</div>
-                    <div field="customerName" width="120" headerAlign="center" allowSort="true">所属工厂</div>
-                    <div field="materialNum" width="120" headerAlign="center" allowSort="true">原厂料号</div>
-                    <div field="unitPrice" width="120" headerAlign="center" allowSort="true">采购价(未税)</div>
-                    <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
+                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+                    <div field="business" width="120" headerAlign="center" align="center" allowSort="true">业务类型</div>
+                    <div field="goodsName" width="120" headerAlign="center" align="center" allowSort="true">所属商品</div>
+                    <div field="customerName" width="120" headerAlign="center" align="center" allowSort="true">所属工厂</div>
+                    <div field="materialNum" width="120" headerAlign="center" align="center" allowSort="true">原厂料号</div>
+                    <div field="unitPrice" width="120" headerAlign="center" align="center" allowSort="true">采购价(未税)</div>
+                    <div field="dictName" width="120" headerAlign="center" align="center" allowSort="true">单位</div>
                 </div>
             </div>
         </div>

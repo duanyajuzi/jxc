@@ -45,14 +45,14 @@
                  url="${pageContext.request.contextPath}/user/query"
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-					 <div field="userName" width="120" headerAlign="center" allowSort="true">登录帐号</div>
-					 <div field="userPwd" width="120" headerAlign="center" allowSort="true">登录密码</div>
-					 <div field="realName" width="120" headerAlign="center" allowSort="true">姓名</div>
-					 <div field="roleName" width="120" headerAlign="center" allowSort="true">所属角色</div>
-					 <div field="position" width="120" headerAlign="center" allowSort="true">职位</div>
-					 <div field="tel" width="120" headerAlign="center" allowSort="true">联系电话</div>
-					 <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
+                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+					 <div field="userName" width="120" headerAlign="center" align="center" allowSort="true">登录帐号</div>
+					 <div field="userPwd" width="120" headerAlign="center" align="center" allowSort="true">登录密码</div>
+					 <div field="realName" width="120" headerAlign="center" align="center" allowSort="true">姓名</div>
+					 <div field="roleName" width="120" headerAlign="center" align="center" allowSort="true">所属角色</div>
+					 <div field="position" width="120" headerAlign="center" align="center" allowSort="true">职位</div>
+					 <div field="tel" width="120" headerAlign="center" align="center" allowSort="true">联系电话</div>
+					 <div field="memo" width="120" headerAlign="center" align="center" allowSort="true">备注</div>
                 </div>
             </div>
         </div>

@@ -40,8 +40,8 @@
                   <%--nodesField="children"--%>
                  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-                    <div name="taskname" field="name1" width="120">权限名称</div>
+                    <div type="indexcolumn" headerAlign="center"  width="3%">序号</div>
+                    <div name="taskname" field="name1" headerAlign="center" width="120">权限名称</div>
 					 <div field="powerNo" width="120" headerAlign="center" >权限编号</div>
 					 <%--<div field="name2" width="120" headerAlign="center" >父节点权限名称</div>--%>
 					 <div field="url" width="120" headerAlign="center" >链接地址</div>
