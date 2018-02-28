@@ -65,8 +65,10 @@ var PageCustomer = function(){
                     iframe.contentWindow.PageCustomerAdd.funSetData(paramData);
                 },
                 ondestroy:function(action){
-                    PageCustomer.showSuccess();
-                	me.customerGrid.reload();
+                    if(action=="save"){
+                        PageCustomer.showSuccess();
+                        me.customerGrid.reload();
+                    }
                 }
             })
         },
