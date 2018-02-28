@@ -24,7 +24,7 @@ public class BlueprintModel extends BaseModel
 	private java.lang.String memo;
 	private String goodsName;
 	private String dictName;
-	private java.lang.String materialNum;
+	private java.lang.String  materialNum;
 
 	public void setId(java.lang.Long value) 
 	{
