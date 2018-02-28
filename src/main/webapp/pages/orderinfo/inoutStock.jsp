@@ -58,7 +58,7 @@
         </div>
         <%--内嵌出货细项表格--%>
         <div id="detailGrid_Form" style="display: none;">
-            <div id="inoutItemGrid" class="mini-datagrid" style="width: 100%;"
+            <div id="inoutItemGrid" class="mini-datagrid" style="width: 100%;" showPager="false"
             url="${pageContext.request.contextPath}/orderItem/queryInoutStockItem">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>

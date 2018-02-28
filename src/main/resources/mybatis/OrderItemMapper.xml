@@ -7,6 +7,7 @@
     <resultMap id="mRetMapOrderItem" type="com.gesoft.model.OrderItemModel">
         <result property="id" column="id"/>
         <result property="orderId" column="orderId"/>
+        <result property="orderNo"/>
         <result property="orderName" column="orderName"/>
         <result property="customerGoodId" column="customerGoodId"/>
         <result property="goodsName" column="goodsName"/>
@@ -280,7 +281,7 @@
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}
         </if>
-        LIMIT #{startNum}, #{pageSize}
+        <!-- LIMIT #{startNum}, #{pageSize} -->
     </select>
 
     <!--查询物料号-->
@@ -310,10 +311,22 @@
       LEFT JOIN tab_orderitem B on A.id=B.orderId
       left join tab_good_customer D on B.customerGoodId=D.id
       left join tab_goods E on E.id=D.goodId
+      left join tab_blueprint F on F.goodsId = D .goodId
       WHERE (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)
       AND A.orderType = #{orderType}
-      AND E.businessId= #{businessId}
-      GROUP BY A.id
+      <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+          AND E.businessId= #{businessId}
+      </if>
+      <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+          AND A.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+      </if>
+      <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
+          AND A.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+      </if>
+      <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+          AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+      </if>
+        GROUP BY A.id
     </select>
 
     <!--查询订单树子节点-->

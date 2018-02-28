@@ -65,18 +65,18 @@ public class OrderItemController extends BaseController
     }
 
     @RequestMapping(value="/queryInoutStockItem", method=RequestMethod.POST)
-    public @ResponseBody MsgModel search3(OrderItemModel model)
+    public @ResponseBody List<OrderItemModel> search3(OrderItemModel model)
     {
-        MsgModel msgModel = new MsgModel();
+        List<OrderItemModel> list=new ArrayList<OrderItemModel>();
         try
         {
-            orderItemService.findPageInoutStockItem(model, msgModel);
+           list= orderItemService.findListInoutStockItem(model);
         }
         catch (Exception e)
         {
             logger.error("OrderItemController queryInoutStockItem error：", e);
         }
-        return msgModel;
+        return list;
     }
 
     /**
