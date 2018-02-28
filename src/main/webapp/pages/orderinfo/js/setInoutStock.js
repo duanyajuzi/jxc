@@ -29,11 +29,30 @@ var PageSetInoutStock = function () {
                     this.datagrid.updateColumn("tmpNum", {header: "入库数量"});
                     $("#stimeLabel").html("入库时间");
                 }
+                this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType);
             }
         },
         funSearch:function () {
-            var param=this.searchForm.getData();
-            this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType+"&businessId="+param.businessId);
+            var orderNo=mini.get("orderNo").getValue().trim("");
+            var orderName=mini.get("orderName").getValue().trim("");
+            var materialNum=mini.get("materialNum").getValue().trim("");
+            var paramData={'orderType':this.orderType,'orderNo':orderNo,'orderName':orderName,'materialNum':materialNum};
+            $.ajax({
+                url: this.basePath + "/orderItem/queryOrderTreeList",
+                data: paramData,
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    mini.get("orderTree").loadData(data);
+                },
+                error: function () {
+                }
+            })
+        },
+        funReset:function(){
+            var searchForm = new mini.Form("searchForm");
+            searchForm.setData();
+            this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType);
         },
         setInoutTableAll: function () {
             var valueList = new Array();

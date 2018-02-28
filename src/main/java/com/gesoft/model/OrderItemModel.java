@@ -9,6 +9,7 @@ public class OrderItemModel extends BaseModel{
     private static final long serialVersionUID = 5454155825314635342L;
     private Long id;
     private Long orderId;
+    private String orderNo;//orderId对应订单编号
     private String orderName;
     private Long customerGoodId;
     private String goodsName;
@@ -50,7 +51,6 @@ public class OrderItemModel extends BaseModel{
     private String text;
     private List<OrderItemModel> children;
     private String data;
-
 
     public String getData() {
         return data;
@@ -401,6 +401,14 @@ public class OrderItemModel extends BaseModel{
     public OrderItemModel setStimeEnd(String stimeEnd) {
         this.stimeEnd = stimeEnd;
         return this;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }
 

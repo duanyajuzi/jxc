@@ -89,6 +89,10 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         }
     }
 
+    public List<OrderItemModel> findListInoutStockItem(OrderItemModel model){
+        return orderItemDAO.findListInoutStockItem(model);
+    }
+
     public List<OrderItemModel> queryOrderTree(OrderItemModel orderItemModel){
         return orderItemDAO.queryOrderTree(orderItemModel);
     }

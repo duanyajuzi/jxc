@@ -13,11 +13,21 @@
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;"
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="searchForm">
-                <lable class="form-label">业务类型：</lable>
-                <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
-                       idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                       style="width:100px;"   maxlength="10"
-                       onvaluechanged="PageSetInoutStock.funSearch()"/>
+                <%--<lable class="form-label">业务类型：</lable>--%>
+                <%--<input name="businessId" id="businessId" class="mini-combobox" allowInput="true"--%>
+                       <%--idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"--%>
+                       <%--style="width:100px;"   maxlength="10"--%>
+                       <%--onvaluechanged="PageSetInoutStock.funSearch()"/>--%>
+                <lable class="form-label">订单号：</lable>
+                <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单号"  style="width:100px;"/>
+                <lable class="form-label">客户订单号：</lable>
+                <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:100px;"/>
+                <%--<lable class="form-label">物料号：</lable>--%>
+                <%--<input name="materialNum" id="materialNum" class="mini-textbox" emptyText="物料号"  style="width:100px;"/>--%>
+                <lable class="form-label">客户物料号：</lable>
+                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户物料号"  style="width:100px;"/>
+                <a class="mini-button" iconCls="icon-search" onclick="PageSetInoutStock.funSearch()" plain="true"><label>查询</label></a>
+                <a class="mini-button" iconCls="icon-reset" onclick="PageSetInoutStock.funReset()" plain="true"><label>重置</label></a>
             </div>
         </div>
         <div id="orderTree" class="mini-tree"  style="width:100%;height: 380px"
