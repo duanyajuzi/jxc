@@ -51,15 +51,11 @@
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
                     <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
-					 <div field="goodsName" width="120" headerAlign="center" allowSort="true">所属商品</div>
-					 <div field="customerName" width="120" headerAlign="center" allowSort="true">所属工厂</div>
-					 <div field="materialNum" width="120" headerAlign="center" allowSort="true">原厂料号</div>
-					 <div field="unitPrice" width="120" headerAlign="center" allowSort="true">采购未税价</div>
-					 <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
-					 <%--<div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>--%>
-                    <%--<div field="acion" width="10%" headerAlign="center" allowSort="false"
-                         align="left">操作
-                    </div>--%>
+                    <div field="goodsName" width="120" headerAlign="center" allowSort="true">所属商品</div>
+                    <div field="customerName" width="120" headerAlign="center" allowSort="true">所属工厂</div>
+                    <div field="materialNum" width="120" headerAlign="center" allowSort="true">原厂料号</div>
+                    <div field="unitPrice" width="120" headerAlign="center" allowSort="true">采购价(未税)</div>
+                    <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
                 </div>
             </div>
         </div>

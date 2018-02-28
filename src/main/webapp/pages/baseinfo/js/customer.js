@@ -11,7 +11,17 @@ var PageCustomer = function(){
             this.basePath = PageMain.basePath;
             this.customerGrid = mini.get("customerGrid");
             this.funSearch();
+            this.customerGrid.on("drawcell", function (e) {
+                var record = e.record;
+                column = e.column;
+                field = e.field;
+                if (column.field == "show_plan") {
+                    e.cellHtml = "<a href='javascript:void(0);' onclick='PageCustomer.chaKan(\"" + record.id + "\")'>查看</a>";
+                }
+            });
         },
+
+
         funSearch : function()
         {
         	var customerForm = new mini.Form("customerForm");
@@ -48,13 +58,14 @@ var PageCustomer = function(){
         	mini.open({
                 url: this.basePath + "/pages/baseinfo/customer_add.jsp",
                 title: paramData.title,
-                width: 400,
-                height: 30 *  13 + 80,
+                width: 900,
+                height: 380,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageCustomerAdd.funSetData(paramData);
                 },
                 ondestroy:function(action){
+                    PageCustomer.showSuccess();
                 	me.customerGrid.reload();
                 }
             })
@@ -95,6 +106,36 @@ var PageCustomer = function(){
             {
                 mini.alert("请先选择要删除的记录");
             }
+        },
+        chaKan : function () {
+            var row = this.customerGrid.getSelected();
+            var paramData = {action: "view", row: row, title:"客户详情"};
+            var me = this;
+            mini.open({
+                url: this.basePath + "/pages/baseinfo/customer_view.jsp",
+                title: paramData.title,
+                width: 900,
+                height: 360,
+                onload:function(){
+                    var iframe=this.getIFrameEl();
+                    iframe.contentWindow.PageCustomerAdd.funSetData(paramData);
+                },
+                ondestroy:function(action){
+                    me.customerGrid.reload();
+                }
+            })
+        },
+
+        //操作成功提示
+        showSuccess : function() {
+            mini.showMessageBox({
+                showModal: false,
+                width: 250,
+                title: '提示',
+                iconCls: 'mini-messagebox-success',
+                message: '操作成功',
+                timeout: 1000
+            });
         }
     }
 }();

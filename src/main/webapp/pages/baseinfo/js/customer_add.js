@@ -42,12 +42,16 @@ var PageCustomerAdd = function(){
                dataType: 'json',
                success: function (data) 
                {
-            	   mini.alert(data.msg, "提醒", function(){
+
+                           PageMain.funCloseWindow("save");
+
+
+            	   /*mini.alert(data.msg, "提醒", function(){
 	               		if(data.success)
 	                    {
 	               			PageMain.funCloseWindow("save");
 	                    }
-                   });
+                   });*/
                },
                error: function (jqXHR, textStatus, errorThrown) 
                {

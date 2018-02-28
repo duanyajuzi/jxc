@@ -41,7 +41,7 @@
                     <div field="pname" width="120" headerAlign="center" allowSort="true">客户名称</div>
                     <div field="goodsNum" width="120" headerAlign="center" allowSort="true">数量</div>
                     <div field="materialNum" width="120" headerAlign="center" allowSort="true">客户料号</div>
-                    <div field="price" width="120" headerAlign="center" allowSort="true">销售未税价</div>
+                    <div field="price" width="120" headerAlign="center" allowSort="true">销售价(未税)</div>
                     <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
                     <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
                 </div>
