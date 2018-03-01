@@ -44,12 +44,11 @@
             </table>
         </div>
         <div class="mini-fit">
-            <div id="goodCustomerGrid" class="mini-datagrid"
-                  idField="id" allowResize="false"
-                 url="${pageContext.request.contextPath}/goodCustomer/query"
+            <div id="goodCustomerGrid" class="mini-datagrid" idField="id" allowResize="false"
+                 url="${pageContext.request.contextPath}/goodCustomer/query" onshowrowdetail="onShowRowDetail"
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+                    <div type="expandcolumn" >#</div>
                     <div field="business" width="120" headerAlign="center" align="center" allowSort="true">业务类型</div>
                     <div field="goodsName" width="120" headerAlign="center" align="center" allowSort="true">所属商品</div>
                     <div field="customerName" width="120" headerAlign="center" align="center" allowSort="true">所属工厂</div>
@@ -59,7 +58,36 @@
                 </div>
             </div>
         </div>
+        <%--内嵌出货细项表格--%>
+        <div id="detailGrid_Form" style="display: none;">
+            <div id="employee_grid" class="mini-datagrid" style="width: 100%;" showPager="false"
+                 url="${pageContext.request.contextPath}/blueprint/query" pagesize="50" sizeList="[10,30,50,100]"
+                 allowAlternating="true"  sortMode="client">
+                <div property="columns">
+                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
+                    <div field="pname" width="120" headerAlign="center" allowSort="true">客户名称</div>
+                    <div field="goodsNum" width="120" headerAlign="center" allowSort="true">数量</div>
+                    <div field="materialNum" width="120" headerAlign="center" allowSort="true">客户料号</div>
+                    <div field="price" width="120" headerAlign="center" allowSort="true">销售价(未税)</div>
+                    <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
+                    <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<script>
+    mini.parse();
+    var detailGrid_Form = document.getElementById("detailGrid_Form");
+    var employee_grid = mini.get("employee_grid");
+    function onShowRowDetail(e){
+        var grid = e.sender;
+        var row = e.record;
+        var td = grid.getRowDetailCellEl(row);
+        td.appendChild(detailGrid_Form);
+        detailGrid_Form.style.display = "block";
+        employee_grid.load({ goodsId: row.id });
+    }
+</script>
 </body>
 </html>
