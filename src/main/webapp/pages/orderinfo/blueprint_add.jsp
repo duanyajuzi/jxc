@@ -65,7 +65,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">销售未税价：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">销售价(未税)：</td>
                     <td style="width:32%;">
                         <input name="price" id="price" class="mini-textbox" style="width:120px;"  required="true" maxlength="12" requiredErrorText="单价不能为空"/>
                         <input name="unit" id="unit" class="mini-combobox" style="width:75px;"

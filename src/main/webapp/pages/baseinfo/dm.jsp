@@ -38,9 +38,9 @@
                  url="${pageContext.request.contextPath}/dm/query"
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-                    <div field="bm" width="120" headerAlign="center" allowSort="true">字典编码</div>
-                    <div field="nr" width="120" headerAlign="center" allowSort="true">字典名称</div>
+                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+                    <div field="bm" width="120" headerAlign="center" align="center" allowSort="true">字典编码</div>
+                    <div field="nr" width="120" headerAlign="center" align="center" allowSort="true">字典名称</div>
                     <%--<div field="show_plan" width="10%" headerAlign="center" allowSort="false"--%>
                          <%--align="left">操作--%>
                     <%--</div>--%>

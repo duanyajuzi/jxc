@@ -60,22 +60,20 @@
                  url="${pageContext.request.contextPath}/customer/query"
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-					 <div field="customerName" width="120" headerAlign="center" allowSort="true">客户名称</div>
-					 <div field="contacts" width="120" headerAlign="center" allowSort="true">联系人</div>
-					 <div field="address" width="120" headerAlign="center" allowSort="true">联系地址</div>
-					 <div field="tel" width="120" headerAlign="center" allowSort="true">联系人电话</div>
-					 <div field="consigneeName" width="120" headerAlign="center" allowSort="true">收货人姓名</div>
-					 <div field="consigneeTel" width="120" headerAlign="center" allowSort="true">收货人电话</div>
-					 <div field="creditCode" width="120" headerAlign="center" allowSort="true">社会信用代码</div>
+                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+					 <div field="customerName" width="120" headerAlign="center" allowSort="true" align="center">客户名称</div>
+					 <div field="contacts" width="120" headerAlign="center" allowSort="true" align="center">联系人</div>
+					 <div field="address" width="120" headerAlign="center" allowSort="true" align="center">联系地址</div>
+					 <div field="tel" width="120" headerAlign="center" allowSort="true" align="center">联系人电话</div>
+					 <div field="consigneeName" width="120" headerAlign="center" allowSort="true"align="center">收货人姓名</div>
+					 <div field="consigneeTel" width="120" headerAlign="center" allowSort="true" align="center">收货人电话</div>
+					 <%--<div field="creditCode" width="120" headerAlign="center" allowSort="true">社会信用代码</div>
 					 <div field="billingAddress" width="120" headerAlign="center" allowSort="true">开票地址</div>
 					 <div field="openBank" width="120" headerAlign="center" allowSort="true">开户行</div>
 					 <div field="bankAccount" width="120" headerAlign="center" allowSort="true">银行帐号</div>
 					 <div field="openTel" width="120" headerAlign="center" allowSort="true">开票电话</div>
-					 <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
-                    <div field="show_plan" width="10%" headerAlign="center" allowSort="false"
-                         align="left">操作
-                    </div>
+					 <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>--%>
+                    <div field="show_plan" width="100" headerAlign="center" allowSort="false" align="center">操作</div>
                 </div>
             </div>
         </div>

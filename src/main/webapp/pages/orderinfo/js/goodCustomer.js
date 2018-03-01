@@ -123,7 +123,24 @@ var PageGoodCustomer = function(){
             {
                 PageMain.funShowMessageBox("请先选择商品");
             }
-        }
+        },
+
+
+
+
+       /* onShowRowDetail : function(e) {
+            var grid = e.sender;
+            var row = e.record;
+            var detailGrid_Form = document.getElementById("detailGrid_Form");
+            var employee_grid = mini.get("employee_grid");
+            var td = grid.getRowDetailCellEl(row);
+
+
+            console.log(td)
+            td.appendChild(detailGrid_Form);
+            detailGrid_Form.style.display = "block";
+            employee_grid.load({ goodsId: row.id });
+        }*/
     }
 }();
 

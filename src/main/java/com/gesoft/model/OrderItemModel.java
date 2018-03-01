@@ -51,7 +51,6 @@ public class OrderItemModel extends BaseModel{
     private List<OrderItemModel> children;
     private String data;
 
-
     public String getData() {
         return data;
     }
@@ -400,6 +399,14 @@ public class OrderItemModel extends BaseModel{
     public OrderItemModel setStimeEnd(String stimeEnd) {
         this.stimeEnd = stimeEnd;
         return this;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }
 

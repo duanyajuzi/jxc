@@ -31,86 +31,74 @@
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-        <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none;">
+        <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none; margin-top:30px">
         <div id="customerFormAdd">
-       
-                	<input id="id" name="id"  class="mini-hidden" />
-            <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
+            <input id="id" name="id"  class="mini-hidden" />
+            <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;">
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">客户名称：</td>
-                    <td style="width:32%;">
-                        <input name="customerName" id="customerName" class="mini-textbox" style="width:200px;"  required="true" maxlength="100" requiredErrorText="客户名称不能为空"/>
+                    <td class="form-label" style="text-align: right;width:15%;">客户名称：</td>
+                    <td>
+                        <input name="customerName" id="customerName" class="mini-textbox"  required="true" maxlength="100" requiredErrorText="客户名称不能为空" style="width:80%"/>
+                    </td>
+                    <td class="form-label" style="text-align: right;width:15%;">联系人：</td>
+                    <td>
+                        <input name="contacts" id="contacts" class="mini-textbox"  required="true" maxlength="50" requiredErrorText="联系人不能为空" style="width:80%"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">联系人：</td>
-                    <td style="width:32%;">
-                        <input name="contacts" id="contacts" class="mini-textbox" style="width:200px;"  required="true" maxlength="50" requiredErrorText="联系人不能为空"/>
+                    <td class="form-label" style="text-align: right;">联系地址：</td>
+                    <td >
+                        <input name="address" id="address" class="mini-textbox"  required="true" maxlength="300" requiredErrorText="联系地址不能为空" style="width:80%"/>
                     </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">联系地址：</td>
-                    <td style="width:32%;">
-                        <input name="address" id="address" class="mini-textbox" style="width:200px;"  required="true" maxlength="300" requiredErrorText="联系地址不能为空"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">联系人电话：</td>
-                    <td style="width:32%;">
-                        <input name="tel" id="tel" class="mini-textbox" style="width:200px;"  required="true" requiredErrorText="联系人电话不能为空"
+                    <td class="form-label" style="text-align: right;">联系人电话：</td>
+                    <td>
+                        <input name="tel" id="tel" class="mini-textbox"  required="true" requiredErrorText="联系人电话不能为空"style="width:80%"
                                vtype="float;maxlength:20" onvalidation="onPhoneValidation"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">收货人姓名：</td>
-                    <td style="width:32%;">
-                        <input name="consigneeName" id="consigneeName" class="mini-textbox" style="width:200px;"  required="true" maxlength="50" requiredErrorText="收货人姓名不能为空"/>
+                    <td class="form-label" style="text-align: right;">收货人姓名：</td>
+                    <td>
+                        <input name="consigneeName" id="consigneeName" class="mini-textbox"  required="true" maxlength="50" requiredErrorText="收货人姓名不能为空"
+                               style="width:80%"/>
                     </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">收货人电话：</td>
-                    <td style="width:32%;">
-                        <input name="consigneeTel" id="consigneeTel" class="mini-textbox" style="width:200px;"  required="true"
-                               onvalidation="onPhoneValidation"
+                    <td class="form-label" style="text-align: right;">收货人电话：</td>
+                    <td >
+                        <input name="consigneeTel" id="consigneeTel" class="mini-textbox"  required="true"
+                               onvalidation="onPhoneValidation" style="width:80%"
                                vtype="float;maxlength:20"  requiredErrorText="收货人电话不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">社会信用代码：</td>
-                    <td style="width:32%;">
-                        <input name="creditCode" id="creditCode" class="mini-textbox" style="width:200px;"  required="true" maxlength="50" requiredErrorText="社会信用代码不能为空"/>
+                    <td class="form-label" style="text-align: right;">社会信用代码：</td>
+                    <td>
+                        <input name="creditCode" id="creditCode" class="mini-textbox" maxlength="50" style="width:80%"/>
+                    </td>
+                    <td class="form-label" style="text-align: right;">开票电话：</td>
+                    <td>
+                        <input name="openTel" id="openTel" class="mini-textbox"  maxlength="50" style="width:80%" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">开票地址：</td>
-                    <td style="width:32%;">
-                        <input name="billingAddress" id="billingAddress" class="mini-textbox" style="width:200px;"  required="true" maxlength="300" requiredErrorText="开票地址不能为空"/>
+                    <td class="form-label" style="text-align: right;">开户行：</td>
+                    <td>
+                        <input name="openBank" id="openBank" class="mini-textbox" maxlength="300" style="width:80%"/>
+                    </td>
+                    <td class="form-label" style="text-align: right;">银行帐号：</td>
+                    <td>
+                        <input name="bankAccount" id="bankAccount" class="mini-textbox" vtype="float;maxLength:20" style="width:80%"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">开户行：</td>
-                    <td style="width:32%;">
-                        <input name="openBank" id="openBank" class="mini-textbox" style="width:200px;"  required="true" maxlength="300" requiredErrorText="开户行不能为空"/>
+                    <td class="form-label" style="text-align: right;">开票地址：</td>
+                    <td colspan="3">
+                        <input name="billingAddress" id="billingAddress" class="mini-textbox" style="width:92%;" maxlength="300" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">银行帐号：</td>
-                    <td style="width:32%;">
-                        <input name="bankAccount" id="bankAccount" class="mini-textbox" style="width:200px;"
-                               required="true" vtype="float;maxLength:20" requiredErrorText="银行帐号不能为空"
-                               onvalidation="onBankValidation"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">开票电话：</td>
-                    <td style="width:32%;">
-                        <input name="openTel" id="openTel" class="mini-textbox" style="width:200px;"  required="true" maxlength="50" requiredErrorText="开票电话不能为空"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">备注：</td>
-                    <td style="width:32%;">
-                        <input name="memo" id="memo" class="mini-textArea" style="width:200px;"  required="true" maxlength="500" requiredErrorText="备注不能为空"/>
+                    <td class="form-label" style="text-align: right;">备注：</td>
+                    <td colspan="3">
+                        <input name="memo" id="memo" class="mini-textArea" style="width:92%;" maxlength="500"/>
                     </td>
                 </tr>
             </table>

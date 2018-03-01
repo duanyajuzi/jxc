@@ -237,7 +237,6 @@
         funAddTab : function(obj, strUrl){
             var pageTabs = mini.get("pageTabs");
             var tab = pageTabs.getTab($(obj).text());
-            console.log(tab)
             if(!tab)
             {
                 tab = { title: $(obj).text(), name:$(obj).text(), url: strUrl, showCloseButton: true };
