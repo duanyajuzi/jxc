@@ -35,9 +35,14 @@
             <table style="width:100%;">
                 <tr>
                     <td style="width:30%;">
-                        <a  class="mini-button block-button" iconCls="icon-add" onclick="PageGoodCustomer.funAdd()">新增</a>
-                        <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageGoodCustomer.funModify()">修改</a>
-                        <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageGoodCustomer.funDelete()">删除</a>
+                        <a  class="mini-button block-button" iconCls="icon-add" onclick="PageGoodCustomer.funAdd()">新增商品</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageGoodCustomer.funModify()">修改商品</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageGoodCustomer.funDelete()">删除商品</a>
+
+
+                        <a  class="mini-button block-button" iconCls="icon-add" id="addFangAn" onclick="PageGoodCustomer.addFangAn()">新增客户方案</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-edit" id="editFangAn" onclick="PageGoodCustomer.funModifyFangAn()">修改客户方案</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-remove" id="removeFangAn" onclick="PageGoodCustomer.funDeleteFangAn()">删除客户方案</a>
                         <a  class="mini-button block-button hide" iconCls="icon-collapse" id="expand" onclick="PageGoodCustomer.funManageSchemes()">客户管理</a>
                     </td>
                 </tr>
@@ -64,13 +69,13 @@
                  url="${pageContext.request.contextPath}/blueprint/query" pagesize="50" sizeList="[10,30,50,100]"
                  allowAlternating="true"  sortMode="client">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-                    <div field="pname" width="120" headerAlign="center" allowSort="true">客户名称</div>
-                    <div field="goodsNum" width="120" headerAlign="center" allowSort="true">数量</div>
-                    <div field="materialNum" width="120" headerAlign="center" allowSort="true">客户料号</div>
-                    <div field="price" width="120" headerAlign="center" allowSort="true">销售价(未税)</div>
-                    <div field="dictName" width="120" headerAlign="center" allowSort="true">单位</div>
-                    <div field="memo" width="120" headerAlign="center" allowSort="true">备注</div>
+                    <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
+                    <div field="pname" width="120" headerAlign="center" align="center" allowSort="true">客户名称</div>
+                    <div field="goodsNum" width="120" headerAlign="center" align="center" allowSort="true">数量</div>
+                    <div field="materialNum" width="120" headerAlign="center" align="center" allowSort="true">客户料号</div>
+                    <div field="price" width="120" headerAlign="center" align="center" allowSort="true">销售价(未税)</div>
+                    <div field="dictName" width="120" headerAlign="center" align="center" allowSort="true">单位</div>
+                    <div field="memo" width="120" headerAlign="center" align="center" allowSort="true">备注</div>
                 </div>
             </div>
         </div>

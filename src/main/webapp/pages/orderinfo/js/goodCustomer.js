@@ -3,13 +3,15 @@ var PageGoodCustomer = function(){
     return {
         defaultOption: {
             basePath:"",
-            goodCustomerGrid : null
+            goodCustomerGrid : null,
+            employee_grid : null
         },
         init :function ()
         {
             mini.parse();
             this.basePath = PageMain.basePath;
             this.goodCustomerGrid = mini.get("goodCustomerGrid");
+            this.employee_grid = mini.get("employee_grid");
             PageMain.funLoadGoodsByBussinessId("goodId", false, "", -1)
             this.funSearch();
         },
@@ -123,6 +125,27 @@ var PageGoodCustomer = function(){
             {
                 PageMain.funShowMessageBox("请先选择商品");
             }
+        },
+        addFangAn : function() {
+            var row = this.goodCustomerGrid.getSelected();
+            var paramData = {action: "add", row:{goodsId:row.id}, title:"新增数据"};
+            this.fangAnInfo(paramData);
+        },
+        fangAnInfo : function(paramData) {
+            var me = this;
+            mini.open({
+                url: this.basePath + "/pages/orderinfo/blueprint_add.jsp",
+                title: paramData.title,
+                width: 400,
+                height: 30 *  7 + 65,
+                onload:function(){
+                    var iframe=this.getIFrameEl();
+                    iframe.contentWindow.PageBlueprintAdd.funSetData(paramData);
+                },
+                ondestroy:function(action){
+                    me.employee_grid.reload();
+                }
+            })
         },
 
 
