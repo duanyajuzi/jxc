@@ -126,11 +126,50 @@ var PageGoodCustomer = function(){
                 PageMain.funShowMessageBox("请先选择商品");
             }
         },
+
         addFangAn : function() {
             var row = this.goodCustomerGrid.getSelected();
-            var paramData = {action: "add", row:{goodsId:row.id}, title:"新增数据"};
+            var paramData = {action: "add", row:{goodsId:row.id}, title:"新增客户方案"};
             this.fangAnInfo(paramData);
         },
+
+        modifyFangAn : function() {
+            var row = this.employee_grid.getSelected();
+            var paramData = {action: "modify", row:row, title:"修改客户方案"};
+            this.fangAnInfo(paramData);
+        },
+
+        deleteFangAn : function(){
+            var row = this.employee_grid.getSelected();
+            var me = this;
+            if(row){
+                mini.confirm("确定要删除这条记录?", "提醒", function (action) {
+                    if (action == "ok") {
+                        $.ajax({
+                            url : me.basePath + "/blueprint/del",
+                            type: 'POST',
+                            data: {"id": row.id},
+                            dataType: 'json',
+                            success: function (data) {
+                                mini.alert(data.msg, "提醒", function(){
+                                    if(data.success) {
+                                        me.employee_grid.reload();
+                                    }
+                                });
+
+                            },
+                            error: function(){
+                                mini.alert("删除记录失败");
+                            }
+                        });
+                    }
+                })
+            }else{
+                mini.alert("请先选择要删除的记录");
+            }
+        },
+
+
         fangAnInfo : function(paramData) {
             var me = this;
             mini.open({
