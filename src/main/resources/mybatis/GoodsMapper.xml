@@ -155,6 +155,12 @@
 		FROM tab_blueprint
 	</select>
 
+	<select id="GoodsMapper.queryMaterialNum2" resultMap="mRetMapGoods">
+		SELECT id,materialNum
+		FROM tab_good_customer
+	</select>
+
+
 	<!--修改厂商商品的货存-->
 	<update id="GoodsMapper.updateStorage" >
 		update tab_good_customer set storage = storage -  #{esgouNum}

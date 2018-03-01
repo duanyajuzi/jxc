@@ -61,7 +61,10 @@
         	ptel ,
         	ctime ,
         	cuserid ,
-        	memo 
+        	memo,
+        	iskh,
+        	zdsc,
+        	orderStatus
         ) VALUES (
         	#{id} ,
         	#{orderNo} ,
@@ -81,7 +84,10 @@
         	#{ptel} ,
         	now() ,
         	#{cuserid} ,
-        	#{memo} 
+        	#{memo},
+        	#{iskh},
+        	#{zdsc},
+        	#{orderStatus}
         )
     ]]>
 	</insert>
@@ -102,8 +108,10 @@
 	        pcontacts = #{pcontacts} ,
 	        paddress = #{paddress} ,
 	        ptel = #{ptel} ,
-	        memo = #{memo}
-        WHERE 
+	        memo = #{memo},
+	        iskh = #{iskh},
+	        zdsc = #{zdsc}
+        WHERE
 	        id = #{id} 
     ]]>
 	</update>

@@ -295,6 +295,22 @@
             A.id = #{id}
     </select>
 
+    <select id="OrderItemMapper.queryNumInfo2" resultMap="mRetMapOrderItem">
+        SELECT
+        A.id,
+        A.materialNum,
+        A.unitPrice as price,
+        A.goodId as goodsId,
+        B.goodsName,
+        D.dictName
+        FROM
+        tab_good_customer A
+        LEFT JOIN tab_goods B ON A.goodId = B.id
+        LEFT JOIN tab_dict D ON A.unit = D.dictNo
+        WHERE
+        A.id = #{id}
+    </select>
+
   <select id="OrderItemMapper.goodsPlan" resultMap="mRetMapOrderItem">
 	  SELECT A.id,
 	  A.pname,
