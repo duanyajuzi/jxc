@@ -55,6 +55,7 @@
                     <div field="materialNum" width="120" headerAlign="center" align="center" allowSort="true">原厂料号</div>
                     <div field="unitPrice" width="120" headerAlign="center" align="center" allowSort="true">采购价(未税)</div>
                     <div field="dictName" width="120" headerAlign="center" align="center" allowSort="true">单位</div>
+                    <div field="storage" width="120" headerAlign="center" align="center" allowSort="true">库存量</div>
                 </div>
             </div>
         </div>
