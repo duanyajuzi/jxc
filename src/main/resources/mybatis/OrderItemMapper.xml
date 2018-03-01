@@ -146,7 +146,7 @@
     <delete id="OrderItemMapper.delete" >
         <![CDATA[
         DELETE FROM tab_orderitem WHERE
-        id = #{id}
+        orderId = #{orderId}
     ]]>
     </delete>
 
@@ -216,27 +216,23 @@
 
     <!-- 分页查询订单细项-->
     <select id="OrderItemMapper.list" resultMap="mRetMapOrderItem">
-        SELECT A.id,
+        SELECT
+        A.id,
         A.orderId,
-        B.orderName,
         A.customerGoodId,
-        D.id goodsId,
+        A.esgouNum,
+        A.unitPrice as price,
+        A.tmpNum,
         D.goodsName,
         F.materialNum,
-        F.storage,
-        A.esgouNum,
-        A.unitPrice,
         D.specUnit,
         E.dictName,
-        D.businessId,
-        G.business,
-        A.esgouNum*A.unitPrice as totalMoney
-        FROM tab_orderitem A
-        left join tab_order B on  A.orderId=B.id
-        left join tab_good_customer F on A.customerGoodId=F.id
-        left join tab_goods D on F.goodId=D.id
-        left join tab_dict E on D.specUnit=E.dictNo
-        left join tab_business G on G.id=D.businessId
+        A.esgouNum * A.unitPrice AS totalMoney
+        FROM
+        tab_orderitem A
+        LEFT JOIN tab_blueprint F ON A.customerGoodId = F.id
+        LEFT JOIN tab_goods D ON F.goodsId = D.id
+        LEFT JOIN tab_dict E ON F.unit = E.dictNo
         <include refid="OrderItemMapper.findPage.where"/>
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}

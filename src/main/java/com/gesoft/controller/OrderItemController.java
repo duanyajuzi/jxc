@@ -135,6 +135,9 @@ public class OrderItemController extends BaseController
         try
         {
             String orderId = model.getOrderId();
+            //根据订单id删除订单子项
+            orderItemService.delete(model);
+            
             String data = model.getData();
             JSONArray jsArr = JSONArray.parseArray(data);
             OrderItemModel itemModel;

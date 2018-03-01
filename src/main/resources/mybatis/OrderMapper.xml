@@ -89,9 +89,7 @@
 	<update id="OrderMapper.update" >
     <![CDATA[
         UPDATE tab_order SET
-	        orderNo = #{orderNo} ,
 	        orderName = #{orderName} ,
-	        orderTime = #{orderTime} ,
 	        orderType = #{orderType} ,
 	        businessId = #{businessId},
 	        deliveryTime = #{deliveryTime} ,
@@ -104,9 +102,7 @@
 	        pcontacts = #{pcontacts} ,
 	        paddress = #{paddress} ,
 	        ptel = #{ptel} ,
-	        ctime = #{ctime} ,
-	        cuserid = #{cuserid} ,
-	        memo = #{memo} 
+	        memo = #{memo}
         WHERE 
 	        id = #{id} 
     ]]>

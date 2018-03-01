@@ -6,6 +6,7 @@ var PageOrderAdd = function(){
             action : "",
             orderForm : null,
             pOrderType:null,
+            orderId:''
 
         },
         init :function ()
@@ -35,11 +36,11 @@ var PageOrderAdd = function(){
                     error: function () {
                     }
                 });
-            }
-            else if(this.action == 'modify'){
+            }else if(this.action == 'modify'){
                 var data = new Object();
                 data.orderId = row.id;
                 this.orderItemGrid.load(data);
+                PageOrderAdd.defaultOption.orderId = row.id;
             }
         },
         //选择厂商和采购公司时联动填充联系人、电话、地址
@@ -106,7 +107,12 @@ var PageOrderAdd = function(){
                {
                     if(data.success)
                     {
-                        PageOrderAdd.saveOrderItem(data.data[0]);
+                        if(me.action == 'add'){
+                            PageOrderAdd.saveOrderItem(data.data[0]);
+                        }else if(me.action == 'modify'){
+                            PageOrderAdd.saveOrderItem(PageOrderAdd.defaultOption.orderId);
+                        }
+
                     }
 
                },
@@ -185,7 +191,7 @@ var PageOrderAdd = function(){
                             obj.goodsName = result[0].goodsName;
                             obj.price = result[0].price;
                             obj.dictName = result[0].dictName;
-                            obj.customerGoodId = result[0].goodsId;
+                            obj.customerGoodId = result[0].id;
                             if(record.esgouNum > 0){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
                             }

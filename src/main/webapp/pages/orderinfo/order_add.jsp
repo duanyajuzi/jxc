@@ -143,9 +143,9 @@
 
             <div id="orderItemGrid" class="mini-datagrid" style="width:100%;height:270px;"
                  url="${pageContext.request.contextPath}/orderItem/getList" idField="id"
-                 allowResize="true" ajaxType="get" showPager="false" oncellbeginedit="PageOrderAdd.OnCellBeginEdit"
+                 allowResize="false" ajaxType="get" showPager="false" oncellbeginedit="PageOrderAdd.OnCellBeginEdit"
                  allowCellEdit="true" allowCellSelect="true" multiSelect="true" oncellcommitedit="PageOrderAdd.onMaterialNumChanged"
-                 editNextOnEnterKey="true"  editNextRowCell="true">
+                 editNextOnEnterKey="true" allowSortColumn="fasle"  editNextRowCell="true">
                 <div property="columns">
                     <div type="indexcolumn"></div>
                     <div type="checkcolumn"></div>
