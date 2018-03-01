@@ -50,6 +50,7 @@ public class OrderItemModel extends BaseModel{
     private String text;
     private List<OrderItemModel> children;
     private String data;
+    private String orderNo;
 
     public String getData() {
         return data;
