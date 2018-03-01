@@ -168,6 +168,9 @@ var PageSetInoutStock = function () {
             var stime=mini.get("stime");
             var value=stime.text;
             var param=this.searchForm.getData();
+            if(this.orderType==1){
+                data.tmpNum=0-parseFloat(data.tmpNum);
+            }
             var paramData={"stime":value,"orderType":this.orderType,"businessId":param.businessId,"data":JSON.stringify(data)};
             $.ajax({
                 url: this.basePath + "/orderItem/updateOrderItemTmpNum",
