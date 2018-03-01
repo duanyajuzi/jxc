@@ -85,9 +85,9 @@ var PageOrderItem = function(){
         {
             var row = this.orderItemGrid.getSelected();
             var me = this;
-            var goodsData={esgouNum:-row.esgouNum,id:row.customerGoodId};
             if(row)
             {
+                var goodsData={esgouNum:-row.esgouNum,id:row.customerGoodId};
                 mini.confirm("确定要删除这条记录?", "提醒", function (action) {
                     if (action == "ok")
                     {
@@ -120,6 +120,7 @@ var PageOrderItem = function(){
             }
             else
             {
+                console.log("请先选择要删除的记录")
                 mini.alert("请先选择要删除的记录");
             }
         },
@@ -183,8 +184,6 @@ var PageOrderItem = function(){
                 data: {goodId:value},
                 dataType: "json",
                 success: function (result) {
-                    console.log("queryMaterialNum");
-                    console.log(result);
                     materialNum.setData(result);
                 },
                 error: function () {

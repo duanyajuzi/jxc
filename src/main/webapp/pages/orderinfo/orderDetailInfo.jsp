@@ -24,22 +24,22 @@
                     <td style="width:32%;">
                         <input name="orderNo" id="orderNo" class="mini-textbox" style="width:200px;"  required="true" maxlength="20" requiredErrorText="订单编号不能为空"/>
                     </td>
-                    <td class="form-label" style="text-align: right;width:16%;">订单名称：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">客户订单号：</td>
                     <td style="width:32%;">
-                        <input name="orderName" id="orderName" class="mini-textbox" style="width:200px;"  required="true" maxlength="100" requiredErrorText="订单名称不能为空"/>
+                        <input name="orderName" id="orderName" class="mini-textbox" style="width:200px;"  required="true" maxlength="100" requiredErrorText="客户订单号不能为空"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">订单时间：</td>
                     <td style="width:32%;">
                         <input name="orderTime" id="orderTime" class="mini-datepicker" style="width:200px;"
-                               format="yyyy-MM-dd HH:mm:ss" timeFormat="HH:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"
+                               format="yyyy-MM-dd" showTime="true"  showOkButton="true" showClearButton="false"
                                nullValue="null"  emptyText="订单时间" allowInput="false"  />
                     </td>
                     <td class="form-label" style="text-align: right;width:16%;">交货时间：</td>
                     <td style="width:32%;">
                         <input name="deliveryTime" id="deliveryTime" class="mini-datepicker" style="width:200px; "
-                               format="yyyy-MM-dd HH:mm:ss" timeFormat="HH:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"
+                               format="yyyy-MM-dd" showTime="true"  showOkButton="true" showClearButton="false"
                                nullValue="null"  emptyText="交货时间" allowInput="false"/>
                     </td>
                 </tr>
@@ -59,19 +59,19 @@
                 </tr>
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">交货地址：</td>
-                    <td style="width:32%;">
-                        <input name="deliveryAddress" id="deliveryAddress" class="mini-textbox" style="width:200px;"
+                    <td colspan="3">
+                        <input name="deliveryAddress" id="deliveryAddress" class="mini-textbox" style="width:520px;"
                                required="true" maxlength="200" requiredErrorText="交货地址不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                <td class="form-label" style="text-align: right;width:16%;">厂商：</td>
+                <td class="form-label" style="text-align: right;width:16%;">工厂：</td>
                 <td style="width:32%;">
                     <input name="customerId" id="customerId" class="mini-combobox" style="width:200px;"  required="true" maxlength="10"
                            requiredErrorText="厂商不能为空" onvaluechanged="PageOrderAdd.onDeptChanged()" allowInput="true"
                            allowput="true"  idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList" />
                 </td>
-                <td class="form-label" style="text-align: right;width:16%;">采购公司：</td>
+                <td class="form-label" style="text-align: right;width:16%;">客户：</td>
                 <td style="width:32%;">
                     <input name="pcustomerId" id="pcustomerId" class="mini-combobox" style="width:200px;"
                            onvaluechanged="PageOrderAdd.onDeptChanged()" allowInput="true"
@@ -80,32 +80,32 @@
                 </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">厂商联系人：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">工厂联系人：</td>
                     <td style="width:32%;">
                         <input name="ccontacts" id="ccontacts" class="mini-textbox" style="width:200px;"  required="true" maxlength="40"
                                requiredErr orText="厂商联系人不能为空"/>
                     </td>
-                    <td class="form-label" style="text-align: right;width:16%;">采购人：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">客户联系人：</td>
                     <td style="width:32%;">
                         <input name="pcontacts" id="pcontacts" class="mini-textbox" style="width:200px;"  required="true" maxlength="40" requiredErrorText="采购人不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">厂商联系地址：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">工厂联系地址：</td>
                     <td style="width:32%;">
                         <input name="caddress" id="caddress" class="mini-textbox" style="width:200px;"  required="true" maxlength="200" requiredErrorText="厂商联系地址不能为空"/>
                     </td>
-                    <td class="form-label" style="text-align: right;width:16%;">采购商联系地址：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">客户联系地址：</td>
                     <td style="width:32%;">
                         <input name="paddress" id="paddress" class="mini-textbox" style="width:200px;"  required="true" maxlength="200" requiredErrorText="联系地址不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">厂商联系电话：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">工厂联系电话：</td>
                     <td style="width:32%;">
                         <input name="ctel" id="ctel" class="mini-textbox" style="width:200px;"  required="true" maxlength="40" requiredErrorText="厂商联系电话不能为空"/>
                     </td>
-                    <td class="form-label" style="text-align: right;width:16%;">采购商联系电话：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">客户联系电话：</td>
                     <td style="width:32%;">
                         <input name="ptel" id="ptel" class="mini-textbox" style="width:200px;"  required="true" maxlength="40" requiredErrorText="联系电话不能为空"/>
                     </td>
@@ -113,7 +113,7 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">备注：</td>
                     <td style="width:32%;">
-                        <input name="memo" id="memo" class="mini-textArea" style="width:520px;"  required="true" maxlength="400" requiredErrorText="备注不能为空"/>
+                        <input name="memo" id="memo" class="mini-textArea" style="width:520px;" maxlength="400"/>
                     </td>
                 </tr>
             </table>

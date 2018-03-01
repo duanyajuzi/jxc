@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="345" showHeader="false"
+    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="300" showHeader="false"
          style="border: none">
         <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
             <table style="width:100%;">
@@ -21,10 +21,9 @@
             </table>
         </div>
         <div class="mini-fit">
-            <div id="orderItemGrid" class="mini-datagrid" showSummaryRow="true" ondrawsummarycell="onDrawSummaryCell"
-                 url="${pageContext.request.contextPath}/orderItem/query"
-                 idField="id" allowResize="false"
-                 pagesize="10" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
+            <div id="orderItemGrid" class="mini-datagrid" showPager="false"
+                 url="${pageContext.request.contextPath}/orderItem/getList" ajaxType="get"
+                 idField="id" allowResize="false" allowAlternating="true"  ondrawsummarycell="onDrawSummaryCell" sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
                     <div field="goodsName" headerAlign="center" allowSort="true">商品名称</div>
@@ -32,8 +31,14 @@
                     <div field="esgouNum" headerAlign="center" allowSort="true">数量</div>
                     <div field="dictName" headerAlign="center" allowSort="true">单位</div>
                     <div field="unitPrice"  headerAlign="center" allowSort="true">单价</div>
-                    <div field="totalMoney"  headerAlign="center" allowSort="true" summaryType="sum">总价</div>
+                    <div field="totalMoney" width="120" headerAlign="center" allowSort="true" summaryType="sum">总价</div>
                 </div>
+            </div>
+        </div>
+        <div style="height: 45px">
+            <div style="padding-left: 520px" >
+                总&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 价：<span id="zj"></span><br/>
+                含税总价：<span id="hszj"></span>
             </div>
         </div>
     </div>
@@ -48,8 +53,6 @@
                     <td style="width:32%;">
                         <input name="businessId" id="businessId" class="mini-combobox" style="width:150px;"
                                required="true" vtype="float;maxlength:10" allowInput="true"
-                               <%--onvaluechanged="PageOrderItem.funBusValuechanged"--%>
-                               <%--onvaluechanged="PageOrderItem.onGoodsNameChanged()"--%>
                                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"/>
                     </td>
                     <td class="form-label" style="text-align: right;width:16%;">商品名称：</td>
@@ -68,7 +71,6 @@
                     <td style="width:32%;">
                         <input name="materialNum" id="materialNum" class="mini-combobox" style="width:150px;" allowInput="true"
                                allowInput="true"  valueField="id" textField="materialNum"
-                               <%--url="${pageContext.request.contextPath}/goods/queryMaterialNum"--%>
                                onvaluechanged="PageOrderItem.onPriceChanged()"
                                required="true" maxlength="19" requiredErrorText="物料号不能为空" />
                     </td>
@@ -93,13 +95,10 @@
                         </td>
 
                 </tr>
-                <tr>
-
-                    <td>
+                <tr style="text-align: center">
+                    <td colspan="4">
                         <a id="orderItemSave" class="mini-button" iconCls="icon-save" onclick="PageOrderItem.funSave()" plain="true"><label>保存</label></a>
-                    </td>
-                    <td>
-                    <a id="orderItemReset" class="mini-button" iconCls="icon-reset" onclick="PageOrderItem.funReset()" plain="true"><label>重置</label></a>
+                        <a id="orderItemReset" class="mini-button" iconCls="icon-reset" onclick="PageOrderItem.funReset()" plain="true"><label>重置</label></a>
                     </td>
                 </tr>
             </table>
@@ -111,7 +110,8 @@
     function onDrawSummaryCell(e) {
         //客户端汇总计算
         if (e.field == "totalMoney") {
-            e.cellHtml = "总价: " + e.value;
+            $("#zj").text(e.value.toFixed(2))
+            $("#hszj").text((e.value * 1.17).toFixed(2))
         }
     }
 </script>

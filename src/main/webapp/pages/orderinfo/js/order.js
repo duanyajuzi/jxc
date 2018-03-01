@@ -62,8 +62,8 @@ var PageOrder = function(){
         	mini.open({
                 url: this.basePath + "/pages/orderinfo/order_add.jsp",
                 title: paramData.title,
-                width: 650,
-                height: 30 *  12 ,
+                width: 750,
+                height: 550 ,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageOrderAdd.funSetData(paramData);

@@ -20,7 +20,7 @@ package com.gesoft.model;
 	public static final String FORMAT_DELIVERY_TIME = DATE_FORMAT ;
 	public static final String FORMAT_CTIME = DATE_FORMAT ;
 	
-	private java.lang.Long id;
+	private String id;
 	private java.lang.String orderNo;
 	private java.lang.String orderName;
 //	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -48,18 +48,16 @@ package com.gesoft.model;
 	private String pcustomerName;
 	private String name1;
 	private String name2;
-
-	public void setId(java.lang.Long value) 
-	{
-		this.id = value;
+	
+	public String getId() {
+		return id;
 	}
 	
-	public java.lang.Long getId() 
-	{
-
-		return this.id;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public void setOrderNo(java.lang.String value) 
+	
+	public void setOrderNo(java.lang.String value)
 	{
 		this.orderNo = value;
 	}

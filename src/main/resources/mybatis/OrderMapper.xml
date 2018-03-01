@@ -66,7 +66,7 @@
         	#{id} ,
         	#{orderNo} ,
         	#{orderName} ,
-        	#{orderTime} ,
+        	now()  ,
         	#{orderType} ,
         	#{businessId},
         	#{deliveryTime} ,
@@ -249,7 +249,7 @@
 
 	<select id="OrderMapper.queryMaterialNum" resultMap="mRetMapOrder">
 		SELECT id,materialNum
-		FROM tab_goods_customer
+		FROM tab_blueprint
 	</select>
 
 </mapper>

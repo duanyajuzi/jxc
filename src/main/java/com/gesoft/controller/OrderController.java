@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+import com.gesoft.util.Md5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -85,7 +86,7 @@ public class OrderController extends BaseController
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/query", method=RequestMethod.POST)
+	@RequestMapping(value="/query", method=RequestMethod.GET)
 	public @ResponseBody MsgModel search(OrderModel model)
 	{
 		MsgModel msgModel = new MsgModel();
@@ -114,13 +115,17 @@ public class OrderController extends BaseController
 	{
 
 		MsgModel msgModel = new MsgModel();
-//		model.setCuserid(getSessionUserId(request));//类型不匹配
-		model.setCuserid(123);
+		model.setCuserid((int)getSessionUserId(request));//类型不匹配
+		String id = Md5Util.UUID();
+		model.setId(id);
 		try
 		{
 			if (orderService.save(model) > 0)
 			{
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+				List<String> list = new ArrayList<>();
+				list.add(id);
+				msgModel.setData(list);
 			}
 		}
 		catch (Exception e)

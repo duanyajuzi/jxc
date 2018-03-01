@@ -240,7 +240,6 @@
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}
         </if>
-        LIMIT #{startNum}, #{pageSize}
     </select>
 
     <!--分页查询出库订单信息-->
@@ -283,13 +282,20 @@
         LIMIT #{startNum}, #{pageSize}
     </select>
 
-    <!--查询物料号-->
     <select id="OrderItemMapper.queryNumInfo" resultMap="mRetMapOrderItem">
-    select A.id,A.materialNum,B.goodsName,A.unit,D.dictName,A.unitPrice,A.storage
-    from tab_good_customer A
-    left join tab_goods B on A.goodId=B.id
-    left join tab_dict D on A.unit=D.dictNo
-    where A.id=#{id}
+        SELECT
+            A.id,
+            A.materialNum,
+            A.price,
+            A.goodsId,
+            B.goodsName,
+            D.dictName
+        FROM
+            tab_blueprint A
+        LEFT JOIN tab_goods B ON A.goodsId = B.id
+        LEFT JOIN tab_dict D ON A.unit = D.dictNo
+        WHERE
+            A.id = #{id}
     </select>
 
   <select id="OrderItemMapper.goodsPlan" resultMap="mRetMapOrderItem">

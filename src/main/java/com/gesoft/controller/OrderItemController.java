@@ -5,6 +5,8 @@ package com.gesoft.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.gesoft.model.OrderItemModel;
 import com.gesoft.service.OrderItemService;
 import org.slf4j.Logger;
@@ -41,6 +43,27 @@ public class OrderItemController extends BaseController
         try
         {
             orderItemService.findPageList(model, msgModel);
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController search error：", e);
+        }
+        return msgModel;
+    }
+    
+    /**
+     * 描述信息：列表查询
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/getList", method=RequestMethod.GET)
+    public @ResponseBody MsgModel getList(OrderItemModel model)
+    {
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            msgModel.setData(orderItemService.findList(model));
+            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
         }
         catch (Exception e)
         {
@@ -97,6 +120,38 @@ public class OrderItemController extends BaseController
         catch (Exception e)
         {
             logger.error("OrderItemController add error：", e);
+        }
+        return msgModel;
+    }
+    
+    /**
+     * 描述信息：修改
+     * @return
+     */
+    @RequestMapping(value="/edit", method=RequestMethod.POST)
+    public @ResponseBody MsgModel edit(OrderItemModel model, HttpServletRequest request)
+    {
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            String orderId = model.getOrderId();
+            String data = model.getData();
+            JSONArray jsArr = JSONArray.parseArray(data);
+            OrderItemModel itemModel;
+            for(Object obj : jsArr){
+                itemModel = new OrderItemModel();
+                JSONObject jsonObject = JSONObject.parseObject(obj.toString());
+                itemModel.setOrderId(orderId);
+                itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
+                itemModel.setCustomerGoodId(Long.parseLong(jsonObject.get("customerGoodId").toString()));
+                itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
+                orderItemService.save(itemModel);
+            }
+            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController modify error：", e);
         }
         return msgModel;
     }
@@ -227,7 +282,7 @@ public class OrderItemController extends BaseController
                 Object obj2= list.get(i).get("orderId");
                 Object obj1 = list.get(i).get("tmpNum");
                 orderItemModel.setInout_stock_id(model.getId());
-                orderItemModel.setOrderId(Long.valueOf(String.valueOf(obj2)));
+                orderItemModel.setOrderId(String.valueOf(obj2));
                 orderItemModel.setOrderItemId(Long.valueOf(String.valueOf(obj)));
                 orderItemModel.setGoodNum(Float.parseFloat(obj1.toString()));
                 orderItemService.insertInoutStockItem(orderItemModel);
@@ -302,7 +357,7 @@ public class OrderItemController extends BaseController
         for (OrderItemModel childlist : plist) {
             if (childlist.getId() != null) {
                 List<OrderItemModel> clist = new ArrayList();//查询子节点
-                model.setOrderId(childlist.getId());
+                model.setOrderId(String.valueOf(childlist.getId()));
                 clist = orderItemService.queryOrderTree2(model);
                 childlist.setChildren(clist);
             }

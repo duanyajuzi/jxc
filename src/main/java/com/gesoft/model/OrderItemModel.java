@@ -8,7 +8,7 @@ import java.util.List;
 public class OrderItemModel extends BaseModel{
     private static final long serialVersionUID = 5454155825314635342L;
     private Long id;
-    private Long orderId;
+    private String orderId;
     private String orderName;
     private Long customerGoodId;
     private String goodsName;
@@ -87,16 +87,15 @@ public class OrderItemModel extends BaseModel{
         this.id = id;
         return this;
     }
-
-    public Long getOrderId() {
+    
+    public String getOrderId() {
         return orderId;
     }
-
-    public OrderItemModel setOrderId(Long orderId) {
+    
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
-        return this;
     }
-
+    
     public String getOrderName() {
         return orderName;
     }
