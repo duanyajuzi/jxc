@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.gesoft.model.OrderItemModel;
+import com.gesoft.service.OrderItemService;
 import com.gesoft.util.Md5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +73,7 @@ public class OrderController extends BaseController
 //获取String类型的订单编号
 	@RequestMapping(value = "/queryOrderNo")
 	@ResponseBody
-	public static String getStringOrderNo(){
+	public String getStringOrderNo(){
 		if(tmpID > 999999){
 			tmpID=1;
 		}
@@ -78,6 +82,9 @@ public class OrderController extends BaseController
 	
 	@Resource
 	private OrderService orderService;
+	
+	@Resource
+	private OrderItemService orderItemService;
 	
 	/**
 	 * 描述信息：分页查询
@@ -120,19 +127,77 @@ public class OrderController extends BaseController
 		model.setId(id);
 		try
 		{
-			if (orderService.save(model) > 0)
-			{
-				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
-				List<String> list = new ArrayList<>();
-				list.add(id);
-				msgModel.setData(list);
+			//保存采购订单
+			if("1".equals(model.getZdsc())){
+				model.setOrderStatus(1);
+			}else{
+				model.setOrderStatus(0);
 			}
+			orderService.save(model);
+			//保存子项
+			editItem(model);
+			if("1".equals(model.getZdsc())){
+				String id2 = Md5Util.UUID();
+				model.setId(id2);
+				model.setOrderType(1);
+				model.setOrderStatus(0);
+				model.setOrderNo("DD"+getStringOrderNo());
+				orderService.save(model);
+				editItem(model);
+			}
+			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}
 		catch (Exception e)
 		{
 			logger.error("OrderController add error：", e);
 		}
 		return msgModel;
+	}
+	
+	/**
+	 * 描述信息：修改订单子项
+	 * @return
+	 */
+	public void editItem(OrderModel model)
+	{
+		MsgModel msgModel = new MsgModel();
+		try
+		{
+			String orderId = model.getId();
+			String iskh = model.getIskh();
+			OrderItemModel itemModel2 = new OrderItemModel();
+			itemModel2.setOrderId(orderId);
+			//根据订单id删除订单子项
+			orderItemService.delete(itemModel2);
+			
+			String data = model.getData();
+			JSONArray jsArr = JSONArray.parseArray(data);
+			OrderItemModel itemModel;
+			for(Object obj : jsArr){
+				itemModel = new OrderItemModel();
+				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
+				itemModel.setOrderId(orderId);
+				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
+				itemModel.setCustomerGoodId(Long.parseLong(jsonObject.get("customerGoodId").toString()));
+				itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
+				//是否控货处理
+				if("1".equals(iskh)){
+					itemModel.setTmpNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
+				}
+				orderItemService.save(itemModel);
+				
+				//是否控货处理
+				if("1".equals(iskh)){
+				
+				}
+				
+			}
+			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+		}
+		catch (Exception e)
+		{
+			logger.error("OrderItemController modify error：", e);
+		}
 	}
 
 	
@@ -152,6 +217,7 @@ public class OrderController extends BaseController
 			setSessionUserId(model, request);
 			if (orderService.update(model) > 0)
 			{
+				editItem(model);
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 			}
 		}

@@ -59,8 +59,15 @@ var PageOrder = function(){
         funOpenInfo : function(paramData)
         {
         	var me = this;
+        	var url;
+        	if(paramData.row.orderType == 0){
+        	    url = this.basePath + "/pages/orderinfo/buy_order_add.jsp";
+            }else{
+                url = this.basePath + "/pages/orderinfo/order_add.jsp";
+            }
+
         	mini.open({
-                url: this.basePath + "/pages/orderinfo/order_add.jsp",
+                url: url,
                 title: paramData.title,
                 width: 750,
                 height: 550 ,

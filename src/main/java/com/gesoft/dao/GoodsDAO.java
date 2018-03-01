@@ -31,7 +31,11 @@ public class GoodsDAO extends EntityDAOImpl<GoodsModel, Long>
     public List<GoodsModel> queryMaterialNum(GoodsModel model){
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryMaterialNum", model);
     }
-
+    
+    public List<GoodsModel> queryMaterialNum2(GoodsModel model){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryMaterialNum2", model);
+    }
+    
     public int updateStorage(GoodsModel model){
         return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateStorage",model);
     }

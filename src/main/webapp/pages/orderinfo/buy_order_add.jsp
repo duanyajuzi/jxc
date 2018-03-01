@@ -149,11 +149,11 @@
                 <div property="columns">
                     <div type="indexcolumn"></div>
                     <div type="checkcolumn"></div>
-                    <div field="materialNum" name="materialNum"  headerAlign="center" width="100" allowSort="true" >客户料号
+                    <div field="materialNum" name="materialNum"  headerAlign="center" width="100" allowSort="true" >原厂料号
                         <input property="editor" class="mini-combobox" style="width:100%;"
                                allowInput="true"  valueField="id" textField="materialNum"
-                               url="${pageContext.request.contextPath}/goods/queryMaterialNum"
-                               required="true" maxlength="19" requiredErrorText="物料号不能为空" />
+                               url="${pageContext.request.contextPath}/goods/queryMaterialNum2"
+                               required="true" maxlength="19" />
                     </div>
                     <div field="esgouNum" width="100"  headerAlign="center" allowSort="true">数量
                         <input property="editor" class="mini-spinner"  value="1" minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;"/>
@@ -161,13 +161,13 @@
                     <div  field="goodsName" headerAlign="center" allowSort="true" width="150" >商品名称
                         <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
                     </div>
-                    <div field="price" headerAlign="center" width="100" allowSort="true" >单价（未税）
+                    <div field="price" headerAlign="center" width="100" allowSort="true" >采购单价
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
                     <div field="dictName" headerAlign="center" width="100" allowSort="true">单位
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
-                    <div field="totalMoney" headerAlign="center"  width="100" allowSort="true" >总价（未税）
+                    <div field="totalMoney" headerAlign="center"  width="100" allowSort="true" >总价
                         <input property="editor" class="mini-spinner" style="width:100%;"/>
                     </div>
                     <div field="customerGoodId" headerAlign="center" width="0" allowSort="true" >

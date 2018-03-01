@@ -15,7 +15,7 @@
 <body>
 <div  style="width: 100%;height: 100%;" allowResize="false">
     <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false"
-        style="border:0 none;height: 300px;">
+        style="border:0 none;height: 265px;">
         <div id="orderDetailForm">
             <input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
@@ -124,16 +124,16 @@
         <div class="mini-fit">
             <div id="orderDetailGrid" class="mini-datagrid" showSummaryRow="true" ondrawsummarycell="onDrawSummaryCell"
                  url="${pageContext.request.contextPath}/orderItem/query"
-                 idField="id" allowResize="false"
-                 pagesize="10" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
+                 idField="id" allowResize="false" showPager="false"
+                 allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-                    <div field="goodsName" headerAlign="center" allowSort="true">商品名称</div>
-                    <div field="materialNum"  headerAlign="center" allowSort="true">物料号</div>
+                    <div field="materialNum"  headerAlign="center" allowSort="true">客户料号</div>
                     <div field="esgouNum" headerAlign="center" allowSort="true">数量</div>
+                    <div field="goodsName" headerAlign="center" allowSort="true">商品名称</div>
+                    <div field="price"  headerAlign="center" allowSort="true">单价（未税）</div>
                     <div field="dictName" headerAlign="center" allowSort="true">单位</div>
-                    <div field="unitPrice"  headerAlign="center" allowSort="true">单价</div>
-                    <div field="totalMoney"  headerAlign="center" allowSort="true" summaryType="sum">总价</div>
+                    <div field="totalMoney"  headerAlign="center" allowSort="true" summaryType="sum">总价（未税）</div>
                 </div>
             </div>
         </div>

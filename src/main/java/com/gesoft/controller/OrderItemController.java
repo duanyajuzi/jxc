@@ -124,40 +124,7 @@ public class OrderItemController extends BaseController
         return msgModel;
     }
     
-    /**
-     * 描述信息：修改
-     * @return
-     */
-    @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public @ResponseBody MsgModel edit(OrderItemModel model, HttpServletRequest request)
-    {
-        MsgModel msgModel = new MsgModel();
-        try
-        {
-            String orderId = model.getOrderId();
-            //根据订单id删除订单子项
-            orderItemService.delete(model);
-            
-            String data = model.getData();
-            JSONArray jsArr = JSONArray.parseArray(data);
-            OrderItemModel itemModel;
-            for(Object obj : jsArr){
-                itemModel = new OrderItemModel();
-                JSONObject jsonObject = JSONObject.parseObject(obj.toString());
-                itemModel.setOrderId(orderId);
-                itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
-                itemModel.setCustomerGoodId(Long.parseLong(jsonObject.get("customerGoodId").toString()));
-                itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
-                orderItemService.save(itemModel);
-            }
-            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
-        }
-        catch (Exception e)
-        {
-            logger.error("OrderItemController modify error：", e);
-        }
-        return msgModel;
-    }
+
 
 
     /**
@@ -205,7 +172,7 @@ public class OrderItemController extends BaseController
         return msgModel;
     }
 
-    //根据商品名称查询物料号
+    //根据客户料号查询详细
     @RequestMapping(value="/queryNumInfoList")
     public @ResponseBody List<OrderItemModel> queryNumInfoList(OrderItemModel model){
         List<OrderItemModel> list=null;
@@ -214,6 +181,21 @@ public class OrderItemController extends BaseController
                 list=new ArrayList();
             }
             list=orderItemService.queryNumInfo(model);
+        }catch (Exception e){
+            logger.error("OrderItemController queryNumInfoList error：", e);
+        }
+        return list;
+    }
+    
+    //根据原厂料号查询详细
+    @RequestMapping(value="/queryNumInfoList2")
+    public @ResponseBody List<OrderItemModel> queryNumInfoList2(OrderItemModel model){
+        List<OrderItemModel> list=null;
+        try{
+            if(list==null){
+                list=new ArrayList();
+            }
+            list=orderItemService.queryNumInfo2(model);
         }catch (Exception e){
             logger.error("OrderItemController queryNumInfoList error：", e);
         }

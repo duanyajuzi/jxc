@@ -171,6 +171,22 @@ public class GoodsController extends BaseController
 		}
 		return list;
 	}
+	
+	
+	@RequestMapping(value = "/queryMaterialNum2")
+	@ResponseBody
+	public List<GoodsModel> queryMaterialNumList2(GoodsModel model){
+		List<GoodsModel> list=null;
+		try{
+			list=goodsService.queryMaterialNum2(model);
+			if(list==null){
+				list=new ArrayList<>();
+			}
+		}catch (Exception e){
+			logger.error("GoodsController queryMaterialNum error：", e);
+		}
+		return list;
+	}
 
 	@RequestMapping(value = "updateStorage")
 	@ResponseBody

@@ -48,6 +48,42 @@ package com.gesoft.model;
 	private String pcustomerName;
 	private String name1;
 	private String name2;
+	private String iskh;
+	private String zdsc;
+	private String data;
+	private String orderId;
+	
+	public String getOrderId() {
+		return orderId;
+	}
+	
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+	
+	public String getData() {
+		return data;
+	}
+	
+	public void setData(String data) {
+		this.data = data;
+	}
+	
+	public String getIskh() {
+		return iskh;
+	}
+	
+	public void setIskh(String iskh) {
+		this.iskh = iskh;
+	}
+	
+	public String getZdsc() {
+		return zdsc;
+	}
+	
+	public void setZdsc(String zdsc) {
+		this.zdsc = zdsc;
+	}
 	
 	public String getId() {
 		return id;

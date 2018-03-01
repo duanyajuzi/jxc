@@ -21,12 +21,13 @@ var PageOrderDetailInfo=function () {
                 $.ajax({
                     url: this.basePath+"/order/query",
                     data: {id: row.id,orderType:row.orderType},
-                    type: "post",
+                    type: "get",
                     dataType: "json",
                     success: function (text) {
                         var o = mini.decode(text.data[0]);
                         o.orderStatus=PageOrderDetailInfo.onStatusChanged(o.orderStatus);
                         orderDetailForm.setData(o);
+                        orderDetailForm.setEnabled(false);
                     },
                     error: function () {
                     }

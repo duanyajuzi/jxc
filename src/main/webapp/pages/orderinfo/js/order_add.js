@@ -20,7 +20,7 @@ var PageOrderAdd = function(){
         funSetData : function(data)
         {
             var row = data.row;
-            this.pOrderType=row.orderType;
+            PageOrderAdd.defaultOption.pOrderType=row.orderType;
             this.action = data.action;
             this.orderForm.setData(row);
             if(this.action=="add") {
@@ -96,8 +96,14 @@ var PageOrderAdd = function(){
                  return;
             }
             var me = this;
+            var orderinfo = this.orderItemGrid.getChanges();
+            var json = mini.encode(orderinfo);
             var obj = this.orderForm.getData(true);
-            obj.orderType=this.pOrderType;
+            obj.data = json;
+            obj.orderType=PageOrderAdd.defaultOption.pOrderType;
+            obj.iskh = obj.iskh == 'true' ? 1 : 0;
+            obj.zdsc = obj.zdsc == 'true' ? 1 : 0;
+            var messageBox = mini.loading("保存中......","提示");
             $.ajax({
                url : me.basePath + "/order/" + me.action + "?a="+Math.random(),
                type : 'POST',
@@ -105,15 +111,13 @@ var PageOrderAdd = function(){
                dataType: 'json',
                success: function (data) 
                {
-                    if(data.success)
-                    {
-                        if(me.action == 'add'){
-                            PageOrderAdd.saveOrderItem(data.data[0]);
-                        }else if(me.action == 'modify'){
-                            PageOrderAdd.saveOrderItem(PageOrderAdd.defaultOption.orderId);
-                        }
-
-                    }
+                   mini.hideMessageBox(messageBox);
+                   mini.alert(data.msg, "提醒", function(){
+                       if(data.success)
+                       {
+                           PageMain.funCloseWindow("save");
+                       }
+                   });
 
                },
                error: function (jqXHR, textStatus, errorThrown) 
@@ -121,31 +125,6 @@ var PageOrderAdd = function(){
             	   PageMain.funShowMessageBox("操作出现异常");
                }
            });
-        },
-
-        /**
-         * 保存订单子项
-         */
-        saveOrderItem : function (orderId) {
-
-            var orderinfo = this.orderItemGrid.getChanges();
-            var json = mini.encode(orderinfo);
-            $.ajax({
-                url: this.basePath + "/orderItem/edit" + "?a="+Math.random(),
-                data: { data: json, orderId:orderId },
-                type: "post",
-                success: function (data) {
-                    mini.alert(data.msg, "提醒", function(){
-                        if(data.success)
-                        {
-                            PageMain.funCloseWindow("save");
-                        }
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(jqXHR.responseText);
-                }
-            });
         },
 
         funCancel : function()
@@ -180,8 +159,14 @@ var PageOrderAdd = function(){
             var value = e.value;
             if (field == "materialNum") {
                 if(value!="") {
+                    var url;
+                    if(PageOrderAdd.defaultOption.pOrderType == 0){
+                        url =  PageOrderAdd.defaultOption.basePath + "/orderItem/queryNumInfoList2";
+                    }else{
+                        url =  PageOrderAdd.defaultOption.basePath + "/orderItem/queryNumInfoList";
+                    }
                     $.ajax({
-                        url: PageOrderAdd.defaultOption.basePath + "/orderItem/queryNumInfoList",
+                        url:url,
                         type: "post",
                         data: {id:value},
                         dataType: "json",
