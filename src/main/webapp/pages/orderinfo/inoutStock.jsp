@@ -17,11 +17,9 @@
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="inoutStockForm">
                 <lable class="form-label" name="stimeSearch" id="stimeSearch"><c:if test="${param.orderType==0}">入</c:if><c:if test="${param.orderType==1}">出</c:if>库时间：</lable>
                 <input name="stimeBegin" id="stimeBegin" class="mini-datepicker" style="witdth:150px;"
-                       format="yyyy-MM-dd H:mm:ss" timeFormat="H:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"
-                       nullValue="null"  emptyText="开始时间" allowInput="false"  />至
+                       format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至
                 <input name="stimeEnd" id="stimeEnd" class="mini-datepicker" style="width:150px;"
-                       format="yyyy-MM-dd H:mm:ss" timeFormat="H:mm:ss" showTime="true"  showOkButton="true" showClearButton="false"
-                       nullValue="null"  emptyText="结束时间" allowInput="false"  />
+                       format="yyyy-MM-dd" emptyText="结束时间" allowInput="false"  />
                 <a class="mini-button" iconCls="icon-search" onclick="PageInoutStock.funSearch()" plain="true"><label>查询</label></a>
                 <a class="mini-button" iconCls="icon-reset" onclick="PageInoutStock.funReset()" plain="true"><label>重置</label></a>
             </div>
