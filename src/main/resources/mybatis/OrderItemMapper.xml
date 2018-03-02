@@ -39,6 +39,7 @@
         <result property="customerGoodId"/>
         <result property="goodsName"/>
         <result property="text"/>
+        <result property="treeId"/>
 
         <result property="stimeBegin"/>
         <result property="stimeEnd"/>
@@ -286,7 +287,7 @@
         LIMIT #{startNum}, #{pageSize}
     </select>
 
-    <!--分页查询出库订单细项信息-->
+    <!--分页查询入库订单细项信息-->
     <select id="OrderItemMapper.queryInoutStockItem" resultMap="mRetMapOrderItem">
         select A.id,
         A.orderItemId,
@@ -305,6 +306,28 @@
         </if>
         <!-- LIMIT #{startNum}, #{pageSize} -->
     </select>
+
+    <!--分页查询出库订单细项信息-->
+    <select id="OrderItemMapper.queryOutStockItem" resultMap="mRetMapOrderItem">
+        select A.id,
+        A.orderItemId,
+        F.goodsId as customerGoodId,
+        F.materialNum,
+        G.goodId,
+        D.goodsName,
+        A.goodNum
+        from tab_inout_stock_item A
+        left join tab_orderitem B on A.orderItemId=B.id
+        LEFT JOIN tab_blueprint F ON B.customerGoodId=F.id
+        LEFT JOIN tab_good_customer G on F.goodsId=G.id
+        LEFT JOIN tab_goods D ON G.goodId=D.id
+        WHERE A.inout_stock_id = #{inout_stock_id}
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+        <!-- LIMIT #{startNum}, #{pageSize} -->
+    </select>
+
 
     <select id="OrderItemMapper.queryNumInfo" resultMap="mRetMapOrderItem">
         SELECT
@@ -351,18 +374,59 @@
       WHERE A.goodsId = #{goodsId}
   </select>
 
-    <!--查询订单树父节点-->
+    <!--查询采购订单树父节点-->
+    <select id="OrderItemMapper.queryInOrderTree" resultMap="mRetMapOrderItem">
+        SELECT A.id as treeId,A.orderName text
+        FROM tab_order A
+        LEFT JOIN tab_orderitem B on B.orderId = A.id
+        left join tab_good_customer F on B.customerGoodId=F.id
+        left join tab_goods D on F.goodId=D.id
+        WHERE 1=1
+        AND (A.orderStatus!=-1 or A.orderStatus!=5)
+        <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
+        AND A.orderType = #{orderType}
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+            AND D.businessId= #{businessId}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+            AND A.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">D
+            AND A.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+            AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+        </if>
+        GROUP BY A.id
+    </select>
+    <!--查询采购订单树子节点-->
+    <select id="OrderItemMapper.queryOrderTree1" resultMap="mRetMapOrderItem">
+        SELECT B.id as treeId,B.customerGoodId,F.goodId,D.goodsName ,F.materialNum,B.esgouNum,B.tmpNum,(B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,
+        concat( D.goodsName, '-' ,F.materialNum,'(',CONVERT(B.esgouNum-B.tmpNum,char),')') as text,B.orderId
+        FROM tab_orderitem B
+        left join tab_order A on A.id=B.orderId
+        left join tab_good_customer F on B.customerGoodId=F.id
+        left join tab_goods D on F.goodId=D.id
+        where B.orderId = #{orderId}
+        AND (A.orderStatus!=-1 or A.orderStatus!=5)
+        <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
+        AND B.esgouNum != B.tmpNum
+    </select>
+
+    <!--查询销售订单树父节点-->
     <select id="OrderItemMapper.queryOrderTree" resultMap="mRetMapOrderItem">
-      SELECT A.id,A.orderName text
+      SELECT A.id as treeId,A.orderName text
       FROM tab_order A
-      LEFT JOIN tab_orderitem B on A.id=B.orderId
-      left join tab_good_customer D on B.customerGoodId=D.id
-      left join tab_goods E on E.id=D.goodId
-      left join tab_blueprint F on F.goodsId = D .goodId
-      WHERE (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)
+      LEFT JOIN tab_orderitem B ON A.id = B.orderId
+      LEFT JOIN tab_blueprint F ON B.customerGoodId=F.id
+      LEFT JOIN tab_good_customer G on F.goodsId=G.id
+      LEFT JOIN tab_goods D ON G.goodId=D.id
+      WHERE 1=1
+      AND (A.orderStatus!=-1 or A.orderStatus!=5)
+      <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
       AND A.orderType = #{orderType}
       <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
-          AND E.businessId= #{businessId}
+          AND D.businessId= #{businessId}
       </if>
       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
           AND A.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
@@ -376,17 +440,36 @@
         GROUP BY A.id
     </select>
 
-    <!--查询订单树子节点-->
+    <!--查询销售订单树子节点-->
     <select id="OrderItemMapper.queryOrderTree2" resultMap="mRetMapOrderItem">
-        SELECT B.id,B.customerGoodId,F.goodId,D.goodsName ,F.materialNum,B.esgouNum,B.tmpNum,(B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,
-		concat( D.goodsName, '-' ,F.materialNum,'(',CONVERT(B.esgouNum-B.tmpNum,char),')') as text,B.orderId
-        FROM tab_orderitem B
-        left join tab_order A on A.id=B.orderId
-		left join tab_good_customer F on B.customerGoodId=F.id
-        left join tab_goods D on F.goodId=D.id
-        where B.orderId = #{orderId}
-        AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)
-        AND B.esgouNum != B.tmpNum
+        SELECT
+        A.id as treeId,
+        A.orderId,
+        B.orderName,
+        F.goodsId as customerGoodId,
+        A.esgouNum,
+        A.unitPrice AS price,
+        A.tmpNum,
+        (A.esgouNum - A.tmpNum) AS afterNum,
+        concat(D.goodsName,'-',F.materialNum,'(',CONVERT (A.esgouNum - A.tmpNum, CHAR),')') AS text,
+        D.goodsName,
+        F.materialNum,
+        D.specUnit,
+        D.businessId,
+        D.id as goodId,
+        E.dictName,
+        A.esgouNum * A.unitPrice AS totalMoney
+        FROM
+        tab_orderitem A
+        LEFT JOIN tab_order B ON A.orderId = B.id
+        LEFT JOIN tab_blueprint F ON A.customerGoodId=F.id
+        LEFT JOIN tab_good_customer G on F.goodsId=G.id
+        LEFT JOIN tab_goods D ON G.goodId=D.id
+        LEFT JOIN tab_dict E ON F.unit = E.dictNo
+        where B.id = #{orderId}
+        AND (B.orderStatus!=-1 or A.orderStatus!=5)
+        <!--AND (B.orderStatus = 1 or B.orderStatus=2 or B.orderStatus=3)-->
+        AND A.esgouNum != A.tmpNum
     </select>
 
     <update id="OrderItemMapper.updateOutOrderStatus">
@@ -412,7 +495,8 @@
         WHERE id = #{orderId}
     ]]>
     </update>
-    
+
+    <!--入库-->
     <update id="OrderItemMapper.updateTabGoodsStorage">
         <![CDATA[
         UPDATE tab_goods
@@ -425,6 +509,23 @@
         <![CDATA[
         UPDATE tab_good_customer
         SET storage = storage + #{tmpNum}
+        WHERE id = #{customerGoodId}
+    ]]>
+    </update>
+
+    <!--出库-->
+    <update id="OrderItemMapper.updateTabGoodsStorageOut">
+        <![CDATA[
+        UPDATE tab_goods
+        SET storage = storage - #{tmpNum}
+        WHERE id = #{goodId}
+    ]]>
+    </update>
+
+    <update id="OrderItemMapper.updateTabGoodCustomerStorageOut">
+        <![CDATA[
+        UPDATE tab_good_customer
+        SET storage = storage - #{tmpNum}
         WHERE id = #{customerGoodId}
     ]]>
     </update>

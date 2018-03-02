@@ -1,5 +1,5 @@
 
-var PageInoutStock=function () {
+var PageOutStock=function () {
     return {
         defaultOption: {
             basePath: "",
@@ -12,12 +12,12 @@ var PageInoutStock=function () {
             this.basePath = PageMain.basePath;
             this.inoutGrid=mini.get("inoutGrid");
             this.inoutItemGrid=mini.get("inoutItemGrid");
-            PageInoutStock.defaultOption.orderType=PageInoutStock.getUrlParam("orderType");
-            if(PageInoutStock.defaultOption.orderType==0){
+            PageOutStock.defaultOption.orderType=PageOutStock.getUrlParam("orderType");
+            if(PageOutStock.defaultOption.orderType==0){
                 this.inoutGrid.updateColumn("stime", {header: "入库时间"});
                 $("label#stimeSearch").val("入库时间");
                 this.inoutItemGrid.updateColumn("goodNum", {header: "入库数量"});
-            }else if(PageInoutStock.defaultOption.orderType==1){
+            }else if(PageOutStock.defaultOption.orderType==1){
                 this.inoutGrid.updateColumn("stime", {header: "出库时间"});
                 $("#stimeSearch").val("出库时间");
                 this.inoutItemGrid.updateColumn("goodNum", {header: "出库数量"});
@@ -43,7 +43,7 @@ var PageInoutStock=function () {
         },
         funAdd : function()
         {
-            var paramData = {action: "insertTabInoutStock",row:{orderType:PageInoutStock.defaultOption.orderType}, title:"新增数据"};
+            var paramData = {action: "insertTabInoutStock",row:{orderType:PageOutStock.defaultOption.orderType}, title:"新增数据"};
             this.funOpenInfo(paramData);
         },
         funModify : function()
@@ -51,7 +51,7 @@ var PageInoutStock=function () {
             var row = this.inoutGrid.getSelected();
             if(row)
             {
-                row.orderType=PageInoutStock.defaultOption.orderType;
+                row.orderType=PageOutStock.defaultOption.orderType;
                 var paramData = {action: "updateTabInoutStock", row: row, title:"编辑数据"};
                 this.funOpenInfo(paramData);
             }
@@ -70,7 +70,7 @@ var PageInoutStock=function () {
                 height: 120,
                 onload:function(){
                     var iframe=this.getIFrameEl();
-                    iframe.contentWindow.PageInoutStockAdd.funSetData(paramData);
+                    iframe.contentWindow.PageOutStockAdd.funSetData(paramData);
                 },
                 ondestroy:function(action){
                     me.inoutGrid.reload();
@@ -112,25 +112,25 @@ var PageInoutStock=function () {
                 mini.alert("请先选择要删除的记录");
             }
         },
-        //商品入库数量
+        //商品出库数量
         funSetInoutStockNum: function () {
-            var data={orderType:PageInoutStock.defaultOption.orderType}
-           mini.open({
-               url:this.basePath+"/pages/orderinfo/setInoutStock.jsp",
-               height:600,
-               width:1000,
-               onload:function () {
-                   var iframe=this.getIFrameEl();
-                   iframe.contentWindow.PageSetInoutStock.funGetData(data);
-               },
-               ondestroy:function () {
-                   mini.get("inoutGrid").load();
-               }
-           });
+            var data={orderType:PageOutStock.defaultOption.orderType}
+            mini.open({
+                url:this.basePath+"/pages/orderinfo/setOutStock.jsp",
+                height:600,
+                width:1000,
+                onload:function () {
+                    var iframe=this.getIFrameEl();
+                    iframe.contentWindow.PageSetOutStock.funGetData(data);
+                },
+                ondestroy:function () {
+                    mini.get("inoutGrid").load();
+                }
+            });
         }
     }
 } ();
 
 $(function(){
-    PageInoutStock.init();
+    PageOutStock.init();
 });

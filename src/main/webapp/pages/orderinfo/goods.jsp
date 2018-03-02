@@ -46,7 +46,7 @@
                      <div field="business" width="120" headerAlign="center" allowSort="true" align="center">业务类型</div>
 					 <div field="spec" width="120" headerAlign="center" allowSort="true" align="center">规格</div>
 					 <div field="name2" width="120" headerAlign="center" allowSort="true" align="center">规格单位</div>
-					 <%--<div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>--%>
+					 <div field="storage" width="120" headerAlign="center" allowSort="true">库存量</div>
 					 <div field="memo" width="120" headerAlign="center" allowSort="true" align="center">备注</div>
                 </div>
             </div>

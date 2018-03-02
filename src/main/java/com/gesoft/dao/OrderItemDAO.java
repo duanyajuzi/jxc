@@ -61,17 +61,43 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
     public List<OrderItemModel> findListInoutStock(OrderItemModel orderItemModel){
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryInoutStock", orderItemModel);
     }
+
+    /**
+     * 入库细项
+     * @param orderItemModel
+     * @return
+     */
     public List<OrderItemModel> findListInoutStockItem(OrderItemModel orderItemModel){
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryInoutStockItem", orderItemModel);
     }
 
+    /**
+     * 出库细项
+     * @param orderItemModel
+     * @return
+     */
+    public List<OrderItemModel> findListOutStockItem(OrderItemModel orderItemModel){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryOutStockItem", orderItemModel);
+    }
+
     /*
-    * 订单树父节点*/
+    * 采购订单树父节点*/
+    public List<OrderItemModel> queryInOrderTree(OrderItemModel orderItemModel){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryInOrderTree", orderItemModel);
+    }
+
+    /*
+    * 销售订单树父节点*/
     public List<OrderItemModel> queryOrderTree(OrderItemModel orderItemModel){
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryOrderTree", orderItemModel);
     }
     /*
-    * 订单树子节点*/
+  * 订单树入库子节点*/
+    public List<OrderItemModel> queryOrderTree1(OrderItemModel orderItemModel){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryOrderTree1", orderItemModel);
+    }
+    /*
+    * 订单树销售子节点*/
     public List<OrderItemModel> queryOrderTree2(OrderItemModel orderItemModel){
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryOrderTree2", orderItemModel);
     }
@@ -94,12 +120,20 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
     public int updateOrderBillStatus(OrderItemModel model){
         return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateOrderBillStatus", model);
     }
-
+    //入库数量
     public int updateTabGoodsStorage(OrderItemModel model){
         return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateTabGoodsStorage", model);
     }
 
     public int updateTabGoodCustomerStorage(OrderItemModel model){
         return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateTabGoodCustomerStorage", model);
+    }
+    //出库数量
+    public int updateTabGoodsStorageOut(OrderItemModel model){
+        return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateTabGoodsStorageOut", model);
+    }
+
+    public int updateTabGoodCustomerStorageOut(OrderItemModel model){
+        return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateTabGoodCustomerStorageOut", model);
     }
 }
