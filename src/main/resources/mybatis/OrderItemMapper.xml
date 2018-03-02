@@ -377,8 +377,8 @@
     <!--查询采购订单树父节点-->
     <select id="OrderItemMapper.queryInOrderTree" resultMap="mRetMapOrderItem">
         SELECT A.id as treeId,A.orderName text
-        FROM tab_order A
-        LEFT JOIN tab_orderitem B on B.orderId = A.id
+        FROM tab_orderitem B
+        LEFT JOIN tab_order A on B.orderId = A.id
         left join tab_good_customer F on B.customerGoodId=F.id
         left join tab_goods D on F.goodId=D.id
         WHERE 1=1
@@ -416,8 +416,8 @@
     <!--查询销售订单树父节点-->
     <select id="OrderItemMapper.queryOrderTree" resultMap="mRetMapOrderItem">
       SELECT A.id as treeId,A.orderName text
-      FROM tab_order A
-      LEFT JOIN tab_orderitem B ON A.id = B.orderId
+      FROM tab_orderitem B
+      LEFT JOIN tab_order A ON A.id = B.orderId
       LEFT JOIN tab_blueprint F ON B.customerGoodId=F.id
       LEFT JOIN tab_good_customer G on F.goodsId=G.id
       LEFT JOIN tab_goods D ON G.goodId=D.id
