@@ -71,6 +71,27 @@ public class OrderItemController extends BaseController
         }
         return msgModel;
     }
+    
+    /**
+     * 描述信息：列表查询
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/getList2", method=RequestMethod.GET)
+    public @ResponseBody MsgModel getList2(OrderItemModel model)
+    {
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            msgModel.setData(orderItemService.findList2(model));
+            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController search error：", e);
+        }
+        return msgModel;
+    }
 
     @RequestMapping(value="/queryInoutStock", method=RequestMethod.POST)
     public @ResponseBody MsgModel search2(OrderItemModel model)

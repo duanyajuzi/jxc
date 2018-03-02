@@ -142,7 +142,7 @@
             </div>
 
             <div id="orderItemGrid" class="mini-datagrid" style="width:100%;height:270px;"
-                 url="${pageContext.request.contextPath}/orderItem/getList" idField="id"
+                 url="${pageContext.request.contextPath}/orderItem/getList2" idField="id"
                  allowResize="false" ajaxType="get" showPager="false" oncellbeginedit="PageOrderAdd.OnCellBeginEdit"
                  allowCellEdit="true" allowCellSelect="true" multiSelect="true" oncellcommitedit="PageOrderAdd.onMaterialNumChanged"
                  editNextOnEnterKey="true" allowSortColumn="fasle"  editNextRowCell="true">

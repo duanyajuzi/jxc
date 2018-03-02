@@ -231,7 +231,32 @@
         FROM
         tab_orderitem A
         LEFT JOIN tab_blueprint F ON A.customerGoodId = F.id
-        LEFT JOIN tab_goods D ON F.goodsId = D.id
+        left join tab_good_customer G ON F.goodsId = G.id
+        LEFT JOIN tab_goods D ON G.goodId = D.id
+        LEFT JOIN tab_dict E ON F.unit = E.dictNo
+    <include refid="OrderItemMapper.findPage.where"/>
+    <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
+        ORDER BY ${sortColumns}
+    </if>
+</select>
+
+    <select id="OrderItemMapper.list2" resultMap="mRetMapOrderItem">
+        SELECT
+        A.id,
+        A.orderId,
+        A.customerGoodId,
+        A.esgouNum,
+        A.unitPrice as price,
+        A.tmpNum,
+        D.goodsName,
+        F.materialNum,
+        D.specUnit,
+        E.dictName,
+        A.esgouNum * A.unitPrice AS totalMoney
+        FROM
+        tab_orderitem A
+        LEFT JOIN tab_good_customer F ON A.customerGoodId = F.id
+        LEFT JOIN tab_goods D ON F.goodId = D.id
         LEFT JOIN tab_dict E ON F.unit = E.dictNo
         <include refid="OrderItemMapper.findPage.where"/>
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
@@ -289,7 +314,8 @@
             D.dictName
         FROM
             tab_blueprint A
-        LEFT JOIN tab_goods B ON A.goodsId = B.id
+        left join tab_good_customer G ON A.goodsId = G.id
+        LEFT JOIN tab_goods B ON G.goodId = B.id
         LEFT JOIN tab_dict D ON A.unit = D.dictNo
         WHERE
             A.id = #{id}

@@ -23,6 +23,9 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryNumInfo2", model);
     }
     
+    public List<OrderItemModel> findList2(OrderItemModel model){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".list2", model);
+    }
     
     public List<OrderItemModel> queryGoodPLan(OrderItemModel model){
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".goodsPlan", model);

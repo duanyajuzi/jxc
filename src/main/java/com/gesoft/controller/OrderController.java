@@ -143,7 +143,7 @@ public class OrderController extends BaseController
 				model.setOrderStatus(0);
 				model.setOrderNo("DD"+getStringOrderNo());
 				orderService.save(model);
-				editItem(model);
+//				editItem(model);
 			}
 			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}
