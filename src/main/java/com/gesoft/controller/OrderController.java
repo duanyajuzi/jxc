@@ -187,8 +187,10 @@ public class OrderController extends BaseController
 				if("added".equals(state)){
 					orderItemService.save(itemModel);
 				}else if("modified".equals(state)){
+					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
 					orderItemService.update(itemModel);
 				}else if("removed".equals(state)){
+					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
 					orderItemService.delete(itemModel);
 				}
 				
