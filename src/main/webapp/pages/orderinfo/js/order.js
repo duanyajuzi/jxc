@@ -45,11 +45,11 @@ var PageOrder = function(){
             {
                 // row.orderType=this.type;
             	var paramData = {action: "modify", row: row, title:"编辑数据"};
-                if(row.orderStatus==0) {
+                // if(row.orderStatus==0) {
                     this.funOpenInfo(paramData);
-                }else {
-                    PageMain.funShowMessageBox("订单状态已改变，不可更改");
-                }
+                // }else {
+                //     PageMain.funShowMessageBox("订单状态已改变，不可更改");
+                // }
             }
             else
             {

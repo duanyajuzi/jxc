@@ -74,6 +74,17 @@
     ]]>
     </insert>
 
+    <update id="OrderItemMapper.update" >
+        <![CDATA[
+        UPDATE tab_orderitem SET
+	        customerGoodId = #{customerGoodId} ,
+	        esgouNum = #{esgouNum} ,
+	        unitPrice = #{unitPrice}
+        WHERE
+	        id = #{id}
+    ]]>
+    </update>
+
     <!--添加出库信息-->
     <insert id="OrderItemMapper.insertInoutStock" useGeneratedKeys="true" keyProperty="id">
         <![CDATA[
@@ -114,16 +125,7 @@
     ]]>
     </insert>
 
-    <update id="OrderItemMapper.update" >
-        <![CDATA[
-        UPDATE tab_orderitem SET
-	        customerGoodId = #{customerGoodId} ,
-	        esgouNum = #{esgouNum} ,
-	        unitPrice = #{unitPrice}
-        WHERE
-	        id = #{id}
-    ]]>
-    </update>
+
 
     <update id="OrderItemMapper.updateInoutStock">
           <![CDATA[
@@ -146,7 +148,7 @@
     <delete id="OrderItemMapper.delete" >
         <![CDATA[
         DELETE FROM tab_orderitem WHERE
-        orderId = #{orderId}
+        id = #{id}
     ]]>
     </delete>
 

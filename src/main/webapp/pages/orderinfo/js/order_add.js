@@ -134,7 +134,8 @@ var PageOrderAdd = function(){
 
         addRow : function () {
             var newRow = { name: "New Row" };
-            this.orderItemGrid.addRow(newRow, 0);
+            var index = $(".mini-grid-row").length;
+            this.orderItemGrid.addRow(newRow, index);
             this.orderItemGrid.beginEditCell(newRow, "LoginName");
         },
         removeRow : function () {

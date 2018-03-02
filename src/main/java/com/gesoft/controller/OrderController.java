@@ -167,8 +167,6 @@ public class OrderController extends BaseController
 			String iskh = model.getIskh();
 			OrderItemModel itemModel2 = new OrderItemModel();
 			itemModel2.setOrderId(orderId);
-			//根据订单id删除订单子项
-			orderItemService.delete(itemModel2);
 			
 			String data = model.getData();
 			JSONArray jsArr = JSONArray.parseArray(data);
@@ -176,6 +174,7 @@ public class OrderController extends BaseController
 			for(Object obj : jsArr){
 				itemModel = new OrderItemModel();
 				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
+				
 				itemModel.setOrderId(orderId);
 				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
 				itemModel.setCustomerGoodId(Long.parseLong(jsonObject.get("customerGoodId").toString()));
@@ -184,7 +183,14 @@ public class OrderController extends BaseController
 				if("1".equals(iskh)){
 					itemModel.setTmpNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
 				}
-				orderItemService.save(itemModel);
+				String state = jsonObject.get("_state").toString();
+				if("added".equals(state)){
+					orderItemService.save(itemModel);
+				}else if("modified".equals(state)){
+					orderItemService.update(itemModel);
+				}else if("removed".equals(state)){
+					orderItemService.delete(itemModel);
+				}
 				
 				//是否控货处理
 				if("1".equals(iskh)){
