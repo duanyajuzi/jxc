@@ -329,6 +329,7 @@
         A.materialNum,
         A.unitPrice as price,
         A.goodId as goodsId,
+        A.isHasLadder,
         B.goodsName,
         D.dictName
         FROM

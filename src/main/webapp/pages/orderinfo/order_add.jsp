@@ -152,7 +152,6 @@
                     <div field="materialNum" name="materialNum"  headerAlign="center" width="100" allowSort="true" >客户料号
                         <input property="editor" class="mini-combobox" style="width:100%;"
                                allowInput="true"  valueField="id" textField="materialNum"
-                               url="${pageContext.request.contextPath}/goods/queryMaterialNum"
                                required="true" maxlength="19" requiredErrorText="物料号不能为空" />
                     </div>
                     <div field="esgouNum" width="100"  headerAlign="center" allowSort="true">数量
