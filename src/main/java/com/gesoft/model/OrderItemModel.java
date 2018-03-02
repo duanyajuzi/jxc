@@ -47,6 +47,7 @@ public class OrderItemModel extends BaseModel{
     private Long orderItemId;
     private Float goodNum;
     private Long goodId;
+    private String treeId;
     private String text;
     private List<OrderItemModel> children;
     private String data;
@@ -59,6 +60,14 @@ public class OrderItemModel extends BaseModel{
     public OrderItemModel setData(String data) {
         this.data = data;
         return this;
+    }
+
+    public String getTreeId() {
+        return treeId;
+    }
+
+    public void setTreeId(String treeId) {
+        this.treeId = treeId;
     }
 
     public String getText() {

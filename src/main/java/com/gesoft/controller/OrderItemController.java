@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gesoft.model.OrderItemModel;
 import com.gesoft.service.OrderItemService;
+import com.gesoft.util.Md5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -108,6 +109,11 @@ public class OrderItemController extends BaseController
         return msgModel;
     }
 
+    /**
+     * 入库细项
+     * @param model
+     * @return
+     */
     @RequestMapping(value="/queryInoutStockItem", method=RequestMethod.POST)
     public @ResponseBody List<OrderItemModel> search3(OrderItemModel model)
     {
@@ -119,6 +125,26 @@ public class OrderItemController extends BaseController
         catch (Exception e)
         {
             logger.error("OrderItemController queryInoutStockItem error：", e);
+        }
+        return list;
+    }
+
+    /**
+     * 出库细项
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/queryOutStockItem", method=RequestMethod.POST)
+    public @ResponseBody List<OrderItemModel> search4(OrderItemModel model)
+    {
+        List<OrderItemModel> list=new ArrayList<OrderItemModel>();
+        try
+        {
+            list= orderItemService.findListOutStockItem(model);
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController queryOutStockItem error：", e);
         }
         return list;
     }
@@ -239,10 +265,10 @@ public class OrderItemController extends BaseController
         return planList;
     }
 
-    //修改已出库商品数量
+    //修改已入库商品数量
     @RequestMapping(value = "/updateOrderItemTmpNum")
     @ResponseBody
-    public void updateOrderItem(OrderItemModel model){
+    public void updateOrderItemTmpNum(OrderItemModel model){
         try{
             String str=model.getData();
             List<Map<String,Object>> list= (List<Map<String,Object>>) JSONUtils.parse(str);
@@ -256,12 +282,38 @@ public class OrderItemController extends BaseController
                 model.setCustomerGoodId(Long.valueOf(String.valueOf(obj2)));
                 model.setTmpNum(Float.parseFloat(obj1.toString()));
                 orderItemService.updateInoutNum(model);
-                orderItemService.updateTabGoodsStorage(model);
+//                orderItemService.updateTabGoodsStorage(model);
                 orderItemService.updateTabGoodCustomerStorage(model);
             }
         }
         catch (Exception e) {
             logger.error("OrderItemController updateOrderItemTmpNum error：", e);
+        }
+    }
+
+    //修改已出库商品数量
+    @RequestMapping(value = "/updateOrderItemTmpNumOut")
+    @ResponseBody
+    public void updateOrderItemTmpNumOut(OrderItemModel model){
+        try{
+            String str=model.getData();
+            List<Map<String,Object>> list= (List<Map<String,Object>>) JSONUtils.parse(str);
+            for(int i=0;i<list.size();i++){
+                Object obj=list.get(i).get("id");
+                Object obj1=list.get(i).get("tmpNum");
+                Object obj2=list.get(i).get("customerGoodId");
+                Object obj3=list.get(i).get("goodId");
+                model.setId(Long.valueOf(String.valueOf(obj)));
+                model.setGoodId(Long.valueOf(String.valueOf(obj3)));
+                model.setCustomerGoodId(Long.valueOf(String.valueOf(obj2)));
+                model.setTmpNum(Float.parseFloat(obj1.toString()));
+                orderItemService.updateInoutNum(model);
+//                orderItemService.updateTabGoodsStorageOut(model);
+                orderItemService.updateTabGoodCustomerStorageOut(model);
+            }
+        }
+        catch (Exception e) {
+            logger.error("OrderItemController updateOrderItemTmpNumOut error：", e);
         }
     }
 
@@ -351,6 +403,35 @@ public class OrderItemController extends BaseController
 //        }
 //    }
 
+    /**
+     * 采购订单树
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/queryInOrderTreeList")
+    @ResponseBody
+    public List<OrderItemModel> queryInOrderTreeList(OrderItemModel model) {
+        List<OrderItemModel> plist = new ArrayList<>();
+        try {
+            plist = orderItemService.queryInOrderTree(model);
+        } catch (Exception e) {
+            logger.error("OrderItemController queryOrderTreeList error: ", e);
+        }
+        for (OrderItemModel childlist : plist) {
+            if (childlist.getTreeId() != null) {
+                List<OrderItemModel> clist = new ArrayList();//查询子节点
+                model.setOrderId(String.valueOf(childlist.getTreeId()));
+                clist = orderItemService.queryOrderTree1(model);
+                childlist.setChildren(clist);
+            }
+        }
+        return plist;
+    }
+    /**
+     * 销售订单树
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/queryOrderTreeList")
     @ResponseBody
     public List<OrderItemModel> queryOrderTreeList(OrderItemModel model) {
@@ -361,12 +442,12 @@ public class OrderItemController extends BaseController
             logger.error("OrderItemController queryOrderTreeList error: ", e);
         }
         for (OrderItemModel childlist : plist) {
-            if (childlist.getId() != null) {
-                List<OrderItemModel> clist = new ArrayList();//查询子节点
-                model.setOrderId(String.valueOf(childlist.getId()));
-                clist = orderItemService.queryOrderTree2(model);
-                childlist.setChildren(clist);
-            }
+                if (childlist.getTreeId() != null) {
+                    List<OrderItemModel> clist = new ArrayList();//查询子节点
+                    model.setOrderId(String.valueOf(childlist.getTreeId()));
+                    clist = orderItemService.queryOrderTree2(model);
+                    childlist.setChildren(clist);
+                }
         }
         return plist;
     }

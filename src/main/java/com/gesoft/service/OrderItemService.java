@@ -96,14 +96,26 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         }
     }
 
+    //入库细项
     public List<OrderItemModel> findListInoutStockItem(OrderItemModel model){
         return orderItemDAO.findListInoutStockItem(model);
+    }
+    //出库细项
+    public List<OrderItemModel> findListOutStockItem(OrderItemModel model){
+        return orderItemDAO.findListOutStockItem(model);
+    }
+
+    public List<OrderItemModel> queryInOrderTree(OrderItemModel orderItemModel){
+        return orderItemDAO.queryInOrderTree(orderItemModel);
     }
 
     public List<OrderItemModel> queryOrderTree(OrderItemModel orderItemModel){
         return orderItemDAO.queryOrderTree(orderItemModel);
     }
 
+    public List<OrderItemModel> queryOrderTree1(OrderItemModel orderItemModel){
+        return orderItemDAO.queryOrderTree1(orderItemModel);
+    }
     public List<OrderItemModel> queryOrderTree2(OrderItemModel orderItemModel){
         return orderItemDAO.queryOrderTree2(orderItemModel);
     }
@@ -126,11 +138,21 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         return orderItemDAO.updateOrderBillStatus(model);
     }
 
+    //入库数量
     public int updateTabGoodsStorage(OrderItemModel model){
         return  orderItemDAO.updateTabGoodsStorage(model);
     }
 
     public int updateTabGoodCustomerStorage(OrderItemModel model){
         return  orderItemDAO.updateTabGoodCustomerStorage(model);
+    }
+
+    //出库数量
+    public int updateTabGoodsStorageOut(OrderItemModel model){
+        return  orderItemDAO.updateTabGoodsStorageOut(model);
+    }
+
+    public int updateTabGoodCustomerStorageOut(OrderItemModel model){
+        return  orderItemDAO.updateTabGoodCustomerStorageOut(model);
     }
 }
