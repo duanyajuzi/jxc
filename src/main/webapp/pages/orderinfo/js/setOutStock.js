@@ -16,6 +16,11 @@ var PageSetOutStock = function () {
             this.searchForm=new mini.Form("searchForm");
             var date=new Date();
             mini.get("stime").setValue(date);
+            this.orderTree.on("nodeselect", function (e) {
+                var node = e.node;
+                var sender = e.sender;
+                sender.checkNode(node);
+            });
         },
         funGetData:function (data) {
             if(data!=null && data!="") {
@@ -57,10 +62,12 @@ var PageSetOutStock = function () {
                     data[i] = this.orderTree.getNode(valueList[i]);
                 }
                 for (var i = 0; i < data.length; i++) {
+                    data[i].beforeTmpNum=data[i].tmpNum;
                     data[i].tmpNum = data[i].afterNum;
                     PageSetOutStock.funSetTable(data[i]);
                 }
             }else if(values.length==0 && node!=null){
+                node.beforeTmpNum=node.tmpNum;
                 node.tmpNum=node.afterNum;
                 PageSetOutStock.funSetTable(node);
             }else {
@@ -71,7 +78,7 @@ var PageSetOutStock = function () {
         },
         onEditNum: function () {
             var node = this.orderTree.getSelectedNode();
-            this.beforeTmpNum = node.tmpNum;
+            node.beforeTmpNum = node.tmpNum;
             mini.prompt("请输数量", "数量",
                 function (action, value) {
                     if (action == "ok") {
@@ -134,7 +141,7 @@ var PageSetOutStock = function () {
                 if(row.length!=0 && row[0].tmpNum != data.esgouNum){
                     var rowData=row[0];
                     this.funUpdateTree(data);
-                    data.tmpNum = parseFloat(data.tmpNum) + parseFloat(this.beforeTmpNum);
+                    data.tmpNum = parseFloat(data.tmpNum) + parseFloat(data.beforeTmpNum);
                     this.datagrid.updateRow(rowData,{"tmpNum":data.tmpNum});
                 }else if(row.length!=0 && row[0].tmpNum==data.esgouNum){
                     mini.alert("已全部入/出库");

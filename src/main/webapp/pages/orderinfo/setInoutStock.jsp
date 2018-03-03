@@ -36,8 +36,8 @@
                   </div>
         </div>
         <div id="orderTree" class="mini-tree"  style="width:100%;height: calc(100% - 100px)"
-            showTreeIcon="true" textField="text" idField="orderId" nodesField="children" resultAsTree="true"
-             showCheckBox="true" checkRecursive="false" autoCheckParent="true" expandOnLoad="true"
+            showTreeIcon="true" textField="text" idField="treeId" nodesField="children" resultAsTree="true"
+             showCheckBox="true" checkOnTextClick="true" checkRecursive="true" expandOnLoad="true"
              contextMenu="#treeMenu">
         </div>
         <ul id="treeMenu" class="mini-contextmenu"  onbeforeopen="onBeforeOpen">

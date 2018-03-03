@@ -16,6 +16,11 @@ var PageSetInoutStock = function () {
             this.searchForm=new mini.Form("searchForm");
             var date=new Date();
             mini.get("stime").setValue(date);
+            this.orderTree.on("nodeselect", function (e) {
+                var node = e.node;
+                var sender = e.sender;
+                sender.checkNode(node);
+            });
         },
         funGetData:function (data) {
             if(data!=null && data!="") {
@@ -50,7 +55,7 @@ var PageSetInoutStock = function () {
             var data = new Array();
             var values = this.orderTree.getValue(false);
             var node = this.orderTree.getSelectedNode();
-            if(values.length>0) {
+            if (values.length > 0) {
                 valueList = values.split(",");
                 var valueLength = valueList.length;
                 for (var i = 0; i < valueLength; i++) {
@@ -60,14 +65,13 @@ var PageSetInoutStock = function () {
                     data[i].tmpNum = data[i].afterNum;
                     PageSetInoutStock.funSetTable(data[i]);
                 }
-            }else if(values.length==0 && node!=null){
-                    node.tmpNum=node.afterNum;
-                    PageSetInoutStock.funSetTable(node);
-            }else {
+            } else if (values.length == 0 && node != null) {
+                node.tmpNum = node.afterNum;
+                PageSetInoutStock.funSetTable(node);
+            } else {
                 mini.alert("请选择所要入库的商品");
             }
-                PageSetInoutStock.funUncheckTree();
-
+            PageSetInoutStock.funUncheckTree();
         },
         onEditNum: function () {
             var node = this.orderTree.getSelectedNode();
