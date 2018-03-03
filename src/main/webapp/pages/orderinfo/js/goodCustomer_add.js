@@ -4,13 +4,15 @@ var PageGoodCustomerAdd = function(){
         defaultOption: {
             basePath:"",
             action : "",
-            goodCustomerForm : null
+            goodCustomerForm : null,
+            grid: null,
         },
         init :function ()
         {
             mini.parse();
             this.basePath = PageMain.basePath;
             this.goodCustomerForm = new mini.Form("goodCustomerFormAdd");
+            this.grid = mini.get("datagrid1");
             PageMain.funDictInfo("unit", false, "", "danwei");
 
         },
@@ -33,19 +35,16 @@ var PageGoodCustomerAdd = function(){
                 storage.disable();
             }
         },
-        funSave : function()
-        {
+        funSave : function() {
         	this.goodCustomerForm.validate();
-            if (!this.goodCustomerForm.isValid()) 
-            {
+            if (!this.goodCustomerForm.isValid()) {
                  var errorTexts = form.getErrorTexts();
-                 for (var i in errorTexts) 
-                 {
+                 for (var i in errorTexts) {
                      mini.alert(errorTexts[i]);
                      return;
                  }
             }
-            
+
             var me = this;
             var obj = this.goodCustomerForm.getData(true);
             $.ajax({
@@ -53,25 +52,79 @@ var PageGoodCustomerAdd = function(){
                type : 'POST',
                data : obj,
                dataType: 'json',
-               success: function (data) 
-               {
+               success: function (data) {
             	   mini.alert(data.msg, "提醒", function(){
-	               		if(data.success)
-	                    {
+	               		if(data.success) {
 	               			PageMain.funCloseWindow("save");
 	                    }
                    });
                },
-               error: function (jqXHR, textStatus, errorThrown) 
-               {
+               error: function (jqXHR, textStatus, errorThrown) {
             	   PageMain.funShowMessageBox("操作出现异常");
                }
            });
         },
-        funCancel : function()
-        {
+        funCancel : function() {
         	PageMain.funCloseWindow("cancel");
+        },
+
+        onSimilarValidation : function(e) {
+            var obj={
+                materialNum:e.value,
+            }
+            $.ajax({
+                url : PageMain.basePath+"/goodCustomer/query",
+                type : 'POST',
+                data : obj,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    if(data.total==0){
+                        e.isValid = true;
+                    }else if(data.total>0){
+                        e.isValid = false;
+                        e.errorText = "原厂料号不能为空，且不能重复";
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        },
+
+
+
+        addRow : function() {
+            var newRow = { name: "New Row" };
+            this.grid.addRow(newRow, 0);
+
+            this.grid.beginEditCell(newRow, "LoginName");
+        },
+        removeRow : function() {
+            var rows = this.grid.getSelecteds();
+            if (rows.length > 0) {
+
+                this.grid.removeRows(rows, true);
+            }
+        },
+        saveData : function() {
+            var me = this;
+            var data = this.grid.getChanges();
+            var json = mini.encode(data);
+            console.log(data);
+            this.grid.loading("保存中，请稍后......");
+            $.ajax({
+                url : me.basePath + "/ladderPrice/add" ,
+                data: { data: json },
+                type: "post",
+                success: function (text) {
+                    //this.grid.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(jqXHR.responseText);
+                }
+            });
         }
+
     }
 }();
 

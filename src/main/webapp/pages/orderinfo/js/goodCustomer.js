@@ -24,38 +24,31 @@ var PageGoodCustomer = function(){
         	var goodCustomerForm = new mini.Form("goodCustomerForm");
         	this.goodCustomerGrid.load(goodCustomerForm.getData());
         },
-        funReset : function()
-        {
+        funReset : function() {
         	var goodCustomerForm = new mini.Form("goodCustomerForm");
         	goodCustomerForm.setData();
             this.goodCustomerGrid.load();
         },
-        funAdd : function()
-        {
+        funAdd : function() {
         	var paramData = {action: "add", row:{}, title:"新增数据"};
             this.funOpenInfo(paramData);
         },
-        funModify : function()
-        {
+        funModify : function() {
         	var row = this.goodCustomerGrid.getSelected();
-            if(row)
-            {
+            if(row) {
             	var paramData = {action: "modify", row: row, title:"编辑数据"};
                 this.funOpenInfo(paramData);
-            }
-            else
-            {
+            } else {
             	PageMain.funShowMessageBox("请选择一条记录");
             }
         },
-        funOpenInfo : function(paramData)
-        {
+        funOpenInfo : function(paramData) {
         	var me = this;
         	mini.open({
                 url: this.basePath + "/pages/orderinfo/goodCustomer_add.jsp",
                 title: paramData.title,
-                width: 400,
-                height: 30 * 5 + 85,
+                width: 700,
+                height: 500,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageGoodCustomerAdd.funSetData(paramData);

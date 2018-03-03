@@ -15,7 +15,7 @@ public class BlueprintModel extends BaseModel
 	private static final long serialVersionUID = 5454155825314635342L;
 
 	
-	private java.lang.Long id;
+	private String id;
 	private java.lang.Long goodsId;
 	private java.lang.Long goodsNum;
 	private java.lang.Float price;
@@ -26,12 +26,12 @@ public class BlueprintModel extends BaseModel
 	private String dictName;
 	private java.lang.String  materialNum;
 
-	public void setId(java.lang.Long value) 
+	public void setId(String value)
 	{
 		this.id = value;
 	}
 	
-	public java.lang.Long getId() 
+	public String getId()
 	{
 		return this.id;
 	}

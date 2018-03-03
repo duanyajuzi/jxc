@@ -82,30 +82,37 @@
 	
 	<sql id="BlueprintMapper.findPage.where">
 		<where>
-			 A.goodsId = #{goodsId}
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(goodsId)">
+				A.goodsId = #{goodsId}
+			</if>
+
+	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
 				AND A.id = #{id}
 			</if>
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(goodsId)">
 				AND A.goodsId = #{goodsId}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(goodsName)">
+	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(goodsName)">
 				AND B.goodsName LIKE CONCAT(CONCAT('%', #{goodsName}), '%')
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(goodsNum)">
+	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(goodsNum)">
 				AND A.goodsNum = #{goodsNum}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(price)">
+	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(price)">
 				AND A.price = #{price}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(unit)">
+	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(unit)">
 				AND A.unit = #{unit}
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(pname)">
+	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(pname)">
 				AND A.pname LIKE CONCAT(CONCAT('%', #{pname}), '%')
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
+	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
 				AND A.memo = #{memo}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+				AND A.materialNum = #{materialNum}
 			</if>
 		</where>
 	</sql>

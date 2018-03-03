@@ -31,60 +31,88 @@
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-        <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none;">
+        <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none;margin-top:10px">
         <div id="goodCustomerFormAdd">
-       
-                	<input id="id" name="id"  class="mini-hidden" />
+            <input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
-                    <td style="width:32%;">
+                    <td class="form-label" style="text-align: right;width:20%">业务类型：</td>
+                    <td>
                         <input name="businessId" id="businessId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
                                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                               style="width:200px;" onvaluechanged="PageGoodCustomerAdd.funBusValuechanged"  required="true" maxlength="10" requiredErrorText="业务类型不能为空"/>
+                               style="width:83%;" onvaluechanged="PageGoodCustomerAdd.funBusValuechanged"  required="true" maxlength="10" requiredErrorText="业务类型不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">所属商品：</td>
-                    <td style="width:32%;">
-                        <input name="goodId" id="goodId" class="mini-combobox" style="width:200px;"  required="true" allowInput="true"
+                    <td class="form-label" style="text-align: right;width:20%">所属商品：</td>
+                    <td>
+                        <input name="goodId" id="goodId" class="mini-combobox" style="width:83%;"  required="true" allowInput="true"
                                textField="msgVal"  valueField="msgKey" emptyText="请选择"
                                maxlength="50" requiredErrorText="所属商品不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">所属工厂：</td>
-                    <td style="width:32%;">
+                    <td class="form-label" style="text-align: right;width:20%">所属工厂：</td>
+                    <td>
                         <input name="customerId" id="customerId" class="mini-combobox" allowInput="true"  emptyText="请输入或选择"
                                idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                               style="width:200px;"  required="true" maxlength="10" requiredErrorText="所属客户不能为空"/>
+                               style="width:83%;"  required="true" maxlength="10" requiredErrorText="所属客户不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">原厂料号：</td>
-                    <td style="width:32%;">
-                        <input name="materialNum" id="materialNum" class="mini-textbox" style="width:200px;"  required="true" maxlength="100" requiredErrorText="物料号不能为空"/>
+                    <td class="form-label" style="text-align: right;width:20%">原厂料号：</td>
+                    <td>
+                        <input name="materialNum" id="materialNum" class="mini-textbox" style="width:83%;"  required="true" maxlength="100"
+                               onvalidation="PageGoodCustomerAdd.onSimilarValidation" requiredErrorText="物料号不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">采购价(未税)：</td>
-                    <td style="width:32%;">
-                        <input name="unitPrice" id="unitPrice" class="mini-textbox" style="width:120px;" vtype="float;maxlength:12"  required="true"  requiredErrorText="单价不能为空"/>
-                        <input name="unit" id="unit" class="mini-combobox" style="width:75px;"  required="true"
+                    <td class="form-label" style="text-align: right;width:20%">采购价(未税)：</td>
+                    <td>
+                        <input name="unitPrice" id="unitPrice" class="mini-textbox" style="width:70%;" vtype="float;maxlength:12"  required="true"  requiredErrorText="单价不能为空"/>
+                        <input name="unit" id="unit" class="mini-combobox" style="width:12%;"  required="true"
                                textField="msgVal"  valueField="msgKey"  emptyText="请选择"
                                maxlength="50" requiredErrorText="单位不能为空"/>
                     </td>
                 </tr>
-                <%--<tr>--%>
-                    <%--<td class="form-label" style="text-align: right;width:16%;">库存量：</td>--%>
-                    <%--<td style="width:32%;">--%>
-                        <%--<input name="storage" id="storage" class="mini-textbox" style="width:200px;"  required="true"--%>
-                               <%--textField="msgVal"  valueField="msgKey"--%>
-                               <%--maxlength="50" requiredErrorText="库存量不能为空"/>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:20%">是否有阶梯价：</td>
+                    <td>
+                        <input id="checkbox" name="checkbox" class="mini-checkbox" text="是" trueValue="1" falseValue="0"/>
+                    </td>
+                </tr>
             </table>
-         </div>
+            <div style="width:80%;margin-left: 10%">
+                <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:100%;">
+                                <a class="mini-button" iconCls="icon-add" onclick="PageGoodCustomerAdd.addRow()" plain="true" tooltip="增加...">增加</a>
+                                <a class="mini-button" iconCls="icon-remove" onclick="PageGoodCustomerAdd.removeRow()" plain="true">删除</a>
+                                <span class="separator"></span>
+                                <a class="mini-button" iconCls="icon-save" onclick="PageGoodCustomerAdd.saveData()" plain="true">保存</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="datagrid1" class="mini-datagrid" style="width:80%;height:200px;margin-left: 10%"
+                 url="../data/AjaxService.aspx?method=SearchEmployees" idField="id"
+                 allowResize="true" pageSize="20"
+                 allowCellEdit="true" allowCellSelect="true" multiSelect="true"
+                 editNextOnEnterKey="true"  editNextRowCell="true">
+                <div property="columns">
+                    <div name="num"  field="num" headerAlign="center" allowSort="true" width="100">数量
+                        <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200"  align="center" />
+                    </div>
+                    <div field="price" width="100" allowSort="true" headerAlign="center" >价格
+                        <input property="editor" class="mini-spinner"  minValue="0"
+                               maxValue="200" value="25" style="width:100%;"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
             
         </div>
         <div  region="south" showSplit="false" showSplitIcon="false" height="30" showHeader="false"  style="border: none">
@@ -94,8 +122,5 @@
 	        </div>
         </div>
     </div>
-    <script type="text/javascript">
-    	mini.parse();
-    </script>
 </body>
 </html>

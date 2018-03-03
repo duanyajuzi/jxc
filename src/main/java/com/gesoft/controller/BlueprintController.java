@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+import com.gesoft.util.Md5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -68,14 +69,13 @@ public class BlueprintController extends BaseController
 	 * @return
 	 */
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public @ResponseBody MsgModel add(BlueprintModel model, HttpServletRequest request)
-	{
+	public @ResponseBody MsgModel add(BlueprintModel model, HttpServletRequest request) {
 		MsgModel msgModel = new MsgModel();
-		try
-		{
+		String id = Md5Util.UUID();
+		model.setId(id);
+		try {
 			setSessionUserId(model, request);
-			if (blueprintService.save(model) > 0)
-			{
+			if (blueprintService.save(model) > 0) {
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 			}
 		}

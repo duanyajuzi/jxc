@@ -15,7 +15,7 @@ public class GoodCustomerModel extends BaseModel
 	private static final long serialVersionUID = 5454155825314635342L;
 
 	
-	private java.lang.Long id;
+	private String id;
 	private java.lang.String goodsName;
 	private java.lang.String dictName;
 	private java.lang.String business;
@@ -68,12 +68,12 @@ public class GoodCustomerModel extends BaseModel
 		this.businessId = businessId;
 	}
 
-	public void setId(java.lang.Long value)
+	public void setId(String value)
 	{
 		this.id = value;
 	}
 	
-	public java.lang.Long getId() 
+	public String getId()
 	{
 		return this.id;
 	}

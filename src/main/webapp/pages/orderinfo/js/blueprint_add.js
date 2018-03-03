@@ -58,6 +58,29 @@ var PageBlueprintAdd = function(){
         funCancel : function()
         {
             PageMain.funCloseWindow("cancel");
+        },
+
+        onSimilarValidation : function(e) {
+            var obj={
+                materialNum:e.value,
+            }
+            $.ajax({
+                url : PageMain.basePath+"/blueprint/query",
+                type : 'POST',
+                data : obj,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    if(data.total==0){
+                        e.isValid = true;
+                    }else if(data.total>0){
+                        e.isValid = false;
+                        e.errorText = "客户料号不能为空，且不能重复";
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
         }
     }
 }();
