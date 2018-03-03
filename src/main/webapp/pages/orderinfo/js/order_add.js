@@ -150,6 +150,12 @@ var PageOrderAdd = function(){
             if (rows.length > 0) {
                 this.orderItemGrid.removeRows(rows, true);
             }
+            var index = $(".mini-grid-row").length;
+            if(index == 0){
+                mini.get("customerId").setEnabled(true);
+                mini.get("businessId").setEnabled(true);
+                mini.get("pcustomerId").setEnabled(true);
+            }
         },
 
         OnCellBeginEdit : function (e) {
@@ -163,12 +169,13 @@ var PageOrderAdd = function(){
             if (field == "materialNum") {
                 var customerId = mini.get("customerId").getValue();
                 var businessId = mini.get("businessId").getValue();
-                if (customerId && businessId) {
+                var pcustomerId = mini.get("pcustomerId").getValue();
+                if (customerId && businessId && pcustomerId) {
                     var url;
                     if(PageOrderAdd.defaultOption.pOrderType == 0){
                         url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum2?customerId=" + customerId+"&businessId="+businessId;
                     }else{
-                        url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum?customerId=" + customerId+"&businessId="+businessId;
+                        url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum?customerId=" + customerId+"&businessId="+businessId +"&pcustomerId="+pcustomerId;
                     }
 
                     editor.setUrl(url);
@@ -191,6 +198,7 @@ var PageOrderAdd = function(){
                     //禁用工厂
                     mini.get("customerId").setEnabled(false);
                     mini.get("businessId").setEnabled(false);
+                    mini.get("pcustomerId").setEnabled(false);
 
                     var url;
                     if(PageOrderAdd.defaultOption.pOrderType == 0){//采购
@@ -212,7 +220,7 @@ var PageOrderAdd = function(){
                             obj.dictName = result[0].dictName;
                             obj.isHasLadder = result[0].isHasLadder;
                             obj.customerGoodId = result[0].id;
-                            console.log("isHasHeader:"+result[0].isHasLadder)
+                            console.log("isHasLadder:"+result[0].isHasLadder)
                             if(record.esgouNum > 0){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
                             }
@@ -228,10 +236,16 @@ var PageOrderAdd = function(){
                     console.log(record.isHasLadder+"....");
                     if(record.isHasLadder == '1'){
                         //阶梯价格处理
+                        var url;
+                        if(PageOrderAdd.defaultOption.pOrderType == 0){//采购
+                            url =  PageOrderAdd.defaultOption.basePath + "/order/getLadderPrice";
+                        }else{//销售
+                            url =  PageOrderAdd.defaultOption.basePath + "/order/getBluePrintLadderPrice";
+                        }
 
                         //获取阶梯价格
                         $.ajax({
-                            url : PageOrderAdd.defaultOption.basePath + "/order/getLadderPrice",
+                            url : url,
                             type : 'GET',
                             data : {customerGoodId:record.customerGoodId,num:value},
                             dataType: 'json',

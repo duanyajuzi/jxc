@@ -34,7 +34,16 @@ public class GoodsModel extends BaseModel
 	private Long goodId;
 	private Float esgouNum;
 	private  String goodsId;
-
+	private Integer pcustomerId;
+	
+	public Integer getPcustomerId() {
+		return pcustomerId;
+	}
+	
+	public void setPcustomerId(Integer pcustomerId) {
+		this.pcustomerId = pcustomerId;
+	}
+	
 	public String getGoodsId() {
 		return goodsId;
 	}

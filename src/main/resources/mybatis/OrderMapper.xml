@@ -267,5 +267,16 @@
 		ORDER BY num DESC LIMIT 0,1
 	</select>
 
+	<select id="OrderMapper.getBluePrintLadderPrice" resultMap="mRetMapOrder">
+		SELECT
+		price,num
+		FROM
+		tab_blueprint_ladder_price
+		WHERE
+		blueprint_id = ${customerGoodId} and
+		${num} >= num
+		ORDER BY num DESC LIMIT 0,1
+	</select>
+
 </mapper>
 

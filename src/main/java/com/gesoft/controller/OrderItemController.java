@@ -279,7 +279,7 @@ public class OrderItemController extends BaseController
                 Object obj3=list.get(i).get("goodId");
                 model.setId(Long.valueOf(String.valueOf(obj)));
                 model.setGoodId(Long.valueOf(String.valueOf(obj3)));
-                model.setCustomerGoodId(Long.valueOf(String.valueOf(obj2)));
+                model.setCustomerGoodId(String.valueOf(obj2));
                 model.setTmpNum(Float.parseFloat(obj1.toString()));
                 orderItemService.updateInoutNum(model);
 //                orderItemService.updateTabGoodsStorage(model);
@@ -305,7 +305,7 @@ public class OrderItemController extends BaseController
                 Object obj3=list.get(i).get("goodId");
                 model.setId(Long.valueOf(String.valueOf(obj)));
                 model.setGoodId(Long.valueOf(String.valueOf(obj3)));
-                model.setCustomerGoodId(Long.valueOf(String.valueOf(obj2)));
+                model.setCustomerGoodId(String.valueOf(obj2));
                 model.setTmpNum(Float.parseFloat(obj1.toString()));
                 orderItemService.updateInoutNum(model);
 //                orderItemService.updateTabGoodsStorageOut(model);
