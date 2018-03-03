@@ -63,7 +63,6 @@ public class GoodCustomerController extends BaseController
 	/**
 	 * 描述信息：增加
 	 * 创建时间：2017-07-19 13:24:49
-	 * @author WCL (ln_admin@yeah.net)
 	 * @param model
 	 * @param request
 	 * @return
