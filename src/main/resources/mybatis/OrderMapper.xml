@@ -256,5 +256,16 @@
 		FROM tab_blueprint
 	</select>
 
+	<select id="OrderMapper.getLadderPrice" resultMap="mRetMapOrder">
+		SELECT
+		price,num
+		FROM
+		tab_good_customer_ladder_price
+		WHERE
+		good_customer_id = ${customerGoodId} and
+		${num} >= num
+		ORDER BY num DESC LIMIT 0,1
+	</select>
+
 </mapper>
 

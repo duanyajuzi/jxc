@@ -108,6 +108,29 @@ public class OrderController extends BaseController
 		return msgModel;
 	}
 	
+	/**
+	 * 获取商品阶梯价格
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/getLadderPrice", method=RequestMethod.GET)
+	public @ResponseBody MsgModel getLadderPrice(OrderModel model)
+	{
+		
+		MsgModel msgModel = new MsgModel();
+		try
+		{
+			msgModel.setData(orderService.getLadderPrice(model));
+			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+		}
+		catch (Exception e)
+		{
+			logger.error("OrderItemController search error：", e);
+		}
+		return msgModel;
+		
+	}
+	
 	
 	/**
 	 * 描述信息：增加

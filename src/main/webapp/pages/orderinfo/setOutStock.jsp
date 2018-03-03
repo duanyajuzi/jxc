@@ -1,8 +1,15 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: cx
+  Date: 2018/3/1
+  Time: 19:35
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
-    <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/setInoutStock.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/setOutStock.js'/>"></script>
     <title></title>
 </head>
 <body>
@@ -14,38 +21,36 @@
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="searchForm">
                 <%--<lable class="form-label">业务类型：</lable>--%>
                 <%--<input name="businessId" id="businessId" class="mini-combobox" allowInput="true"--%>
-                       <%--idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"--%>
-                       <%--style="width:100px;"   maxlength="10"--%>
-                       <%--onvaluechanged="PageSetInoutStock.funSearch()"/>--%>
+                <%--idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"--%>
+                <%--style="width:100px;"   maxlength="10"--%>
+                <%--onvaluechanged="PageSetOutStock.funSearch()"/>--%>
                 <table>
                     <tr>
                         <td style="width: 50px"> <lable class="form-label">订单号：</lable></td>
                         <td> <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单号"  style="width:110px;"/></td>
-                    <%--</tr>--%>
-                    <%--<tr>--%>
                         <td style="width: 75px"> <lable class="form-label">客户订单号：</lable></td>
                         <td> <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:110px;"/></td>
                     </tr>
                     <tr>
-                        <td> <lable class="form-label">原厂料号：</lable></td>
-                        <td> <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="原厂料号"  style="width:110px;"/></td>
-                        <td><a class="mini-button" iconCls="icon-search" onclick="PageSetInoutStock.funSearch()" plain="true"><label>查询</label></a></td>
-                        <td><a class="mini-button" iconCls="icon-reset" onclick="PageSetInoutStock.funReset()" plain="true"><label>重置</label></a></td>
+                        <td> <lable class="form-label">客户料号：</lable></td>
+                        <td> <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:110px;"/></td>
+                        <td><a class="mini-button" iconCls="icon-search" onclick="PageSetOutStock.funSearch()" plain="true"><label>查询</label></a></td>
+                        <td><a class="mini-button" iconCls="icon-reset" onclick="PageSetOutStock.funReset()" plain="true"><label>重置</label></a></td>
                     </tr>
                 </table>
-                  </div>
+            </div>
         </div>
         <div id="orderTree" class="mini-tree"  style="width:100%;height: calc(100% - 100px)"
-            showTreeIcon="true" textField="text" idField="treeId" nodesField="children" resultAsTree="true"
-             showCheckBox="true" checkOnTextClick="true" checkRecursive="true" expandOnLoad="true"
-             contextMenu="#treeMenu">
+             showTreeIcon="true" textField="text" idField="treeId" nodesField="children" resultAsTree="true"
+             showCheckBox="true" checkRecursive="true" checkOnTextClick="true"
+             expandOnLoad="true" contextMenu="#treeMenu">
         </div>
         <ul id="treeMenu" class="mini-contextmenu"  onbeforeopen="onBeforeOpen">
-            <li name="inEdit"  id="inEdit" iconCls="icon-edit" onclick="PageSetInoutStock.onEditNum()">入库数量</li>
+            <li name="outEdit" id="outEdit" iconCls="icon-edit" onclick="PageSetOutStock.onEditNum()">出库数量</li>
         </ul>
     </div>
     <div region="center" align="center">
-        <input type="button" value=">>" onclick="PageSetInoutStock.setInoutTableAll()" style="margin-top: 250px;text-align: center"/>
+        <input type="button" value=">>" onclick="PageSetOutStock.setInoutTableAll()" style="margin-top: 250px;text-align: center"/>
     </div>
     <div title="商品入/出库详情" region="east" allowResize="false" showSplit="false"
          showSplitIcon="false" allowUnselect="false" showHeader="false" showModified="false"
@@ -60,20 +65,20 @@
                 <div field="customerGoodId" visible="false">customerGoodId</div>
                 <div field="goodId" visible="false">goodId</div>
                 <div field="goodsName" width="80" headerAlign="center" allowSort="true">商品名称</div>
-                <div field="materialNum" width="120" headerAlign="center" allowSort="true">原厂料号</div>
-                <div field="tmpNum" name="tmpNum" width="100" headerAlign="center" allowSort="true">入库数量</div>
+                <div field="materialNum" width="120" headerAlign="center" allowSort="true">客户料号</div>
+                <div field="tmpNum" name="tmpNum" width="100" headerAlign="center" allowSort="true">出库数量</div>
                 <div field="action" width="120" headerAlign="center" allowSort="true">操作</div>
             </div>
         </div>
         <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
             <table style="width:100%;">
                 <tr>
-                    <td style="width:160px;font-size: 14px" align="right"> <lable class="form-label" id="stimeLabel"></lable>入库时间：</td>
+                    <td style="width:160px;font-size: 14px" align="right"> <lable class="form-label" id="stimeLabel"></lable>出库时间：</td>
                     <td style="width:210px;">
                         <input name="stime" id="stime" class="mini-datepicker" style="width:200px;" required="true" allowInput="false"  />
                     </td>
                     <td style="width:30%;" align="left">
-                        <a  class="mini-button block-button" iconCls="icon-save" onclick="PageSetInoutStock.updateOrderItemTmpNum()">确定</a>
+                        <a  class="mini-button block-button" iconCls="icon-save" onclick="PageSetOutStock.updateOrderItemTmpNum()">确定</a>
                     </td>
                     <td></td>
                 </tr>
@@ -104,4 +109,5 @@
 </script>
 </body>
 </html>
+
 

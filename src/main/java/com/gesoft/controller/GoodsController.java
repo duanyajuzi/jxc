@@ -156,7 +156,12 @@ public class GoodsController extends BaseController
 		}
 		return list;
 	}
-
+	
+	/**
+	 * 查询客户料号列表
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/queryMaterialNum")
 	@ResponseBody
 	public List<GoodsModel> queryMaterialNumList(GoodsModel model){
@@ -172,7 +177,11 @@ public class GoodsController extends BaseController
 		return list;
 	}
 	
-	
+	/**
+	 * 查询原厂物流号列表
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/queryMaterialNum2")
 	@ResponseBody
 	public List<GoodsModel> queryMaterialNumList2(GoodsModel model){

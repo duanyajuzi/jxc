@@ -1,4 +1,4 @@
-var PageSetInoutStock = function () {
+var PageSetOutStock = function () {
     return {
         defaultOption: {
             basePath: "",
@@ -25,7 +25,7 @@ var PageSetInoutStock = function () {
         funGetData:function (data) {
             if(data!=null && data!="") {
                 this.orderType = data.orderType;
-                this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
+                this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType);
             }
         },
         funSearch:function () {
@@ -34,7 +34,7 @@ var PageSetInoutStock = function () {
             var materialNum=mini.get("materialNum").getValue().trim("");
             var paramData={'orderType':this.orderType,'orderNo':orderNo,'orderName':orderName,'materialNum':materialNum};
             $.ajax({
-                url: this.basePath + "/orderItem/queryInOrderTreeList",
+                url: this.basePath + "/orderItem/queryOrderTreeList",
                 data: paramData,
                 type: "post",
                 dataType: "json",
@@ -48,34 +48,37 @@ var PageSetInoutStock = function () {
         funReset:function(){
             var searchForm = new mini.Form("searchForm");
             searchForm.setData();
-            this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
+            this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType);
         },
         setInoutTableAll: function () {
             var valueList = new Array();
             var data = new Array();
             var values = this.orderTree.getValue(false);
             var node = this.orderTree.getSelectedNode();
-            if (values.length > 0) {
+            if(values.length>0) {
                 valueList = values.split(",");
                 var valueLength = valueList.length;
                 for (var i = 0; i < valueLength; i++) {
                     data[i] = this.orderTree.getNode(valueList[i]);
                 }
                 for (var i = 0; i < data.length; i++) {
+                    data[i].beforeTmpNum=data[i].tmpNum;
                     data[i].tmpNum = data[i].afterNum;
-                    PageSetInoutStock.funSetTable(data[i]);
+                    PageSetOutStock.funSetTable(data[i]);
                 }
-            } else if (values.length == 0 && node != null) {
-                node.tmpNum = node.afterNum;
-                PageSetInoutStock.funSetTable(node);
-            } else {
+            }else if(values.length==0 && node!=null){
+                node.beforeTmpNum=node.tmpNum;
+                node.tmpNum=node.afterNum;
+                PageSetOutStock.funSetTable(node);
+            }else {
                 mini.alert("请选择所要入库的商品");
             }
-            PageSetInoutStock.funUncheckTree();
+            PageSetOutStock.funUncheckTree();
+
         },
         onEditNum: function () {
             var node = this.orderTree.getSelectedNode();
-            this.beforeTmpNum = node.tmpNum;
+            node.beforeTmpNum = node.tmpNum;
             mini.prompt("请输数量", "数量",
                 function (action, value) {
                     if (action == "ok") {
@@ -87,8 +90,8 @@ var PageSetInoutStock = function () {
                                 PageMain.funShowMessageBox("请输入数量");
                             }else{
                                 node.tmpNum = value;
-                                PageSetInoutStock.funSetTable(node);
-                                PageSetInoutStock.funUncheckTree();
+                                PageSetOutStock.funSetTable(node);
+                                PageSetOutStock.funUncheckTree();
                             }
                         }else {
                             mini.alert("请输入数字");
@@ -107,7 +110,7 @@ var PageSetInoutStock = function () {
                 if(node.treeId==value) return true;
             })[0];
             node.tmpNum = row.tmpNum;
-            PageSetInoutStock.funModifyTree(node);
+            PageSetOutStock.funModifyTree(node);
             this.datagrid.removeRow(row);
         },
         //删除商品信息时修改tree
@@ -138,7 +141,7 @@ var PageSetInoutStock = function () {
                 if(row.length!=0 && row[0].tmpNum != data.esgouNum){
                     var rowData=row[0];
                     this.funUpdateTree(data);
-                    data.tmpNum = parseFloat(data.tmpNum) + parseFloat(this.beforeTmpNum);
+                    data.tmpNum = parseFloat(data.tmpNum) + parseFloat(data.beforeTmpNum);
                     this.datagrid.updateRow(rowData,{"tmpNum":data.tmpNum});
                 }else if(row.length!=0 && row[0].tmpNum==data.esgouNum){
                     mini.alert("已全部入/出库");
@@ -153,7 +156,7 @@ var PageSetInoutStock = function () {
                         "goodsName": data.goodsName,
                         "materialNum": data.materialNum,
                         "tmpNum": data.tmpNum,
-                        "action": "<a href='javascript:void(0);' onclick='PageSetInoutStock.delRight(this)'>删除</a>"
+                        "action": "<a href='javascript:void(0);' onclick='PageSetOutStock.delRight(this)'>删除</a>"
                     };
                     beforeData.push(paramData);
                     this.funUpdateTree(data);
@@ -166,12 +169,9 @@ var PageSetInoutStock = function () {
             var stime=mini.get("stime");
             var value=stime.text;
             var param=this.searchForm.getData();
-            if(this.orderType==1){
-                data.tmpNum=0-parseFloat(data.tmpNum);
-            }
             var paramData={"stime":value,"orderType":this.orderType,"businessId":param.businessId,"data":JSON.stringify(data)};
             $.ajax({
-                url: this.basePath + "/orderItem/updateOrderItemTmpNum",
+                url: this.basePath + "/orderItem/updateOrderItemTmpNumOut",
                 data: paramData,
                 type: "post",
                 dataType: "json",
@@ -196,5 +196,5 @@ var PageSetInoutStock = function () {
 }();
 
 $(function () {
-    PageSetInoutStock.init();
+    PageSetOutStock.init();
 });

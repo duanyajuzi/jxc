@@ -133,10 +133,17 @@ var PageOrderAdd = function(){
         },
 
         addRow : function () {
-            var newRow = { name: "New Row" };
-            var index = $(".mini-grid-row").length;
-            this.orderItemGrid.addRow(newRow, index);
-            this.orderItemGrid.beginEditCell(newRow, "LoginName");
+            var customerId = mini.get("customerId").getValue();
+            var businessId = mini.get("businessId").getValue();
+            if(customerId && businessId){
+                var newRow = { name: "New Row" };
+                var index = $(".mini-grid-row").length;
+                this.orderItemGrid.addRow(newRow, index);
+                this.orderItemGrid.beginEditCell(newRow, "LoginName");
+            }else{
+                mini.alert("请先选择业务类型和工厂")
+            }
+
         },
         removeRow : function () {
             var rows = this.orderItemGrid.getSelecteds();
@@ -147,9 +154,29 @@ var PageOrderAdd = function(){
 
         OnCellBeginEdit : function (e) {
             var record = e.record, field = e.field;
+
             if (field == "dictName" || field == "goodsName" || field == "price" || field == "totalMoney" ) {
                 e.cancel = true;
             }
+
+            var editor = e.editor;
+            if (field == "materialNum") {
+                var customerId = mini.get("customerId").getValue();
+                var businessId = mini.get("businessId").getValue();
+                if (customerId && businessId) {
+                    var url;
+                    if(PageOrderAdd.defaultOption.pOrderType == 0){
+                        url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum2?customerId=" + customerId+"&businessId="+businessId;
+                    }else{
+                        url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum?customerId=" + customerId+"&businessId="+businessId;
+                    }
+
+                    editor.setUrl(url);
+                } else {
+                    e.cancel = true;
+                }
+            }
+
         },
 
         //根据物料号设置price
@@ -160,10 +187,15 @@ var PageOrderAdd = function(){
             var value = e.value;
             if (field == "materialNum") {
                 if(value!="") {
+
+                    //禁用工厂
+                    mini.get("customerId").setEnabled(false);
+                    mini.get("businessId").setEnabled(false);
+
                     var url;
-                    if(PageOrderAdd.defaultOption.pOrderType == 0){
+                    if(PageOrderAdd.defaultOption.pOrderType == 0){//采购
                         url =  PageOrderAdd.defaultOption.basePath + "/orderItem/queryNumInfoList2";
-                    }else{
+                    }else{//销售
                         url =  PageOrderAdd.defaultOption.basePath + "/orderItem/queryNumInfoList";
                     }
                     $.ajax({
@@ -176,8 +208,11 @@ var PageOrderAdd = function(){
                             obj.materialNum = result[0].materialNum;
                             obj.goodsName = result[0].goodsName;
                             obj.price = result[0].price;
+                            obj.oneprice = result[0].price;
                             obj.dictName = result[0].dictName;
+                            obj.isHasLadder = result[0].isHasLadder;
                             obj.customerGoodId = result[0].id;
+                            console.log("isHasHeader:"+result[0].isHasLadder)
                             if(record.esgouNum > 0){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
                             }
@@ -190,8 +225,38 @@ var PageOrderAdd = function(){
                 }
             }else if(field == "esgouNum"){
                 if(record.price > 0){
-                    record.totalMoney = (value * record.price).toFixed(2);
-                    grid.updateRow(record, record);
+                    console.log(record.isHasLadder+"....");
+                    if(record.isHasLadder == '1'){
+                        //阶梯价格处理
+
+                        //获取阶梯价格
+                        $.ajax({
+                            url : PageOrderAdd.defaultOption.basePath + "/order/getLadderPrice",
+                            type : 'GET',
+                            data : {customerGoodId:record.customerGoodId,num:value},
+                            dataType: 'json',
+                            success: function (data)
+                            {
+                                console.log(data);
+                                var priceArr = data.data;
+                                if(priceArr.length > 0){
+                                    var price = priceArr[0].price;
+                                    record.totalMoney = (value * price).toFixed(2);
+                                    record.price = price;
+                                    grid.updateRow(record, record);
+                                }else{
+                                    record.price = record.oneprice;
+                                    record.totalMoney = (value * record.price).toFixed(2);
+                                    grid.updateRow(record, record);
+                                }
+                            },
+                        });
+
+                    }else{
+                        record.totalMoney = (value * record.price).toFixed(2);
+                        grid.updateRow(record, record);
+                    }
+
                 }
             }
 
