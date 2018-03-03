@@ -52,7 +52,16 @@ public class OrderItemModel extends BaseModel{
     private List<OrderItemModel> children;
     private String data;
     private String orderNo;
-
+    private String isHasLadder;
+    
+    public String getIsHasLadder() {
+        return isHasLadder;
+    }
+    
+    public void setIsHasLadder(String isHasLadder) {
+        this.isHasLadder = isHasLadder;
+    }
+    
     public String getData() {
         return data;
     }

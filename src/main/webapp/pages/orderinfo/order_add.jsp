@@ -118,7 +118,7 @@
                         <input name="memo" id="memo" class="mini-textArea" style="width:573px;" maxlength="400" />
                     </td>
                 </tr>
-                <tr>
+                <tr hidden>
                     <td class="form-label" colspan="2" style="padding-left: 44px;">
                         是否直接生成销售订单：
                         <div id="zdsc" name="zdsc" class="mini-checkbox" readOnly="false" text="" onvaluechanged="onValueChanged"></div>
@@ -152,7 +152,7 @@
                     <div field="materialNum" name="materialNum"  headerAlign="center" width="100" allowSort="true" >客户料号
                         <input property="editor" class="mini-combobox" style="width:100%;"
                                allowInput="true"  valueField="id" textField="materialNum"
-                               required="true" maxlength="19" requiredErrorText="物料号不能为空" />
+                               required="true" maxlength="19" />
                     </div>
                     <div field="esgouNum" width="100"  headerAlign="center" allowSort="true">数量
                         <input property="editor" class="mini-spinner"  value="1" minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;"/>
@@ -170,6 +170,12 @@
                         <input property="editor" class="mini-spinner" style="width:100%;"/>
                     </div>
                     <div field="customerGoodId" headerAlign="center" width="0" allowSort="true" >
+                        <input property="editor" class="mini-textbox" style="width:100%;"/>
+                    </div>
+                    <div field="isHasLadder" headerAlign="center" width="0" allowSort="true" >
+                        <input property="editor" class="mini-textbox" style="width:100%;"/>
+                    </div>
+                    <div field="oneprice" headerAlign="center" width="0" allowSort="true" >
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
                 </div>

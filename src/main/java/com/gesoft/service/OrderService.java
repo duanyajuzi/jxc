@@ -18,7 +18,9 @@ import com.gesoft.common.EntityService;
 import com.gesoft.dao.OrderDAO;
 import com.gesoft.model.OrderModel;
 
-@Service
+import java.util.List;
+
+ @Service
 @Transactional
 public class OrderService extends EntityService<OrderModel, Long>
 {
@@ -34,5 +36,9 @@ public class OrderService extends EntityService<OrderModel, Long>
 
 	public int  updateOrderStatus(OrderModel orderModel){
 		return orderDAO.updateOrderStatus(orderModel);
+	}
+	
+	public List<OrderModel> getLadderPrice(OrderModel model){
+		return orderDAO.getLadderPrice(model);
 	}
 }

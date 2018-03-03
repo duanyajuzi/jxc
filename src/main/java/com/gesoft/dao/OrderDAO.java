@@ -12,8 +12,10 @@ import org.springframework.stereotype.Repository;
 import com.gesoft.common.EntityDAOImpl;
 import com.gesoft.model.OrderModel;
 
+import java.util.List;
 
-@Repository
+
+ @Repository
 public class OrderDAO extends EntityDAOImpl<OrderModel, Long>
 {
 	@Override
@@ -25,4 +27,9 @@ public class OrderDAO extends EntityDAOImpl<OrderModel, Long>
     public int  updateOrderStatus(OrderModel model){
         return getSqlSession().update(getMybatisSqlMapNamespace() + ".updateOrderStatus",model);
     }
+    
+    public List<OrderModel> getLadderPrice(OrderModel model){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".getLadderPrice", model);
+    }
+    
 }

@@ -164,7 +164,13 @@ var PageOrderAdd = function(){
                 var customerId = mini.get("customerId").getValue();
                 var businessId = mini.get("businessId").getValue();
                 if (customerId && businessId) {
-                    var url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum2?customerId=" + customerId+"&businessId="+businessId;
+                    var url;
+                    if(PageOrderAdd.defaultOption.pOrderType == 0){
+                        url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum2?customerId=" + customerId+"&businessId="+businessId;
+                    }else{
+                        url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum?customerId=" + customerId+"&businessId="+businessId;
+                    }
+
                     editor.setUrl(url);
                 } else {
                     e.cancel = true;
