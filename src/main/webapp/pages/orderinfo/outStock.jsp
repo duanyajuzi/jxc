@@ -67,8 +67,10 @@
                  url="${pageContext.request.contextPath}/orderItem/queryOutStockItem">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
+                    <div field="orderId" width="120" allowSort="true" headerAlign="center">订单编号</div>
+                    <div field="orderName" width="120" allowSort="true" headerAlign="center">客户订单号</div>
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center">商品名称</div>
-                    <div field="materialNum" width="120" allowSort="true" headerAlign="center">物料号</div>
+                    <div field="materialNum" width="120" allowSort="true" headerAlign="center">客户料号</div>
                     <div field="goodNum" name="goodNum" width="120" allowSort="true">入/出库商品数量</div>
                 </div>
             </div>

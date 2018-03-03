@@ -291,6 +291,8 @@
     <select id="OrderItemMapper.queryInoutStockItem" resultMap="mRetMapOrderItem">
         select A.id,
         A.orderItemId,
+        B.orderId,
+        T.orderName,
         B.customerGoodId,
         F.materialNum,
         F.goodId,
@@ -298,6 +300,7 @@
         A.goodNum
         from tab_inout_stock_item A
         left join tab_orderitem B on A.orderItemId=B.id
+        left join tab_order T on T.id=B.orderId
         left join tab_good_customer F on B.customerGoodId=F.id
         left join tab_goods D on F.goodId=D.id
         WHERE A.inout_stock_id = #{inout_stock_id}
@@ -311,6 +314,8 @@
     <select id="OrderItemMapper.queryOutStockItem" resultMap="mRetMapOrderItem">
         select A.id,
         A.orderItemId,
+        B.orderId,
+        T.orderName,
         F.goodsId as customerGoodId,
         F.materialNum,
         G.goodId,
@@ -318,6 +323,7 @@
         A.goodNum
         from tab_inout_stock_item A
         left join tab_orderitem B on A.orderItemId=B.id
+        left join tab_order T on T.id= B.orderId
         LEFT JOIN tab_blueprint F ON B.customerGoodId=F.id
         LEFT JOIN tab_good_customer G on F.goodsId=G.id
         LEFT JOIN tab_goods D ON G.goodId=D.id
@@ -383,6 +389,7 @@
         left join tab_goods D on F.goodId=D.id
         WHERE 1=1
         AND (A.orderStatus!=-1 or A.orderStatus!=5)
+        AND B.esgouNum != B.tmpNum
         <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
         AND A.orderType = #{orderType}
         <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
@@ -423,6 +430,7 @@
       LEFT JOIN tab_goods D ON G.goodId=D.id
       WHERE 1=1
       AND (A.orderStatus!=-1 or A.orderStatus!=5)
+      AND B.esgouNum != B.tmpNum
       <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
       AND A.orderType = #{orderType}
       <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
@@ -467,7 +475,7 @@
         LEFT JOIN tab_goods D ON G.goodId=D.id
         LEFT JOIN tab_dict E ON F.unit = E.dictNo
         where B.id = #{orderId}
-        AND (B.orderStatus!=-1 or A.orderStatus!=5)
+        AND (B.orderStatus!=-1 or B.orderStatus!=5)
         <!--AND (B.orderStatus = 1 or B.orderStatus=2 or B.orderStatus=3)-->
         AND A.esgouNum != A.tmpNum
     </select>
