@@ -39,6 +39,7 @@
                     <td class="form-label" style="text-align: right;width:20%">业务类型：</td>
                     <td>
                         <input name="businessId" id="businessId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
+                               valueFromSelect="true" popupHeight="150"
                                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
                                style="width:83%;" onvaluechanged="PageGoodCustomerAdd.funBusValuechanged"  required="true" maxlength="10" requiredErrorText="业务类型不能为空"/>
                     </td>
@@ -47,7 +48,7 @@
                     <td class="form-label" style="text-align: right;width:20%">所属商品：</td>
                     <td>
                         <input name="goodId" id="goodId" class="mini-combobox" style="width:83%;"  required="true" allowInput="true"
-                               textField="msgVal"  valueField="msgKey" emptyText="请选择"
+                               textField="msgVal"  valueField="msgKey" emptyText="请选择" popupHeight="150"
                                maxlength="50" requiredErrorText="所属商品不能为空"/>
                     </td>
                 </tr>
@@ -55,6 +56,7 @@
                     <td class="form-label" style="text-align: right;width:20%">所属工厂：</td>
                     <td>
                         <input name="customerId" id="customerId" class="mini-combobox" allowInput="true"  emptyText="请输入或选择"
+                               valueFromSelect="true" popupHeight="150"
                                idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
                                style="width:83%;"  required="true" maxlength="10" requiredErrorText="所属客户不能为空"/>
                     </td>

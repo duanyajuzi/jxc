@@ -16,7 +16,7 @@ var PageBlueprintAdd = function(){
         },
         funSetData : function(data){
             var row = data.row;
-            PageMain.funDictInfo("unit", false, "", "danwei");
+            PageMain.funDictInfo("unit", true, "rmb", "danwei");
             this.action = data.action;
             this.blueprintForm.setData(row);
             if(this.action == "modify") {
