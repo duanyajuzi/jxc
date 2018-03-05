@@ -76,7 +76,8 @@
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="20">序号</div>
                     <div field="materialNum" width="100" allowSort="true" headerAlign="center">客户料号</div>
-                    <div field="esgouNum" width="100" allowSort="true" headerAlign="center">数量</div>
+                    <div field="esgouNum" width="100" allowSort="true" headerAlign="center">订单数量</div>
+                    <div field="tmpNum" width="100" allowSort="true" headerAlign="center">已出库数量</div>
                     <div field="goodsName" width="100" allowSort="true" headerAlign="center">商品名称</div>
                     <div field="price" width="100" allowSort="true" headerAlign="center">单价（未税）</div>
                     <div field="dictName" width="100" allowSort="true" headerAlign="center">单位</div>
