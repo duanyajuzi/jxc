@@ -246,7 +246,9 @@
 		A.paddress ,
 		A.ptel ,
 		date_format(A.ctime,'%Y-%m-%d %T') as ctime,
-		A.cuserid ,
+		A.cuserid,
+		A.zdsc,
+		A.iskh,
 		A.memo
 		from tab_order A
 		LEFT JOIN tab_orderitem T on T.orderId=A.id

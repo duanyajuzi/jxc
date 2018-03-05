@@ -17,6 +17,7 @@ public class BlueprintModel extends BaseModel
 	
 	private String id;
 	private String goodsId;
+	private String data;
 	private java.lang.Long goodsNum;
 	private java.lang.Float price;
 	private java.lang.String unit;
@@ -25,7 +26,16 @@ public class BlueprintModel extends BaseModel
 	private String goodsName;
 	private String dictName;
 	private java.lang.String  materialNum;
-	
+
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
 	public String getGoodsId() {
 		return goodsId;
 	}

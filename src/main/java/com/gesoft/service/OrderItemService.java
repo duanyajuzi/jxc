@@ -61,6 +61,14 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
     public int deleteInoutStock(OrderItemModel model){
         return orderItemDAO.deleteInoutStock(model);
     }
+    
+    //更新库存
+    public int updateStorage(OrderItemModel model){
+        return orderItemDAO.updateStorage(model);
+    }
+    public float getOrderItemTepNum(OrderItemModel model){
+        return orderItemDAO.getOrderItemTepNum(model);
+    }
 
     public void findPageInoutStock(OrderItemModel model, MsgModel msgModel)
     {

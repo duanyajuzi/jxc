@@ -22,6 +22,8 @@ var PageOrderAdd = function(){
             var row = data.row;
             PageOrderAdd.defaultOption.pOrderType=row.orderType;
             this.action = data.action;
+            row.zdsc == 1? row.zdsc=true : row.zdsc=false;
+            row.iskh == 1? row.iskh=true : row.iskh=false;
             this.orderForm.setData(row);
             if(this.action=="add") {
                 var orderNo = mini.get("orderNo");
@@ -41,6 +43,15 @@ var PageOrderAdd = function(){
                 data.orderId = row.id;
                 this.orderItemGrid.load(data);
                 PageOrderAdd.defaultOption.orderId = row.id;
+                mini.get("zdsc").setEnabled(false);
+            }else if(this.action == 'view'){
+                var data = new Object();
+                data.orderId = row.id;
+                this.orderItemGrid.load(data);
+                PageOrderAdd.defaultOption.orderId = row.id;
+                this.orderForm.setEnabled(false);
+                this.orderItemGrid.setEnabled(false);
+                $(".mini-toolbar").hide()
             }
         },
         //选择厂商和采购公司时联动填充联系人、电话、地址
@@ -220,7 +231,8 @@ var PageOrderAdd = function(){
                             obj.dictName = result[0].dictName;
                             obj.isHasLadder = result[0].isHasLadder;
                             obj.customerGoodId = result[0].blueprintId;
-                            console.log("isHasLadder:"+result[0].isHasLadder)
+                            obj.goodsId = result[0].goodsId;
+                            console.log("goodsId:"+result[0].goodsId)
                             if(record.esgouNum > 0){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
                             }

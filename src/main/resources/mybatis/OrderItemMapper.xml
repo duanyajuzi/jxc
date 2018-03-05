@@ -20,6 +20,7 @@
         <result property="totalMoney" column="totalMoney"/>
 
         <result property="goodsId"/>
+        <result property="blueprintId"/>
         <result property="goodsNum"/>
         <result property="price"/>
         <result property="unit"/>
@@ -64,12 +65,14 @@
 		orderId,
 		customerGoodId,
 		esgouNum,
+		tmpNum,
 		unitPrice
         ) VALUES (
         	#{id} ,
         	#{orderId} ,
         	#{customerGoodId} ,
         	#{esgouNum} ,
+        	#{tmpNum} ,
         	#{unitPrice}
         )
     ]]>
@@ -80,6 +83,7 @@
         UPDATE tab_orderitem SET
 	        customerGoodId = #{customerGoodId} ,
 	        esgouNum = #{esgouNum} ,
+	        tmpNum = #{tmpNum} ,
 	        unitPrice = #{unitPrice}
         WHERE
 	        id = #{id}
@@ -228,6 +232,8 @@
         A.tmpNum,
         D.goodsName,
         F.materialNum,
+        F.isHasLadder,
+        F.goodsId,
         D.specUnit,
         E.dictName,
         A.esgouNum * A.unitPrice AS totalMoney
@@ -241,7 +247,6 @@
     <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
         ORDER BY ${sortColumns}
     </if>
-    LIMIT #{startNum}, #{pageSize}
 </select>
 
     <select id="OrderItemMapper.list2" resultMap="mRetMapOrderItem">
@@ -254,6 +259,7 @@
         A.tmpNum,
         D.goodsName,
         F.materialNum,
+        F.isHasLadder,
         D.specUnit,
         E.dictName,
         A.esgouNum * A.unitPrice AS totalMoney
@@ -266,7 +272,6 @@
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}
         </if>
-        LIMIT #{startNum}, #{pageSize}
     </select>
 
     <!--分页查询出库订单信息-->
@@ -552,4 +557,17 @@
         WHERE id = #{customerGoodId}
     ]]>
     </update>
+
+    <!--修改厂商商品的货存-->
+    <update id="OrderItemMapper.updateStorage" >
+        update tab_good_customer set storage = storage +  #{afterNum}
+        where id = #{customerGoodId}
+    </update>
+
+    <!--查询已入库数量-->
+    <select id="OrderItemMapper.getOrderItemTepNum" resultType="float">
+        SELECT tmpNum
+        FROM tab_orderitem
+        WHERE id = #{id}
+    </select>
 </mapper>

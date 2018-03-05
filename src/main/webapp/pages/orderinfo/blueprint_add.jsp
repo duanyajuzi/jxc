@@ -9,7 +9,7 @@
             padding: 3px 0 !important;
         }
         .mini-textbox-border{
-            height: 24px;
+            height: 21px;
         }
         .mini-textbox-input{
             height: 24px;
@@ -33,56 +33,90 @@
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
         <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none;">
         <div id="blueprintFormAdd">
-       
-                	<input id="id" name="id"  class="mini-hidden" />
+            <input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">客户名称：</td>
-                    <td style="width:32%;">
-                        <input name="pname" id="pname" class="mini-combobox" style="width:200px;"
+                    <td class="form-label" style="text-align: right;width:20%;">客户方案名称：</td>
+                    <td>
+                        <input name="pname" id="pname" class="mini-combobox" style="width:84%"
                                allowInput="true" idField="id" textField="customerName"
                                url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                               required="true" maxlength="10" requiredErrorText="客户名称不能为空"/>
+                               required="true" maxlength="10" requiredErrorText="客户方案名称不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width:32%;">
-                        <input name="goodsId" id="goodsId" class="mini-textbox" style="width:200px;" allowInput="true"
-                               required="true"  requiredErrorText="商品名称不能为空"  visible="false"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">数量：</td>
-                    <td style="width:32%;">
-                        <input name="goodsNum" id="goodsNum" class="mini-textbox" style="width:200px;"
-                               required="true" vtype="float;maxlength:19" requiredErrorText="数量不能为空"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">客户料号：</td>
-                    <td style="width:32%;">
-                        <input name="materialNum" id="materialNum" class="mini-textbox" style="width:200px;"
+                    <td class="form-label" style="text-align: right;width:20%;">客户料号：</td>
+                    <td>
+                        <input name="materialNum" id="materialNum" class="mini-textbox" style="width:84%"
                                onvalidation="PageBlueprintAdd.onSimilarValidation" required="true" requiredErrorText="客户料号不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">销售价(未税)：</td>
-                    <td style="width:32%;">
-                        <input name="price" id="price" class="mini-textbox" style="width:120px;"  required="true" maxlength="12" requiredErrorText="单价不能为空"/>
-                        <input name="unit" id="unit" class="mini-combobox" style="width:75px;"
+                    <td>
+                        <input name="goodsId" id="goodsId" class="mini-textbox" style="width:84%" allowInput="true"
+                               required="true"  requiredErrorText="商品名称不能为空"  visible="false"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:20%;">销售价(未税)：</td>
+                    <td>
+                        <input name="price" id="price" class="mini-textbox" style="width:68%;"  required="true" maxlength="12" requiredErrorText="单价不能为空"/>
+                        <input name="unit" id="unit" class="mini-combobox" style="width:15%;"
                                textField="msgVal"  valueField="msgKey"  emptyText="请选择"
                                required="true" vtype="float;maxlength:10" requiredErrorText="单位不能为空"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">备注：</td>
-                    <td style="width:32%;">
-                        <input name="memo" id="memo" class="mini-textArea" style="width:200px;"  required="true" maxlength="300" requiredErrorText="备注不能为空"/>
+                    <td class="form-label" style="text-align: right;width:20%;">数量：</td>
+                    <td>
+                        <input name="goodsNum" id="goodsNum" class="mini-textbox" style="width:84%"
+                               required="true" vtype="float;maxlength:19" requiredErrorText="数量不能为空"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;">备注：</td>
+                    <td>
+                        <input name="memo" id="memo" class="mini-textArea" style="width:84%" required="true" maxlength="300" requiredErrorText="备注不能为空"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;">是否有阶梯价：</td>
+                    <td>
+                        <input id="checkbox" name="checkbox" class="mini-checkbox" text="是" trueValue="1" falseValue="0"/>
                     </td>
                 </tr>
             </table>
+            <div style="width:80%;margin-left: 10%">
+                <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:100%;">
+                                <a class="mini-button" iconCls="icon-add" onclick="PageBlueprintAdd.addRow()" plain="true" tooltip="增加...">增加</a>
+                                <a class="mini-button" iconCls="icon-remove" onclick="PageBlueprintAdd.removeRow()" plain="true">删除</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="datagrid1" class="mini-datagrid" style="width:80%;height:200px;margin-left: 10%"
+                 url="${pageContext.request.contextPath}/ladderPrice/getList" idField="id" ajaxType="get"
+                 allowResize="fasle" pageSize="20"
+                 allowCellEdit="true" allowCellSelect="true" multiSelect="true"
+                 editNextOnEnterKey="true"  editNextRowCell="true" showPager="false">
+                <div property="columns">
+                    <div name="num"  field="num" headerAlign="center" allowSort="true" width="100">数量
+                        <input property="editor" class="mini-textbox" style="width:100%;" />
+                    </div>
+                    <div field="price" width="100" allowSort="true" headerAlign="center" >价格
+                        <input property="editor" class="mini-textbox" style="width:100%;"/>
+                    </div>
+                </div>
+            </div>
+
+
+
          </div>
-            
+
         </div>
         <div  region="south" showSplit="false" showSplitIcon="false" height="30" showHeader="false"  style="border: none">
 	        <div class="mini-toolbar" style="position: fixed;left:0;bottom: 0;right:0;text-align: center;border-width: 1px 0 0 0" >

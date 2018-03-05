@@ -9,6 +9,6 @@ package com.gesoft.dao;
  public class LadderPriceDAO extends EntityDAOImpl<LadderPriceModel, Long> {
      @Override
      public String getMybatisSqlMapNamespace() {
-         return "BlueprintMapper";
+         return "LadderPriceMapper";
      }
  }

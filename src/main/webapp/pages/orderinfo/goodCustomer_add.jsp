@@ -9,7 +9,7 @@
             padding: 3px 0 !important;
         }
         .mini-textbox-border{
-            height: 24px;
+            height: 20px;
         }
         .mini-textbox-input{
             height: 24px;
@@ -63,7 +63,7 @@
                     <td class="form-label" style="text-align: right;width:20%">原厂料号：</td>
                     <td>
                         <input name="materialNum" id="materialNum" class="mini-textbox" style="width:83%;"  required="true" maxlength="100"
-                               onvalidation="PageGoodCustomerAdd.onSimilarValidation" requiredErrorText="物料号不能为空"/>
+                               <%--onvalidation="PageGoodCustomerAdd.onSimilarValidation"--%> requiredErrorText="物料号不能为空"/>
                     </td>
                 </tr>
                 <tr>
@@ -89,25 +89,22 @@
                             <td style="width:100%;">
                                 <a class="mini-button" iconCls="icon-add" onclick="PageGoodCustomerAdd.addRow()" plain="true" tooltip="增加...">增加</a>
                                 <a class="mini-button" iconCls="icon-remove" onclick="PageGoodCustomerAdd.removeRow()" plain="true">删除</a>
-                                <span class="separator"></span>
-                                <a class="mini-button" iconCls="icon-save" onclick="PageGoodCustomerAdd.saveData()" plain="true">保存</a>
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
             <div id="datagrid1" class="mini-datagrid" style="width:80%;height:200px;margin-left: 10%"
-                 url="../data/AjaxService.aspx?method=SearchEmployees" idField="id"
-                 allowResize="true" pageSize="20"
+                 url="${pageContext.request.contextPath}/customerPrice/getList" idField="id" ajaxType="get"
+                 allowResize="fasle" pageSize="20"
                  allowCellEdit="true" allowCellSelect="true" multiSelect="true"
-                 editNextOnEnterKey="true"  editNextRowCell="true">
+                 editNextOnEnterKey="true"  editNextRowCell="true" showPager="false">
                 <div property="columns">
                     <div name="num"  field="num" headerAlign="center" allowSort="true" width="100">数量
-                        <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200"  align="center" />
+                        <input property="editor" class="mini-textbox" style="width:100%;" />
                     </div>
                     <div field="price" width="100" allowSort="true" headerAlign="center" >价格
-                        <input property="editor" class="mini-spinner"  minValue="0"
-                               maxValue="200" value="25" style="width:100%;"/>
+                        <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
                 </div>
             </div>

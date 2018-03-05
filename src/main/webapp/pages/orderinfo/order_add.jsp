@@ -149,7 +149,7 @@
                 <div property="columns">
                     <div type="indexcolumn"></div>
                     <div type="checkcolumn"></div>
-                    <div field="materialNum" name="materialNum"  headerAlign="center" width="100" allowSort="true" >客户料号
+                    <div field="materialNum" name="materialNum"  headerAlign="center" width="150" allowSort="true" >客户料号
                         <input property="editor" class="mini-combobox" style="width:100%;"
                                allowInput="true"  valueField="id" textField="materialNum"
                                required="true" maxlength="19" />
@@ -163,13 +163,16 @@
                     <div field="price" headerAlign="center" width="100" allowSort="true" >单价（未税）
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
-                    <div field="dictName" headerAlign="center" width="100" allowSort="true">单位
+                    <div field="dictName" headerAlign="center" width="50" allowSort="true">单位
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
                     <div field="totalMoney" headerAlign="center"  width="100" allowSort="true" >总价（未税）
                         <input property="editor" class="mini-spinner" style="width:100%;"/>
                     </div>
                     <div field="customerGoodId" headerAlign="center" width="0" allowSort="true" >
+                        <input property="editor" class="mini-textbox" style="width:100%;"/>
+                    </div>
+                    <div field="goodsId" headerAlign="center" width="0" allowSort="true" >
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
                     <div field="isHasLadder" headerAlign="center" width="0" allowSort="true" >

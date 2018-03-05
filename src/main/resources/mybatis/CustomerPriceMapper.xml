@@ -2,66 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="LadderPriceMapper">
+<mapper namespace="CustomerPriceMapper">
 
-	<resultMap id="mRetMapLadderPrice" type="com.gesoft.model.LadderPriceModel">
+	<resultMap id="mRetMapCustomerLadderPrice" type="com.gesoft.model.CustomerPriceModel">
         <result property="id" column="id"/>
         <result property="price" column="price"/>
-        <result property="buleprint_id" column="buleprint_id"/>
+        <result property="good_customer_id" column="good_customer_id"/>
         <result property="num" column="num"/>
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
-	<sql id="LadderPriceMapper.columns">
+	<sql id="CustomerPriceMapper.columns">
 	    <![CDATA[
-		id,price,blueprint_id,num
+		id,price,good_customer_id,num
 	    ]]>
 	</sql>
 
-	<insert id="LadderPriceMapper.insert" useGeneratedKeys="true" keyProperty="id">
+	<insert id="CustomerPriceMapper.insert" useGeneratedKeys="true" keyProperty="id">
     <![CDATA[
-        INSERT INTO tab_blueprint_ladder_price (
+        INSERT INTO tab_good_customer_ladder_price (
         	id,
         	price,
-        	blueprint_id,
+        	good_customer_id,
         	num
         ) VALUES (
         	#{id} ,
         	#{price} ,
-        	#{blueprint_id} ,
+        	#{good_customer_id} ,
         	#{num}
         )
     ]]>
 	</insert>
     
-	<update id="LadderPriceMapper.update" >
+	<update id="CustomerPriceMapper.update" >
     <![CDATA[
-        UPDATE tab_blueprint_ladder_price SET
+        UPDATE tab_good_customer_ladder_price SET
 	        price = #{price} ,
-	        blueprint_id = #{blueprint_id} ,
+	        good_customer_id = #{good_customer_id} ,
 	        num = #{num}
         WHERE 
 	        id = #{id} 
     ]]>
 	</update>
 
-    <delete id="LadderPriceMapper.delete">
+    <delete id="CustomerPriceMapper.delete">
     <![CDATA[
-        DELETE FROM tab_blueprint_ladder_price WHERE
+        DELETE FROM tab_good_customer_ladder_price WHERE
         id = #{id} 
     ]]>
     </delete>
     
-    <select id="LadderPriceMapper.getById" resultMap="mRetMapLadderPrice">
-		SELECT <include refid="LadderPriceMapper.columns" />
+    <select id="CustomerPriceMapper.getById" resultMap="mRetMapCustomerLadderPrice">
+		SELECT <include refid="CustomerPriceMapper.columns" />
 	    <![CDATA[
-		    FROM tab_blueprint_ladder_price
+		    FROM tab_good_customer_ladder_price
 	        WHERE 
 		        id = #{id} 
 	    ]]>
 	</select>
 	
-	<sql id="LadderPriceMapper.findPage.where">
+	<sql id="CustomerPriceMapper.findPage.where">
 		<where>
 
 			1=1
@@ -71,8 +71,8 @@
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(price)">
 				AND A.price = #{price}
 			</if>
-			<if test="@com.gesoft.util.Ognl@isNotEmpty(blueprint_id)">
-				AND A.blueprint_id = #{blueprint_id}
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(good_customer_id)">
+				AND A.good_customer_id = #{good_customer_id}
 			</if>
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(num)">
 				AND A.num = #{num}
@@ -81,28 +81,26 @@
 		</where>
 	</sql>
 		
-    <select id="LadderPriceMapper.count" resultType="long">
+    <select id="CustomerPriceMapper.count" resultType="long">
 		SELECT 	count(*)
-		FROM tab_blueprint_ladder_price A
+		FROM tab_good_customer_ladder_price A
 		left join tab_goods B on A.goodsId=B.id
 		left join tab_dict D on A.unit=D.dictNo
-		<include refid="LadderPriceMapper.findPage.where"/>
+		<include refid="CustomerPriceMapper.findPage.where"/>
     </select>
     
     <!-- 分页查询 -->
-    <select id="LadderPriceMapper.list" resultMap="mRetMapLadderPrice">
+    <select id="CustomerPriceMapper.list" resultMap="mRetMapCustomerLadderPrice">
 		SELECT 	A.id,
 		A.price,
-		A.blueprint_id,
+		A.good_customer_id,
 		A.num
-		FROM tab_blueprint_ladder_price A
-		<include refid="LadderPriceMapper.findPage.where"/>
+		FROM tab_good_customer_ladder_price A
+		<include refid="CustomerPriceMapper.findPage.where"/>
 		
 		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
 			ORDER BY ${sortColumns}
 		</if>
-		
-		LIMIT #{startNum}, #{pageSize}
     </select>
 
 </mapper>

@@ -27,6 +27,15 @@ public class GoodCustomerModel extends BaseModel
 	private java.lang.Float unitPrice;
 	private java.lang.String unit;
 	private java.lang.Float storage;
+	private String data;
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
 
 	public String getDictName() {
 		return dictName;
