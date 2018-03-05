@@ -206,7 +206,6 @@ var PageOrderAdd = function(){
                     }else{//销售
                         url =  PageOrderAdd.defaultOption.basePath + "/orderItem/queryNumInfoList";
                     }
-                    debugger
                     $.ajax({
                         url:url,
                         type: "post",
