@@ -54,7 +54,7 @@
              showColumns="true" showPager="false"  region="east">
             <div property="columns">
                 <div field="key" visible="false"  headerAlign="center" allowSort="true">key</div>
-                <div field="orderId" visible="false">订单ID</div>
+                <div field="orderNo" visible="false">订单ID</div>
                 <div field="orderName" width="100" headerAlign="center" allowSort="true">客户订单号</div>
                 <div field="id" visible="false">orderItemId</div>
                 <div field="customerGoodId" visible="false">customerGoodId</div>
