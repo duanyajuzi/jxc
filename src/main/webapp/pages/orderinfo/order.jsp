@@ -49,10 +49,11 @@
             </table>
         </div>
         <div class="mini-fit">
-            <div id="orderGrid" class="mini-datagrid" idField="id" allowResize="false"
-                 pagesize="10" sizeList="[2,30,50,100]" ajaxType="get" allowAlternating="true"  sortMode="client" style="height: 100%;">
+            <div id="orderGrid" class="mini-datagrid" idField="id" allowResize="false" onshowrowdetail="onShowRowDetail"
+                 pagesize="10" sizeList="[10,30,50,100]" ajaxType="get" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="30">序号</div>
+                     <div type="expandcolumn">订单项</div>
+                     <div type="indexcolumn" headerAlign="center"  width="30">序号</div>
 					 <div field="orderNo" width="130" headerAlign="center" allowSort="true">订单编号</div>
 					 <div field="orderName" width="120" headerAlign="center" allowSort="true">客户订单号</div>
 					 <div field="orderTime" width="120" headerAlign="center" allowSort="true"
@@ -62,8 +63,24 @@
 					 <div field="deliveryTime" width="120" headerAlign="center" allowSort="true"
                           dateFormat="yyyy-MM-dd">交货时间</div>
                      <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
-                    <div field="button" width="80" headerAlign="center" align="center"
+                     <div field="button" width="80" headerAlign="center" align="center"
                          renderer="funSetButton" >操作</div>
+                </div>
+            </div>
+        </div>
+
+        <%--内嵌出货细项表格--%>
+        <div id="detailGrid_Form" style="display: none;">
+            <div id="orderInfoGrid" class="mini-datagrid" style="width: 100%;" showPager="false"  ajaxType="get"
+                 url="${pageContext.request.contextPath}/orderItem/getList2">
+                <div property="columns">
+                    <div type="indexcolumn" headerAlign="center"  width="20">序号</div>
+                    <div field="materialNum" width="100" allowSort="true" headerAlign="center">原厂料号</div>
+                    <div field="esgouNum" width="100" allowSort="true" headerAlign="center">数量</div>
+                    <div field="goodsName" width="100" allowSort="true" headerAlign="center">商品名称</div>
+                    <div field="price" width="100" allowSort="true" headerAlign="center">采购单价</div>
+                    <div field="dictName" width="100" allowSort="true" headerAlign="center">单位</div>
+                    <div field="totalMoney" width="100" allowSort="true" headerAlign="center">总价</div>
                 </div>
             </div>
         </div>
@@ -107,6 +124,17 @@
         return "";
     }
 
+
+    var detailGrid_Form = document.getElementById("detailGrid_Form");
+    var orderInfoGrid=mini.get("orderInfoGrid");
+    function onShowRowDetail(e) {
+        var grid = e.sender;
+        var row = e.record;
+        var td = grid.getRowDetailCellEl(row);
+        td.appendChild(detailGrid_Form);
+        detailGrid_Form.style.display = "block";
+        orderInfoGrid.load({ orderId: row.id });
+    }
 </script>
 </body>
 </html>
