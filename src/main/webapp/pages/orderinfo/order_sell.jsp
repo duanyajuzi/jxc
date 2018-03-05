@@ -22,10 +22,10 @@
                        style="width:100px;" emptyText="请选择"/>
                 <lable class="form-label">订单编号：</lable>
                 <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单编号"  style="width:100px;"/>
-				<lable class="form-label">客户订单号：</lable>
+                <lable class="form-label">客户订单号：</lable>
                 <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:100px;"/>
-                <lable class="form-label">原厂料号：</lable>
-                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="原厂料号"  style="width:110px;"/>
+                <lable class="form-label">客户料号：</lable>
+                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:110px;"/>
                 <lable class="form-label" name="stimeSearch" id="stimeSearch">订单时间：</lable>
                 <input name="orderTimeBegin" id="orderTimeBegin" class="mini-datepicker" style="witdth:150px;"
                        format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至
@@ -53,15 +53,15 @@
                  pagesize="10" sizeList="[2,30,50,100]" ajaxType="get" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="30">序号</div>
-					 <div field="orderNo" width="130" headerAlign="center" allowSort="true">订单编号</div>
-					 <div field="orderName" width="120" headerAlign="center" allowSort="true">客户订单号</div>
-					 <div field="orderTime" width="120" headerAlign="center" allowSort="true"
-                          dateFormat="yyyy-MM-dd">订单时间</div>
-					 <div field="orderStatus" width="120" headerAlign="center"
-                          renderer="onStatusRenderer" allowSort="true">订单状态</div>
-					 <div field="deliveryTime" width="120" headerAlign="center" allowSort="true"
-                          dateFormat="yyyy-MM-dd">交货时间</div>
-                     <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
+                    <div field="orderNo" width="130" headerAlign="center" allowSort="true">订单编号</div>
+                    <div field="orderName" width="120" headerAlign="center" allowSort="true">客户订单号</div>
+                    <div field="orderTime" width="120" headerAlign="center" allowSort="true"
+                         dateFormat="yyyy-MM-dd">订单时间</div>
+                    <div field="orderStatus" width="120" headerAlign="center"
+                         renderer="onStatusRenderer" allowSort="true">订单状态</div>
+                    <div field="deliveryTime" width="120" headerAlign="center" allowSort="true"
+                         dateFormat="yyyy-MM-dd">交货时间</div>
+                    <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
                     <div field="button" width="80" headerAlign="center" align="center"
                          renderer="funSetButton" >操作</div>
                 </div>
@@ -73,32 +73,32 @@
     mini.parse();
     var type = <%=type%>;
     var orderGrid=mini.get("orderGrid");
-    orderGrid.setUrl("${pageContext.request.contextPath}/order/query?orderType="+type);
+    orderGrid.setUrl("${pageContext.request.contextPath}/order/querySell?orderType="+type);
     function funSetButton(e) {
         var button;
 //        var orderStatus = e.row.orderStatus;
 //        if(orderStatus==0){
 //            button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
-//                    '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
-//                    'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>' +
-//                    '<a class="mini-button mini-button-plain " href="javascript:void(0)">' +
-//                    '<span class="mini-button-text  mini-button-icon icon-filter" style="height: auto" ' +
-//                    'onclick="PageOrder.funUpdateOrderStatus()">下发订单</span></a>';
+//                '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
+//                'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>' +
+//                '<a class="mini-button mini-button-plain " href="javascript:void(0)">' +
+//                '<span class="mini-button-text  mini-button-icon icon-filter" style="height: auto" ' +
+//                'onclick="PageOrder.funUpdateOrderStatus()">下发订单</span></a>';
 //        }else {
             button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
-                    '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
-                    'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>';
+                '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
+                'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>';
 //        }
         return button;
     }
 
     var Genders = [{ id: -1, text: '订单已删除' },
-                              { id: 0, text: '订单申请'},
-                              { id: 1, text: '订单下发'},
-                              { id: 2, text: '订单出库'},
-                              { id: 3, text: '订单入库'},
-                              { id: 4, text: '订单开票'},
-                              { id: 5, text: '订单完成'}];
+        { id: 0, text: '订单申请'},
+        { id: 1, text: '订单下发'},
+        { id: 2, text: '订单出库'},
+        { id: 3, text: '订单入库'},
+        { id: 4, text: '订单开票'},
+        { id: 5, text: '订单完成'}];
     function onStatusRenderer(e) {
         for (var i = 0, l = Genders.length; i < l; i++) {
             var g = Genders[i];

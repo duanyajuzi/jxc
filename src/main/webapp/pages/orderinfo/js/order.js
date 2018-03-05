@@ -21,9 +21,15 @@ var PageOrder = function(){
          },
         funSearch : function()
         {
-        	var orderForm = new mini.Form("orderForm");
-            var data=orderForm.getData();
-        	this.orderGrid.load(data, function(res){
+        	var businessId= mini.get("businessId").getValue().trim();
+        	var orderNo = mini.get("orderNo").getValue().trim();
+        	var orderName=mini.get("orderName").getValue().trim();
+        	var materialNum=mini.get("materialNum").getValue().trim();
+            var orderTimeBegin=mini.get("orderTimeBegin");
+            var orderTimeEnd=mini.get("orderTimeEnd");
+            var paramData={"businessId":businessId,"orderNo":orderNo,"orderName":orderName,"materialNum":materialNum,
+                "orderTimeBegin":orderTimeBegin.text,"orderTimeEnd":orderTimeEnd.text};
+        	this.orderGrid.load(paramData, function(res){
                 console.log(res);
             });
         },

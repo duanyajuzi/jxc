@@ -30,6 +30,9 @@
 		<result property="name1"/>
 		<result property="name2"/>
 		<result property="business"/>
+		<result property="materialNum"/>
+		<result property="orderTimeBegin"/>
+		<result property="orderTimeEnd"/>
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
@@ -144,20 +147,23 @@
 				AND A.id = #{id}
 			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
-				AND A.orderNo = #{orderNo}
-			</if>
+				AND A.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+		   </if>
+		   <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+				AND A.businessId = #{businessId}
+		   </if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
 				AND A.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
-			</if>
-	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeBegin)">-->
-				<!--AND orderTime >= #{orderTimeBegin}-->
-		   <!--</if>-->
-		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeEnd)">-->
-				<!--AND orderTime &lt;= #{orderTimeEnd}-->
-		   <!--</if>-->
-	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(orderType)">-->
-				<!--AND A.orderType = #{orderType}-->
-			<!--</if>-->
+		   </if>
+		   <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+				AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+		   </if>
+	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeBegin)">
+				AND DATE_FORMAT(A.orderTime,'%Y-%m-%d') >= #{orderTimeBegin}
+		   </if>
+		   <if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeEnd)">
+				AND DATE_FORMAT(A.orderTime,'%Y-%m-%d') &lt;= #{orderTimeEnd}
+		   </if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderStatus)">
 				AND A.orderStatus = #{orderStatus}
 			</if>
@@ -200,21 +206,21 @@
 		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeEnd)">-->
 				<!--AND ctime &lt;= #{ctimeEnd}-->
 		   <!--</if>-->
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(cuserid)">
-				AND cuserid = #{cuserid}
-			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
-				AND memo = #{memo}
-			</if>
 		</where>
 	</sql>
 		
     <select id="OrderMapper.count" resultType="long">
-		SELECT 	COUNT(*)
+		SELECT count(*)
+		from (
+		select A.id
 		from tab_order A
+		LEFT JOIN tab_orderitem T on T.orderId=A.id
+		LEFT JOIN tab_good_customer F on F.id= T.customerGoodId
 		left join tab_customer B on A.customerId=B.id
-		left JOIN tab_customer D on A.pcustomerId=D.id
-		<include refid="OrderMapper.findPage.where"/>    
+		left join tab_customer D on A.pcustomerId=D.id
+		left join tab_business E on A.businessId=E.id
+		<include refid="OrderMapper.findPage.where"/>
+		GROUP BY A.id) t1
     </select>
     
     <!-- 分页查询 -->
@@ -243,13 +249,132 @@
 		A.cuserid ,
 		A.memo
 		from tab_order A
+		LEFT JOIN tab_orderitem T on T.orderId=A.id
+		LEFT JOIN tab_good_customer F on F.id= T.customerGoodId
 		left join tab_customer B on A.customerId=B.id
 		left join tab_customer D on A.pcustomerId=D.id
 		left join tab_business E on A.businessId=E.id
 		<include refid="OrderMapper.findPage.where"/>
+		group by A.id
 		order by A.orderTime desc
 		LIMIT #{startNum}, #{pageSize}
     </select>
+
+	<sql id="OrderMapper.findPage.whereSell">
+		<where>
+			A.orderType = #{orderType}
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
+				AND A.id = #{id}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+				AND A.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+				AND A.businessId = #{businessId}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
+				AND A.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+				AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeBegin)">
+				AND DATE_FORMAT(A.orderTime,'%Y-%m-%d') >= #{orderTimeBegin}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeEnd)">
+				AND DATE_FORMAT(A.orderTime,'%Y-%m-%d') &lt;= #{orderTimeEnd}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderStatus)">
+				AND A.orderStatus = #{orderStatus}
+			</if>
+			<!--<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryTimeBegin)">-->
+			<!--AND deliveryTime >= #{deliveryTimeBegin}-->
+			<!--</if>-->
+			<!--<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryTimeEnd)">-->
+			<!--AND deliveryTime &lt;= #{deliveryTimeEnd}-->
+			<!--</if>-->
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryAddress)">
+				AND A.deliveryAddress = #{deliveryAddress}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(customerName)">
+				AND B.customerName LIKE CONCAT(CONCAT('%', #{customerName}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(ccontacts)">
+				AND A.ccontacts = #{ccontacts}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(caddress)">
+				AND A.caddress = #{caddress}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(ctel)">
+				AND A.ctel = #{ctel}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(pcustomerName)">
+				AND D.customerName LIKE CONCAT(CONCAT('%', #{pcustomerName}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(pcontacts)">
+				AND A.pcontacts = #{pcontacts}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(paddress)">
+				AND A.paddress = #{paddress}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(ptel)">
+				AND A.ptel = #{ptel}
+			</if>
+		</where>
+	</sql>
+
+	<select id="OrderMapper.countSell" resultType="long">
+		SELECT count(*)
+		from (
+		select A.id
+		from tab_order A
+		LEFT JOIN tab_orderitem T on T.orderId=A.id
+		LEFT JOIN tab_blueprint F ON F.id = T.customerGoodId
+		left join tab_good_customer G ON F.goodsId = G.id
+		left join tab_customer B on A.customerId=B.id
+		left join tab_customer D on A.pcustomerId=D.id
+		left join tab_business E on A.businessId=E.id
+		<include refid="OrderMapper.findPage.whereSell"/>
+		GROUP BY A.id) t1
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="OrderMapper.listSell" resultMap="mRetMapOrder">
+		SELECT 	A.id ,
+		A.orderNo ,
+		A.orderName ,
+		date_format(A.orderTime,'%Y-%m-%d %T') as orderTime,
+		A.orderType ,
+		A.orderStatus ,
+		A.businessId ,
+		E.business,
+		date_format(A.deliveryTime,'%Y-%m-%d %T') as deliveryTime,
+		A.deliveryAddress ,
+		A.customerId ,
+		B.customerName name1,
+		A.ccontacts ,
+		A.caddress ,
+		A.ctel ,
+		A.pcustomerId ,
+		D.customerName name2,
+		A.pcontacts ,
+		A.paddress ,
+		A.ptel ,
+		date_format(A.ctime,'%Y-%m-%d %T') as ctime,
+		A.cuserid ,
+		A.memo
+		from tab_order A
+		LEFT JOIN tab_orderitem T on T.orderId=A.id
+		LEFT JOIN tab_blueprint F ON  F.id = T.customerGoodId
+		left join tab_good_customer G ON F.goodsId = G.id
+		left join tab_customer B on A.customerId=B.id
+		left join tab_customer D on A.pcustomerId=D.id
+		left join tab_business E on A.businessId=E.id
+		<include refid="OrderMapper.findPage.whereSell"/>
+		group by A.id
+		order by A.orderTime desc
+		LIMIT #{startNum}, #{pageSize}
+	</select>
 
 	<!--<select id="OrderMapper.queryMaterialNum" resultMap="mRetMapOrder">-->
 		<!--SELECT id,materialNum-->
