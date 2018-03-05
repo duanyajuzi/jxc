@@ -16,7 +16,7 @@ public class BlueprintModel extends BaseModel
 
 	
 	private String id;
-	private java.lang.Long goodsId;
+	private String goodsId;
 	private java.lang.Long goodsNum;
 	private java.lang.Float price;
 	private java.lang.String unit;
@@ -25,7 +25,15 @@ public class BlueprintModel extends BaseModel
 	private String goodsName;
 	private String dictName;
 	private java.lang.String  materialNum;
-
+	
+	public String getGoodsId() {
+		return goodsId;
+	}
+	
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
+	
 	public void setId(String value)
 	{
 		this.id = value;
@@ -35,16 +43,7 @@ public class BlueprintModel extends BaseModel
 	{
 		return this.id;
 	}
-	public void setGoodsId(java.lang.Long value) 
-	{
-		this.goodsId = value;
-	}
-	
-	public java.lang.Long getGoodsId() 
-	{
-		return this.goodsId;
-	}
-	public void setGoodsNum(java.lang.Long value) 
+	public void setGoodsNum(java.lang.Long value)
 	{
 		this.goodsNum = value;
 	}

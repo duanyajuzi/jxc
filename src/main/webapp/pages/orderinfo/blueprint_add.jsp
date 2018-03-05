@@ -43,17 +43,12 @@
                                allowInput="true" idField="id" textField="customerName"
                                url="${pageContext.request.contextPath}/customer/queryCustomerList"
                                required="true" maxlength="10" requiredErrorText="客户名称不能为空"/>
-
-
-                        <%--<input name="pname" id="pname" class="mini-textbox" style="width:200px;"  required="true" maxlength="100" requiredErrorText="方案名称不能为空"/>--%>
                     </td>
                 </tr>
                 <tr>
-                    <%--<td class="form-label" style="text-align: right;width:16%;">商品名称：</td>--%>
                     <td style="width:32%;">
                         <input name="goodsId" id="goodsId" class="mini-textbox" style="width:200px;" allowInput="true"
-                               <%--url="${pageContext.request.contextPath}/goods/queryGoodsList" idField="id" textField="goodsName"--%>
-                               required="true" maxlength="19" requiredErrorText="商品名称不能为空"  visible="false"/>
+                               required="true"  requiredErrorText="商品名称不能为空"  visible="false"/>
                     </td>
                 </tr>
                 <tr>

@@ -90,9 +90,6 @@
 	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
 				AND A.id = #{id}
 			</if>
-			<if test="@com.gesoft.util.Ognl@isNotEmpty(goodsId)">
-				AND A.goodsId = #{goodsId}
-			</if>
 	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(goodsName)">
 				AND B.goodsName LIKE CONCAT(CONCAT('%', #{goodsName}), '%')
 			</if>
@@ -146,7 +143,6 @@
 			ORDER BY ${sortColumns}
 		</if>
 		
-		LIMIT #{startNum}, #{pageSize}
     </select>
 
 </mapper>
