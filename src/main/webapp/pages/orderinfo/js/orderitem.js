@@ -179,7 +179,7 @@ var PageOrderItem = function(){
             var value=goodsId.getValue();
             materialNum.setValue("");
             $.ajax({
-                url: this.basePath + "/goods/queryMaterialNum",
+                url: this.basePath + "/order/queryMaterialNum",
                 type: "post",
                 data: {goodId:value},
                 dataType: "json",

@@ -150,32 +150,7 @@
 		and businessId = #{businessId}
 	</select>
 
-	<select id="GoodsMapper.queryMaterialNum" resultMap="mRetMapGoods">
-		SELECT
-			t.id,
-			t.materialNum
-		FROM
-			tab_blueprint t
-		LEFT JOIN tab_good_customer b ON b.id = t.goodsId
-		LEFT JOIN tab_goods d ON d.id = b.goodId
-		WHERE
-			b.customerId = ${customerId}
-		AND d.businessId = ${businessId}
-		AND t.pname = ${pcustomerId}
-	</select>
 
-	<select id="GoodsMapper.queryMaterialNum2" resultMap="mRetMapGoods">
-		SELECT
-			t.id,
-			t.materialNum
-		FROM
-			tab_good_customer t
-		LEFT JOIN tab_goods d ON d.id = t.goodId
-		WHERE
-			t.customerId = ${customerId}
-		AND d.businessId = ${businessId}
-
-	</select>
 
 
 	<!--修改厂商商品的货存-->

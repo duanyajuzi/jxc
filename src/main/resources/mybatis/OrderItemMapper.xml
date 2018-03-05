@@ -337,7 +337,7 @@
 
     <select id="OrderItemMapper.queryNumInfo" resultMap="mRetMapOrderItem">
         SELECT
-            A.id,
+            A.id  as blueprintId,
             A.materialNum,
             A.price,
             A.goodsId,
@@ -350,12 +350,12 @@
         LEFT JOIN tab_goods B ON G.goodId = B.id
         LEFT JOIN tab_dict D ON A.unit = D.dictNo
         WHERE
-            A.id = #{id}
+            A.id = #{blueprintId}
     </select>
 
     <select id="OrderItemMapper.queryNumInfo2" resultMap="mRetMapOrderItem">
         SELECT
-        A.id,
+        A.id as blueprintId,
         A.materialNum,
         A.unitPrice as price,
         A.goodId as goodsId,
@@ -367,7 +367,7 @@
         LEFT JOIN tab_goods B ON A.goodId = B.id
         LEFT JOIN tab_dict D ON A.unit = D.dictNo
         WHERE
-        A.id = #{id}
+        A.id = #{blueprintId}
     </select>
 
   <select id="OrderItemMapper.goodsPlan" resultMap="mRetMapOrderItem">

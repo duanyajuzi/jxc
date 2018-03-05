@@ -54,6 +54,15 @@ public class OrderItemModel extends BaseModel{
     private String orderNo;
     private String isHasLadder;
     private Integer customerId;
+    private String blueprintId;
+    
+    public String getBlueprintId() {
+        return blueprintId;
+    }
+    
+    public void setBlueprintId(String blueprintId) {
+        this.blueprintId = blueprintId;
+    }
     
     public Integer getCustomerId() {
         return customerId;

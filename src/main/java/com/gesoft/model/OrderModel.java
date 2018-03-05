@@ -55,6 +55,15 @@ package com.gesoft.model;
 	private Float price;
 	private String num;
 	private String customerGoodId;
+	private String materialNum;
+	
+	public String getMaterialNum() {
+		return materialNum;
+	}
+	
+	public void setMaterialNum(String materialNum) {
+		this.materialNum = materialNum;
+	}
 	
 	public String getCustomerGoodId() {
 		return customerGoodId;

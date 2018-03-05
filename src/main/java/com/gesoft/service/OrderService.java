@@ -45,4 +45,13 @@ public class OrderService extends EntityService<OrderModel, Long>
 	public List<OrderModel> getBluePrintLadderPrice(OrderModel model){
 		return orderDAO.getBluePrintLadderPrice(model);
 	}
+	
+	public List<OrderModel> queryMaterialNum(OrderModel model){
+		return orderDAO.queryMaterialNum(model);
+	}
+	
+	public List<OrderModel> queryMaterialNum2(OrderModel model){
+		return orderDAO.queryMaterialNum2(model);
+	}
+	
 }

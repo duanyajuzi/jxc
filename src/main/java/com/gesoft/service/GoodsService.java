@@ -37,13 +37,6 @@ public class GoodsService extends EntityService<GoodsModel, Long>
 		return goodsDAO.queryGoodsList(model);
 	}
 
-	public List<GoodsModel> queryMaterialNum(GoodsModel model){
-		return goodsDAO.queryMaterialNum(model);
-	}
-	
-	public List<GoodsModel> queryMaterialNum2(GoodsModel model){
-		return goodsDAO.queryMaterialNum2(model);
-	}
 
 //	public int updateStorage(GoodsModel model){
 //		return goodsDAO.updateStorage(model);

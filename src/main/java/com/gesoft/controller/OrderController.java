@@ -227,7 +227,7 @@ public class OrderController extends BaseController
 				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
 				itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
 				//是否控货处理
-				if("1".equals(iskh)){
+				if("0".equals(iskh)){//不控货
 					itemModel.setTmpNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
 				}
 				String state = jsonObject.get("_state").toString();
@@ -240,9 +240,9 @@ public class OrderController extends BaseController
 					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
 					orderItemService.delete(itemModel);
 				}
-				
+				//新增操作，控货
 				//是否控货处理
-				if("1".equals(iskh)){
+				if("0".equals(iskh)){//不控货
 				
 				}
 				
@@ -383,4 +383,45 @@ public class OrderController extends BaseController
 			logger.error("OrderController updateOrderStatus error：", e);
 		}
 	}
+	
+	/**
+	 * 查询客户料号列表
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/queryMaterialNum")
+	@ResponseBody
+	public List<OrderModel> queryMaterialNumList(OrderModel model){
+		List<OrderModel> list=null;
+		try{
+			list=orderService.queryMaterialNum(model);
+			if(list==null){
+				list=new ArrayList<>();
+			}
+		}catch (Exception e){
+			logger.error("GoodsController queryMaterialNum error：", e);
+		}
+		return list;
+	}
+	
+	/**
+	 * 查询原厂物流号列表
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/queryMaterialNum2")
+	@ResponseBody
+	public List<OrderModel> queryMaterialNumList2(OrderModel model){
+		List<OrderModel> list=null;
+		try{
+			list=orderService.queryMaterialNum2(model);
+			if(list==null){
+				list=new ArrayList<>();
+			}
+		}catch (Exception e){
+			logger.error("GoodsController queryMaterialNum error：", e);
+		}
+		return list;
+	}
+	
 }

@@ -141,7 +141,7 @@ var PageOrderAdd = function(){
                 this.orderItemGrid.addRow(newRow, index);
                 this.orderItemGrid.beginEditCell(newRow, "LoginName");
             }else{
-                mini.alert("请先选择业务类型和工厂")
+                mini.alert("请先选择业务类型、工厂和客户")
             }
 
         },
@@ -173,9 +173,9 @@ var PageOrderAdd = function(){
                 if (customerId && businessId && pcustomerId) {
                     var url;
                     if(PageOrderAdd.defaultOption.pOrderType == 0){
-                        url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum2?customerId=" + customerId+"&businessId="+businessId;
+                        url = PageOrderAdd.defaultOption.basePath + "/order/queryMaterialNum2?customerId=" + customerId+"&businessId="+businessId;
                     }else{
-                        url = PageOrderAdd.defaultOption.basePath + "/goods/queryMaterialNum?customerId=" + customerId+"&businessId="+businessId +"&pcustomerId="+pcustomerId;
+                        url = PageOrderAdd.defaultOption.basePath + "/order/queryMaterialNum?customerId=" + customerId+"&businessId="+businessId +"&pcustomerId="+pcustomerId;
                     }
 
                     editor.setUrl(url);
@@ -206,10 +206,11 @@ var PageOrderAdd = function(){
                     }else{//销售
                         url =  PageOrderAdd.defaultOption.basePath + "/orderItem/queryNumInfoList";
                     }
+                    debugger
                     $.ajax({
                         url:url,
                         type: "post",
-                        data: {id:value},
+                        data: {blueprintId:value},
                         dataType: "json",
                         success: function (result) {
                             var obj = new Object();
@@ -219,7 +220,7 @@ var PageOrderAdd = function(){
                             obj.oneprice = result[0].price;
                             obj.dictName = result[0].dictName;
                             obj.isHasLadder = result[0].isHasLadder;
-                            obj.customerGoodId = result[0].id;
+                            obj.customerGoodId = result[0].blueprintId;
                             console.log("isHasLadder:"+result[0].isHasLadder)
                             if(record.esgouNum > 0){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
