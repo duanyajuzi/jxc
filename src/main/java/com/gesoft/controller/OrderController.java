@@ -87,7 +87,7 @@ public class OrderController extends BaseController
 	private OrderItemService orderItemService;
 	
 	/**
-	 * 描述信息：分页查询
+	 * 描述信息：采购订单分页查询
 	 * 创建时间：2017-06-28 11:58:20
 	 * @author WCL (ln_admin@yeah.net)
 	 * @param model
@@ -107,7 +107,26 @@ public class OrderController extends BaseController
 		}
 		return msgModel;
 	}
-	
+
+	/**
+	 * 描述信息：销售订单分页查询
+	 *  @param model
+	 * @return
+	 */
+	@RequestMapping(value="/querySell", method=RequestMethod.GET)
+	public @ResponseBody MsgModel querySell(OrderModel model)
+	{
+		MsgModel msgModel = new MsgModel();
+		try
+		{
+			orderService.findPageOrderSell(model, msgModel);
+		}
+		catch (Exception e)
+		{
+			logger.error("OrderController querySell error：", e);
+		}
+		return msgModel;
+	}
 	/**
 	 * 获取商品阶梯价格
 	 * @param model

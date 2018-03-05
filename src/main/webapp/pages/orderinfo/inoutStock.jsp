@@ -34,7 +34,6 @@
                         <%--<a name="modify" class="mini-button block-button" iconCls="icon-edit" onclick="PageInoutStock.funModify()">修改</a>--%>
                         <%--<a name="delete" class="mini-button block-button" iconCls="icon-remove" onclick="PageInoutStock.funDelete()">删除</a>--%>
                         <a name="setInStockButton" id="setInStockButton" class="mini-button" iconCls="icon-node" onclick="PageInoutStock.funSetInoutStockNum()">入库</a>
-                        <a name="setOutStockButton" id="setOutStockButton" class="mini-button" iconCls="icon-node" onclick="PageInoutStock.funSetInoutStockNum()">出库</a>
                     </td>
                 </tr>
             </table>
@@ -60,7 +59,7 @@
             url="${pageContext.request.contextPath}/orderItem/queryInoutStockItem">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="5%">序号</div>
-                    <div field="orderId" width="120" allowSort="true" headerAlign="center">订单编号</div>
+                    <div field="orderNo" width="120" allowSort="true" headerAlign="center">订单编号</div>
                     <div field="orderName" width="120" allowSort="true" headerAlign="center">客户订单号</div>
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center">商品名称</div>
                     <div field="materialNum" width="120" allowSort="true" headerAlign="center">原厂料号</div>
@@ -75,14 +74,6 @@
 <script>
     mini.parse();
     var orderType=<%=orderType%>;
-    var setOutStockButton=mini.get("setOutStockButton");
-    var setInStockButton=mini.get("setInStockButton");
-    if(orderType==0){
-        setOutStockButton.hide();
-    }else if(orderType==1){
-        setInStockButton.hide();
-    }
-
     var Genders=[{id:0,text:"未开票"},
                             {id:1,text:"已开票"}];
     function onStatusRenderer(e) {

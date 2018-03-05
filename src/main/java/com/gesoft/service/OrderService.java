@@ -9,10 +9,9 @@ package com.gesoft.service;
 
 import javax.annotation.Resource;
 
-import com.gesoft.dao.OrderItemDAO;
+import com.gesoft.model.MsgModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.gesoft.common.EntityDAO;
 import com.gesoft.common.EntityService;
 import com.gesoft.dao.OrderDAO;
@@ -41,7 +40,25 @@ public class OrderService extends EntityService<OrderModel, Long>
 	public List<OrderModel> getLadderPrice(OrderModel model){
 		return orderDAO.getLadderPrice(model);
 	}
-	
+
+	public void findPageOrderSell(OrderModel model, MsgModel msgModel) {
+		//取总记录数
+		long recordCount = model.getTotal();
+		if (isSearchPageTotal(model)) {
+			recordCount = orderDAO.findCntOrderSell(model);
+		}
+		//分页加载数据
+		if (recordCount > 0) {
+			setPageModel(recordCount, model);
+			List <OrderModel> argArgs = orderDAO.findListOrderSell(model);
+			if (argArgs != null) {
+				msgModel.setData(argArgs);
+				msgModel.setTotal(recordCount);
+			}
+		}
+	}
+
+
 	public List<OrderModel> getBluePrintLadderPrice(OrderModel model){
 		return orderDAO.getBluePrintLadderPrice(model);
 	}

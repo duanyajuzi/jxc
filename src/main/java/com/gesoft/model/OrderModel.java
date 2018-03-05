@@ -25,6 +25,8 @@ package com.gesoft.model;
 	private java.lang.String orderName;
 //	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private String orderTime;
+	private String orderTimeBegin;
+	private String orderTimeEnd;
 	private Integer orderType;
 	private Integer orderStatus;
 //	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -55,7 +57,8 @@ package com.gesoft.model;
 	private Float price;
 	private String num;
 	private String customerGoodId;
-	
+	private String materialNum;
+
 	public String getCustomerGoodId() {
 		return customerGoodId;
 	}
@@ -139,15 +142,29 @@ package com.gesoft.model;
 		return this.orderName;
 	}
 
-//	public String getOrderTimeString()
-//	{
-//		return DateConvertUtils.format(getOrderTime(), FORMAT_ORDER_TIME);
-//	}
-//	public void setOrderTimeString(String value)
-//	{
-//		setOrderTime(DateConvertUtils.parse(value, FORMAT_ORDER_TIME,java.util.Date.class));
-//	}
+	public String getOrderTimeBegin() {
+		return orderTimeBegin;
+	}
 
+	public void setOrderTimeBegin(String orderTimeBegin) {
+		this.orderTimeBegin = orderTimeBegin;
+	}
+
+	public String getOrderTimeEnd() {
+		return orderTimeEnd;
+	}
+
+	public void setOrderTimeEnd(String orderTimeEnd) {
+		this.orderTimeEnd = orderTimeEnd;
+	}
+
+	public String getMaterialNum() {
+		return materialNum;
+	}
+
+	public void setMaterialNum(String materialNum) {
+		this.materialNum = materialNum;
+	}
 
 	public void setOrderType(Integer value)
 	{
