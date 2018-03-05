@@ -49,17 +49,26 @@ var PageOrder = function(){
         	var row = this.orderGrid.getSelected();
             if(row)
             {
-                // row.orderType=this.type;
             	var paramData = {action: "modify", row: row, title:"编辑数据"};
-                // if(row.orderStatus==0) {
-                    this.funOpenInfo(paramData);
-                // }else {
-                //     PageMain.funShowMessageBox("订单状态已改变，不可更改");
-                // }
+                this.funOpenInfo(paramData);
             }
             else
             {
             	PageMain.funShowMessageBox("请选择一条记录");
+            }
+        },
+
+        funDetail : function()
+        {
+            var row = this.orderGrid.getSelected();
+            if(row)
+            {
+                var paramData = {action: "view", row: row, title:"详情"};
+                this.funOpenInfo(paramData);
+            }
+            else
+            {
+                PageMain.funShowMessageBox("请选择一条记录");
             }
         },
         funOpenInfo : function(paramData)
