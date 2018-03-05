@@ -27,6 +27,16 @@
             height: 100%;
             overflow: hidden;
         }
+        .mini-buttonedit {
+            height: 25px;
+        }
+        .mini-buttonedit-border {
+            height: 23px;
+        }
+        .mini-buttonedit-input{
+            line-height: 23px;
+            height: 23px;
+        }
     </style>
 </head>
 <body>
@@ -35,28 +45,28 @@
         <div id="goodsFormAdd">
        
                 	<input id="id" name="id"  class="mini-hidden" />
-            <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">商品名称：</td>
+            <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;margin-top: 20px">
+                <tr style="height: 40px">
+                    <td class="form-label" style="text-align: right;width:12%;">商品名称：</td>
                     <td style="width:32%;">
-                        <input name="goodsName" id="goodsName" class="mini-textbox" style="width:200px;"  required="true"
+                        <input name="goodsName" id="goodsName" class="mini-textbox" style="width:300px;"  required="true"
                                maxlength="100" requiredErrorText="商品名称不能为空"/>
                     </td>
                 </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">业务类型：</td>
+                <tr style="height: 40px">
+                    <td class="form-label" style="text-align: right;width:12%;">业务类型：</td>
                     <td style="width:32%;">
-                        <input name="businessId" id="businessId" class="mini-combobox" style="width:200px;"
-                               allowInput="true" emptyText="请输入或选择"
+                        <input name="businessId" id="businessId" class="mini-combobox" style="width:300px;"
+                               allowInput="true" emptyText="请输入或选择" valueFromSelect="true" popupHeight="100"
                                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
                                required="true" maxlength="15" requiredErrorText="业务类型不能为空"/>
                     </td>
                 </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">规格：</td>
+                <tr style="height: 40px">
+                    <td class="form-label" style="text-align: right;width:12%;">规格：</td>
                     <td style="width:32%;">
-                        <input name="spec" id="spec" class="mini-textbox" style="width:120px;"  vtype="float;maxlength:12" required="true"  requiredErrorText="规格不能为空"/>
-                        <input name="specUnit" id="specUnit" class="mini-combobox" style="width:75px;"  required="true"
+                        <input name="spec" id="spec" class="mini-textbox" style="width:200px;"  vtype="float;maxlength:12" required="true"  requiredErrorText="规格不能为空"/>
+                        <input name="specUnit" id="specUnit" class="mini-combobox" style="width:95px;"  required="true"  popupHeight="100"
                                textField="msgVal"  valueField="msgKey"  emptyText="请选择" maxlength="30" />
                     </td>
                 </tr>
@@ -68,10 +78,10 @@
                     <%--</td>--%>
                 <%--</tr>--%>
 
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">备注：</td>
+                <tr style="height: 70px">
+                    <td class="form-label" style="text-align: right;width:12%;">备注：</td>
                     <td style="width:32%;">
-                        <input name="memo" id="memo" class="mini-textArea" style="width:200px;" maxlength="100"/>
+                        <input name="memo" id="memo" class="mini-textArea" style="width:300px;" maxlength="100"/>
                     </td>
                 </tr>
             </table>

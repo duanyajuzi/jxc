@@ -49,8 +49,8 @@ var PageGoods = function(){
         	mini.open({
                 url: this.basePath + "/pages/orderinfo/goods_add.jsp",
                 title: paramData.title,
-                width: 400,
-                height: 220,
+                width: 600,
+                height: 300,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageGoodsAdd.funSetData(paramData);
