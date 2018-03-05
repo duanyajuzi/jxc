@@ -232,7 +232,6 @@ var PageOrderAdd = function(){
                             obj.isHasLadder = result[0].isHasLadder;
                             obj.customerGoodId = result[0].blueprintId;
                             obj.goodsId = result[0].goodsId;
-                            console.log("goodsId:"+result[0].goodsId)
                             if(record.esgouNum > 0){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
                             }
@@ -245,7 +244,6 @@ var PageOrderAdd = function(){
                 }
             }else if(field == "esgouNum"){
                 if(record.price > 0){
-                    console.log(record.isHasLadder+"....");
                     if(record.isHasLadder == '1'){
                         //阶梯价格处理
                         var url;
@@ -263,7 +261,6 @@ var PageOrderAdd = function(){
                             dataType: 'json',
                             success: function (data)
                             {
-                                console.log(data);
                                 var priceArr = data.data;
                                 if(priceArr.length > 0){
                                     var price = priceArr[0].price;

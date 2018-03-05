@@ -101,13 +101,13 @@ var PageOrder = function(){
             var me = this;
             if(row)
             {
-                if(row.orderStatus==0) {
+                if(row.orderStatus != -1) {
                     mini.confirm("确定要删除这条记录?", "提醒", function (action) {
                         if (action == "ok") {
                             $.ajax({
                                 url: me.basePath + "/order/del",
                                 type: 'POST',
-                                data: {"id": row.id},
+                                data: row,
                                 dataType: 'json',
                                 success: function (data) {
                                     mini.alert(data.msg, "提醒", function () {
@@ -122,8 +122,8 @@ var PageOrder = function(){
                             });
                         }
                     });
-                }else {
-                    mini.alert("订单状态已改变，不可删除");
+                }else{
+                    mini.alert("该订单已删除");
                 }
             }
             else

@@ -171,7 +171,7 @@
         	customerName ,
         	contacts ,
         	address ,
-        	tel,weqrweqrewq
+        	tel,
         	consigneeName,
         	consigneeTel
         FROM tab_customer

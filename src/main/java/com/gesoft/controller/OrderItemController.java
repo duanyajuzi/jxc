@@ -53,7 +53,7 @@ public class OrderItemController extends BaseController
     }
     
     /**
-     * 描述信息：列表查询
+     * 描述信息：销售订单子项查询
      * @param model
      * @return
      */
@@ -74,7 +74,7 @@ public class OrderItemController extends BaseController
     }
     
     /**
-     * 描述信息：列表查询
+     * 描述信息：采购订单子项查询
      * @param model
      * @return
      */

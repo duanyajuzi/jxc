@@ -192,12 +192,7 @@ public class OrderController extends BaseController
 		model.setId(id);
 		try
 		{
-			//保存采购订单
-			if("1".equals(model.getZdsc())){
-				model.setOrderStatus(1);
-			}else{
-				model.setOrderStatus(0);
-			}
+			model.setOrderStatus(1);
 			orderService.save(model);
 			//采购订单项保存
 			if(model.getOrderType() == 0){
@@ -486,10 +481,27 @@ public class OrderController extends BaseController
 		MsgModel msgModel = new MsgModel();
 		try
 		{
-			if (orderService.delete(model) > 0)
-			{
-				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+			String orderId = model.getId();
+			OrderItemModel itemModel = new OrderItemModel();
+			itemModel.setOrderId(orderId);
+			//根据已出库/入库数量恢复库存
+			if(model.getOrderType() == 0) {//采购订单
+				//查询子项列表
+				List<OrderItemModel> itemList = orderItemService.findList2(itemModel);
+				for(OrderItemModel item : itemList){
+					item.setAfterNum(-item.getTmpNum());
+					orderItemService.updateStorage(item);
+				}
+			}else{//销售订单
+				List<OrderItemModel> itemList = orderItemService.findList(itemModel);
+				for(OrderItemModel item : itemList){
+					item.setAfterNum(item.getTmpNum());
+					item.setCustomerGoodId(item.getGoodsId());
+					orderItemService.updateStorage(item);
+				}
 			}
+			orderService.delete(model);
+			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}
 		catch (Exception e)
 		{
