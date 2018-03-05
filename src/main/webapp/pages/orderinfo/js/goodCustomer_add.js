@@ -20,19 +20,19 @@ var PageGoodCustomerAdd = function(){
         {
             PageMain.funLoadGoodsByBussinessId("goodId", false, "", e.value)
         },
-        funSetData : function(data)
-        {
+
+
+        funSetData : function(data) {
         	var row = data.row;
         	this.action = data.action;
-            var storage=mini.get("storage");
-            if(this.action == "add"){
-                this.goodCustomerForm.setData(row);
-            }
-            if(this.action == "modify")
-            {
-                PageMain.funLoadGoodsByBussinessId("goodId", false, "", row.businessId);
-                this.goodCustomerForm.setData(row);
-                storage.disable();
+           /* var storage=mini.get("storage");*/
+            this.goodCustomerForm.setData(row);
+            if(this.action == "modify") {
+                var data = new Object();
+                data.good_customer_id = row.id;
+                this.grid.load(data);
+                //PageMain.funLoadGoodsByBussinessId("goodId", false, "", row.businessId);
+                //storage.disable();
             }
         },
         funSave : function() {
@@ -47,6 +47,9 @@ var PageGoodCustomerAdd = function(){
 
             var me = this;
             var obj = this.goodCustomerForm.getData(true);
+            var data = this.grid.getChanges();
+            var json = mini.encode(data);
+            obj.data = json;
             $.ajax({
                url : me.basePath + "/goodCustomer/" + me.action + "?a="+Math.random(),
                type : 'POST',
@@ -102,20 +105,20 @@ var PageGoodCustomerAdd = function(){
         removeRow : function() {
             var rows = this.grid.getSelecteds();
             if (rows.length > 0) {
-
                 this.grid.removeRows(rows, true);
             }
         },
         saveData : function() {
             var me = this;
             var data = this.grid.getChanges();
-            var json = mini.encode(data);
-            console.log(data);
+            obj.data = mini.encode(data);
+
             this.grid.loading("保存中，请稍后......");
             $.ajax({
-                url : me.basePath + "/ladderPrice/add" ,
-                data: { data: json },
+                url : me.basePath + "/goodCustomer/add" ,
+                data: obj,
                 type: "post",
+                dataType: 'json',
                 success: function (text) {
                     //this.grid.reload();
                 },

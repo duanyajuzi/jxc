@@ -1,22 +1,22 @@
 package com.gesoft.model;
 
- public class LadderPriceModel extends BaseModel {
-     /*private static final long serialVersionUID = 5454155825314635342L;*/
+ public class CustomerPriceModel extends BaseModel {
+     private static final long serialVersionUID = 5454155825314615342L;
 
      private Long id;
-     private String  blueprint_id;
+     private String  good_customer_id;
      private Long num;
      private Float price;
 
 
-     public String getBlueprint_id() {
-         return blueprint_id;
+
+     public String getGood_customer_id() {
+         return good_customer_id;
      }
 
-     public void setBlueprint_id(String blueprint_id) {
-         this.blueprint_id = blueprint_id;
+     public void setGood_customer_id(String good_customer_id) {
+         this.good_customer_id = good_customer_id;
      }
-
 
      public Long getId() {
          return id;

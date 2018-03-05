@@ -19,8 +19,7 @@ import com.gesoft.model.GoodCustomerModel;
 
 @Service
 @Transactional
-public class GoodCustomerService extends EntityService<GoodCustomerModel, Long>
-{
+public class GoodCustomerService extends EntityService<GoodCustomerModel, Long> {
 
 	@Resource
 	private GoodCustomerDAO goodCustomerDAO;

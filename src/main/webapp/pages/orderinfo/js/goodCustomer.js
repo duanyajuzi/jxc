@@ -168,8 +168,8 @@ var PageGoodCustomer = function(){
             mini.open({
                 url: this.basePath + "/pages/orderinfo/blueprint_add.jsp",
                 title: paramData.title,
-                width: 400,
-                height: 30 *  7 + 65,
+                width: 700,
+                height: 500,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageBlueprintAdd.funSetData(paramData);

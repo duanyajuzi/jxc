@@ -1,8 +1,10 @@
 package com.gesoft.controller;
 
 
+ import com.alibaba.fastjson.JSONArray;
  import com.gesoft.model.LadderPriceModel;
  import com.gesoft.model.MsgModel;
+ import com.gesoft.model.OrderItemModel;
  import com.gesoft.service.LadderPriceService;
  import org.slf4j.Logger;
  import org.slf4j.LoggerFactory;
@@ -35,11 +37,29 @@ package com.gesoft.controller;
          try{
              ladderPriceService.findPageList(model, msgModel);
          }catch (Exception e) {
-             logger.error("BlueprintController search error：", e);
+             logger.error("LadderPriceController search error：", e);
          }
          return msgModel;
      }
 
+
+
+     /**
+      * 描述信息：列表查询
+      * @param model
+      * @return
+      */
+     @RequestMapping(value="/getList", method=RequestMethod.GET)
+     public @ResponseBody MsgModel getList(LadderPriceModel model) {
+         MsgModel msgModel = new MsgModel();
+         try {
+             msgModel.setData(ladderPriceService.findList(model));
+             msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+         } catch (Exception e) {
+             logger.error("LadderPriceController search error：", e);
+         }
+         return msgModel;
+     }
 
      /**
       * 描述信息：增加
@@ -50,13 +70,15 @@ package com.gesoft.controller;
      @RequestMapping(value="/add", method=RequestMethod.POST)
      public @ResponseBody MsgModel add(LadderPriceModel model, HttpServletRequest request){
          MsgModel msgModel = new MsgModel();
+        /*String data = model.();
+        JSONArray jsArr = JSONArray.parseArray(data);*/
          try {
              setSessionUserId(model, request);
              if (ladderPriceService.save(model) > 0) {
                  msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
              }
          }catch (Exception e) {
-             logger.error("BlueprintController add error：", e);
+             logger.error("LadderPriceController add error：", e);
          }
          return msgModel;
      }
@@ -76,7 +98,7 @@ package com.gesoft.controller;
                  msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
              }
          }catch (Exception e) {
-             logger.error("BlueprintController modify error：", e);
+             logger.error("LadderPriceController modify error：", e);
          }
          return msgModel;
      }
@@ -95,7 +117,7 @@ package com.gesoft.controller;
                  msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
              }
          }catch (Exception e) {
-             logger.error("BlueprintController delete error：", e);
+             logger.error("LadderPriceController delete error：", e);
          }
          return msgModel;
      }

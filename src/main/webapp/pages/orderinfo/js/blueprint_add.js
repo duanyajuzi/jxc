@@ -4,30 +4,32 @@ var PageBlueprintAdd = function(){
         defaultOption: {
             basePath:"",
             action : "",
-            blueprintForm : null
+            blueprintForm : null,
+            grid : null,
 
         },
-        init :function ()
-        {
+        init :function (){
             mini.parse();
             this.basePath = PageMain.basePath;
+            this.grid = mini.get("datagrid1");
             this.blueprintForm = new mini.Form("blueprintFormAdd");
         },
-        funSetData : function(data)
-        {
+        funSetData : function(data){
             var row = data.row;
             PageMain.funDictInfo("unit", false, "", "danwei");
             this.action = data.action;
             this.blueprintForm.setData(row);
+            if(this.action == "modify") {
+                var data = new Object();
+                data.blueprint_id = row.id;
+                this.grid.load(data);
+            }
         },
-        funSave : function()
-        {
+        funSave : function() {
             this.blueprintForm.validate();
-            if (!this.blueprintForm.isValid())
-            {
-                var errorTexts = form.getErrorTexts();
-                for (var i in errorTexts)
-                {
+            if (!this.blueprintForm.isValid()) {
+                var errorTexts = this.blueprintForm.getErrorTexts();
+                for (var i in errorTexts) {
                     mini.alert(errorTexts[i]);
                     return;
                 }
@@ -35,22 +37,22 @@ var PageBlueprintAdd = function(){
 
             var me = this;
             var obj = this.blueprintForm.getData(true);
+            var data = this.grid.getChanges();
+            var json = mini.encode(data);
+            obj.data = json;
             $.ajax({
                 url : me.basePath + "/blueprint/" + me.action + "?a="+Math.random(),
                 type : 'POST',
                 data : obj,
                 dataType: 'json',
-                success: function (data)
-                {
+                success: function (data) {
                     mini.alert(data.msg, "提醒", function(){
-                        if(data.success)
-                        {
+                        if(data.success) {
                             PageMain.funCloseWindow("save");
                         }
                     });
                 },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
+                error: function (jqXHR, textStatus, errorThrown) {
                     PageMain.funShowMessageBox("操作出现异常");
                 }
             });
@@ -81,7 +83,20 @@ var PageBlueprintAdd = function(){
                 error: function (jqXHR, textStatus, errorThrown) {
                 }
             });
-        }
+        },
+
+        addRow : function() {
+            var newRow = { name: "New Row" };
+            this.grid.addRow(newRow, 0);
+
+            this.grid.beginEditCell(newRow, "LoginName");
+        },
+        removeRow : function() {
+            var rows = this.grid.getSelecteds();
+            if (rows.length > 0) {
+                this.grid.removeRows(rows, true);
+            }
+        },
     }
 }();
 
