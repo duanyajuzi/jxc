@@ -159,8 +159,9 @@
 		LEFT JOIN tab_good_customer b ON b.id = t.goodsId
 		LEFT JOIN tab_goods d ON d.id = b.goodId
 		WHERE
-			t.customerId = ${customerId}
+			b.customerId = ${customerId}
 		AND d.businessId = ${businessId}
+		AND t.pname = ${pcustomerId}
 	</select>
 
 	<select id="GoodsMapper.queryMaterialNum2" resultMap="mRetMapGoods">

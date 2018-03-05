@@ -131,6 +131,29 @@ public class OrderController extends BaseController
 		
 	}
 	
+	/**
+	 * 获取客户方案阶梯价格
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/getBluePrintLadderPrice", method=RequestMethod.GET)
+	public @ResponseBody MsgModel getBluePrintLadderPrice(OrderModel model)
+	{
+		
+		MsgModel msgModel = new MsgModel();
+		try
+		{
+			msgModel.setData(orderService.getBluePrintLadderPrice(model));
+			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+		}
+		catch (Exception e)
+		{
+			logger.error("OrderItemController search error：", e);
+		}
+		return msgModel;
+		
+	}
+	
 	
 	/**
 	 * 描述信息：增加
@@ -159,6 +182,8 @@ public class OrderController extends BaseController
 			orderService.save(model);
 			//保存子项
 			editItem(model);
+			
+			//自动生成销售订单
 			if("1".equals(model.getZdsc())){
 				String id2 = Md5Util.UUID();
 				model.setId(id2);
@@ -166,7 +191,8 @@ public class OrderController extends BaseController
 				model.setOrderStatus(0);
 				model.setOrderNo("DD"+getStringOrderNo());
 				orderService.save(model);
-//				editItem(model);
+				//复制子项
+				editItem2(model);
 			}
 			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}
@@ -188,8 +214,6 @@ public class OrderController extends BaseController
 		{
 			String orderId = model.getId();
 			String iskh = model.getIskh();
-			OrderItemModel itemModel2 = new OrderItemModel();
-			itemModel2.setOrderId(orderId);
 			
 			String data = model.getData();
 			JSONArray jsArr = JSONArray.parseArray(data);
@@ -200,7 +224,7 @@ public class OrderController extends BaseController
 				
 				itemModel.setOrderId(orderId);
 				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
-				itemModel.setCustomerGoodId(Long.parseLong(jsonObject.get("customerGoodId").toString()));
+				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
 				itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
 				//是否控货处理
 				if("1".equals(iskh)){
@@ -222,6 +246,71 @@ public class OrderController extends BaseController
 				
 				}
 				
+			}
+			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+		}
+		catch (Exception e)
+		{
+			logger.error("OrderItemController modify error：", e);
+		}
+	}
+	
+	/**
+	 * 描述信息：复制订单子项
+	 * @return
+	 */
+	public void editItem2(OrderModel model)
+	{
+		MsgModel msgModel = new MsgModel();
+		try
+		{
+			String orderId = model.getId();
+			//客户id
+			int customerId = model.getPcustomerId();
+			
+			String data = model.getData();
+			JSONArray jsArr = JSONArray.parseArray(data);
+			OrderItemModel itemModel;
+			OrderItemModel itemModelTmp;
+			for(Object obj : jsArr){
+				itemModelTmp = new OrderItemModel();
+				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
+				String customerGoodId = jsonObject.get("customerGoodId").toString();
+				itemModelTmp.setCustomerGoodId(customerGoodId);
+				itemModelTmp.setCustomerId(customerId);
+				
+				//根据customerGoodId和customerId查询blueprint主键
+				OrderItemModel orderItemTemp = orderItemService.getBluePrintInfo(itemModelTmp);
+				String blueprintId = orderItemTemp.getCustomerGoodId();
+				String isHasLadder = orderItemTemp.getIsHasLadder();
+				Float price;
+				if("1".equals(isHasLadder)){
+					model.setCustomerGoodId(blueprintId);
+					model.setNum(jsonObject.get("esgouNum").toString());
+					List<OrderModel> ladderPrice = orderService.getBluePrintLadderPrice(model);
+					if(ladderPrice.size() > 0){
+						price = ladderPrice.get(0).getPrice();
+					}else{
+						price = orderItemTemp.getPrice();
+					}
+				}else {
+					price = orderItemTemp.getPrice();
+				}
+				itemModel = new OrderItemModel();
+				itemModel.setOrderId(orderId);
+				itemModel.setUnitPrice(price);
+				itemModel.setCustomerGoodId(blueprintId);
+				itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
+				String state = jsonObject.get("_state").toString();
+				if("added".equals(state)){
+					orderItemService.save(itemModel);
+				}else if("modified".equals(state)){
+					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					orderItemService.update(itemModel);
+				}else if("removed".equals(state)){
+					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					orderItemService.delete(itemModel);
+				}
 			}
 			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}

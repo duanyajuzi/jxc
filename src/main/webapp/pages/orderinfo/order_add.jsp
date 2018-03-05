@@ -121,9 +121,9 @@
                 <tr hidden>
                     <td class="form-label" colspan="2" style="padding-left: 44px;">
                         是否直接生成销售订单：
-                        <div id="zdsc" name="zdsc" class="mini-checkbox" readOnly="false" text="" onvaluechanged="onValueChanged"></div>
+                        <div id="zdsc" name="zdsc" class="mini-checkbox" readOnly="false" text=""></div>
                         是否控货：
-                        <div id="iskh" name="iskh" class="mini-checkbox" readOnly="false" text="" onvaluechanged="onValueChanged"></div>
+                        <div id="iskh" name="iskh" class="mini-checkbox" readOnly="false" text=""></div>
                     </td>
                 </tr>
             </table>

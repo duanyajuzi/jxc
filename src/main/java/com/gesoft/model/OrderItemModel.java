@@ -10,7 +10,7 @@ public class OrderItemModel extends BaseModel{
     private Long id;
     private String orderId;
     private String orderName;
-    private Long customerGoodId;
+    private String customerGoodId;
     private String goodsName;
     private Float esgouNum;
     private Float unitPrice;
@@ -53,6 +53,15 @@ public class OrderItemModel extends BaseModel{
     private String data;
     private String orderNo;
     private String isHasLadder;
+    private Integer customerId;
+    
+    public Integer getCustomerId() {
+        return customerId;
+    }
+    
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
     
     public String getIsHasLadder() {
         return isHasLadder;
@@ -122,16 +131,15 @@ public class OrderItemModel extends BaseModel{
         this.orderName = orderName;
         return this;
     }
-
-    public Long getCustomerGoodId() {
+    
+    public String getCustomerGoodId() {
         return customerGoodId;
     }
-
-    public OrderItemModel setCustomerGoodId(Long customerGoodId) {
+    
+    public void setCustomerGoodId(String customerGoodId) {
         this.customerGoodId = customerGoodId;
-        return this;
     }
-
+    
     public String getGoodsName() {
         return goodsName;
     }

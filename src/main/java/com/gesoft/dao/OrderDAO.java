@@ -32,4 +32,8 @@ public class OrderDAO extends EntityDAOImpl<OrderModel, Long>
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".getLadderPrice", model);
     }
     
+    public List<OrderModel> getBluePrintLadderPrice(OrderModel model){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".getBluePrintLadderPrice", model);
+    }
+    
 }

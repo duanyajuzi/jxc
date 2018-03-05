@@ -343,6 +343,7 @@
             A.materialNum,
             A.price,
             A.goodsId,
+            A.isHasLadder,
             B.goodsName,
             D.dictName
         FROM
@@ -381,6 +382,18 @@
       FROM tab_blueprint A
       WHERE A.goodsId = #{goodsId}
   </select>
+
+    <select id="OrderItemMapper.getBluePrintInfo" resultMap="mRetMapOrderItem">
+        SELECT
+            t.id as customerGoodId,
+            t.isHasLadder,
+            t.price
+        FROM
+            tab_blueprint t
+        WHERE
+            t.pname = ${customerId}
+        and t.goodsId = ${customerGoodId} LIMIT 0,1
+    </select>
 
     <!--查询采购订单树父节点-->
     <select id="OrderItemMapper.queryInOrderTree" resultMap="mRetMapOrderItem">

@@ -38,6 +38,10 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         return orderItemDAO.findList2(model);
     }
     
+    public OrderItemModel getBluePrintInfo(OrderItemModel model){
+        return orderItemDAO.getBluePrintInfo(model);
+    }
+    
     public List<OrderItemModel> queryGoodPrint(OrderItemModel model){
      return orderItemDAO.queryGoodPLan(model);
     }
