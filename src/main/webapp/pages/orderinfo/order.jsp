@@ -27,9 +27,9 @@
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="orderForm">
                 <lable class="form-label">业务类型：</lable>
-                <input name="businessId" id="businessId" class="mini-combobox" allowInput="false"
+                <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                       style="width:100px;" emptyText="请选择"/>
+                       style="width:100px;" emptyText="请输入或选择" valueFromSelect="true" popupHeight="200"/>
                 <lable class="form-label">订单编号：</lable>
                 <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单编号"  style="width:100px;"/>
 				<lable class="form-label">客户订单号：</lable>
