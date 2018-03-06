@@ -18,7 +18,6 @@ var PageBlueprintAdd = function(){
             var row = data.row;
             var toolbar = mini.get("toolbar");
             var bottom = mini.get("bottom");
-            PageMain.funDictInfo("unit", false, "", "danwei");
             PageMain.funDictInfo("unit", true, "rmb", "danwei");
             this.action = data.action;
             this.blueprintForm.setData(row);
