@@ -39,8 +39,10 @@ var PageGoodCustomerAdd = function(){
                 data.good_customer_id = row.id;
                 this.grid.load(data);
                 PageGoodCustomerAdd.labelModel();
+                this.grid.setEnabled(false);
                 $("#toolbar").hide();
                 $(".mini-toolbar").css("display", "none");
+
             }
         },
         funSave : function() {

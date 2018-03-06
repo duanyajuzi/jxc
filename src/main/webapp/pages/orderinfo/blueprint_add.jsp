@@ -11,6 +11,10 @@
         .mini-textbox-border{
             height: 21px;
         }
+
+        .mini-grid-cell-nowrap {
+            text-align: center;
+        }
         .mini-textbox-input{
             height: 24px;
             line-height: 24px;
