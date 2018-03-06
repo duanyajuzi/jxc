@@ -141,7 +141,7 @@
                 </div>
             </div>
 
-            <div id="orderItemGrid" class="mini-datagrid" style="width:100%;height:270px;"
+            <div id="orderItemGrid" class="mini-datagrid" style="width:100%;height:245px;"
                  url="${pageContext.request.contextPath}/orderItem/getList2" idField="id"
                  allowResize="false" ajaxType="get" showPager="false" oncellbeginedit="PageOrderAdd.OnCellBeginEdit"
                  allowCellEdit="true" allowCellSelect="true" multiSelect="true" oncellcommitedit="PageOrderAdd.onMaterialNumChanged"
@@ -183,6 +183,12 @@
                     </div>
                 </div>
             </div>
+            <div style="height: 25px">
+                <div style="padding-left: 520px" >
+                    总价：<span id="zj"></span><br/>
+                </div>
+            </div>
+
          </div>
         </div>
 </div>

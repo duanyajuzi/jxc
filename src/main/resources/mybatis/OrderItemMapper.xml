@@ -234,6 +234,7 @@
         F.materialNum,
         F.isHasLadder,
         F.goodsId,
+        F.price AS oneprice,
         D.specUnit,
         E.dictName,
         A.esgouNum * A.unitPrice AS totalMoney
@@ -260,6 +261,7 @@
         D.goodsName,
         F.materialNum,
         F.isHasLadder,
+        F.unitPrice as oneprice,
         D.specUnit,
         E.dictName,
         A.esgouNum * A.unitPrice AS totalMoney

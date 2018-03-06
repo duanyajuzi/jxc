@@ -49,8 +49,12 @@ var PageOrder = function(){
         	var row = this.orderGrid.getSelected();
             if(row)
             {
-            	var paramData = {action: "modify", row: row, title:"编辑数据"};
-                this.funOpenInfo(paramData);
+                if(row.orderStatus != -1) {
+                    var paramData = {action: "modify", row: row, title:"编辑数据"};
+                    this.funOpenInfo(paramData);
+                }else{
+                    mini.alert("该订单已删除");
+                }
             }
             else
             {

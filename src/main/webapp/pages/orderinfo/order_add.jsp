@@ -141,11 +141,11 @@
                 </div>
             </div>
 
-            <div id="orderItemGrid" class="mini-datagrid" style="width:100%;height:270px;"
+            <div id="orderItemGrid" class="mini-datagrid" style="width:100%;height:245px;"
                  url="${pageContext.request.contextPath}/orderItem/getList" idField="id"
                  allowResize="false" ajaxType="get" showPager="false" oncellbeginedit="PageOrderAdd.OnCellBeginEdit"
                  allowCellEdit="true" allowCellSelect="true" multiSelect="true" oncellcommitedit="PageOrderAdd.onMaterialNumChanged"
-                 editNextOnEnterKey="true" allowSortColumn="fasle"  editNextRowCell="true">
+                 editNextOnEnterKey="true" allowSortColumn="fasle" editNextRowCell="true">
                 <div property="columns">
                     <div type="indexcolumn"></div>
                     <div type="checkcolumn"></div>
@@ -160,7 +160,7 @@
                     <div  field="goodsName" headerAlign="center" allowSort="true" width="150" >商品名称
                         <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
                     </div>
-                    <div field="price" headerAlign="center" width="100" allowSort="true" >单价（未税）
+                    <div field="price" headerAlign="center" width="100" allowSort="true" >销售价（未税）
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
                     <div field="dictName" headerAlign="center" width="50" allowSort="true">单位
@@ -183,6 +183,13 @@
                     </div>
                 </div>
             </div>
+            <div style="height: 45px">
+                <div style="padding-left: 520px" >
+                    未税总价：<span id="zj"></span><br/>
+                    含税总价：<span id="hszj"></span>
+                </div>
+            </div>
+
          </div>
         </div>
 </div>

@@ -42,12 +42,14 @@ var PageOrderAdd = function(){
                 var data = new Object();
                 data.orderId = row.id;
                 this.orderItemGrid.load(data);
+                PageOrderAdd.updateTotalPrice();
                 PageOrderAdd.defaultOption.orderId = row.id;
                 mini.get("zdsc").setEnabled(false);
             }else if(this.action == 'view'){
                 var data = new Object();
                 data.orderId = row.id;
                 this.orderItemGrid.load(data);
+                PageOrderAdd.updateTotalPrice();
                 PageOrderAdd.defaultOption.orderId = row.id;
                 this.orderForm.setEnabled(false);
                 this.orderItemGrid.setEnabled(false);
@@ -167,6 +169,7 @@ var PageOrderAdd = function(){
                 mini.get("businessId").setEnabled(true);
                 mini.get("pcustomerId").setEnabled(true);
             }
+            PageOrderAdd.updateTotalPrice();
         },
 
         OnCellBeginEdit : function (e) {
@@ -236,6 +239,7 @@ var PageOrderAdd = function(){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
                             }
                             grid.updateRow(record, obj);
+                            PageOrderAdd.updateTotalPrice();
                         },
                         error: function () {
                             mini.alert("queryNumInfoList error");
@@ -279,9 +283,38 @@ var PageOrderAdd = function(){
                         record.totalMoney = (value * record.price).toFixed(2);
                         grid.updateRow(record, record);
                     }
+                    PageOrderAdd.updateTotalPrice();
 
                 }
             }
+
+        },
+
+        /**
+         * 更新总价
+         */
+        updateTotalPrice : function(){
+            var totalPrice = 0;
+            var tmp = 0;
+            setTimeout(function() {
+                $(".mini-grid-row").each(function(){
+                    var price = parseFloat($(this).find(".mini-grid-cell:eq(7)").text());
+                    if(price > 0){
+                        totalPrice += price;
+                    }
+                    tmp ++;
+                    //单位
+                    var dict = $(this).find(".mini-grid-cell:eq(6)").text()
+                    if(tmp == $(".mini-grid-row").length){
+                        $("#zj").text(totalPrice.toFixed(2) + dict)
+                        $("#hszj").text((totalPrice * 1.17).toFixed(2) + dict)
+                    }
+                });
+                if($(".mini-grid-row").length == 0){
+                    $("#zj").text(0)
+                    $("#hszj").text(0)
+                }
+            }, 500);
 
         },
 

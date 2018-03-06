@@ -55,6 +55,15 @@ public class OrderItemModel extends BaseModel{
     private String isHasLadder;
     private Integer customerId;
     private String blueprintId;
+    private float oneprice;
+    
+    public float getOneprice() {
+        return oneprice;
+    }
+    
+    public void setOneprice(float oneprice) {
+        this.oneprice = oneprice;
+    }
     
     public String getBlueprintId() {
         return blueprintId;
