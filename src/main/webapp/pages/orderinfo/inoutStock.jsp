@@ -60,10 +60,10 @@
         <div class="mini-fit">
             <div id="inoutGrid" class="mini-datagrid"
                  idField="id" allowResize="false" onshowrowdetail="onShowRowDetail"
-                 pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
+                 pagesize="30" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="expandcolumn" >入库详情</div>
-                    <div type="indexcolumn" headerAlign="center" align="center"  width="40">序号</div>
+                    <div type="indexcolumn" headerAlign="center" align="center"  width="20">序号</div>
                     <div field="business" width="150" headerAlign="center" align="center" allowSort="true">业务类型</div>
                     <div field="stime" name="stime" width="150" headerAlign="center" align="center"
                          dateFormat="yyyy-MM-dd" allowSort="true">入库时间</div>
@@ -77,7 +77,7 @@
             <div id="inoutItemGrid" class="mini-datagrid" style="width: 100%;" showPager="false" allowRowSelect="false"
             url="${pageContext.request.contextPath}/orderItem/queryInoutStockItem">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center" align="center"  width="20">序号</div>
+                    <div type="indexcolumn" headerAlign="center" align="center"  width="30">序号</div>
                     <div field="orderNo" width="120" allowSort="true" align="center" headerAlign="center">订单编号</div>
                     <div field="orderName" width="120" allowSort="true" align="center" headerAlign="center">客户订单号</div>
                     <div field="goodsName" width="120" allowSort="true" align="center" headerAlign="center">商品名称</div>

@@ -46,8 +46,8 @@
                        format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至
                 <input name="stimeEnd" id="stimeEnd" class="mini-datepicker" style="width:150px;"
                        format="yyyy-MM-dd" emptyText="结束时间" allowInput="false"  />
-                <a class="mini-button" iconCls="icon-search" onclick="PageInoutStock.funSearch()" plain="true"><label>查询</label></a>
-                <a class="mini-button" iconCls="icon-reset" onclick="PageInoutStock.funReset()" plain="true"><label>重置</label></a>
+                <a class="mini-button" iconCls="icon-search" onclick="PageOutStock.funSearch()" plain="true"><label>查询</label></a>
+                <a class="mini-button" iconCls="icon-reset" onclick="PageOutStock.funReset()" plain="true"><label>重置</label></a>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
         <div class="mini-fit">
             <div id="inoutGrid" class="mini-datagrid"
                  idField="id" allowResize="false" onshowrowdetail="onShowRowDetail"
-                 pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
+                 pagesize="30" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="expandcolumn" >出库详情</div>
                     <div type="indexcolumn" headerAlign="center"  width="20" align="center">序号</div>
@@ -84,7 +84,7 @@
             <div id="inoutItemGrid" class="mini-datagrid" style="width: 100%;" showPager="false"
                  url="${pageContext.request.contextPath}/orderItem/queryOutStockItem">
                 <div property="columns">
-                    <div type="indexcolumn" headerAlign="center"  width="40" align="center">序号</div>
+                    <div type="indexcolumn" headerAlign="center"  width="30" align="center">序号</div>
                     <div field="orderNo" width="120" allowSort="true" headerAlign="center" align="center">订单编号</div>
                     <div field="orderName" width="120" allowSort="true" headerAlign="center" align="center">客户订单号</div>
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center" align="center">商品名称</div>
@@ -112,7 +112,7 @@
     }
 
     var inoutGrid=mini.get("inoutGrid");
-    inoutGrid.setUrl("${pageContext.request.contextPath}/orderItem/queryInoutStock?orderType=1");
+    inoutGrid.setUrl("${pageContext.request.contextPath}/orderItem/queryOutStock?orderType=1");
     inoutGrid.load();
     var detailGrid_Form = document.getElementById("detailGrid_Form");
     var inoutItemGrid=mini.get("inoutItemGrid");

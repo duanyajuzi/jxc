@@ -29,9 +29,13 @@ var PageOutStock=function () {
             if (r != null) return decodeURIComponent(r[2]); return null;
         },
         funSearch: function () {
+            var businessId= mini.get("businessId").getValue().trim();
+            var orderNo = mini.get("orderNo").getValue().trim();
+            var orderName=mini.get("orderName").getValue().trim();
+            var materialNum=mini.get("materialNum").getValue().trim();
             var stimeBegin=mini.get("stimeBegin");
             var stimeEnd=mini.get("stimeEnd");
-            var paramData={"stimeBegin":stimeBegin.text,"stimeEnd":stimeEnd.text};
+            var paramData={"businessId":businessId,"orderNo":orderNo,"orderName":orderName,"materialNum":materialNum,"stimeBegin":stimeBegin.text,"stimeEnd":stimeEnd.text};
             this.inoutGrid.load(paramData, function(res){
                 console.log(res);
             });

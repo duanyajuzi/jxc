@@ -70,6 +70,11 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         return orderItemDAO.getOrderItemTepNum(model);
     }
 
+    /**
+     * 入库管理分页
+     * @param model
+     * @param msgModel
+     */
     public void findPageInoutStock(OrderItemModel model, MsgModel msgModel)
     {
         //取总记录数
@@ -83,6 +88,32 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         {
             setPageModel(recordCount, model);
             List<OrderItemModel> argArgs =  orderItemDAO.findListInoutStock(model);
+            if (argArgs != null)
+            {
+                msgModel.setData(argArgs);
+                msgModel.setTotal(recordCount);
+            }
+        }
+    }
+
+    /**
+     * 出库管理分页
+     * @param model
+     * @param msgModel
+     */
+    public void findPageOutStock(OrderItemModel model, MsgModel msgModel)
+    {
+        //取总记录数
+        long recordCount = model.getTotal();
+        if (isSearchPageTotal(model))
+        {
+            recordCount = orderItemDAO.findCntOutStock(model);
+        }
+        //分页加载数据
+        if (recordCount > 0)
+        {
+            setPageModel(recordCount, model);
+            List<OrderItemModel> argArgs =  orderItemDAO.findListOutStock(model);
             if (argArgs != null)
             {
                 msgModel.setData(argArgs);
