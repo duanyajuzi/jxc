@@ -8,7 +8,17 @@
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
     <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/order.js'/>"></script>
     <title></title>
+    <style>
+        #detailGrid_Form .mini-grid-headerCell-outer{
+            background-color: #cad7e0;
+        }
+
+        #detailGrid_Form .mini-grid-cell {
+            background-color: #e3edf3;;
+        }
+    </style>
 </head>
+
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
     <div title="north" region="north" showSplit="false" showSplitIcon="false" height="70" showHeader="false"
@@ -54,17 +64,13 @@
                 <div property="columns">
                      <div type="expandcolumn">#</div>
                      <div type="indexcolumn" headerAlign="center"  width="30">序号</div>
-					 <div field="orderNo" width="130" headerAlign="center" allowSort="true">订单编号</div>
-					 <div field="orderName" width="120" headerAlign="center" allowSort="true">客户订单号</div>
-					 <div field="orderTime" width="120" headerAlign="center" allowSort="true"
-                          dateFormat="yyyy-MM-dd">订单时间</div>
-					 <div field="orderStatus" width="120" headerAlign="center"
-                          renderer="onStatusRenderer" allowSort="true">订单状态</div>
-					 <div field="deliveryTime" width="120" headerAlign="center" allowSort="true"
-                          dateFormat="yyyy-MM-dd">交货时间</div>
-                     <div field="business" width="120" headerAlign="center" allowSort="true">业务类型</div>
-                     <div field="button" width="80" headerAlign="center" align="center"
-                         renderer="funSetButton" >操作</div>
+					 <div field="orderNo" width="130" headerAlign="center" allowSort="true" align="center">订单编号</div>
+					 <div field="orderName" width="120" headerAlign="center" allowSort="true" align="center">客户订单号</div>
+					 <div field="orderTime" width="120" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd" align="center">订单时间</div>
+					 <div field="orderStatus" width="120" headerAlign="center" renderer="onStatusRenderer" allowSort="true" align="center">订单状态</div>
+					 <div field="deliveryTime" width="120" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd" align="center">交货时间</div>
+                     <div field="business" width="120" headerAlign="center" allowSort="true" align="center">业务类型</div>
+                     <div field="button" width="80" headerAlign="center" align="center" renderer="funSetButton"  align="center">操作</div>
                 </div>
             </div>
         </div>
@@ -72,16 +78,16 @@
         <%--内嵌出货细项表格--%>
         <div id="detailGrid_Form" style="display: none;">
             <div id="orderInfoGrid" class="mini-datagrid" style="width: 100%;" showPager="false"  ajaxType="get"
-                 url="${pageContext.request.contextPath}/orderItem/getList2">
+                 url="${pageContext.request.contextPath}/orderItem/getList2" allowRowSelect="false">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="20">序号</div>
-                    <div field="materialNum" width="100" allowSort="true" headerAlign="center">原厂料号</div>
-                    <div field="esgouNum" width="100" allowSort="true" headerAlign="center">订单数量</div>
-                    <div field="tmpNum" width="100" allowSort="true" headerAlign="center">已入库数量</div>
-                    <div field="goodsName" width="100" allowSort="true" headerAlign="center">商品名称</div>
-                    <div field="price" width="100" allowSort="true" headerAlign="center">采购单价</div>
-                    <div field="dictName" width="100" allowSort="true" headerAlign="center">单位</div>
-                    <div field="totalMoney" width="100" allowSort="true" headerAlign="center">总价</div>
+                    <div field="materialNum" width="100" allowSort="true" headerAlign="center" align="center">原厂料号</div>
+                    <div field="esgouNum" width="100" allowSort="true" headerAlign="center" align="center">订单数量</div>
+                    <div field="tmpNum" width="100" allowSort="true" headerAlign="center" align="center">已入库数量</div>
+                    <div field="goodsName" width="100" allowSort="true" headerAlign="center" align="center">商品名称</div>
+                    <div field="price" width="100" allowSort="true" headerAlign="center" align="center">采购单价</div>
+                    <div field="dictName" width="100" allowSort="true" headerAlign="center" align="center">单位</div>
+                    <div field="totalMoney" width="100" allowSort="true" headerAlign="center" align="center">总价</div>
                 </div>
             </div>
         </div>
