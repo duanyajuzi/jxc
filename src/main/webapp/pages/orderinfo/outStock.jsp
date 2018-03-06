@@ -26,11 +26,13 @@
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="70" showHeader="false"
+    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="105" showHeader="false"
          style="border: none">
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;height:100%"
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="inoutStockForm">
+                <div style="width: 900px;margin: 0 auto">
+                <div style="width:100%;">
                 <lable class="form-label">业务类型：</lable>
                 <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
@@ -41,6 +43,8 @@
                 <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:150px;"/>
                 <lable class="form-label">客户料号：</lable>
                 <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:150px;"/>
+                </div>
+                <div style="margin: 0 200px">
                 <lable class="form-label" name="stimeSearch" id="stimeSearch">入库时间：</lable>
                 <input name="stimeBegin" id="stimeBegin" class="mini-datepicker" style="witdth:150px;"
                        format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至
@@ -48,6 +52,8 @@
                        format="yyyy-MM-dd" emptyText="结束时间" allowInput="false"  />
                 <a class="mini-button" iconCls="icon-search" onclick="PageOutStock.funSearch()" plain="true"><label>查询</label></a>
                 <a class="mini-button" iconCls="icon-reset" onclick="PageOutStock.funReset()" plain="true"><label>重置</label></a>
+                </div>
+                </div>
             </div>
         </div>
     </div>
