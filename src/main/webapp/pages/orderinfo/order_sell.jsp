@@ -28,22 +28,22 @@
                 <lable class="form-label">业务类型：</lable>
                 <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                       style="width:100px;" emptyText="请输入或选择" valueFromSelect="true" popupHeight="200"/>
+                       style="width:120px;" emptyText="请输入或选择" valueFromSelect="true" popupHeight="200"/>
                 <lable class="form-label">订单编号：</lable>
-                <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单编号"  style="width:100px;"/>
+                <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单编号"  style="width:120px;"/>
                 <lable class="form-label">客户订单号：</lable>
-                <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:100px;"/>
+                <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:120px;"/>
                 <lable class="form-label">客户：</lable>
                 <input name="pcustomerId" id="pcustomerId" class="mini-combobox" style="width:150px;"allowInput="true"
                        idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                       maxlength="50" emptyText="请输入或选择"/>
+                       maxlength="50" emptyText="请输入或选择" valueFromSelect="true"/>
                 <lable class="form-label">客户料号：</lable>
-                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:110px;"/>
+                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:120px;"/>
                 <br/>
                 <lable class="form-label"  style="padding-left: 23px;" name="stimeSearch" id="stimeSearch">订单时间：</lable>
-                <input name="orderTimeBegin" id="orderTimeBegin" class="mini-datepicker" style="witdth:150px;"
+                <input name="orderTimeBegin" id="orderTimeBegin" class="mini-datepicker" style="width:120px;"
                        format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至
-                <input name="orderTimeEnd" id="orderTimeEnd" class="mini-datepicker" style="width:150px;"
+                <input name="orderTimeEnd" id="orderTimeEnd" class="mini-datepicker" style="width:120px;"
                        format="yyyy-MM-dd"   emptyText="结束时间" allowInput="false"  />
                 <a class="mini-button" iconCls="icon-search" onclick="PageOrder.funSearch()" plain="true"><label>查询</label></a>
                 <a class="mini-button" iconCls="icon-reset" onclick="PageOrder.funReset()" plain="true"><label>重置</label></a>

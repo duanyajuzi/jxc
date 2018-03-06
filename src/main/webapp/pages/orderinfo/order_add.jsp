@@ -51,13 +51,12 @@
                         <input name="businessId" id="businessId" class="mini-combobox" style="width:200px; "
                                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
                                required="true" maxlength="15" requiredErrorText="业务类型不能为空"
-                                emptyText="请输入或选择" allowInput="true"/>
+                                valueFromSelect="true" allowInput="true"/>
                     </td>
                     <td class="form-label" style="text-align: right;width:16%;">交货时间：</td>
                     <td style="width:32%;">
                         <input name="deliveryTime" id="deliveryTime" class="mini-datepicker" style="width:200px; "
-                               format="yyyy-MM-dd" showTime="true" required="true" showOkButton="true" showClearButton="false"
-                               nullValue="null"  emptyText="交货时间" allowInput="false"/>
+                               format="yyyy-MM-dd" required="true" allowInput="false"/>
                     </td>
                 </tr>
                 <tr>
@@ -70,14 +69,14 @@
                     <td class="form-label" style="text-align: right;width:16%;">工厂：</td>
                     <td style="width:32%;">
                         <input name="customerId" id="customerId" class="mini-combobox" style="width:200px;"  required="true" maxlength="50"
-                               requiredErrorText="工厂不能为空" onvaluechanged="PageOrderAdd.onDeptChanged()" allowInput="true"
+                               requiredErrorText="工厂不能为空" valueFromSelect="true" onvaluechanged="PageOrderAdd.onDeptChanged()" allowInput="true"
                              allowput="true"  idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList" />
                     </td>
                      <td class="form-label" style="text-align: right;width:16%;">客户：</td>
                     <td style="width:32%;">
                     <input name="pcustomerId" id="pcustomerId" class="mini-combobox" style="width:200px;"
                            onvaluechanged="PageOrderAdd.onDeptChanged()" allowInput="true"
-                           idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
+                           idField="id" valueFromSelect="true" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
                            required="true" maxlength="50" requiredErrorText="客户不能为空"/>
                     </td>
                 </tr>
@@ -151,7 +150,7 @@
                     <div type="checkcolumn"></div>
                     <div field="materialNum" name="materialNum"  headerAlign="center" width="150" allowSort="true" >客户料号
                         <input property="editor" class="mini-combobox" style="width:100%;"
-                               allowInput="true"  valueField="id" textField="materialNum"
+                               allowInput="true" valueFromSelect="true" valueField="id" textField="materialNum"
                                required="true" maxlength="50" />
                     </div>
                     <div field="esgouNum" width="100"  headerAlign="center" allowSort="true">数量
