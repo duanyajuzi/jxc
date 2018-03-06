@@ -69,7 +69,7 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">工厂：</td>
                     <td style="width:32%;">
-                        <input name="customerId" id="customerId" class="mini-combobox" style="width:200px;"  required="true" maxlength="10"
+                        <input name="customerId" id="customerId" class="mini-combobox" style="width:200px;"  required="true" maxlength="50"
                                requiredErrorText="工厂不能为空" onvaluechanged="PageOrderAdd.onDeptChanged()" allowInput="true"
                              allowput="true"  idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList" />
                     </td>
@@ -78,7 +78,7 @@
                     <input name="pcustomerId" id="pcustomerId" class="mini-combobox" style="width:200px;"
                            onvaluechanged="PageOrderAdd.onDeptChanged()" allowInput="true"
                            idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                           required="true" maxlength="10" requiredErrorText="客户不能为空"/>
+                           required="true" maxlength="50" requiredErrorText="客户不能为空"/>
                     </td>
                 </tr>
                 <tr hidden>
@@ -152,7 +152,7 @@
                     <div field="materialNum" name="materialNum"  headerAlign="center" width="150" allowSort="true" >客户料号
                         <input property="editor" class="mini-combobox" style="width:100%;"
                                allowInput="true"  valueField="id" textField="materialNum"
-                               required="true" maxlength="19" />
+                               required="true" maxlength="50" />
                     </div>
                     <div field="esgouNum" width="100"  headerAlign="center" allowSort="true">数量
                         <input property="editor" class="mini-spinner"  value="1" minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;"/>

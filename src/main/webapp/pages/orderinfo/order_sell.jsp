@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="70" showHeader="false"
+    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="110px" showHeader="false"
          style="border: none">
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;height:100%"
              showCloseButton="false">
@@ -33,9 +33,14 @@
                 <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单编号"  style="width:100px;"/>
                 <lable class="form-label">客户订单号：</lable>
                 <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:100px;"/>
+                <lable class="form-label">客户：</lable>
+                <input name="pcustomerId" id="pcustomerId" class="mini-combobox" style="width:150px;"allowInput="true"
+                       idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
+                       maxlength="50" emptyText="请输入或选择"/>
                 <lable class="form-label">客户料号：</lable>
                 <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:110px;"/>
-                <lable class="form-label" name="stimeSearch" id="stimeSearch">订单时间：</lable>
+                <br/>
+                <lable class="form-label"  style="padding-left: 23px;" name="stimeSearch" id="stimeSearch">订单时间：</lable>
                 <input name="orderTimeBegin" id="orderTimeBegin" class="mini-datepicker" style="witdth:150px;"
                        format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至
                 <input name="orderTimeEnd" id="orderTimeEnd" class="mini-datepicker" style="width:150px;"
@@ -65,15 +70,12 @@
                     <div type="indexcolumn" headerAlign="center"  width="30">序号</div>
                     <div field="orderNo" width="130" headerAlign="center" allowSort="true" align="center">订单编号</div>
                     <div field="orderName" width="120" headerAlign="center" allowSort="true" align="center">客户订单号</div>
-                    <div field="orderTime" width="120" headerAlign="center" allowSort="true"
-                         dateFormat="yyyy-MM-dd" align="center">订单时间</div>
-                    <div field="orderStatus" width="120" headerAlign="center"
-                         renderer="onStatusRenderer" allowSort="true" align="center">订单状态</div>
-                    <div field="deliveryTime" width="120" headerAlign="center" allowSort="true"
-                         dateFormat="yyyy-MM-dd" align="center">交货时间</div>
+                    <div field="name2" width="120" headerAlign="center" allowSort="true" align="center">客户</div>
+                    <div field="orderTime" width="100" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd" align="center">订单时间</div>
+                    <div field="orderStatus" width="100" headerAlign="center" renderer="onStatusRenderer" allowSort="true" align="center">订单状态</div>
+                    <div field="deliveryTime" width="100" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd" align="center">交货时间</div>
                     <div field="business" width="120" headerAlign="center" allowSort="true" align="center">业务类型</div>
-                    <div field="button" width="80" headerAlign="center" align="center"
-                         renderer="funSetButton" >操作</div>
+                    <div field="button" width="70" headerAlign="center" align="center" renderer="funSetButton" >操作</div>
                 </div>
             </div>
         </div>

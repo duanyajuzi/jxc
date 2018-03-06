@@ -152,6 +152,9 @@
 		   <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
 				AND A.businessId = #{businessId}
 		   </if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(pcustomerId)">
+				AND A.pcustomerId = #{pcustomerId}
+			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
 				AND A.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
 		   </if>
@@ -167,12 +170,6 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(orderStatus)">
 				AND A.orderStatus = #{orderStatus}
 			</if>
-	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryTimeBegin)">-->
-				<!--AND deliveryTime >= #{deliveryTimeBegin}-->
-		   <!--</if>-->
-		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryTimeEnd)">-->
-				<!--AND deliveryTime &lt;= #{deliveryTimeEnd}-->
-		   <!--</if>-->
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryAddress)">
 				AND A.deliveryAddress = #{deliveryAddress}
 			</if>
@@ -200,12 +197,6 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(ptel)">
 				AND A.ptel = #{ptel}
 			</if>
-	       <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeBegin)">-->
-				<!--AND ctime >= #{ctimeBegin}-->
-		   <!--</if>-->
-		   <!--<if test="@com.gesoft.util.Ognl@isNotEmpty(ctimeEnd)">-->
-				<!--AND ctime &lt;= #{ctimeEnd}-->
-		   <!--</if>-->
 		</where>
 	</sql>
 		
@@ -274,6 +265,9 @@
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
 				AND A.businessId = #{businessId}
 			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+				AND A.pcustomerId = #{pcustomerId}
+			</if>
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
 				AND A.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
 			</if>
@@ -289,12 +283,6 @@
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderStatus)">
 				AND A.orderStatus = #{orderStatus}
 			</if>
-			<!--<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryTimeBegin)">-->
-			<!--AND deliveryTime >= #{deliveryTimeBegin}-->
-			<!--</if>-->
-			<!--<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryTimeEnd)">-->
-			<!--AND deliveryTime &lt;= #{deliveryTimeEnd}-->
-			<!--</if>-->
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(deliveryAddress)">
 				AND A.deliveryAddress = #{deliveryAddress}
 			</if>

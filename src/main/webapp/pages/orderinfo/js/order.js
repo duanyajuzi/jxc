@@ -27,8 +27,9 @@ var PageOrder = function(){
         	var materialNum=mini.get("materialNum").getValue().trim();
             var orderTimeBegin=mini.get("orderTimeBegin");
             var orderTimeEnd=mini.get("orderTimeEnd");
+            var pcustomerId=mini.get("pcustomerId").getValue();
             var paramData={"businessId":businessId,"orderNo":orderNo,"orderName":orderName,"materialNum":materialNum,
-                "orderTimeBegin":orderTimeBegin.text,"orderTimeEnd":orderTimeEnd.text};
+                "orderTimeBegin":orderTimeBegin.text,"orderTimeEnd":orderTimeEnd.text,"pcustomerId":pcustomerId};
         	this.orderGrid.load(paramData, function(res){
                 console.log(res);
             });
