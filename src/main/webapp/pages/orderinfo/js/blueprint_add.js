@@ -19,19 +19,13 @@ var PageBlueprintAdd = function(){
             var toolbar = mini.get("toolbar");
             var bottom = mini.get("bottom");
             PageMain.funDictInfo("unit", false, "", "danwei");
+            PageMain.funDictInfo("unit", true, "rmb", "danwei");
             this.action = data.action;
             this.blueprintForm.setData(row);
             if(this.action == "modify") {
                 var data = new Object();
                 data.blueprint_id = row.id;
                 this.grid.load(data);
-            }else if(this.action == "view"){
-                var data = new Object();
-                data.blueprint_id = row.id;
-                this.grid.load(data);
-                PageBlueprintAdd.labelModel();
-                $("#toolbar").hide();
-                $(".mini-toolbar").css("display", "none");
             }
         },
         funSave : function() {
@@ -106,16 +100,6 @@ var PageBlueprintAdd = function(){
                 this.grid.removeRows(rows, true);
             }
         },
-        //设置只读模式
-        labelModel : function() {
-            var fields = this.blueprintForm.getFields();
-            for (var i = 0; l = fields.length, i < l; i++) {
-                var c = fields[i];
-                if (c.setReadOnly) c.setReadOnly(true);
-                if (c.setIsValid) c.setIsValid(true);
-
-            }
-        }
     }
 }();
 

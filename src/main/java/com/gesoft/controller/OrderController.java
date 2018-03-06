@@ -192,27 +192,30 @@ public class OrderController extends BaseController
 		model.setId(id);
 		try
 		{
-			//保存采购订单
-			if("1".equals(model.getZdsc())){
-				model.setOrderStatus(1);
-			}else{
-				model.setOrderStatus(0);
-			}
+			model.setOrderStatus(1);
 			orderService.save(model);
-			//保存子项
-			editItem(model);
-			
-			//自动生成销售订单
-			if("1".equals(model.getZdsc())){
-				String id2 = Md5Util.UUID();
-				model.setId(id2);
-				model.setOrderType(1);
-				model.setOrderStatus(0);
-				model.setOrderNo("DD"+getStringOrderNo());
-				orderService.save(model);
-				//复制子项
-				editItem2(model);
+			//采购订单项保存
+			if(model.getOrderType() == 0){
+				//保存子项
+				editItem(model);
+				
+				//自动生成销售订单
+				if("1".equals(model.getZdsc())){
+					String id2 = Md5Util.UUID();
+					model.setId(id2);
+					model.setOrderType(1);
+					model.setOrderStatus(0);
+					model.setIskh("0");
+					model.setZdsc("0");
+					model.setOrderNo("DD"+getStringOrderNo());
+					orderService.save(model);
+					//复制子项
+					editItem2(model);
+				}
+			}else{//销售订单项保存
+				editSellItem(model);
 			}
+			
 			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}
 		catch (Exception e)
@@ -223,7 +226,7 @@ public class OrderController extends BaseController
 	}
 	
 	/**
-	 * 描述信息：修改订单子项
+	 * 描述信息：修改采购订单子项
 	 * @return
 	 */
 	public void editItem(OrderModel model)
@@ -233,6 +236,89 @@ public class OrderController extends BaseController
 		{
 			String orderId = model.getId();
 			String iskh = model.getIskh();
+			String data = model.getData();
+			JSONArray jsArr = JSONArray.parseArray(data);
+			OrderItemModel itemModel;
+			for(Object obj : jsArr){
+				itemModel = new OrderItemModel();
+				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
+				
+				itemModel.setOrderId(orderId);
+				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
+				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
+				Float esgouNum = Float.parseFloat(jsonObject.get("esgouNum").toString());
+				itemModel.setEsgouNum(esgouNum);
+
+				String state = jsonObject.get("_state").toString();
+				if("added".equals(state)){
+					//是否控货处理
+					if("0".equals(iskh)){//不控货
+						itemModel.setTmpNum(esgouNum);
+						//添加库存
+						itemModel.setAfterNum(esgouNum);
+						orderItemService.updateStorage(itemModel);
+					}
+					orderItemService.save(itemModel);
+				}else if("modified".equals(state)){
+					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					//不控货时，数目小于已入库存时，temNum=num,afterNum=num-temNum
+					//控货时，num>temNum时，temNum不需要赋值，其他同不控货
+					Float orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
+					if(orderItemTepNum >= esgouNum){//数目小于已入库存时
+						Float afterNum = esgouNum - orderItemTepNum;
+						itemModel.setAfterNum(afterNum);
+						itemModel.setTmpNum(esgouNum);
+					}else{//数目大于已入库存时
+						if("0".equals(iskh)){//不控货
+							itemModel.setTmpNum(esgouNum);
+							//添加库存
+							Float afterNum = esgouNum - orderItemTepNum;
+							itemModel.setAfterNum(afterNum);
+						}else{
+							itemModel.setTmpNum(orderItemTepNum);
+							itemModel.setAfterNum(0f);
+						}
+					}
+					orderItemService.updateStorage(itemModel);
+					orderItemService.update(itemModel);
+				}else if("removed".equals(state)){
+					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					//删除时库存处理
+					//查询已入库数量
+					Float orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
+					itemModel.setAfterNum(-orderItemTepNum);
+					orderItemService.updateStorage(itemModel);
+					
+					orderItemService.delete(itemModel);
+				}
+				//新增操作，不控货需要添加库存，控货不做任何操作
+				//删除操作，修改订单时，需要根据temNum修改库存
+				//修改操作，修改订单时，需要根据temNum和num修改库存
+				// temNum=10 oldnum=10 num=8  =>temNum=8 库存-2
+				// temNum=10 oldnum=15 num=5  =>temNum=5 库存-5
+				// temNum=10 oldnum=15 num=13 +>不变
+				
+				//删除订单时，回归库存 加减temNum
+				
+			}
+			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+		}
+		catch (Exception e)
+		{
+			logger.error("OrderItemController modify error：", e);
+		}
+	}
+	
+	/**
+	 * 描述信息：修改销售订单子项
+	 * @return
+	 */
+	public void editSellItem(OrderModel model)
+	{
+		MsgModel msgModel = new MsgModel();
+		try
+		{
+			String orderId = model.getId();
 			
 			String data = model.getData();
 			JSONArray jsArr = JSONArray.parseArray(data);
@@ -244,27 +330,36 @@ public class OrderController extends BaseController
 				itemModel.setOrderId(orderId);
 				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
 				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
-				itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
-				//是否控货处理
-				if("0".equals(iskh)){//不控货
-					itemModel.setTmpNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
-				}
+				itemModel.setTmpNum(0f);
+				Float esgouNum = Float.parseFloat(jsonObject.get("esgouNum").toString());
+				itemModel.setEsgouNum(esgouNum);
 				String state = jsonObject.get("_state").toString();
 				if("added".equals(state)){
 					orderItemService.save(itemModel);
 				}else if("modified".equals(state)){
 					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					Float orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
+					if(orderItemTepNum >= esgouNum){//数目小于已出库存时
+						Float afterNum = orderItemTepNum - esgouNum;
+						itemModel.setAfterNum(afterNum);
+						itemModel.setTmpNum(esgouNum);
+					}else{//数目大于已出库存时
+						itemModel.setTmpNum(orderItemTepNum);
+						itemModel.setAfterNum(0f);
+					}
 					orderItemService.update(itemModel);
+					itemModel.setCustomerGoodId(jsonObject.get("goodsId").toString());
+					orderItemService.updateStorage(itemModel);
 				}else if("removed".equals(state)){
 					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					//删除时库存处理
+					//查询已出库数量
+					Float orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
+					itemModel.setAfterNum(orderItemTepNum);
 					orderItemService.delete(itemModel);
+					itemModel.setCustomerGoodId(jsonObject.get("goodsId").toString());
+					orderItemService.updateStorage(itemModel);
 				}
-				//新增操作，控货
-				//是否控货处理
-				if("0".equals(iskh)){//不控货
-				
-				}
-				
 			}
 			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}
@@ -356,7 +451,12 @@ public class OrderController extends BaseController
 			setSessionUserId(model, request);
 			if (orderService.update(model) > 0)
 			{
-				editItem(model);
+				if(model.getOrderType() == 0){//采购订单项保存
+					editItem(model);
+				}else{//销售订单项保存
+					editSellItem(model);
+				}
+				
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 			}
 		}
@@ -381,10 +481,27 @@ public class OrderController extends BaseController
 		MsgModel msgModel = new MsgModel();
 		try
 		{
-			if (orderService.delete(model) > 0)
-			{
-				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+			String orderId = model.getId();
+			OrderItemModel itemModel = new OrderItemModel();
+			itemModel.setOrderId(orderId);
+			//根据已出库/入库数量恢复库存
+			if(model.getOrderType() == 0) {//采购订单
+				//查询子项列表
+				List<OrderItemModel> itemList = orderItemService.findList2(itemModel);
+				for(OrderItemModel item : itemList){
+					item.setAfterNum(-item.getTmpNum());
+					orderItemService.updateStorage(item);
+				}
+			}else{//销售订单
+				List<OrderItemModel> itemList = orderItemService.findList(itemModel);
+				for(OrderItemModel item : itemList){
+					item.setAfterNum(item.getTmpNum());
+					item.setCustomerGoodId(item.getGoodsId());
+					orderItemService.updateStorage(item);
+				}
 			}
+			orderService.delete(model);
+			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}
 		catch (Exception e)
 		{

@@ -13,7 +13,7 @@ var PageGoodCustomerAdd = function(){
             this.basePath = PageMain.basePath;
             this.goodCustomerForm = new mini.Form("goodCustomerFormAdd");
             this.grid = mini.get("datagrid1");
-            PageMain.funDictInfo("unit", false, "", "danwei");
+            PageMain.funDictInfo("unit", true, "rmb", "danwei");
 
         },
         funBusValuechanged : function(e)

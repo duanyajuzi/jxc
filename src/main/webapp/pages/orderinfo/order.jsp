@@ -52,7 +52,7 @@
             <div id="orderGrid" class="mini-datagrid" idField="id" allowResize="false" onshowrowdetail="onShowRowDetail"
                  pagesize="10" sizeList="[10,30,50,100]" ajaxType="get" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
-                     <div type="expandcolumn">订单项</div>
+                     <div type="expandcolumn">#</div>
                      <div type="indexcolumn" headerAlign="center"  width="30">序号</div>
 					 <div field="orderNo" width="130" headerAlign="center" allowSort="true">订单编号</div>
 					 <div field="orderName" width="120" headerAlign="center" allowSort="true">客户订单号</div>
@@ -76,7 +76,8 @@
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="20">序号</div>
                     <div field="materialNum" width="100" allowSort="true" headerAlign="center">原厂料号</div>
-                    <div field="esgouNum" width="100" allowSort="true" headerAlign="center">数量</div>
+                    <div field="esgouNum" width="100" allowSort="true" headerAlign="center">订单数量</div>
+                    <div field="tmpNum" width="100" allowSort="true" headerAlign="center">已入库数量</div>
                     <div field="goodsName" width="100" allowSort="true" headerAlign="center">商品名称</div>
                     <div field="price" width="100" allowSort="true" headerAlign="center">采购单价</div>
                     <div field="dictName" width="100" allowSort="true" headerAlign="center">单位</div>
@@ -93,19 +94,9 @@
     orderGrid.setUrl("${pageContext.request.contextPath}/order/query?orderType="+type);
     function funSetButton(e) {
         var button;
-//        var orderStatus = e.row.orderStatus;
-//        if(orderStatus==0){
-//            button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
-//                    '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
-//                    'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>' +
-//                    '<a class="mini-button mini-button-plain " href="javascript:void(0)">' +
-//                    '<span class="mini-button-text  mini-button-icon icon-filter" style="height: auto" ' +
-//                    'onclick="PageOrder.funUpdateOrderStatus()">下发订单</span></a>';
-//        }else {
-            button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
-                    '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
-                    'onclick="PageOrder.funOpenOderDetailInfo(type)">详情</span></a>';
-//        }
+        button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
+                '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
+                'onclick="PageOrder.funDetail()">详情</span></a>';
         return button;
     }
 

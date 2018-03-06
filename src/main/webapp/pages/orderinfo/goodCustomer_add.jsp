@@ -113,7 +113,7 @@
                 </div>
             </div>
         </div>
-        <div region="south" showSplit="false" showSplitIcon="false" height="30" showHeader="false"  style="border: none">
+        <div  region="south" showSplit="false" showSplitIcon="false" height="30" showHeader="false"  style="border: none">
 	        <div class="mini-toolbar" style="position: fixed;left:0;bottom: 0;right:0;text-align: center;border-width: 1px 0 0 0" >
 	            <a class="mini-button cursor" onclick="PageGoodCustomerAdd.funSave()" iconCls="icon-save">保存</a>
 	            <a class="mini-button cursor" onclick="PageGoodCustomerAdd.funCancel()" iconCls="icon-cancel" style="margin:0 20px;">取消</a>

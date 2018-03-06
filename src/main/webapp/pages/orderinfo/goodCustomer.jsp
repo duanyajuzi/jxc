@@ -14,17 +14,20 @@
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="goodCustomerForm">
 				<lable class="form-label">业务类型：</lable>
                 <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"emptyText="请输入或选择"
+                       valueFromSelect="true" popupHeight="150"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                       style="width:100px;" onvaluechanged="PageGoodCustomer.funBusValuechanged"   maxlength="20" />
+                       style="width:150px;" onvaluechanged="PageGoodCustomer.funBusValuechanged"   maxlength="20" />
                 <lable class="form-label">所属商品：</lable>
-                <input name="goodId" id="goodId" class="mini-combobox" style="width:100px;"  allowInput="true"
+                <input name="goodId" id="goodId" class="mini-combobox" style="width:150px;"  allowInput="true"
+                       valueFromSelect="true" popupHeight="150"
                        textField="msgVal"  valueField="msgKey"  emptyText="请输入或选择" maxlength="50"/>
 				<lable class="form-label">所属工厂：</lable>
                 <input name="customerId" id="customerId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
+                       valueFromSelect="true" popupHeight="150"
                        idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                       style="width:100px;"  maxlength="20" />
+                       style="width:150px;"  maxlength="20" />
 				<lable class="form-label">原厂料号：</lable>
-                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="原厂料号"  style="width:100px;"/>
+                <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="原厂料号"  style="width:150px;"/>
                 <a class="mini-button" iconCls="icon-search" onclick="PageGoodCustomer.funSearch()" plain="true"><label>查询</label></a>
                 <a class="mini-button" iconCls="icon-reset" onclick="PageGoodCustomer.funReset()" plain="true"><label>重置</label></a>
             </div>

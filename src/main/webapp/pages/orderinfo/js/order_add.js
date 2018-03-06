@@ -22,6 +22,8 @@ var PageOrderAdd = function(){
             var row = data.row;
             PageOrderAdd.defaultOption.pOrderType=row.orderType;
             this.action = data.action;
+            row.zdsc == 1? row.zdsc=true : row.zdsc=false;
+            row.iskh == 1? row.iskh=true : row.iskh=false;
             this.orderForm.setData(row);
             if(this.action=="add") {
                 var orderNo = mini.get("orderNo");
@@ -40,7 +42,18 @@ var PageOrderAdd = function(){
                 var data = new Object();
                 data.orderId = row.id;
                 this.orderItemGrid.load(data);
+                PageOrderAdd.updateTotalPrice();
                 PageOrderAdd.defaultOption.orderId = row.id;
+                mini.get("zdsc").setEnabled(false);
+            }else if(this.action == 'view'){
+                var data = new Object();
+                data.orderId = row.id;
+                this.orderItemGrid.load(data);
+                PageOrderAdd.updateTotalPrice();
+                PageOrderAdd.defaultOption.orderId = row.id;
+                this.orderForm.setEnabled(false);
+                this.orderItemGrid.setEnabled(false);
+                $(".mini-toolbar").hide()
             }
         },
         //选择厂商和采购公司时联动填充联系人、电话、地址
@@ -156,6 +169,7 @@ var PageOrderAdd = function(){
                 mini.get("businessId").setEnabled(true);
                 mini.get("pcustomerId").setEnabled(true);
             }
+            PageOrderAdd.updateTotalPrice();
         },
 
         OnCellBeginEdit : function (e) {
@@ -220,11 +234,12 @@ var PageOrderAdd = function(){
                             obj.dictName = result[0].dictName;
                             obj.isHasLadder = result[0].isHasLadder;
                             obj.customerGoodId = result[0].blueprintId;
-                            console.log("isHasLadder:"+result[0].isHasLadder)
+                            obj.goodsId = result[0].goodsId;
                             if(record.esgouNum > 0){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
                             }
                             grid.updateRow(record, obj);
+                            PageOrderAdd.updateTotalPrice();
                         },
                         error: function () {
                             mini.alert("queryNumInfoList error");
@@ -233,7 +248,6 @@ var PageOrderAdd = function(){
                 }
             }else if(field == "esgouNum"){
                 if(record.price > 0){
-                    console.log(record.isHasLadder+"....");
                     if(record.isHasLadder == '1'){
                         //阶梯价格处理
                         var url;
@@ -251,7 +265,6 @@ var PageOrderAdd = function(){
                             dataType: 'json',
                             success: function (data)
                             {
-                                console.log(data);
                                 var priceArr = data.data;
                                 if(priceArr.length > 0){
                                     var price = priceArr[0].price;
@@ -270,9 +283,38 @@ var PageOrderAdd = function(){
                         record.totalMoney = (value * record.price).toFixed(2);
                         grid.updateRow(record, record);
                     }
+                    PageOrderAdd.updateTotalPrice();
 
                 }
             }
+
+        },
+
+        /**
+         * 更新总价
+         */
+        updateTotalPrice : function(){
+            var totalPrice = 0;
+            var tmp = 0;
+            setTimeout(function() {
+                $(".mini-grid-row").each(function(){
+                    var price = parseFloat($(this).find(".mini-grid-cell:eq(7)").text());
+                    if(price > 0){
+                        totalPrice += price;
+                    }
+                    tmp ++;
+                    //单位
+                    var dict = $(this).find(".mini-grid-cell:eq(6)").text()
+                    if(tmp == $(".mini-grid-row").length){
+                        $("#zj").text(totalPrice.toFixed(2) + dict)
+                        $("#hszj").text((totalPrice * 1.17).toFixed(2) + dict)
+                    }
+                });
+                if($(".mini-grid-row").length == 0){
+                    $("#zj").text(0)
+                    $("#hszj").text(0)
+                }
+            }, 500);
 
         },
 

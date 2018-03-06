@@ -23,7 +23,7 @@ public class OrderItemModel extends BaseModel{
     private String dictName;
     private Float totalMoney;
     //方案其他字段
-    private Long goodsId;
+    private String goodsId;
     private Long goodsNum;
     private Float price;
     private String unit;
@@ -55,6 +55,15 @@ public class OrderItemModel extends BaseModel{
     private String isHasLadder;
     private Integer customerId;
     private String blueprintId;
+    private float oneprice;
+    
+    public float getOneprice() {
+        return oneprice;
+    }
+    
+    public void setOneprice(float oneprice) {
+        this.oneprice = oneprice;
+    }
     
     public String getBlueprintId() {
         return blueprintId;
@@ -256,16 +265,15 @@ public class OrderItemModel extends BaseModel{
         this.goodsNum = goodsNum;
         return this;
     }
-
-    public Long getGoodsId() {
+    
+    public String getGoodsId() {
         return goodsId;
     }
-
-    public OrderItemModel setGoodsId(Long goodsId) {
+    
+    public void setGoodsId(String goodsId) {
         this.goodsId = goodsId;
-        return this;
     }
-
+    
     public Float getStorage() {
         return storage;
     }

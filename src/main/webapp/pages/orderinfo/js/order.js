@@ -49,17 +49,30 @@ var PageOrder = function(){
         	var row = this.orderGrid.getSelected();
             if(row)
             {
-                // row.orderType=this.type;
-            	var paramData = {action: "modify", row: row, title:"编辑数据"};
-                // if(row.orderStatus==0) {
+                if(row.orderStatus != -1) {
+                    var paramData = {action: "modify", row: row, title:"编辑数据"};
                     this.funOpenInfo(paramData);
-                // }else {
-                //     PageMain.funShowMessageBox("订单状态已改变，不可更改");
-                // }
+                }else{
+                    mini.alert("该订单已删除");
+                }
             }
             else
             {
             	PageMain.funShowMessageBox("请选择一条记录");
+            }
+        },
+
+        funDetail : function()
+        {
+            var row = this.orderGrid.getSelected();
+            if(row)
+            {
+                var paramData = {action: "view", row: row, title:"详情"};
+                this.funOpenInfo(paramData);
+            }
+            else
+            {
+                PageMain.funShowMessageBox("请选择一条记录");
             }
         },
         funOpenInfo : function(paramData)
@@ -92,13 +105,13 @@ var PageOrder = function(){
             var me = this;
             if(row)
             {
-                if(row.orderStatus==0) {
+                if(row.orderStatus != -1) {
                     mini.confirm("确定要删除这条记录?", "提醒", function (action) {
                         if (action == "ok") {
                             $.ajax({
                                 url: me.basePath + "/order/del",
                                 type: 'POST',
-                                data: {"id": row.id},
+                                data: row,
                                 dataType: 'json',
                                 success: function (data) {
                                     mini.alert(data.msg, "提醒", function () {
@@ -113,8 +126,8 @@ var PageOrder = function(){
                             });
                         }
                     });
-                }else {
-                    mini.alert("订单状态已改变，不可删除");
+                }else{
+                    mini.alert("该订单已删除");
                 }
             }
             else
