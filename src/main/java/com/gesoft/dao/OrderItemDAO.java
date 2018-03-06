@@ -60,9 +60,23 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
         return getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".getOrderItemTepNum", model);
     }
 
+    //入库分页
     public long findCntInoutStock(OrderItemModel model)
     {
         return (Long)getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".countInout", model);
+    }
+
+    public List<OrderItemModel> findListInoutStock(OrderItemModel orderItemModel){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryInoutStock", orderItemModel);
+    }
+    //出库分页
+    public long findCntOutStock(OrderItemModel model)
+    {
+        return (Long)getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".countOut", model);
+    }
+
+    public List<OrderItemModel> findListOutStock(OrderItemModel orderItemModel){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryOutStock", orderItemModel);
     }
 
     public long findCntInoutStockItem(OrderItemModel model)
@@ -70,9 +84,6 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
         return (Long)getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".countInoutItem", model);
     }
 
-    public List<OrderItemModel> findListInoutStock(OrderItemModel orderItemModel){
-        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryInoutStock", orderItemModel);
-    }
 
     /**
      * 入库细项

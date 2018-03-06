@@ -94,8 +94,13 @@ public class OrderItemController extends BaseController
         return msgModel;
     }
 
+    /**
+     * 入库清单
+     * @param model
+     * @return
+     */
     @RequestMapping(value="/queryInoutStock", method=RequestMethod.POST)
-    public @ResponseBody MsgModel search2(OrderItemModel model)
+    public @ResponseBody MsgModel queryInoutStock(OrderItemModel model)
     {
         MsgModel msgModel = new MsgModel();
         try
@@ -105,6 +110,26 @@ public class OrderItemController extends BaseController
         catch (Exception e)
         {
             logger.error("OrderItemController queryInoutStock error：", e);
+        }
+        return msgModel;
+    }
+
+    /**
+     * 出库清单
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/queryOutStock", method=RequestMethod.POST)
+    public @ResponseBody MsgModel queryOutStock(OrderItemModel model)
+    {
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            orderItemService.findPageOutStock(model, msgModel);
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController queryOutStock error：", e);
         }
         return msgModel;
     }
