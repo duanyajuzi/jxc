@@ -13,15 +13,6 @@ var PageOutStock=function () {
             this.inoutGrid=mini.get("inoutGrid");
             this.inoutItemGrid=mini.get("inoutItemGrid");
             PageOutStock.defaultOption.orderType=PageOutStock.getUrlParam("orderType");
-            if(PageOutStock.defaultOption.orderType==0){
-                this.inoutGrid.updateColumn("stime", {header: "入库时间"});
-                $("label#stimeSearch").val("入库时间");
-                this.inoutItemGrid.updateColumn("goodNum", {header: "入库数量"});
-            }else if(PageOutStock.defaultOption.orderType==1){
-                this.inoutGrid.updateColumn("stime", {header: "出库时间"});
-                $("#stimeSearch").val("出库时间");
-                this.inoutItemGrid.updateColumn("goodNum", {header: "出库数量"});
-            }
         },
         getUrlParam:function(name){
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
