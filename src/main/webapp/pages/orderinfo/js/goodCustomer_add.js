@@ -22,6 +22,7 @@ var PageGoodCustomerAdd = function(){
         },
 
 
+
         funSetData : function(data) {
         	var row = data.row;
         	this.action = data.action;
