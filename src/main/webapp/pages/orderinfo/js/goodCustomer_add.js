@@ -5,7 +5,7 @@ var PageGoodCustomerAdd = function(){
             basePath:"",
             action : "",
             goodCustomerForm : null,
-            grid: null,
+            grid: null
         },
         init :function ()
         {
@@ -39,7 +39,6 @@ var PageGoodCustomerAdd = function(){
                 data.good_customer_id = row.id;
                 this.grid.load(data);
                 PageGoodCustomerAdd.labelModel();
-                this.grid.cancelEdit();
                 $("#toolbar").hide();
                 $(".mini-toolbar").css("display", "none");
             }
@@ -82,8 +81,8 @@ var PageGoodCustomerAdd = function(){
 
         onSimilarValidation : function(e) {
             var obj={
-                materialNum:e.value,
-            }
+                materialNum:e.value
+            };
             $.ajax({
                 url : PageMain.basePath+"/goodCustomer/query",
                 type : 'POST',
@@ -143,7 +142,6 @@ var PageGoodCustomerAdd = function(){
                 var c = fields[i];
                 if (c.setReadOnly) c.setReadOnly(true);
                 if (c.setIsValid) c.setIsValid(true);
-
             }
         }
 

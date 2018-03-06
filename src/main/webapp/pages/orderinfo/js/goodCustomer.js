@@ -121,7 +121,6 @@ var PageGoodCustomer = function(){
         addFangAn : function() {
             var row = this.goodCustomerGrid.getSelected();
             var paramData = {action: "add", row:{goodsId:row.id}, title:"新增客户方案"};
-            console.log(paramData)
             this.fangAnInfo(paramData);
         },
 
@@ -186,14 +185,15 @@ var PageGoodCustomer = function(){
             var button;
             button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
                 '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
-                'onclick="PageGoodCustomer.funOpenInfo()">详情</span></a>';
+                'onclick="PageGoodCustomer.viewShuJu()">详情</span></a>';
             return button;
         } ,
 
         //商品数据详情页
-        funOpenInfo:function () {
+        viewShuJu:function () {
             var row = this.goodCustomerGrid.getSelected();
             var paramData = {'action': "view", 'row': row};
+
             mini.open({
                 url: this.basePath + "/pages/orderinfo/goodCustomer_add.jsp",
                 title: "商品详细信息",
@@ -212,12 +212,12 @@ var PageGoodCustomer = function(){
             var button;
             button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
                 '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
-                'onclick="PageGoodCustomer.fangAnInfo();">详情</span></a>';
+                'onclick="PageGoodCustomer.viewFangAnInfo();">详情</span></a>';
             return button;
         } ,
 
         //客户方案详情页
-        fangAnInfo:function () {
+        viewFangAnInfo:function () {
             var row = this.employee_grid.getSelected();
             var paramData = {'action': "view", 'row': row};
             mini.open({

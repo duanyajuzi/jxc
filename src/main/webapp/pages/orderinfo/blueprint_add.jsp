@@ -107,10 +107,10 @@
                  allowCellEdit="true" allowCellSelect="true" multiSelect="true"
                  editNextOnEnterKey="true"  editNextRowCell="true" showPager="false">
                 <div property="columns">
-                    <div name="num"  field="num" headerAlign="center" allowSort="true" width="100">数量
+                    <div name="num"  field="num" headerAlign="center" width="100">数量
                         <input property="editor" class="mini-textbox" style="width:100%;" />
                     </div>
-                    <div field="price" width="100" allowSort="true" headerAlign="center" >价格
+                    <div field="price" width="100" headerAlign="center" >价格
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
                     </div>
                 </div>

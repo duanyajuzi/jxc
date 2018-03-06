@@ -11,6 +11,11 @@
         .mini-textbox-border{
             height: 20px;
         }
+
+        .mini-grid-cell-nowrap {
+            text-align: center;
+        }
+
         .mini-textbox-input{
             height: 24px;
             line-height: 24px;
@@ -103,11 +108,11 @@
                      allowCellEdit="true" allowCellSelect="true" multiSelect="true"
                      editNextOnEnterKey="true"  editNextRowCell="true" showPager="false">
                     <div property="columns">
-                        <div name="num"  field="num" headerAlign="center" allowSort="true" width="100">数量
-                            <input property="editor" class="mini-textbox" style="width:100%;" />
+                        <div name="num"  field="num" headerAlign="center" width="100">数量
+                            <input property="editor" id="num" class="mini-textbox" style="width:100%;" />
                         </div>
-                        <div field="price" width="100" allowSort="true" headerAlign="center" >价格
-                            <input property="editor" class="mini-textbox" style="width:100%;"/>
+                        <div field="price" width="100" headerAlign="center" >价格
+                            <input property="editor" id="price" class="mini-textbox" style="width:100%;"/>
                         </div>
                     </div>
                 </div>
