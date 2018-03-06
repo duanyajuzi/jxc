@@ -389,8 +389,8 @@
 		FROM
 		tab_good_customer_ladder_price
 		WHERE
-		good_customer_id = ${customerGoodId} and
-		${num} >= num
+		good_customer_id = #{customerGoodId} and
+		#{num} >= num
 		ORDER BY num DESC LIMIT 0,1
 	</select>
 
@@ -400,8 +400,8 @@
 		FROM
 		tab_blueprint_ladder_price
 		WHERE
-		blueprint_id = ${customerGoodId} and
-		${num} >= num
+		blueprint_id = #{customerGoodId} and
+		#{num} >= num
 		ORDER BY num DESC LIMIT 0,1
 	</select>
 
@@ -414,9 +414,9 @@
 		LEFT JOIN tab_good_customer b ON b.id = t.goodsId
 		LEFT JOIN tab_goods d ON d.id = b.goodId
 		WHERE
-		b.customerId = ${customerId}
-		AND d.businessId = ${businessId}
-		AND t.pname = ${pcustomerId}
+		b.customerId = #{customerId}
+		AND d.businessId = #{businessId}
+		AND t.pname = #{pcustomerId}
 	</select>
 
 	<select id="OrderMapper.queryMaterialNum2" resultMap="mRetMapOrder">
@@ -427,8 +427,8 @@
 		tab_good_customer t
 		LEFT JOIN tab_goods d ON d.id = t.goodId
 		WHERE
-		t.customerId = ${customerId}
-		AND d.businessId = ${businessId}
+		t.customerId = #{customerId}
+		AND d.businessId = #{businessId}
 
 	</select>
 
