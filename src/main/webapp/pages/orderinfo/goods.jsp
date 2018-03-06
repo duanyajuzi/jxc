@@ -14,8 +14,9 @@
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="goodsForm">
                 <lable class="form-label">业务类型：</lable>
                 <input name="businessId" id="businessId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
+                       valueFromSelect="true" popupHeight="200"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                       style="width:150px;"   maxlength="10" virtualScroll="true"/>
+                       style="width:150px;"   maxlength="10"/>
 				<lable class="form-label">商品名称：</lable>
                 <input name="goodsName" id="goodsName" class="mini-textbox" emptyText="商品名称"  style="width:150px;"/>
                 <a class="mini-button" iconCls="icon-search" onclick="PageGoods.funSearch()" plain="true"><label>查询</label></a>
