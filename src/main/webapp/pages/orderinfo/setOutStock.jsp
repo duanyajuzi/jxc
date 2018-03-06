@@ -24,7 +24,7 @@
          style="border:1px solid #cccccc;">
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;" showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="searchForm">
-                <lable class="form-label ywlx">业务类型：</lable>
+                <lable class="form-label ywlx">请先选择业务类型：</lable>
                 <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
                 idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
                 style="width:150px;"   maxlength="10" emptyText="请输入或选择" valueFromSelect="true" popupHeight="150"
