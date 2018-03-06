@@ -16,11 +16,6 @@ var PageSetInoutStock = function () {
             this.searchForm=new mini.Form("searchForm");
             var date=new Date();
             mini.get("stime").setValue(date);
-            this.orderTree.on("nodeselect", function (e) {
-                var node = e.node;
-                var sender = e.sender;
-                sender.checkNode(node);
-            });
             $("#search_table").find("td input").prop("disabled",true);
             $("#search_table").find("td input").css("background","#ebebe4");
         },
@@ -63,21 +58,23 @@ var PageSetInoutStock = function () {
             var data = new Array();
             var values = this.orderTree.getValue(false);
             var node = this.orderTree.getSelectedNode();
-            if (values.length > 0) {
-                valueList = values.split(",");
-                var valueLength = valueList.length;
-                for (var i = 0; i < valueLength; i++) {
-                    data[i] = this.orderTree.getNode(valueList[i]);
+            if(node.checked==true || (values!=null && values!="")) {
+                if (values.length > 0) {
+                    valueList = values.split(",");
+                    var valueLength = valueList.length;
+                    for (var i = 0; i < valueLength; i++) {
+                        data[i] = this.orderTree.getNode(valueList[i]);
+                    }
+                    for (var i = 0; i < data.length; i++) {
+                        data[i].tmpNum = data[i].afterNum;
+                        PageSetInoutStock.funSetTable(data[i]);
+                    }
+                } else if (values.length == 0 && node != null) {
+                    node.tmpNum = node.afterNum;
+                    PageSetInoutStock.funSetTable(node);
+                } else {
+                    mini.alert("请选择所要入库的商品");
                 }
-                for (var i = 0; i < data.length; i++) {
-                    data[i].tmpNum = data[i].afterNum;
-                    PageSetInoutStock.funSetTable(data[i]);
-                }
-            } else if (values.length == 0 && node != null) {
-                node.tmpNum = node.afterNum;
-                PageSetInoutStock.funSetTable(node);
-            } else {
-                mini.alert("请选择所要入库的商品");
             }
             PageSetInoutStock.funUncheckTree();
         },
@@ -149,7 +146,7 @@ var PageSetInoutStock = function () {
                     data.tmpNum = parseFloat(data.tmpNum) + parseFloat(this.beforeTmpNum);
                     this.datagrid.updateRow(rowData,{"tmpNum":data.tmpNum});
                 }else if(row.length!=0 && row[0].tmpNum==data.esgouNum){
-                    mini.alert("已全部入/出库");
+                    mini.alert("已全部入出库");
                 }else {
                     var paramData = {
                         "key": unique,
