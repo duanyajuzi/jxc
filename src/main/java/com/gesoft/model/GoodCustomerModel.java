@@ -20,6 +20,7 @@ public class GoodCustomerModel extends BaseModel
 	private java.lang.String dictName;
 	private java.lang.String business;
 	private java.lang.String customerName;
+	private String isHasLadder;
 	private java.lang.Long businessId;
 	private java.lang.Long goodId;
 	private java.lang.Long customerId;
@@ -28,6 +29,31 @@ public class GoodCustomerModel extends BaseModel
 	private java.lang.String unit;
 	private java.lang.Float storage;
 	private String data;
+	private String fid;
+	private java.lang.String fmaterialNum;
+
+	public String getFmaterialNum() {
+		return fmaterialNum;
+	}
+
+	public void setFmaterialNum(String fmaterialNum) {
+		this.fmaterialNum = fmaterialNum;
+	}
+
+	public String getFid() {
+		return fid;
+	}
+
+	public void setFid(String fid) {
+		this.fid = fid;
+	}
+	public String getIsHasLadder() {
+		return isHasLadder;
+	}
+
+	public void setIsHasLadder(String isHasLadder) {
+		this.isHasLadder = isHasLadder;
+	}
 
 	public String getData() {
 		return data;

@@ -16,6 +16,7 @@ public class BlueprintModel extends BaseModel
 
 	
 	private String id;
+	private String fid;
 	private String goodsId;
 	private String data;
 	private String customerName;
@@ -27,7 +28,23 @@ public class BlueprintModel extends BaseModel
 	private String goodsName;
 	private String dictName;
 	private java.lang.String  materialNum;
+	private java.lang.String fmaterialNum;
 
+	public String getFmaterialNum() {
+		return fmaterialNum;
+	}
+
+	public void setFmaterialNum(String fmaterialNum) {
+		this.fmaterialNum = fmaterialNum;
+	}
+
+	public String getFid() {
+		return fid;
+	}
+
+	public void setFid(String fid) {
+		this.fid = fid;
+	}
 	public String getCustomerName() {
 		return customerName;
 	}

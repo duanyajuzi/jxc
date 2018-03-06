@@ -83,9 +83,15 @@
 	
 	<sql id="BlueprintMapper.findPage.where">
 		<where>
-
+				1=1
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(fid)">
+				AND A.id != #{fid}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(fmaterialNum)">
+				AND A.materialNum = #{fmaterialNum}
+			</if>
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(goodsId)">
-				A.goodsId = #{goodsId}
+				AND A.goodsId = #{goodsId}
 			</if>
 
 	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(id)">

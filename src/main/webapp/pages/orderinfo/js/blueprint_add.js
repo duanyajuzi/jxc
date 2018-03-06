@@ -72,7 +72,11 @@ var PageBlueprintAdd = function(){
 
         onSimilarValidation : function(e) {
             var obj={
-                materialNum:e.value,
+                fmaterialNum:e.value
+            };
+            var fid=mini.get("id").getValue();
+            if(fid){
+                obj.fid=fid;
             }
             $.ajax({
                 url : PageMain.basePath+"/blueprint/query",

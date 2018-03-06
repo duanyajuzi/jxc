@@ -39,7 +39,7 @@
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-        <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none;margin-top:10px">
+        <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none;margin-top:15px">
             <div id="goodCustomerFormAdd">
                 <input id="id" name="id"  class="mini-hidden" />
                 <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
@@ -71,7 +71,7 @@
                         <td class="form-label" style="text-align: right;width:20%">原厂料号：</td>
                         <td>
                             <input name="materialNum" id="materialNum" class="mini-textbox" style="width:83%;"  required="true" maxlength="100"
-                                   <%--onvalidation="PageGoodCustomerAdd.onSimilarValidation"--%> requiredErrorText="物料号不能为空"/>
+                                   onvalidation="PageGoodCustomerAdd.onSimilarValidation" requiredErrorText="物料号不能为空"/>
                         </td>
                     </tr>
                     <tr>
@@ -86,7 +86,8 @@
                     <tr>
                         <td class="form-label" style="text-align: right;width:20%">是否有阶梯价：</td>
                         <td>
-                            <input id="checkbox" name="checkbox" class="mini-checkbox" text="是" trueValue="1" falseValue="0"/>
+                            <input id="checkbox" name="checkbox" class="mini-checkbox" text="是"
+                                   onvaluechanged="PageGoodCustomerAdd.onValueChanged" trueValue="1" falseValue="0"/>
                         </td>
                     </tr>
                 </table>

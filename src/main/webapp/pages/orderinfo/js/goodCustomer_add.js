@@ -27,7 +27,13 @@ var PageGoodCustomerAdd = function(){
         	var row = data.row;
         	this.action = data.action;
            /* var storage=mini.get("storage");*/
+            var t = mini.get("checkbox");
             this.goodCustomerForm.setData(row);
+            if(row.isHasLadder=="1"){
+                t.setChecked(true);
+            }else{
+                t.setChecked(false);
+            }
             if(this.action == "modify") {
                 var data = new Object();
                 data.good_customer_id = row.id;
@@ -42,13 +48,12 @@ var PageGoodCustomerAdd = function(){
                 this.grid.setEnabled(false);
                 $("#toolbar").hide();
                 $(".mini-toolbar").css("display", "none");
-
             }
         },
         funSave : function() {
         	this.goodCustomerForm.validate();
             if (!this.goodCustomerForm.isValid()) {
-                 var errorTexts = form.getErrorTexts();
+                 var errorTexts = this.goodCustomerForm.getErrorTexts();
                  for (var i in errorTexts) {
                      mini.alert(errorTexts[i]);
                      return;
@@ -59,6 +64,12 @@ var PageGoodCustomerAdd = function(){
             var obj = this.goodCustomerForm.getData(true);
             var data = this.grid.getChanges();
             var json = mini.encode(data);
+            var t = mini.get("checkbox");
+            if(t.checked){
+                obj.isHasLadder=1;
+            }else{
+                obj.isHasLadder=0;
+            }
             obj.data = json;
             $.ajax({
                url : me.basePath + "/goodCustomer/" + me.action + "?a="+Math.random(),
@@ -83,8 +94,12 @@ var PageGoodCustomerAdd = function(){
 
         onSimilarValidation : function(e) {
             var obj={
-                materialNum:e.value
+                fmaterialNum:e.value
             };
+            var fid=mini.get("id").getValue();
+            if(fid){
+                obj.fid=fid;
+            }
             $.ajax({
                 url : PageMain.basePath+"/goodCustomer/query",
                 type : 'POST',
@@ -96,7 +111,7 @@ var PageGoodCustomerAdd = function(){
                         e.isValid = true;
                     }else if(data.total>0){
                         e.isValid = false;
-                        e.errorText = "原厂料号不能为空，且不能重复";
+                        e.errorText = "原厂料号不能重复";
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -144,6 +159,17 @@ var PageGoodCustomerAdd = function(){
                 var c = fields[i];
                 if (c.setReadOnly) c.setReadOnly(true);
                 if (c.setIsValid) c.setIsValid(true);
+            }
+        },
+
+        onValueChanged : function(e) {
+            var checked = this.getChecked();
+            if(checked){
+                $("#toolbar").css("display", "block");
+                $("#datagrid1").css("display", "block");
+            }else {
+                $("#toolbar").css("display", "none");
+                $("#datagrid1").css("display", "none");
             }
         }
 
