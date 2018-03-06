@@ -21,18 +21,22 @@ var PageSetInoutStock = function () {
                 var sender = e.sender;
                 sender.checkNode(node);
             });
+            $("#search_table").find("td input").prop("disabled",true);
+            $("#search_table").find("td input").css("background","#ebebe4");
         },
         funGetData:function (data) {
             if(data!=null && data!="") {
                 this.orderType = data.orderType;
-                this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
+                // this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
             }
         },
+
         funSearch:function () {
+            var businessId=mini.get("businessId").getValue().trim("");
             var orderNo=mini.get("orderNo").getValue().trim("");
             var orderName=mini.get("orderName").getValue().trim("");
             var materialNum=mini.get("materialNum").getValue().trim("");
-            var paramData={'orderType':this.orderType,'orderNo':orderNo,'orderName':orderName,'materialNum':materialNum};
+            var paramData={'orderType':this.orderType,'orderNo':orderNo,'orderName':orderName,'materialNum':materialNum,'businessId':businessId};
             $.ajax({
                 url: this.basePath + "/orderItem/queryInOrderTreeList",
                 data: paramData,
@@ -43,12 +47,16 @@ var PageSetInoutStock = function () {
                 },
                 error: function () {
                 }
-            })
+            });
+            $("#search_table").find("td input").prop("disabled",false);
+            $("#search_table").find("td input").css("background","none");
         },
         funReset:function(){
             var searchForm = new mini.Form("searchForm");
             searchForm.setData();
-            this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
+            $("#search_table").find("td input").prop("disabled",true);
+            $("#search_table").find("td input").css("background","#ebebe4");
+            this.orderTree.loadData(null);
         },
         setInoutTableAll: function () {
             var valueList = new Array();

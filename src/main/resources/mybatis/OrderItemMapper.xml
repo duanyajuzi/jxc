@@ -420,7 +420,7 @@
         <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
             AND A.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
         </if>
-        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">D
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
             AND A.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
         </if>
         <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">

@@ -11,22 +11,27 @@
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
     <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/setOutStock.js'/>"></script>
     <title></title>
+    <style>
+        .ywlx{
+            margin-left: 65px;
+        }
+    </style>
 </head>
 <body>
 
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-    <div region="west" showSplit="false" showSplitIcon="false" width="400" showHeader="false"
+    <div region="west" showSplit="false" showSplitIcon="false" width="410" showHeader="false"
          style="border:1px solid #cccccc;">
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;" showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="searchForm">
-                <%--<lable class="form-label">业务类型：</lable>--%>
-                <%--<input name="businessId" id="businessId" class="mini-combobox" allowInput="true"--%>
-                <%--idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"--%>
-                <%--style="width:100px;"   maxlength="10"--%>
-                <%--onvaluechanged="PageSetOutStock.funSearch()"/>--%>
-                <table>
+                <lable class="form-label ywlx">业务类型：</lable>
+                <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
+                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
+                style="width:150px;"   maxlength="10" emptyText="请输入或选择" valueFromSelect="true" popupHeight="150"
+                onvaluechanged="PageSetOutStock.funSearch()"/>
+                <table id="search_table">
                     <tr>
-                        <td style="width: 50px"> <lable class="form-label">订单号：</lable></td>
+                        <td style="width: 70px"> <lable class="form-label">订单号：</lable></td>
                         <td> <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单号"  style="width:110px;"/></td>
                         <td style="width: 75px"> <lable class="form-label">客户订单号：</lable></td>
                         <td> <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:110px;"/></td>
@@ -40,7 +45,7 @@
                 </table>
             </div>
         </div>
-        <div id="orderTree" class="mini-tree"  style="width:100%;height: calc(100% - 100px)"
+        <div id="orderTree" class="mini-tree"  style="width:100%;height: calc(100% - 125px)"
              showTreeIcon="true" textField="text" idField="treeId" nodesField="children" resultAsTree="true"
              showCheckBox="true" checkRecursive="true" checkOnTextClick="true"
              expandOnLoad="true" contextMenu="#treeMenu">
@@ -54,7 +59,7 @@
     </div>
     <div title="商品入/出库详情" region="east" allowResize="false" showSplit="false"
          showSplitIcon="false" allowUnselect="false" showHeader="false" showModified="false"
-         width="550" style="border:1px solid #cccccc;">
+         width="540" style="border:1px solid #cccccc;">
         <div id="datagrid" class="mini-datagrid" idField="id"  sortMode="client" style="height: 530px"
              showColumns="true" showPager="false"  region="east">
             <div property="columns">
