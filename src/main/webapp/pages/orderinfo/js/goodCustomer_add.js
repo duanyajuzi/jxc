@@ -33,6 +33,14 @@ var PageGoodCustomerAdd = function(){
                 this.grid.load(data);
                 //PageMain.funLoadGoodsByBussinessId("goodId", false, "", row.businessId);
                 //storage.disable();
+            }else if(this.action == "view"){
+                var data = new Object();
+                data.good_customer_id = row.id;
+                this.grid.load(data);
+                PageGoodCustomerAdd.labelModel();
+                this.grid.cancelEdit();
+                $("#toolbar").hide();
+                $(".mini-toolbar").css("display", "none");
             }
         },
         funSave : function() {
@@ -126,6 +134,16 @@ var PageGoodCustomerAdd = function(){
                     alert(jqXHR.responseText);
                 }
             });
+        },
+        //设置只读模式
+        labelModel : function() {
+            var fields = this.goodCustomerForm.getFields();
+            for (var i = 0; l = fields.length, i < l; i++) {
+                var c = fields[i];
+                if (c.setReadOnly) c.setReadOnly(true);
+                if (c.setIsValid) c.setIsValid(true);
+
+            }
         }
 
     }

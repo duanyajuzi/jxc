@@ -15,6 +15,7 @@
 		<result property="goodsName" column="goodsName"/>
 		<result property="dictName" column="dictName"/>
 		<result property="materialNum" column="materialNum"/>
+		<result property="customerName" column="customerName"/>
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
@@ -133,8 +134,10 @@
 		D.dictName,
 		A.pname,
 		A.memo,
-		A.materialNum
+		A.materialNum,
+		C.customerName
 		FROM tab_blueprint A
+		left join tab_customer C on A.pname=C.id
 		left join tab_goods B on A.goodsId=B.id
 		left join tab_dict D on A.unit=D.dictNo
 		<include refid="BlueprintMapper.findPage.where"/>

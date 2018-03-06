@@ -59,6 +59,8 @@
                     <div field="unitPrice" width="120" headerAlign="center" align="center" allowSort="true">采购价(未税)</div>
                     <div field="dictName" width="120" headerAlign="center" align="center" allowSort="true">单位</div>
                     <div field="storage" width="120" headerAlign="center" align="center" allowSort="true">库存量</div>
+                    <div field="button" width="80" headerAlign="center" align="center"
+                         renderer="PageGoodCustomer.viewXiangqing" >操作</div>
                 </div>
             </div>
         </div>
@@ -69,12 +71,14 @@
                  allowAlternating="true"  sortMode="client">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
-                    <div field="pname" width="120" headerAlign="center" align="center" allowSort="true">客户方案名称</div>
+                    <div field="customerName" width="120" headerAlign="center" align="center" allowSort="true">客户名称</div>
                     <div field="goodsNum" width="120" headerAlign="center" align="center" allowSort="true">数量</div>
                     <div field="materialNum" width="120" headerAlign="center" align="center" allowSort="true">客户料号</div>
                     <div field="price" width="120" headerAlign="center" align="center" allowSort="true">销售价(未税)</div>
                     <div field="dictName" width="120" headerAlign="center" align="center" allowSort="true">单位</div>
                     <div field="memo" width="120" headerAlign="center" align="center" allowSort="true">备注</div>
+                    <div field="button" width="80" headerAlign="center" align="center"
+                         renderer="PageGoodCustomer.viewFangAn" >操作</div>
                 </div>
             </div>
         </div>

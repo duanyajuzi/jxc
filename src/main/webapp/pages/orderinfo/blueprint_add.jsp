@@ -15,6 +15,9 @@
             height: 24px;
             line-height: 24px;
         }
+        .mini-textbox-input[readonly], .mini-buttonedit-readOnly>.mini-buttonedit-border, .mini-buttonedit-readOnly .mini-buttonedit-input[readonly] {
+            background-color: white;
+        }
         .mini-textbox{
             height: 27px;
         }
@@ -36,7 +39,7 @@
             <input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
                 <tr>
-                    <td class="form-label" style="text-align: right;width:20%;">客户方案名称：</td>
+                    <td class="form-label" style="text-align: right;width:20%;">客户名称：</td>
                     <td>
                         <input name="pname" id="pname" class="mini-combobox" style="width:84%"
                                allowInput="true" idField="id" textField="customerName"
@@ -86,7 +89,7 @@
                     </td>
                 </tr>
             </table>
-            <div style="width:80%;margin-left: 10%">
+            <div style="width:80%;margin-left: 10%" id="toolbar" name="toolbar">
                 <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
                     <table style="width:100%;">
                         <tr>
@@ -112,13 +115,9 @@
                     </div>
                 </div>
             </div>
-
-
-
          </div>
-
         </div>
-        <div  region="south" showSplit="false" showSplitIcon="false" height="30" showHeader="false"  style="border: none">
+        <div region="south" showSplit="false" showSplitIcon="false" height="30" showHeader="false"  style="border: none">
 	        <div class="mini-toolbar" style="position: fixed;left:0;bottom: 0;right:0;text-align: center;border-width: 1px 0 0 0" >
 	            <a class="mini-button cursor" onclick="PageBlueprintAdd.funSave()" iconCls="icon-save">保存</a>
 	            <a class="mini-button cursor" onclick="PageBlueprintAdd.funCancel()" iconCls="icon-cancel" style="margin:0 20px;">取消</a>

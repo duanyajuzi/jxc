@@ -6,8 +6,7 @@ var PageGoodCustomer = function(){
             goodCustomerGrid : null,
             employee_grid : null
         },
-        init :function ()
-        {
+        init :function () {
             mini.parse();
             this.basePath = PageMain.basePath;
             this.goodCustomerGrid = mini.get("goodCustomerGrid");
@@ -15,12 +14,10 @@ var PageGoodCustomer = function(){
             PageMain.funLoadGoodsByBussinessId("goodId", false, "", -1)
             this.funSearch();
         },
-        funBusValuechanged : function(e)
-        {
+        funBusValuechanged : function(e) {
             PageMain.funLoadGoodsByBussinessId("goodId", false, "", e.value)
         },
-        funSearch : function()
-        {
+        funSearch : function() {
         	var goodCustomerForm = new mini.Form("goodCustomerForm");
         	this.goodCustomerGrid.load(goodCustomerForm.getData());
         },
@@ -43,6 +40,7 @@ var PageGoodCustomer = function(){
             }
         },
         funOpenInfo : function(paramData) {
+
         	var me = this;
         	mini.open({
                 url: this.basePath + "/pages/orderinfo/goodCustomer_add.jsp",
@@ -104,7 +102,7 @@ var PageGoodCustomer = function(){
                     url:this.basePath+"/pages/orderinfo/blueprint.jsp",
                     title:row.goodsName+"的客户管理",
                     width:850,
-                    height:450,
+                    height:500,
                     onload:function () {
                         var iframe=this.getIFrameEl();
                         iframe.contentWindow.PageBlueprint.funSearch(paramData);
@@ -123,6 +121,7 @@ var PageGoodCustomer = function(){
         addFangAn : function() {
             var row = this.goodCustomerGrid.getSelected();
             var paramData = {action: "add", row:{goodsId:row.id}, title:"新增客户方案"};
+            console.log(paramData)
             this.fangAnInfo(paramData);
         },
 
@@ -183,19 +182,59 @@ var PageGoodCustomer = function(){
 
 
 
-       /* onShowRowDetail : function(e) {
-            var grid = e.sender;
-            var row = e.record;
-            var detailGrid_Form = document.getElementById("detailGrid_Form");
-            var employee_grid = mini.get("employee_grid");
-            var td = grid.getRowDetailCellEl(row);
+        viewXiangqing : function(e){
+            var button;
+            button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
+                '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
+                'onclick="PageGoodCustomer.funOpenInfo()">详情</span></a>';
+            return button;
+        } ,
+
+        //商品数据详情页
+        funOpenInfo:function () {
+            var row = this.goodCustomerGrid.getSelected();
+            var paramData = {'action': "view", 'row': row};
+            mini.open({
+                url: this.basePath + "/pages/orderinfo/goodCustomer_add.jsp",
+                title: "商品详细信息",
+                width: 850,
+                height:500,
+                onload: function () {
+                    var iframe = this.getIFrameEl();
+                    iframe.contentWindow.PageGoodCustomerAdd.funSetData(paramData);
+                },
+                ondestroy: function (action) {
+                }
+            });
+        },
+
+        viewFangAn : function(e){
+            var button;
+            button= '<a class="mini-button mini-button-plain" href="javascript:void(0)">' +
+                '<span class="mini-button-text  mini-button-icon icon-expand" style="height: auto" ' +
+                'onclick="PageGoodCustomer.fangAnInfo();">详情</span></a>';
+            return button;
+        } ,
+
+        //客户方案详情页
+        fangAnInfo:function () {
+            var row = this.employee_grid.getSelected();
+            var paramData = {'action': "view", 'row': row};
+            mini.open({
+                url: this.basePath + "/pages/orderinfo/blueprint_add.jsp",
+                title: "客户方案详细信息",
+                width: 850,
+                height:500,
+                onload: function () {
+                    var iframe = this.getIFrameEl();
+                    iframe.contentWindow.PageBlueprintAdd.funSetData(paramData);
+                },
+                ondestroy: function (action) {
+                }
+            });
+        },
 
 
-            console.log(td)
-            td.appendChild(detailGrid_Form);
-            detailGrid_Form.style.display = "block";
-            employee_grid.load({ goodsId: row.id });
-        }*/
     }
 }();
 
