@@ -45,7 +45,7 @@
                 <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:150px;"/>
                 </div>
                 <div style="margin: 0 200px">
-                <lable class="form-label" name="stimeSearch" id="stimeSearch">入库时间：</lable>
+                <lable class="form-label" name="stimeSearch" id="stimeSearch">出库时间：</lable>
                 <input name="stimeBegin" id="stimeBegin" class="mini-datepicker" style="witdth:150px;"
                        format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至
                 <input name="stimeEnd" id="stimeEnd" class="mini-datepicker" style="width:150px;"
