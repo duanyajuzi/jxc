@@ -20,11 +20,13 @@
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="110px" showHeader="false"
+    <div title="north" region="north" showSplit="false" showSplitIcon="false" height="105px" showHeader="false"
          style="border: none">
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;height:100%"
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="orderForm">
+                <div style="width: 900px;margin: 0 auto">
+                <div style="width:100%;">
                 <lable class="form-label">业务类型：</lable>
                 <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
                        idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
@@ -37,9 +39,10 @@
                 <input name="pcustomerId" id="pcustomerId" class="mini-combobox" style="width:150px;"allowInput="true"
                        idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
                        maxlength="50" emptyText="请输入或选择" valueFromSelect="true"/>
+                </div>
+                <div style="margin: 0 40px" >
                 <lable class="form-label">客户料号：</lable>
                 <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:120px;"/>
-                <br/>
                 <lable class="form-label"  style="padding-left: 23px;" name="stimeSearch" id="stimeSearch">订单时间：</lable>
                 <input name="orderTimeBegin" id="orderTimeBegin" class="mini-datepicker" style="width:120px;"
                        format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至
@@ -47,6 +50,8 @@
                        format="yyyy-MM-dd"   emptyText="结束时间" allowInput="false"  />
                 <a class="mini-button" iconCls="icon-search" onclick="PageOrder.funSearch()" plain="true"><label>查询</label></a>
                 <a class="mini-button" iconCls="icon-reset" onclick="PageOrder.funReset()" plain="true"><label>重置</label></a>
+                </div>
+                </div>
             </div>
         </div>
     </div>
