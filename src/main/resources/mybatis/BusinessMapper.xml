@@ -42,12 +42,14 @@
     ]]>
 	</update>
 
-    <delete id="BusinessMapper.delete">
+    <update id="BusinessMapper.delete">
     <![CDATA[
-        DELETE FROM tab_business WHERE
-        id = #{id} 
+        UPDATE tab_business SET
+	       flag = 1
+        WHERE
+	        id = #{id}
     ]]>
-    </delete>
+    </update>
     
     <select id="BusinessMapper.getById" resultMap="mRetMapBusiness">
 		SELECT <include refid="BusinessMapper.columns" />
@@ -69,6 +71,7 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
 				AND memo = #{memo}
 			</if>
+			AND flag = 0
 		</where>
 	</sql>
 		

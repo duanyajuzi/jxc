@@ -65,12 +65,14 @@
     ]]>
 	</update>
 
-    <delete id="BlueprintMapper.delete">
+    <update id="BlueprintMapper.delete">
     <![CDATA[
-        DELETE FROM tab_blueprint WHERE
-        id = #{id} 
+        UPDATE tab_blueprint SET
+	       flag = 1
+        WHERE
+	        id = #{id}
     ]]>
-    </delete>
+    </update>
     
     <select id="BlueprintMapper.getById" resultMap="mRetMapBlueprint">
 		SELECT <include refid="BlueprintMapper.columns" />
@@ -118,6 +120,7 @@
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
 				AND A.materialNum = #{materialNum}
 			</if>
+			AND A.flag = 0
 		</where>
 	</sql>
 		

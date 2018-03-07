@@ -64,12 +64,14 @@
     ]]>
 	</update>
 
-    <delete id="GoodCustomerMapper.delete">
+    <update id="GoodCustomerMapper.delete">
     <![CDATA[
-        DELETE FROM tab_good_customer WHERE
-        id = #{id} 
+        UPDATE tab_good_customer SET
+	        flag = 1
+        WHERE
+	        id = #{id}
     ]]>
-    </delete>
+	</update>
     
     <select id="GoodCustomerMapper.getById" resultMap="mRetMapGoodCustomer">
 		SELECT <include refid="GoodCustomerMapper.columns" />
@@ -113,6 +115,7 @@
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(fmaterialNum)">
 				AND A1.materialNum = #{fmaterialNum}
 			</if>
+			AND A1.flag = 0
 		</where>
 	</sql>
 		

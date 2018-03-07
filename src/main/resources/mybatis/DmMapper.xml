@@ -38,12 +38,14 @@
     ]]>
 	</update>
 
-    <delete id="DmMapper.delete">
+    <update id="DmMapper.delete">
     <![CDATA[
-        DELETE FROM tab_dm WHERE
-        bm = #{bm}
+       UPDATE tab_dm SET
+	        flag = 1
+	   WHERE
+	        bm = #{bm}
     ]]>
-    </delete>
+    </update>
     
     <select id="DmMapper.getById" resultMap="mRetMapDm">
 		SELECT <include refid="DmMapper.columns" />
@@ -62,6 +64,7 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(nr)">
 				AND nr  LIKE CONCAT(CONCAT('%', #{nr}), '%')
 			</if>
+			AND flag = 0
 		</where>
 	</sql>
 		

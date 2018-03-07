@@ -50,12 +50,14 @@
     ]]>
 	</update>
 
-    <delete id="DictMapper.delete">
+    <update id="DictMapper.delete">
     <![CDATA[
-        DELETE FROM tab_dict WHERE
-        id = #{id} 
+        UPDATE tab_dict SET
+	        flag = 1
+        WHERE
+	        id = #{id}
     ]]>
-    </delete>
+    </update>
     
     <select id="DictMapper.getById" resultMap="mRetMapDict">
 		SELECT <include refid="DictMapper.columns" />
@@ -83,8 +85,8 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(dictIndex)">
 				AND dict.dictIndex = #{dictIndex}
 			</if>
-			AND
-				dict.dmbm=dm.bm
+			AND dict.dmbm=dm.bm
+			AND dict.flag = 0
 		</where>
 	</sql>
 		
