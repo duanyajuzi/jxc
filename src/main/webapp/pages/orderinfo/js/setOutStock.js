@@ -64,10 +64,14 @@ var PageSetOutStock = function () {
                     for (var i = 0; i < valueLength; i++) {
                         data[i] = this.orderTree.getNode(valueList[i]);
                     }
-                    for (var i = 0; i < data.length; i++) {
-                        data[i].beforeTmpNum = data[i].tmpNum;
-                        data[i].tmpNum = data[i].afterNum;
-                        PageSetOutStock.funSetTable(data[i]);
+                    for (var j = 0; j < data.length; j++) {
+                        if(parseFloat(data[j].afterNum) <= parseFloat(data[j].storage)) {
+                            data[j].beforeTmpNum = data[j].tmpNum;
+                            data[j].tmpNum = data[j].afterNum;
+                            PageSetOutStock.funSetTable(data[j]);
+                        }else{
+                            mini.alert(data[j].orderName+"的"+data[j].materialNum+"库存不足,库存为："+data[j].storage);
+                        }
                     }
                 } else if (values.length == 0 && node != null) {
                     node.beforeTmpNum = node.tmpNum;
@@ -92,10 +96,13 @@ var PageSetOutStock = function () {
                                 PageMain.funShowMessageBox("数量大于商品订购数量,请重新输入");
                             } else if(value=="" || value==null){
                                 PageMain.funShowMessageBox("请输入数量");
-                            }else{
+                            }else if(value<=node.storage){
                                 node.tmpNum = value;
+                                node.storage=parseFloat(node.storage)-parseFloat(value);
                                 PageSetOutStock.funSetTable(node);
                                 PageSetOutStock.funUncheckTree();
+                            }else{
+                                mini.alert(node.orderName+"的"+node.materialNum+"库存不足,库存为："+node.storage);
                             }
                         }else {
                             mini.alert("请输入数字");
@@ -148,7 +155,7 @@ var PageSetOutStock = function () {
                     data.tmpNum = parseFloat(data.tmpNum) + parseFloat(data.beforeTmpNum);
                     this.datagrid.updateRow(rowData,{"tmpNum":data.tmpNum});
                 }else if(row.length!=0 && row[0].tmpNum==data.esgouNum){
-                    mini.alert("已全部出库");
+                    mini.alert(row[0].orderName+"的"+row[0].materialNum+"已全部出库");
                 }else {
                     var paramData = {
                         "key": unique,

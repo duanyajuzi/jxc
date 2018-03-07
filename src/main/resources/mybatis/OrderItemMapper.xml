@@ -552,7 +552,8 @@
     </select>
     <!--查询采购订单树子节点-->
     <select id="OrderItemMapper.queryOrderTree1" resultMap="mRetMapOrderItem">
-        SELECT B.id as treeId,B.customerGoodId,F.goodId,D.goodsName ,F.materialNum,B.esgouNum,B.tmpNum,(B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,
+        SELECT B.id as treeId,B.customerGoodId,F.goodId,D.goodsName ,F.materialNum,B.esgouNum,B.tmpNum,F.storage,
+        (B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,
         concat( D.goodsName, '-' ,F.materialNum,'(',CONVERT(B.esgouNum-B.tmpNum,char),')') as text,B.orderId
         FROM tab_orderitem B
         left join tab_order A on A.id=B.orderId
@@ -603,6 +604,7 @@
         A.unitPrice AS price,
         A.tmpNum,
         (A.esgouNum - A.tmpNum) AS afterNum,
+        G.storage,
         concat(D.goodsName,'-',F.materialNum,'(',CONVERT (A.esgouNum - A.tmpNum, CHAR),')') AS text,
         D.goodsName,
         F.materialNum,
