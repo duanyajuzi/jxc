@@ -4,6 +4,19 @@
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
     <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/goodCustomer.js'/>"></script>
     <title></title>
+    <style>
+        #detailGrid_Form .mini-grid-headerCell-outer{
+             background-color: #cad7e0;
+         }
+
+        #detailGrid_Form .mini-grid-row {
+              background: #e3edf3;;
+        }
+
+        .mini-grid-row-selected {
+            background: #beefef !important;
+        }
+    </style>
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
@@ -38,7 +51,7 @@
             <table style="width:100%;">
                 <tr>
                     <td style="width:30%;">
-                        <a  class="mini-button block-button" iconCls="icon-add" onclick="PageGoodCustomer.funAdd()">新增商品</a>
+                        <a  class="mini-button block-button" iconCls="icon-add" id="add" onclick="PageGoodCustomer.funAdd()">新增商品</a>
                         <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageGoodCustomer.funModify()" style="display: none">修改商品</a>
                         <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageGoodCustomer.funDelete()" style="display: none">删除商品</a>
                         <a  class="mini-button block-button" iconCls="icon-add" id="addFangAn" onclick="PageGoodCustomer.addFangAn()" style="display: none">新增客户方案</a>
@@ -51,7 +64,7 @@
         </div>
         <div class="mini-fit">
             <div id="goodCustomerGrid" class="mini-datagrid" idField="id" allowResize="false"
-                 url="${pageContext.request.contextPath}/goodCustomer/query" onshowrowdetail="onShowRowDetail" onhiderowdetail="onhiderowdetail"
+                 url="${pageContext.request.contextPath}/goodCustomer/query" onshowrowdetail="onShowRowDetail" <%--onhiderowdetail="onhiderowdetail"--%>
                  pagesize="50" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="expandcolumn" >#</div>
@@ -100,9 +113,21 @@
         detailGrid_Form.style.display = "block";
         employee_grid.load({ goodsId: row.id });
     }
+    employee_grid.on("rowclick", function(e) {
+        var row =  goodCustomerGrid.getSelected();
+        goodCustomerGrid.deselect(row,false);
+        $("#editFangAn,#removeFangAn").show();
+        $("#add,#remove,#edit,#addFangAn").hide();
 
+    });
+    goodCustomerGrid.on("rowclick", function(e) {
+        var row =  employee_grid.getSelected();
+        $("#add,#remove,#edit,#addFangAn").show();
+        $("#editFangAn,#removeFangAn").hide();
+        employee_grid.deselect(row,false)
+    });
 
-    function onhiderowdetail() {
+    /*function onhiderowdetail() {
         $("#editFangAn,#removeFangAn").hide();
     }
 
@@ -121,7 +146,7 @@
 
     goodCustomerGrid.on("deselect", function () {
         $("#edit,#remove,#addFangAn").hide();
-    });
+    });*/
 
 </script>
 </body>
