@@ -29,6 +29,15 @@ public class BlueprintModel extends BaseModel
 	private String dictName;
 	private java.lang.String  materialNum;
 	private java.lang.String fmaterialNum;
+	private String isHasLadder;
+
+	public String getIsHasLadder() {
+		return isHasLadder;
+	}
+
+	public void setIsHasLadder(String isHasLadder) {
+		this.isHasLadder = isHasLadder;
+	}
 
 	public String getFmaterialNum() {
 		return fmaterialNum;

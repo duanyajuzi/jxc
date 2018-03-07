@@ -46,7 +46,7 @@
                     <tr>
                         <td class="form-label" style="text-align: right;width:20%">业务类型：</td>
                         <td>
-                            <input name="businessId" id="businessId" class="mini-combobox" allowInput="true" emptyText="请输入或选择"
+                            <input name="businessId" id="businessId" class="mini-combobox" allowInput="true" emptyText="请输入或选择" valueFromSelect="true"
                                    idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
                                    style="width:83%;" onvaluechanged="PageGoodCustomerAdd.funBusValuechanged"  required="true" maxlength="10" requiredErrorText="业务类型不能为空"/>
                         </td>
@@ -55,7 +55,7 @@
                         <td class="form-label" style="text-align: right;width:20%">所属商品：</td>
                         <td>
                             <input name="goodId" id="goodId" class="mini-combobox" style="width:83%;"  required="true" allowInput="true"
-                                   textField="msgVal"  valueField="msgKey" emptyText="请选择"
+                                   textField="msgVal"  valueField="msgKey" emptyText="请选择" valueFromSelect="true"
                                    maxlength="50" requiredErrorText="所属商品不能为空"/>
                         </td>
                     </tr>
@@ -64,7 +64,7 @@
                         <td>
                             <input name="customerId" id="customerId" class="mini-combobox" allowInput="true"  emptyText="请输入或选择"
                                    idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
-                                   style="width:83%;"  required="true" maxlength="10" requiredErrorText="所属客户不能为空"/>
+                                   style="width:83%;"  required="true" maxlength="10" requiredErrorText="所属客户不能为空" valueFromSelect="true"/>
                         </td>
                     </tr>
                     <tr>
@@ -91,7 +91,7 @@
                         </td>
                     </tr>
                 </table>
-                <div style="width:80%;margin-left: 10%" id="toolbar" name="toolbar">
+                <div style="width:80%;margin-left: 10%; display: none" id="toolbar" name="toolbar">
                     <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
                         <table style="width:100%;">
                             <tr>
@@ -103,17 +103,18 @@
                         </table>
                     </div>
                 </div>
-                <div id="datagrid1" class="mini-datagrid" style="width:80%;height:200px;margin-left: 10%"
+                <div id="datagrid1" class="mini-datagrid" style="width:80%;height:150px;margin-left: 10%; display: none"
                      url="${pageContext.request.contextPath}/customerPrice/getList" idField="id" ajaxType="get"
                      allowResize="fasle" pageSize="20"
                      allowCellEdit="true" allowCellSelect="true" multiSelect="true"
                      editNextOnEnterKey="true"  editNextRowCell="true" showPager="false">
                     <div property="columns">
                         <div name="num"  field="num" headerAlign="center" width="100">数量
-                            <input property="editor" id="num" class="mini-textbox" style="width:100%;" />
+                            <input property="editor" id="num" class="mini-spinner"  value="1"
+                                   minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;" />
                         </div>
                         <div field="price" width="100" headerAlign="center" >价格
-                            <input property="editor" id="price" class="mini-textbox" style="width:100%;"/>
+                            <input property="editor" onvalidation="PageGoodCustomerAdd.onPriceValidation" id="price" class="mini-textbox" style="width:100%;"/>
                         </div>
                     </div>
                 </div>

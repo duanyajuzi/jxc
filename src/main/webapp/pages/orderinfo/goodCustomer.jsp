@@ -75,7 +75,7 @@
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
                     <div field="customerName" width="120" headerAlign="center" align="center" allowSort="true">客户名称</div>
-                    <div field="goodsNum" width="120" headerAlign="center" align="center" allowSort="true">数量</div>
+                    <%--<div field="goodsNum" width="120" headerAlign="center" align="center" allowSort="true">数量</div>--%>
                     <div field="materialNum" width="120" headerAlign="center" align="center" allowSort="true">客户料号</div>
                     <div field="price" width="120" headerAlign="center" align="center" allowSort="true">销售价(未税)</div>
                     <div field="dictName" width="120" headerAlign="center" align="center" allowSort="true">单位</div>

@@ -16,12 +16,13 @@
 		<result property="dictName" column="dictName"/>
 		<result property="materialNum" column="materialNum"/>
 		<result property="customerName" column="customerName"/>
+		<result property="isHasLadder" column="isHasLadder"/>
 	</resultMap>
 	
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="BlueprintMapper.columns">
 	    <![CDATA[
-		id,goodsId,goodsNum,price,unit,pname,memo,materialNum
+		id,goodsId,goodsNum,price,unit,pname,memo,materialNum,isHasLadder
 	    ]]>
 	</sql>
 
@@ -36,7 +37,8 @@
         	unit ,
         	pname ,
         	memo ,
-        	materialNum
+        	materialNum,
+        	isHasLadder
         ) VALUES (
         	#{id} ,
         	#{goodsId} ,
@@ -45,7 +47,8 @@
         	#{unit} ,
         	#{pname} ,
         	#{memo} ,
-        	#{materialNum}
+        	#{materialNum},
+        	#{isHasLadder}
         )
     ]]>
 	</insert>
@@ -59,7 +62,8 @@
 	        unit = #{unit} ,
 	        pname = #{pname} ,
 	        memo = #{memo} ,
-	        materialNum = #{materialNum}
+	        materialNum = #{materialNum},
+	        isHasLadder = #{isHasLadder}
         WHERE 
 	        id = #{id} 
     ]]>
@@ -144,6 +148,7 @@
 		A.pname,
 		A.memo,
 		A.materialNum,
+		A.isHasLadder,
 		C.customerName
 		FROM tab_blueprint A
 		left join tab_customer C on A.pname=C.id
