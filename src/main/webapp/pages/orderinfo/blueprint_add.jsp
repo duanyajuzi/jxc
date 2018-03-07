@@ -46,7 +46,7 @@
                     <td class="form-label" style="text-align: right;width:20%;">客户名称：</td>
                     <td>
                         <input name="pname" id="pname" class="mini-combobox" style="width:84%"
-                               allowInput="true" idField="id" textField="customerName"
+                               allowInput="true" idField="id" textField="customerName" valueFromSelect="true"
                                url="${pageContext.request.contextPath}/customer/queryCustomerList"
                                required="true" maxlength="10" requiredErrorText="客户方案名称不能为空"/>
                     </td>
@@ -73,27 +73,28 @@
                                required="true" vtype="float;maxlength:10" requiredErrorText="单位不能为空"/>
                     </td>
                 </tr>
-                <tr>
+               <%-- <tr>
                     <td class="form-label" style="text-align: right;width:20%;">数量：</td>
                     <td>
                         <input name="goodsNum" id="goodsNum" class="mini-textbox" style="width:84%"
                                required="true" vtype="float;maxlength:19" requiredErrorText="数量不能为空"/>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td class="form-label" style="text-align: right;">备注：</td>
                     <td>
-                        <input name="memo" id="memo" class="mini-textArea" style="width:84%" required="true" maxlength="300" requiredErrorText="备注不能为空"/>
+                        <input name="memo" id="memo" class="mini-textArea" style="width:84%"  maxlength="300" requiredErrorText="备注不能为空"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="form-label" style="text-align: right;">是否有阶梯价：</td>
                     <td>
-                        <input id="checkbox" name="checkbox" class="mini-checkbox" text="是" trueValue="1" falseValue="0"/>
+                        <input id="checkbox" name="checkbox" class="mini-checkbox" text="是"
+                               onvaluechanged="PageBlueprintAdd.onValueChanged" trueValue="1" falseValue="0"/>
                     </td>
                 </tr>
             </table>
-            <div style="width:80%;margin-left: 10%" id="toolbar" name="toolbar">
+            <div style="width:80%;margin-left: 10%;display: none" id="toolbar" name="toolbar">
                 <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
                     <table style="width:100%;">
                         <tr>
@@ -105,17 +106,17 @@
                     </table>
                 </div>
             </div>
-            <div id="datagrid1" class="mini-datagrid" style="width:80%;height:200px;margin-left: 10%"
+            <div id="datagrid1" class="mini-datagrid" style="width:80%;height:200px;margin-left: 10%;display: none"
                  url="${pageContext.request.contextPath}/ladderPrice/getList" idField="id" ajaxType="get"
                  allowResize="fasle" pageSize="20"
                  allowCellEdit="true" allowCellSelect="true" multiSelect="true"
                  editNextOnEnterKey="true"  editNextRowCell="true" showPager="false">
                 <div property="columns">
                     <div name="num"  field="num" headerAlign="center" width="100">数量
-                        <input property="editor" class="mini-textbox" style="width:100%;" />
+                        <input property="editor" class="mini-spinner"  value="1" minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;" />
                     </div>
                     <div field="price" width="100" headerAlign="center" >价格
-                        <input property="editor" class="mini-textbox" style="width:100%;"/>
+                        <input property="editor" onvalidation="PageBlueprintAdd.onPriceValidation" id="danJia" class="mini-textbox" style="width:100%;"/>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ var PageBlueprintAdd = function(){
             action : "",
             blueprintForm : null,
             grid : null,
+            priceTrue : false,
 
         },
         init :function (){
@@ -19,6 +20,16 @@ var PageBlueprintAdd = function(){
             PageMain.funDictInfo("unit", true, "rmb", "danwei");
             this.action = data.action;
             this.blueprintForm.setData(row);
+            var t = mini.get("checkbox");
+            if(row.isHasLadder=="1"){
+                t.setChecked(true);
+                $("#toolbar").css("display", "block");
+                $("#datagrid1").css("display", "block");
+            }else{
+                t.setChecked(false);
+                $("#toolbar").css("display", "none");
+                $("#datagrid1").css("display", "none");
+            }
             if(this.action == "modify") {
                 var data = new Object();
                 data.blueprint_id = row.id;
@@ -42,11 +53,20 @@ var PageBlueprintAdd = function(){
                     return;
                 }
             }
-
+            if( PageBlueprintAdd.defaultOption.priceTrue==false){
+                mini.alert("请输入正确的价格");
+                return;
+            }
             var me = this;
             var obj = this.blueprintForm.getData(true);
             var data = this.grid.getChanges();
             var json = mini.encode(data);
+            var t = mini.get("checkbox");
+            if(t.checked){
+                obj.isHasLadder=1;
+            }else{
+                obj.isHasLadder=0;
+            }
             obj.data = json;
             $.ajax({
                 url : me.basePath + "/blueprint/" + me.action + "?a="+Math.random(),
@@ -71,36 +91,40 @@ var PageBlueprintAdd = function(){
         },
 
         onSimilarValidation : function(e) {
-            var obj={
-                fmaterialNum:e.value
-            };
-            var fid=mini.get("id").getValue();
-            if(fid){
-                obj.fid=fid;
-            }
-            $.ajax({
-                url : PageMain.basePath+"/blueprint/query",
-                type : 'POST',
-                data : obj,
-                dataType: 'json',
-                async: false,
-                success: function (data) {
-                    if(data.total==0){
-                        e.isValid = true;
-                    }else if(data.total>0){
-                        e.isValid = false;
-                        e.errorText = "客户料号不能为空，且不能重复";
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
+            if(e.value==""){
+                mini.alert("原厂料号不能为空");
+            }else {
+                var obj={
+                    fmaterialNum:e.value
+                };
+                var fid=mini.get("id").getValue();
+                if(fid){
+                    obj.fid=fid;
                 }
-            });
+                $.ajax({
+                    url : PageMain.basePath+"/blueprint/query",
+                    type : 'POST',
+                    data : obj,
+                    dataType: 'json',
+                    async: false,
+                    success: function (data) {
+                        if(data.total==0){
+                            e.isValid = true;
+                        }else if(data.total>0){
+                            e.isValid = false;
+                            mini.alert("客户料号不能重复");
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+            }
         },
 
         addRow : function() {
             var newRow = { name: "New Row" };
-            this.grid.addRow(newRow, 0);
-
+            var index = $(".mini-grid-row").length;
+            this.grid.addRow(newRow, index);
             this.grid.beginEditCell(newRow, "LoginName");
         },
         removeRow : function() {
@@ -118,7 +142,36 @@ var PageBlueprintAdd = function(){
                 if (c.setReadOnly) c.setReadOnly(true);
                 if (c.setIsValid) c.setIsValid(true);
             }
-        }
+        },
+
+
+        onValueChanged : function(e) {
+            var checked = this.getChecked();
+            if(checked){
+                $("#toolbar").css("display", "block");
+                $("#datagrid1").css("display", "block");
+            }else {
+                $("#toolbar").css("display", "none");
+                $("#datagrid1").css("display", "none");
+            }
+        },
+        onPriceValidation : function(e) {
+            if (e.isValid) {
+                if (PageBlueprintAdd.isPrice(e.value) == false) {
+                    PageBlueprintAdd.defaultOption.priceTrue=false;
+                    e.isValid = false;
+                    e.errorText = "请输入正确的价格";
+                    mini.alert("请输入正确的价格");
+                }else if(PageBlueprintAdd.isPrice(e.value) == true){
+                    PageBlueprintAdd.defaultOption.priceTrue=true;
+                }
+            }
+        },
+        isPrice : function(v) {
+            var re = new RegExp("^([1-9][\\d]{0,7}|0)(\\.[\\d]{1,2})?$");
+            if (re.test(v)) return true;
+            return false;
+        },
     }
 }();
 
