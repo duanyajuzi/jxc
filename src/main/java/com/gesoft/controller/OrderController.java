@@ -248,6 +248,7 @@ public class OrderController extends BaseController
 				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
 				Float esgouNum = Float.parseFloat(jsonObject.get("esgouNum").toString());
 				itemModel.setEsgouNum(esgouNum);
+				itemModel.setTmpNum(0f);
 
 				String state = jsonObject.get("_state").toString();
 				if("added".equals(state)){
@@ -414,6 +415,7 @@ public class OrderController extends BaseController
 				itemModel.setOrderId(orderId);
 				itemModel.setUnitPrice(price);
 				itemModel.setCustomerGoodId(blueprintId);
+				itemModel.setTmpNum(0f);
 				itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
 				String state = jsonObject.get("_state").toString();
 				if("added".equals(state)){
