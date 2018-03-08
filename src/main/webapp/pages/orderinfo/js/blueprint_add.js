@@ -7,6 +7,7 @@ var PageBlueprintAdd = function(){
             blueprintForm : null,
             grid : null,
             priceTrue : false,
+            pnameId:"",
 
         },
         init :function (){
@@ -20,6 +21,7 @@ var PageBlueprintAdd = function(){
             PageMain.funDictInfo("unit", true, "rmb", "danwei");
             this.action = data.action;
             this.blueprintForm.setData(row);
+            PageBlueprintAdd.defaultOption.pnameId=row.pname;
             var t = mini.get("checkbox");
             if(row.isHasLadder=="1"){
                 t.setChecked(true);
@@ -55,28 +57,6 @@ var PageBlueprintAdd = function(){
             }
             var me = this;
             var obj = this.blueprintForm.getData(true);
-            /*var pname=obj.pname;
-            var goodsId=obj.goodsId;
-            var obj1={
-                "pname":pname,"goodsId":goodsId
-            }
-            $.ajax({
-                url : PageMain.basePath+"/blueprint/query",
-                type : 'POST',
-                data : obj1,
-                dataType: 'json',
-                async: false,
-                success: function (data) {
-                    if(data.total==0){
-                        alert(1);
-                    }else if(data.total>0){
-                        alert(2);
-                        mini.alert("客户不能重复");
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                }
-            });*/
 
             var data = this.grid.getChanges();
             if(data.length>0){
@@ -115,29 +95,32 @@ var PageBlueprintAdd = function(){
             PageMain.funCloseWindow("cancel");
         },
 
-        onPnamealidation : function(e) {
+        onPnameValidation : function(e) {
             var goodsId=mini.get("goodsId").getValue();
             var obj={
                 "pname":e.value,"goodsId":goodsId
             };
-            $.ajax({
-                url : PageMain.basePath+"/blueprint/query",
-                type : 'POST',
-                data : obj,
-                dataType: 'json',
-                async: false,
-                success: function (data) {
-                    if(data.total==0){
-                        e.isValid = true;
-                    }else if(data.total>0){
-                        e.isValid = false;
-                        e.errorText = "客户不能重复";
+            if(PageBlueprintAdd.defaultOption.pnameId==e.value){
+                e.isValid = true;
+            }else{
+                $.ajax({
+                    url : PageMain.basePath+"/blueprint/query",
+                    type : 'POST',
+                    data : obj,
+                    dataType: 'json',
+                    async: false,
+                    success: function (data) {
+                        if(data.total==0){
+                            e.isValid = true;
+                        }else if(data.total>0){
+                            e.isValid = false;
+                            e.errorText = "客户不能重复";
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                }
-            });
-
+                });
+            }
         },
 
         onSimilarValidation : function(e) {

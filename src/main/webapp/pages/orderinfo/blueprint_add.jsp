@@ -34,11 +34,14 @@
             height: 100%;
             overflow: hidden;
         }
+        .mini-grid-rows-view {
+            height: 118px;
+        }
     </style>
 </head>
 <body>
 <div class="mini-layout" style="width: 100%;height: 100%;" allowResize="false">
-        <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none;">
+        <div title="center" region="center" allowResize="false" showSplit="true" showSplitIcon="false" allowUnselect="false" style="border:0 none;margin-top: 15px">
         <div id="blueprintFormAdd">
             <input id="id" name="id"  class="mini-hidden" />
             <table class="form-table" border="0" cellpadding="1" cellspacing="2" style="width:100%;table-layout:fixed;">
@@ -47,7 +50,7 @@
                     <td>
                         <input name="pname" id="pname" class="mini-combobox" style="width:84%"
                                allowInput="true" idField="id" textField="customerName" valueFromSelect="true"
-                               url="${pageContext.request.contextPath}/customer/queryCustomerList" onvalidation="PageBlueprintAdd.onPnamealidation"
+                               url="${pageContext.request.contextPath}/customer/queryCustomerList" onvalidation="PageBlueprintAdd.onPnameValidation"
                                required="true" maxlength="10" requiredErrorText="客户方案名称不能为空"/>
                     </td>
                 </tr>
@@ -106,7 +109,7 @@
                     </table>
                 </div>
             </div>
-            <div id="datagrid1" class="mini-datagrid" style="width:80%;height:200px;margin-left: 10%;display: none"
+            <div id="datagrid1" class="mini-datagrid" style="width:80%;height:150px;margin-left: 10%;display: none"
                  url="${pageContext.request.contextPath}/ladderPrice/getList" idField="id" ajaxType="get"
                  allowResize="fasle" pageSize="20"
                  allowCellEdit="true" allowCellSelect="true" multiSelect="true"

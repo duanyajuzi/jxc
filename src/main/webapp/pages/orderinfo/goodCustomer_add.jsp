@@ -35,6 +35,10 @@
             height: 100%;
             overflow: hidden;
         }
+
+        .mini-grid-rows-view {
+            height: 118px;
+        }
     </style>
 </head>
 <body>

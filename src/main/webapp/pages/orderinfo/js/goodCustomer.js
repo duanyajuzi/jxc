@@ -164,7 +164,7 @@ var PageGoodCustomer = function(){
                 url: this.basePath + "/pages/orderinfo/blueprint_add.jsp",
                 title: paramData.title,
                 width: 700,
-                height: 500,
+                height: 470,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageBlueprintAdd.funSetData(paramData);
@@ -220,8 +220,8 @@ var PageGoodCustomer = function(){
             mini.open({
                 url: this.basePath + "/pages/orderinfo/blueprint_add.jsp",
                 title: "客户方案详细信息",
-                width: 850,
-                height:500,
+                width: 700,
+                height:470,
                 onload: function () {
                     var iframe = this.getIFrameEl();
                     iframe.contentWindow.PageBlueprintAdd.funSetData(paramData);
