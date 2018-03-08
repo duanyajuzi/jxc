@@ -148,7 +148,8 @@ var PageOrderAdd = function(){
         addRow : function () {
             var customerId = mini.get("customerId").getValue();
             var businessId = mini.get("businessId").getValue();
-            if(customerId && businessId){
+            var pcustomerId = mini.get("pcustomerId").getValue();
+            if(customerId && businessId && pcustomerId){
                 var newRow = { name: "New Row" };
                 var index = $(".mini-grid-row").length;
                 this.orderItemGrid.addRow(newRow, index);
