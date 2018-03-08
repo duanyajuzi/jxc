@@ -116,7 +116,7 @@
 				AND A.unit = #{unit}
 			</if>
 	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(pname)">
-				AND A.pname LIKE CONCAT(CONCAT('%', #{pname}), '%')
+				AND A.pname = #{pname}
 			</if>
 	       	<if test="@com.gesoft.util.Ognl@isNotEmpty(memo)">
 				AND A.memo = #{memo}

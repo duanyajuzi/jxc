@@ -64,13 +64,15 @@ var PageGoodCustomerAdd = function(){
                      return;
                  }
             }
-            if( PageGoodCustomerAdd.defaultOption.priceTrue==false){
-                mini.alert("请输入正确的价格");
-                return;
-            }
             var me = this;
             var obj = this.goodCustomerForm.getData(true);
             var data = this.grid.getChanges();
+            if(data.length>0){
+                if( PageGoodCustomerAdd.defaultOption.priceTrue==false){
+                    mini.alert("请输入正确的价格");
+                    return;
+                }
+            }
             var json = mini.encode(data);
             var t = mini.get("checkbox");
             if(t.checked){
@@ -122,8 +124,7 @@ var PageGoodCustomerAdd = function(){
                             e.isValid = true;
                         }else if(data.total>0){
                             e.isValid = false;
-                            mini.alert("原厂料号不能重复");
-                            /*e.errorText = "原厂料号不能重复";*/
+                            e.errorText = "原厂料号不能重复";
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {

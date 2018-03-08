@@ -56,32 +56,27 @@ var PageGoodCustomer = function(){
                 }
             })
         },
-        funDelete : function()
-        {
+        funDelete : function() {
             var row = this.goodCustomerGrid.getSelected();
             var me = this;
-            if(row)
-            {
+            if(row) {
                 mini.confirm("确定要删除这条记录?", "提醒", function (action) {
-                    if (action == "ok") 
-                    {
+                    if (action == "ok") {
                         $.ajax({
                             url : me.basePath + "/goodCustomer/del",
                             type: 'POST',
                             data: {"id": row.id},
                             dataType: 'json',
-                            success: function (data)
-                            {
+                            success: function (data) {
                             	mini.alert(data.msg, "提醒", function(){
-                            		if(data.success)
-                                    {
-                            			 me.goodCustomerGrid.reload();
+                            		if(data.success) {
+                                        me.goodCustomerGrid.reload();
+                                        $("#remove,#edit,#addFangAn,#removeFangAn,#editFangAn").hide();
+                                        $("#add").show();
                                     }
                                 });
-                                
                             },
-                            error: function ()
-                            {
+                            error: function () {
                                 mini.alert("删除记录失败");
                             }
                         });
@@ -145,6 +140,8 @@ var PageGoodCustomer = function(){
                                 mini.alert(data.msg, "提醒", function(){
                                     if(data.success) {
                                         me.employee_grid.reload();
+                                        $("#remove,#edit,#addFangAn,#removeFangAn,#editFangAn").hide();
+                                        $("#add").show();
                                     }
                                 });
 

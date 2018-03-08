@@ -47,7 +47,7 @@
                     <td>
                         <input name="pname" id="pname" class="mini-combobox" style="width:84%"
                                allowInput="true" idField="id" textField="customerName" valueFromSelect="true"
-                               url="${pageContext.request.contextPath}/customer/queryCustomerList"
+                               url="${pageContext.request.contextPath}/customer/queryCustomerList" onvalidation="PageBlueprintAdd.onPnamealidation"
                                required="true" maxlength="10" requiredErrorText="客户方案名称不能为空"/>
                     </td>
                 </tr>

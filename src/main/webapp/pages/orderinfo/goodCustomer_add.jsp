@@ -71,7 +71,7 @@
                         <td class="form-label" style="text-align: right;width:20%">原厂料号：</td>
                         <td>
                             <input name="materialNum" id="materialNum" class="mini-textbox" style="width:83%;"  required="true" maxlength="100"
-                                   onvalidation="PageGoodCustomerAdd.onSimilarValidation" requiredErrorText="物料号不能为空"/>
+                                   onvalidation="PageGoodCustomerAdd.onSimilarValidation" requiredErrorText="原厂料号不能为空"/>
                         </td>
                     </tr>
                     <tr>

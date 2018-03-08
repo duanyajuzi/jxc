@@ -53,13 +53,38 @@ var PageBlueprintAdd = function(){
                     return;
                 }
             }
-            if( PageBlueprintAdd.defaultOption.priceTrue==false){
-                mini.alert("请输入正确的价格");
-                return;
-            }
             var me = this;
             var obj = this.blueprintForm.getData(true);
+            /*var pname=obj.pname;
+            var goodsId=obj.goodsId;
+            var obj1={
+                "pname":pname,"goodsId":goodsId
+            }
+            $.ajax({
+                url : PageMain.basePath+"/blueprint/query",
+                type : 'POST',
+                data : obj1,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    if(data.total==0){
+                        alert(1);
+                    }else if(data.total>0){
+                        alert(2);
+                        mini.alert("客户不能重复");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });*/
+
             var data = this.grid.getChanges();
+            if(data.length>0){
+                if( PageBlueprintAdd.defaultOption.priceTrue==false){
+                    mini.alert("请输入正确的价格");
+                    return;
+                }
+            }
             var json = mini.encode(data);
             var t = mini.get("checkbox");
             if(t.checked){
@@ -90,9 +115,34 @@ var PageBlueprintAdd = function(){
             PageMain.funCloseWindow("cancel");
         },
 
+        onPnamealidation : function(e) {
+            var goodsId=mini.get("goodsId").getValue();
+            var obj={
+                "pname":e.value,"goodsId":goodsId
+            };
+            $.ajax({
+                url : PageMain.basePath+"/blueprint/query",
+                type : 'POST',
+                data : obj,
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    if(data.total==0){
+                        e.isValid = true;
+                    }else if(data.total>0){
+                        e.isValid = false;
+                        e.errorText = "客户不能重复";
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+
+        },
+
         onSimilarValidation : function(e) {
             if(e.value==""){
-                mini.alert("原厂料号不能为空");
+                mini.alert("客户料号不能为空");
             }else {
                 var obj={
                     fmaterialNum:e.value
@@ -112,7 +162,7 @@ var PageBlueprintAdd = function(){
                             e.isValid = true;
                         }else if(data.total>0){
                             e.isValid = false;
-                            mini.alert("客户料号不能重复");
+                            e.errorText = "客户料号不能重复";
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
