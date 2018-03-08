@@ -78,7 +78,7 @@
 					 <div field="orderName" width="120" headerAlign="center" allowSort="true" align="center">客户订单号</div>
 					 <div field="name2" width="120" headerAlign="center" allowSort="true" align="center">客户</div>
 					 <div field="orderTime" width="100" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd" align="center">订单时间</div>
-					 <%--<div field="orderStatus" width="100" headerAlign="center" renderer="onStatusRenderer" allowSort="true" align="center">订单状态</div>--%>
+					 <div field="orderStatus" width="100" headerAlign="center" renderer="onStatusRenderer" allowSort="true" align="center">订单状态</div>
 					 <div field="deliveryTime" width="100" headerAlign="center" allowSort="true" dateFormat="yyyy-MM-dd" align="center">交货时间</div>
                      <div field="business" width="120" headerAlign="center" allowSort="true" align="center">业务类型</div>
                      <div field="button" width="70" headerAlign="center" align="center" renderer="funSetButton"  align="center">操作</div>
