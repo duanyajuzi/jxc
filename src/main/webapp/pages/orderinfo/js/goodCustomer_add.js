@@ -49,6 +49,7 @@ var PageGoodCustomerAdd = function(){
                 var data = new Object();
                 data.good_customer_id = row.id;
                 this.grid.load(data);
+                PageMain.funLoadGoodsByBussinessId("goodId", true, row.goodId, row.businessId);
                 PageGoodCustomerAdd.labelModel();
                 this.grid.setEnabled(false);
                 $("#toolbar").hide();
