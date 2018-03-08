@@ -95,7 +95,6 @@
                         </td>
                     </tr>
                 </table>
-            </div>
                 <div style="width:80%;margin-left: 10%; display: none" id="toolbar" name="toolbar">
                     <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
                         <table style="width:100%;">
@@ -118,19 +117,14 @@
                             <input property="editor" id="num" class="mini-spinner"  value="1"
                                    minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;" />
                         </div>
-
                         <div field="price" width="100" headerAlign="center" >价格
-                            <input property="editor" id="price" class="mini-spinner" value="123456.123" minValue="0" maxValue="1000000" format="c2" style="width:100%;/>
+                            <input property="editor" id="price" class="mini-spinner" value="123456.123" minValue="0" maxValue="1000000" format="c2" style="width:100%;"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div  region="south" showSplit="false" showSplitIcon="false" height="30" showHeader="false"  style="border: none">
-
-                        </div>
-                    </div>
-                </div>
               <div class="mini-toolbar" style="position: fixed;left:0;bottom: 0;right:0;text-align: center;border-width: 1px 0 0 0" >
 	            <a class="mini-button cursor" onclick="PageGoodCustomerAdd.funSave()" iconCls="icon-save">保存</a>
 	            <a class="mini-button cursor" onclick="PageGoodCustomerAdd.funCancel()" iconCls="icon-cancel" style="margin:0 20px;">取消</a>
