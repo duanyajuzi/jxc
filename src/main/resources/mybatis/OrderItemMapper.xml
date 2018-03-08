@@ -532,7 +532,7 @@
         left join tab_good_customer F on B.customerGoodId=F.id
         left join tab_goods D on F.goodId=D.id
         WHERE 1=1
-        AND (A.orderStatus!=-1 or A.orderStatus!=5)
+        AND A.orderStatus!=-1 AND A.orderStatus!=5
         AND B.esgouNum != B.tmpNum
         <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
         AND A.orderType = #{orderType}
@@ -560,7 +560,7 @@
         left join tab_good_customer F on B.customerGoodId=F.id
         left join tab_goods D on F.goodId=D.id
         where B.orderId = #{orderId}
-        AND (A.orderStatus!=-1 or A.orderStatus!=5)
+        AND A.orderStatus!=-1 AND A.orderStatus!=5
         <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
         AND B.esgouNum != B.tmpNum
     </select>
@@ -574,7 +574,7 @@
       LEFT JOIN tab_good_customer G on F.goodsId=G.id
       LEFT JOIN tab_goods D ON G.goodId=D.id
       WHERE 1=1
-      AND (A.orderStatus!=-1 or A.orderStatus!=5)
+      AND A.orderStatus!=-1 AND A.orderStatus!=5
       AND B.esgouNum != B.tmpNum
       <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
       AND A.orderType = #{orderType}
@@ -621,7 +621,7 @@
         LEFT JOIN tab_goods D ON G.goodId=D.id
         LEFT JOIN tab_dict E ON F.unit = E.dictNo
         where B.id = #{orderId}
-        AND (B.orderStatus!=-1 or B.orderStatus!=5)
+        AND B.orderStatus!=-1 AND B.orderStatus!=5
         <!--AND (B.orderStatus = 1 or B.orderStatus=2 or B.orderStatus=3)-->
         AND A.esgouNum != A.tmpNum
     </select>
