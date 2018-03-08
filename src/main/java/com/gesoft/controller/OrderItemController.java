@@ -289,7 +289,21 @@ public class OrderItemController extends BaseController
         }
         return planList;
     }
-
+    
+    //根据customerGoodId和customerId查询blueprint主键
+    @RequestMapping(value = "/getBluePrintInfo")
+    @ResponseBody
+    public OrderItemModel getBluePrintInfo(OrderItemModel model){
+        OrderItemModel orderItemModel=null;
+        try{
+            orderItemModel = orderItemService.getBluePrintInfo(model);
+        }catch (Exception e){
+            logger.error("OrderItemController queryPrice error：", e);
+        }
+        return orderItemModel;
+    }
+    
+    
     //修改已入库商品数量
     @RequestMapping(value = "/updateOrderItemTmpNum")
     @ResponseBody

@@ -192,6 +192,15 @@ public class OrderController extends BaseController
 		model.setId(id);
 		try
 		{
+			if("1".equals(model.getZdsc())){
+				//检查子项是否有客户方案
+				if(!checkItem(model)){
+					msgModel.setSuccess(GLOBAL_MSG_BOOL_FAIL);
+					msgModel.setMsg("订单项中商品未添加客户方案，不能自动生成订单");
+					return msgModel;
+				}
+			}
+			
 			model.setOrderStatus(1);
 			orderService.save(model);
 			//采购订单项保存
@@ -223,6 +232,42 @@ public class OrderController extends BaseController
 			logger.error("OrderController add error：", e);
 		}
 		return msgModel;
+	}
+	
+	/**
+	 * 描述信息：检查订单子项是否有客户方案
+	 * @return
+	 */
+	public boolean checkItem(OrderModel model)
+	{
+		try
+		{
+			//客户id
+			int customerId = model.getPcustomerId();
+			
+			String data = model.getData();
+			JSONArray jsArr = JSONArray.parseArray(data);
+			OrderItemModel itemModelTmp;
+			for(Object obj : jsArr){
+				itemModelTmp = new OrderItemModel();
+				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
+				String customerGoodId = jsonObject.get("customerGoodId").toString();
+				itemModelTmp.setCustomerGoodId(customerGoodId);
+				itemModelTmp.setCustomerId(customerId);
+				
+				//根据customerGoodId和customerId查询blueprint主键
+				OrderItemModel orderItemTemp = orderItemService.getBluePrintInfo(itemModelTmp);
+				if(orderItemTemp == null){
+					return false;
+				}
+			}
+			return true;
+		}
+		catch (Exception e)
+		{
+			logger.error("OrderItemController modify error：", e);
+			return false;
+		}
 	}
 	
 	/**
