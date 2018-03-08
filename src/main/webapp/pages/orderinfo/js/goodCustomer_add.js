@@ -43,7 +43,7 @@ var PageGoodCustomerAdd = function(){
                 var data = new Object();
                 data.good_customer_id = row.id;
                 this.grid.load(data);
-                //PageMain.funLoadGoodsByBussinessId("goodId", false, "", row.businessId);
+                PageMain.funLoadGoodsByBussinessId("goodId", true, row.goodId, row.businessId);
                 //storage.disable();
             }else if(this.action == "view"){
                 var data = new Object();
