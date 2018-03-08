@@ -68,12 +68,12 @@ var PageGoodCustomerAdd = function(){
             var me = this;
             var obj = this.goodCustomerForm.getData(true);
             var data = this.grid.getChanges();
-            if(data.length>0){
+            /*if(data.length>0){
                 if( PageGoodCustomerAdd.defaultOption.priceTrue==false){
                     mini.alert("请输入正确的价格");
                     return;
                 }
-            }
+            }*/
             var json = mini.encode(data);
             var t = mini.get("checkbox");
             if(t.checked){
