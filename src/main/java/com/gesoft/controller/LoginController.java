@@ -70,7 +70,7 @@ public class LoginController extends BaseController
 	public ModelAndView login(UserModel user, ModelMap model, HttpServletRequest request, HttpServletResponse response)
 	{
 		ModelAndView result = new ModelAndView("/login/login");
-		HttpSession session = request.getSession();
+		HttpSession session;
 		try
 		{
 			if(user != null)
@@ -85,7 +85,7 @@ public class LoginController extends BaseController
 					session.setAttribute("OnLineUser", mLoginModel);
 					session.setAttribute(SESSION_KEY_ISLOGIN, GLOBAL_YES);
 					session.setAttribute(SESSION_KEY_LOGINNAME, mLoginModel.getUserName());
-					session.setAttribute(SESSION_KEY_UID, mLoginModel.getUserId());
+					session.setAttribute(SESSION_KEY_UID, mLoginModel.getId());
 
 					List powerList = powerService.queryRolePowerList(mLoginModel.getRoleId());
 					result.addObject("powerList", powerList);
