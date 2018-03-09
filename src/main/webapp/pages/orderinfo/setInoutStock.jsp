@@ -34,7 +34,7 @@
                 </table>
                   </div>
         </div>
-        <div id="orderTree" class="mini-tree"  style="width:100%;height: calc(100% - 125px)"
+        <div id="orderTree" class="mini-tree"  style="width:100%;height: 450px"
             showTreeIcon="true" textField="text" idField="treeId" nodesField="children" resultAsTree="true"
              showCheckBox="true" checkOnTextClick="true" checkRecursive="true" expandOnLoad="true"
              contextMenu="#treeMenu">
