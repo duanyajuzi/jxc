@@ -697,7 +697,10 @@
       <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
           AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
       </if>
-        GROUP BY A.id
+      <if test="@com.gesoft.util.Ognl@isNotEmpty(ycmaterialNum)">
+         AND G.materialNum LIKE CONCAT(CONCAT('%', #{ycmaterialNum}), '%')
+      </if>
+      GROUP BY A.id
     </select>
 
     <!--查询销售订单树子节点-->

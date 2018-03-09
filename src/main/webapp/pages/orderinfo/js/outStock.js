@@ -23,9 +23,11 @@ var PageOutStock=function () {
             var orderNo = mini.get("orderNo").getValue().trim();
             var orderName=mini.get("orderName").getValue().trim();
             var materialNum=mini.get("materialNum").getValue().trim();
+            var ycmaterialNum=mini.get("ycmaterialNum").getValue().trim();
             var stimeBegin=mini.get("stimeBegin");
             var stimeEnd=mini.get("stimeEnd");
-            var paramData={"businessId":businessId,"orderNo":orderNo,"orderName":orderName,"materialNum":materialNum,"stimeBegin":stimeBegin.text,"stimeEnd":stimeEnd.text};
+            var paramData={"businessId":businessId,"orderNo":orderNo,"orderName":orderName,"materialNum":materialNum,
+                "ycmaterialNum":ycmaterialNum,"stimeBegin":stimeBegin.text,"stimeEnd":stimeEnd.text};
             this.inoutItemGrid.load(paramData, function(res){
                 console.log(res);
             });

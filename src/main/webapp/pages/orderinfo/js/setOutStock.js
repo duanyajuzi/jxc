@@ -16,13 +16,11 @@ var PageSetOutStock = function () {
             this.searchForm=new mini.Form("searchForm");
             var date=new Date();
             mini.get("stime").setValue(date);
-            $("#search_table").find("td input").prop("disabled",true);
-            $("#search_table").find("td input").css("background","#ebebe4");
         },
         funGetData:function (data) {
             if(data!=null && data!="") {
                 this.orderType = data.orderType;
-                // this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType);
+                this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType);
             }
         },
         funSearch:function () {
@@ -30,7 +28,9 @@ var PageSetOutStock = function () {
             var orderNo=mini.get("orderNo").getValue().trim("");
             var orderName=mini.get("orderName").getValue().trim("");
             var materialNum=mini.get("materialNum").getValue().trim("");
-            var paramData={'orderType':this.orderType,'orderNo':orderNo,'orderName':orderName,'materialNum':materialNum,'businessId':businessId};
+            var ycmaterialNum=mini.get("ycmaterialNum").getValue().trim("");
+            var paramData={'orderType':this.orderType,'orderNo':orderNo,'orderName':orderName,'materialNum':materialNum,
+                'ycmaterialNum':ycmaterialNum,'businessId':businessId};
             $.ajax({
                 url: this.basePath + "/orderItem/queryOrderTreeList",
                 data: paramData,
@@ -42,15 +42,11 @@ var PageSetOutStock = function () {
                 error: function () {
                 }
             });
-            $("#search_table").find("td input").prop("disabled",false);
-            $("#search_table").find("td input").css("background","none");
         },
         funReset:function(){
             var searchForm = new mini.Form("searchForm");
             searchForm.setData();
-            $("#search_table").find("td input").prop("disabled",true);
-            $("#search_table").find("td input").css("background","#ebebe4");
-            this.orderTree.loadData(null);
+            this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType);
         },
         setInoutTableAll: function () {
             var valueList = new Array();
