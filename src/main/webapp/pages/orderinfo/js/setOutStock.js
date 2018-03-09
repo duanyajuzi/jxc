@@ -221,7 +221,7 @@ var PageSetOutStock = function () {
         setTempMap:function (goodsId,num) {
             if(PageSetOutStock.defaultOption.tempStorageMap.has(goodsId)){
                 var tempnum = PageSetOutStock.defaultOption.tempStorageMap.get(goodsId);
-                PageSetOutStock.defaultOption.tempStorageMap.set(goodsId,tempnum+num);
+                PageSetOutStock.defaultOption.tempStorageMap.set(goodsId,parseFloat(tempnum)+parseFloat(num));
             }else{
                 PageSetOutStock.defaultOption.tempStorageMap.set(goodsId,num);
             }
@@ -234,7 +234,7 @@ var PageSetOutStock = function () {
         },
         removeTempMap:function (goodsId,num) {
             var tempnum = PageSetOutStock.defaultOption.tempStorageMap.get(goodsId);
-            PageSetOutStock.defaultOption.tempStorageMap.set(goodsId,tempnum-num);
+            PageSetOutStock.defaultOption.tempStorageMap.set(goodsId,parseFloat(tempnum)-parseFloat(num));
         }
     }
 }();
