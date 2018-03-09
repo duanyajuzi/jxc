@@ -121,11 +121,25 @@
         INSERT INTO tab_inout_stock_item(
 		inout_stock_id,
 		orderItemId,
-		goodNum
+		price,
+		goodNum,
+		stime,
+		orderType,
+		createUserId,
+		createTime,
+		modifyUserId,
+		modifyTime
         ) VALUES (
             #{inout_stock_id},
             #{orderItemId},
-        	#{goodNum}
+            #{price},
+        	#{goodNum},
+        	#{stime},
+            #{orderType},
+        	#{createUserId},
+		    #{createTime},
+		    #{modifyUserId},
+		    #{modifyTime}
         )
     ]]>
     </insert>
@@ -352,17 +366,6 @@
     </select>
 
 
-
-    <!--出货细项总数-->
-    <select id="OrderItemMapper.countInoutItem" resultType="long">
-        select count(*)
-        from tab_inout_stock_item A
-        left join tab_orderitem B on A.orderItemId=B.id
-        left join tab_good_customer F on B.customerGoodId=F.id
-        left join tab_goods D on F.goodId=D.id
-        WHERE A.inout_stock_id = #{inout_stock_id}
-    </select>
-
     <!-- 分页查询订单细项-->
     <select id="OrderItemMapper.list" resultMap="mRetMapOrderItem">
         SELECT
@@ -418,6 +421,34 @@
         </if>
     </select>
 
+    <!--入库细项总数-->
+    <select id="OrderItemMapper.countInoutItem" resultType="long">
+        select count(*)
+        from tab_inout_stock_item A
+        left join tab_orderitem B on A.orderItemId=B.id
+        left join tab_order T on T.id=B.orderId
+        left join tab_good_customer F on B.customerGoodId=F.id
+        left join tab_goods D on F.goodId=D.id
+        WHERE 1=1
+        AND A.orderType = #{orderType}
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeBegin)">
+            AND A.stime>= #{stimeBegin}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeEnd)">
+            AND A.stime &lt;= #{stimeEnd}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+            AND T.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
+            AND T.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+            AND J.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+        </if>
+        GROUP BY A.id) t1
+    </select>
+
     <!--分页查询入库订单细项信息-->
     <select id="OrderItemMapper.queryInoutStockItem" resultMap="mRetMapOrderItem">
         select A.id,
@@ -434,11 +465,41 @@
         left join tab_order T on T.id=B.orderId
         left join tab_good_customer F on B.customerGoodId=F.id
         left join tab_goods D on F.goodId=D.id
-        WHERE A.inout_stock_id = #{inout_stock_id}
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}
         </if>
-        <!-- LIMIT #{startNum}, #{pageSize} -->
+        LIMIT #{startNum}, #{pageSize}
+    </select>
+
+    <!--出库细项总数-->
+    <select id="OrderItemMapper.countInoutItem" resultType="long">
+        select count(*)
+        from tab_inout_stock_item A
+        left join tab_orderitem B on A.orderItemId=B.id
+        left join tab_order T on T.id= B.orderId
+        LEFT JOIN tab_blueprint F ON B.customerGoodId=F.id
+        LEFT JOIN tab_good_customer G on F.goodsId=G.id
+        LEFT JOIN tab_goods D ON G.goodId=D.id
+        WHERE 1=1
+        AND A.orderType = #{orderType}
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeBegin)">
+            AND A.stime>= #{stimeBegin}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeEnd)">
+            AND A.stime &lt;= #{stimeEnd}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+            AND T.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
+            AND T.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+            AND J.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+            AND A.businessId = #{businessId}
+        </if>
     </select>
 
     <!--分页查询出库订单细项信息-->
@@ -458,11 +519,30 @@
         LEFT JOIN tab_blueprint F ON B.customerGoodId=F.id
         LEFT JOIN tab_good_customer G on F.goodsId=G.id
         LEFT JOIN tab_goods D ON G.goodId=D.id
-        WHERE A.inout_stock_id = #{inout_stock_id}
+        WHERE 1=1
+        AND A.orderType = #{orderType}
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeBegin)">
+            AND A.stime>= #{stimeBegin}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(stimeEnd)">
+            AND A.stime &lt;= #{stimeEnd}
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+            AND T.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
+            AND T.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(ycmaterialNum)">
+            AND G.materialNum LIKE CONCAT(CONCAT('%', #{ycmaterialNum}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+            AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+        </if>
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}
         </if>
-        <!-- LIMIT #{startNum}, #{pageSize} -->
+        LIMIT #{startNum}, #{pageSize}
     </select>
 
 
@@ -553,7 +633,7 @@
     <!--查询采购订单树子节点-->
     <select id="OrderItemMapper.queryOrderTree1" resultMap="mRetMapOrderItem">
         SELECT B.id as treeId,B.customerGoodId,F.goodId,D.goodsName ,F.materialNum,B.esgouNum,B.tmpNum,F.storage,
-        (B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,
+        (B.esgouNum-B.tmpNum) as afterNum,A.orderName,A.orderType,B.unitPrice,
         concat( D.goodsName, '-' ,F.materialNum,'(',CONVERT(B.esgouNum-B.tmpNum,char),')') as text,B.orderId
         FROM tab_orderitem B
         left join tab_order A on A.id=B.orderId
@@ -601,13 +681,14 @@
         B.orderName,
         F.goodsId as customerGoodId,
         A.esgouNum,
-        A.unitPrice AS price,
+        A.unitPrice,
         A.tmpNum,
         (A.esgouNum - A.tmpNum) AS afterNum,
         G.storage,
-        concat(D.goodsName,'-',F.materialNum,'(',CONVERT (A.esgouNum - A.tmpNum, CHAR),')') AS text,
+        concat(D.goodsName,'-',G.materialNum,'-',F.materialNum,'(',CONVERT (A.esgouNum - A.tmpNum, CHAR),')') AS text,
         D.goodsName,
         F.materialNum,
+        G.materialNum as ycmaterialNum,
         D.specUnit,
         D.businessId,
         D.id as goodId,
