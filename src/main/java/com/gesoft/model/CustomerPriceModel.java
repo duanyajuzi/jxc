@@ -34,12 +34,12 @@ package com.gesoft.model;
      public void setNum(Long num) {
          this.num = num;
      }
-    
-    
+
+
      public Double getPrice() {
          return price;
      }
-    
+
      public void setPrice(Double price) {
          this.price = price;
      }

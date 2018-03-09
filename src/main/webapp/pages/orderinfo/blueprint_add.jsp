@@ -119,8 +119,7 @@
                         <input property="editor" class="mini-spinner"  value="1" minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;" />
                     </div>
                     <div field="price" width="100" headerAlign="center" >价格
-                        <%--<input property="editor" onvalidation="PageBlueprintAdd.onPriceValidation" id="danJia" maxlength="8" class="mini-textbox" style="width:100%;"/>--%>
-                        <input property="editor" id="danJia" class="mini-spinner" value="123456.123" minValue="0" maxValue="1000000" format="c2" style="width:100%;"/>
+                        <input property="editor" id="danJia" class="mini-spinner"  minValue="0" maxValue="100000000" style="width:100%;"/>
                     </div>
                 </div>
             </div>

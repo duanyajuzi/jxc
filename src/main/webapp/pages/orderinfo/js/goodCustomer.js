@@ -46,7 +46,7 @@ var PageGoodCustomer = function(){
                 url: this.basePath + "/pages/orderinfo/goodCustomer_add.jsp",
                 title: paramData.title,
                 width: 700,
-                height: 500,
+                height: 470,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageGoodCustomerAdd.funSetData(paramData);
@@ -96,8 +96,8 @@ var PageGoodCustomer = function(){
                 mini.open({
                     url:this.basePath+"/pages/orderinfo/blueprint.jsp",
                     title:row.goodsName+"的客户管理",
-                    width:850,
-                    height:500,
+                    width:700,
+                    height:470,
                     onload:function () {
                         var iframe=this.getIFrameEl();
                         iframe.contentWindow.PageBlueprint.funSearch(paramData);
