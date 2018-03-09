@@ -108,7 +108,7 @@
             #{orderType},
         	#{businessId},
         	#{createUserId},
-		    ,
+		    now(),
 		    #{modifyUserId},
 		    #{modifyTime}
         )
