@@ -802,7 +802,7 @@
     </update>
 
     <!--查询已入库数量-->
-    <select id="OrderItemMapper.getOrderItemTepNum" resultType="float">
+    <select id="OrderItemMapper.getOrderItemTepNum" resultType="long">
         SELECT tmpNum
         FROM tab_orderitem
         WHERE id = #{id}
