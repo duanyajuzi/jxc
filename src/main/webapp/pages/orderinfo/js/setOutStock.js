@@ -6,7 +6,9 @@ var PageSetOutStock = function () {
             datagrid: null,
             beforeTmpNum: null,
             searchForm:null,
-            orderType:null
+            orderType:null,
+            realStorageMap:new Map(),
+            tempStorageMap:new Map()
         },
         init: function () {
             mini.parse();
@@ -16,11 +18,12 @@ var PageSetOutStock = function () {
             this.searchForm=new mini.Form("searchForm");
             var date=new Date();
             mini.get("stime").setValue(date);
+
         },
         funGetData:function (data) {
             if(data!=null && data!="") {
                 this.orderType = data.orderType;
-                this.orderTree.load(this.basePath+"/orderItem/queryOrderTreeList?orderType="+this.orderType);
+                PageSetOutStock.funSearch();
             }
         },
         funSearch:function () {
@@ -38,6 +41,15 @@ var PageSetOutStock = function () {
                 dataType: "json",
                 success: function (data) {
                     mini.get("orderTree").loadData(data);
+                    if(data.length>0){
+                        for(var i=0;i<data.length;i++) {
+                            if (data[i].children.length > 0) {
+                                for (var j = 0; j < data[i].children.length; j++) {
+                                    PageSetOutStock.defaultOption.realStorageMap.set(data[i].children[j].customerGoodId, data[i].children[j].storage)
+                                }
+                            }
+                        }
+                    }
                 },
                 error: function () {
                 }
@@ -61,19 +73,15 @@ var PageSetOutStock = function () {
                         data[i] = this.orderTree.getNode(valueList[i]);
                     }
                     for (var j = 0; j < data.length; j++) {
-                        if(parseFloat(data[j].afterNum) <= parseFloat(data[j].storage)) {
+                        if(PageSetOutStock.setTempMap(data[j].customerGoodId,data[j].afterNum)) {
                             data[j].beforeTmpNum = data[j].tmpNum;
                             data[j].tmpNum = data[j].afterNum;
                             PageSetOutStock.funSetTable(data[j]);
                         }else{
-                            mini.alert(data[j].orderName+"的"+data[j].materialNum+"库存不足,库存为："+data[j].storage);
+                            mini.alert(data[j].orderName+"的"+data[j].materialNum+"库存不足");
                         }
                     }
-                } else if (values.length == 0 && node != null) {
-                    node.beforeTmpNum = node.tmpNum;
-                    node.tmpNum = node.afterNum;
-                    PageSetOutStock.funSetTable(node);
-                } else {
+                }else {
                     mini.alert("请选择所要入库的商品");
                 }
             }
@@ -92,13 +100,12 @@ var PageSetOutStock = function () {
                                 PageMain.funShowMessageBox("数量大于商品订购数量,请重新输入");
                             } else if(value=="" || value==null){
                                 PageMain.funShowMessageBox("请输入数量");
-                            }else if(value<=node.storage){
+                            }else if(PageSetOutStock.setTempMap(node.customerGoodId,value)){
                                 node.tmpNum = value;
-                                node.storage=parseFloat(node.storage)-parseFloat(value);
                                 PageSetOutStock.funSetTable(node);
                                 PageSetOutStock.funUncheckTree();
                             }else{
-                                mini.alert(node.orderName+"的"+node.materialNum+"库存不足,库存为："+node.storage);
+                                mini.alert(node.orderName+"的"+node.materialNum+"库存不足");
                             }
                         }else {
                             mini.alert("请输入数字");
@@ -118,6 +125,7 @@ var PageSetOutStock = function () {
             })[0];
             node.tmpNum = row.tmpNum;
             PageSetOutStock.funModifyTree(node);
+            PageSetOutStock.removeTempMap(row.customerGoodId,row.tmpNum);
             this.datagrid.removeRow(row);
         },
         //删除商品信息时修改tree
@@ -174,34 +182,59 @@ var PageSetOutStock = function () {
         },
         updateOrderItemTmpNum: function () {
             var data = this.datagrid.getData();
-            var stime=mini.get("stime");
-            var value=stime.text;
-            var param=this.searchForm.getData();
-            if(this.orderType==1){
-                data.tmpNum=0-parseFloat(data.tmpNum);
+            if(data.length>0) {
+                var stime = mini.get("stime");
+                var value = stime.text;
+                var param = this.searchForm.getData();
+                if (this.orderType == 1) {
+                    data.tmpNum = 0 - parseFloat(data.tmpNum);
+                }
+                var paramData = {
+                    "stime": value,
+                    "orderType": this.orderType,
+                    "businessId": param.businessId,
+                    "data": JSON.stringify(data)
+                };
+                // $.ajax({
+                //     url: this.basePath + "/orderItem/updateOrderItemTmpNumOut",
+                //     data: paramData,
+                //     type: "post",
+                //     dataType: "json",
+                //     success: function () {
+                //         PageMain.funCloseWindow("save");
+                //     },
+                //     error: function () {
+                //     }
+                // });
+                // $.ajax({
+                //     url: this.basePath + "/orderItem/insertTabInoutStock",
+                //     data: paramData,
+                //     type: "post",
+                //     dataType: "json",
+                //     success: function () {
+                //     },
+                //     error: function () {
+                //     }
+                // });
             }
-            var paramData={"stime":value,"orderType":this.orderType,"businessId":param.businessId,"data":JSON.stringify(data)};
-            $.ajax({
-                url: this.basePath + "/orderItem/updateOrderItemTmpNumOut",
-                data: paramData,
-                type: "post",
-                dataType: "json",
-                success: function () {
-                    PageMain.funCloseWindow("save");
-                },
-                error: function () {
-                }
-            });
-            $.ajax({
-                url: this.basePath + "/orderItem/insertTabInoutStock",
-                data: paramData,
-                type: "post",
-                dataType: "json",
-                success: function () {
-                },
-                error: function () {
-                }
-            });
+        },
+        setTempMap:function (goodsId,num) {
+            if(PageSetOutStock.defaultOption.tempStorageMap.has(goodsId)){
+                var tempnum = PageSetOutStock.defaultOption.tempStorageMap.get(goodsId);
+                PageSetOutStock.defaultOption.tempStorageMap.set(goodsId,tempnum+num);
+            }else{
+                PageSetOutStock.defaultOption.tempStorageMap.set(goodsId,num);
+            }
+            if(parseFloat(PageSetOutStock.defaultOption.tempStorageMap.get(goodsId)) > parseFloat(PageSetOutStock.defaultOption.realStorageMap.get(goodsId))){
+                PageSetOutStock.removeTempMap(goodsId,num);
+                return false;
+            }else {
+                return true;
+            }
+        },
+        removeTempMap:function (goodsId,num) {
+            var tempnum = PageSetOutStock.defaultOption.tempStorageMap.get(goodsId);
+            PageSetOutStock.defaultOption.tempStorageMap.set(goodsId,tempnum-num);
         }
     }
 }();
