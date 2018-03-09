@@ -108,7 +108,7 @@
             #{orderType},
         	#{businessId},
         	#{createUserId},
-		    #{createTime},
+		    ,
 		    #{modifyUserId},
 		    #{modifyTime}
         )
@@ -137,9 +137,9 @@
         	#{stime},
             #{orderType},
         	#{createUserId},
-		    #{createTime},
+		    now(),
 		    #{modifyUserId},
-		    #{modifyTime}
+		    now()
         )
     ]]>
     </insert>
@@ -151,7 +151,7 @@
         UPDATE tab_inout_stock SET
 		isBIll = #{isBIll},
 		modifyUserId = #{modifyUserId},
-		modifyTime = #{modifyTime},
+		modifyTime = now(),
 		businessId =# {businessId}
         WHERE
 	        id = #{id}
@@ -377,6 +377,7 @@
         A.tmpNum,
         D.goodsName,
         F.materialNum,
+        G.materialNum as ycmaterialNum,
         F.isHasLadder,
         F.goodsId,
         F.price AS oneprice,
