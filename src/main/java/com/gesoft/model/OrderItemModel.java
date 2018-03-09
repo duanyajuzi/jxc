@@ -13,7 +13,7 @@ public class OrderItemModel extends BaseModel{
     private String customerGoodId;
     private String goodsName;
     private Long esgouNum;
-    private Float unitPrice;
+    private Double unitPrice;
     private Long tmpNum;
     private Long afterNum;
     private Integer itemState;
@@ -22,11 +22,11 @@ public class OrderItemModel extends BaseModel{
     private String ycmaterialNum;
     private String specUnit;
     private String dictName;
-    private Float totalMoney;
+    private Double totalMoney;
     //方案其他字段
     private String goodsId;
     private Long goodsNum;
-    private Float price;
+    private Double price;
     private String unit;
     private String pname;
     private Long storage;
@@ -56,7 +56,7 @@ public class OrderItemModel extends BaseModel{
     private String isHasLadder;
     private Integer customerId;
     private String blueprintId;
-    private float oneprice;
+    private Double oneprice;
     
     public String getId() {
         return id;
@@ -64,14 +64,6 @@ public class OrderItemModel extends BaseModel{
     
     public void setId(String id) {
         this.id = id;
-    }
-    
-    public float getOneprice() {
-        return oneprice;
-    }
-    
-    public void setOneprice(float oneprice) {
-        this.oneprice = oneprice;
     }
     
     public String getBlueprintId() {
@@ -171,15 +163,6 @@ public class OrderItemModel extends BaseModel{
         return this;
     }
 
-    public Float getUnitPrice() {
-        return unitPrice;
-    }
-
-    public OrderItemModel setUnitPrice(Float unitPrice) {
-        this.unitPrice = unitPrice;
-        return this;
-    }
-
     public String getGoodsUnit() {
         return goodsUnit;
     }
@@ -213,24 +196,6 @@ public class OrderItemModel extends BaseModel{
 
     public OrderItemModel setDictName(String dictName) {
         this.dictName = dictName;
-        return this;
-    }
-
-    public Float getTotalMoney() {
-        return totalMoney;
-    }
-
-    public OrderItemModel setTotalMoney(Float totalMoney) {
-        this.totalMoney = totalMoney;
-        return this;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public OrderItemModel setPrice(Float price) {
-        this.price = price;
         return this;
     }
 
@@ -456,6 +421,38 @@ public class OrderItemModel extends BaseModel{
     
     public void setGoodNum(Long goodNum) {
         this.goodNum = goodNum;
+    }
+    
+    public Double getUnitPrice() {
+        return unitPrice;
+    }
+    
+    public void setUnitPrice(Double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+    
+    public Double getTotalMoney() {
+        return totalMoney;
+    }
+    
+    public void setTotalMoney(Double totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+    
+    public Double getPrice() {
+        return price;
+    }
+    
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+    
+    public Double getOneprice() {
+        return oneprice;
+    }
+    
+    public void setOneprice(Double oneprice) {
+        this.oneprice = oneprice;
     }
 }
 

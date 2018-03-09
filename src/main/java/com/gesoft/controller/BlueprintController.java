@@ -108,7 +108,7 @@ public class BlueprintController extends BaseController
 				LadderPriceModel ladderPriceModel = new LadderPriceModel();
 				ladderPriceModel.setBlueprint_id(Id);
 				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
-				ladderPriceModel.setPrice(Float.parseFloat(jsonObject.get("price").toString()));
+				ladderPriceModel.setPrice(Double.parseDouble(jsonObject.get("price").toString()));
 				ladderPriceModel.setNum(Long.parseLong(jsonObject.get("num").toString()));
 				ladderPriceService.save(ladderPriceModel);
 			}
@@ -155,7 +155,7 @@ public class BlueprintController extends BaseController
 				LadderPriceModel ladderPriceModel = new LadderPriceModel();
 				ladderPriceModel.setBlueprint_id(Id);
 				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
-				ladderPriceModel.setPrice(Float.parseFloat(jsonObject.get("price").toString()));
+				ladderPriceModel.setPrice(Double.parseDouble(jsonObject.get("price").toString()));
 				ladderPriceModel.setNum(Long.parseLong(jsonObject.get("num").toString()));
 				String state = jsonObject.get("_state").toString();
 				if("added".equals(state)){

@@ -379,7 +379,7 @@ public class OrderItemController extends BaseController
                 Object obj = list.get(i).get("id");
                 Object obj2= list.get(i).get("orderId");
                 Object obj1 = list.get(i).get("tmpNum");
-                orderItemModel.setPrice(Float.parseFloat(list.get(i).get("unitPrice").toString()));
+                orderItemModel.setPrice(Double.parseDouble(list.get(i).get("unitPrice").toString()));
 //                orderItemModel.setInout_stock_id(model.getId());
                 orderItemModel.setOrderId(String.valueOf(obj2));
                 orderItemModel.setOrderItemId(String.valueOf(obj));

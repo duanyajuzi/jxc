@@ -103,9 +103,6 @@
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
 				AND A1.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
 			</if>
-	       <if test="@com.gesoft.util.Ognl@isNotEmpty(unitPrice)">
-				AND A1.unitPrice = #{unitPrice}
-			</if>
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(unit)">
 				AND A1.unit = #{unit}
 			</if>

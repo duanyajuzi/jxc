@@ -105,7 +105,7 @@ public class GoodCustomerController extends BaseController
 				CustomerPriceModel customerPriceModel = new CustomerPriceModel();
 				customerPriceModel.setGood_customer_id(Id);
 				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
-				customerPriceModel.setPrice(Float.parseFloat(jsonObject.get("price").toString()));
+				customerPriceModel.setPrice(Double.parseDouble(jsonObject.get("price").toString()));
 				customerPriceModel.setNum(Long.parseLong(jsonObject.get("num").toString()));
 				customerPriceService.save(customerPriceModel);
 			}
@@ -154,7 +154,7 @@ public class GoodCustomerController extends BaseController
 				CustomerPriceModel customerPriceModel = new CustomerPriceModel();
 				customerPriceModel.setGood_customer_id(Id);
 				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
-				customerPriceModel.setPrice(Float.parseFloat(jsonObject.get("price").toString()));
+				customerPriceModel.setPrice(Double.parseDouble(jsonObject.get("price").toString()));
 				customerPriceModel.setNum(Long.parseLong(jsonObject.get("num").toString()));
 				String state = jsonObject.get("_state").toString();
 				if("added".equals(state)){

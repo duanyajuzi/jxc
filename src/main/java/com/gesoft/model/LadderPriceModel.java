@@ -6,7 +6,7 @@ package com.gesoft.model;
      private Long id;
      private String  blueprint_id;
      private Long num;
-     private Float price;
+     private Double price;
 
 
      public String getBlueprint_id() {
@@ -34,16 +34,13 @@ package com.gesoft.model;
      public void setNum(Long num) {
          this.num = num;
      }
-
-     public Float getPrice() {
+    
+     public Double getPrice() {
          return price;
      }
-
-     public void setPrice(Float price) {
+    
+     public void setPrice(Double price) {
          this.price = price;
      }
-
-
-
  }
 

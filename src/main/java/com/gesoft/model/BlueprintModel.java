@@ -21,7 +21,7 @@ public class BlueprintModel extends BaseModel
 	private String data;
 	private String customerName;
 	private java.lang.Long goodsNum;
-	private java.lang.Float price;
+	private Double price;
 	private java.lang.String unit;
 	private java.lang.String pname;
 	private java.lang.String memo;
@@ -98,16 +98,7 @@ public class BlueprintModel extends BaseModel
 	{
 		return this.goodsNum;
 	}
-	public void setPrice(java.lang.Float value) 
-	{
-		this.price = value;
-	}
-	
-	public java.lang.Float getPrice() 
-	{
-		return this.price;
-	}
-	public void setUnit(java.lang.String value) 
+	public void setUnit(java.lang.String value)
 	{
 		this.unit = value;
 	}
@@ -160,6 +151,14 @@ public class BlueprintModel extends BaseModel
 	public java.lang.String getMaterialNum()
 	{
 		return this.materialNum;
+	}
+	
+	public Double getPrice() {
+		return price;
+	}
+	
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 }
 

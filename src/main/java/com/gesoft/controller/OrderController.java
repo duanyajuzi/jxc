@@ -291,7 +291,7 @@ public class OrderController extends BaseController
 			for(Object obj : jsArr){
 				itemModel = new OrderItemModel();
 				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
-				float price = Float.parseFloat(jsonObject.get("price").toString());
+				double price = Double.parseDouble(jsonObject.get("price").toString());
 				itemModel.setOrderId(orderId);
 				itemModel.setUnitPrice(price);
 				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
@@ -391,7 +391,7 @@ public class OrderController extends BaseController
 				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
 				
 				itemModel.setOrderId(orderId);
-				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
+				itemModel.setUnitPrice(Double.parseDouble(jsonObject.get("price").toString()));
 				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
 				itemModel.setTmpNum(0L);
 				Long esgouNum = Long.parseLong(jsonObject.get("esgouNum").toString());
@@ -461,7 +461,7 @@ public class OrderController extends BaseController
 				OrderItemModel orderItemTemp = orderItemService.getBluePrintInfo(itemModelTmp);
 				String blueprintId = orderItemTemp.getCustomerGoodId();
 				String isHasLadder = orderItemTemp.getIsHasLadder();
-				Float price;
+				Double price;
 				if("1".equals(isHasLadder)){
 					model.setCustomerGoodId(blueprintId);
 					model.setNum(jsonObject.get("esgouNum").toString());

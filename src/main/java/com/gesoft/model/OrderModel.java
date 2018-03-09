@@ -54,7 +54,7 @@ package com.gesoft.model;
 	private String zdsc;
 	private String data;
 	private String orderId;
-	private Float price;
+	private Double price;
 	private String num;
 	private String customerGoodId;
 	private String materialNum;
@@ -76,11 +76,11 @@ package com.gesoft.model;
 		this.customerGoodId = customerGoodId;
 	}
 	
-	public Float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 	
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	

@@ -6,7 +6,7 @@ package com.gesoft.model;
      private Long id;
      private String  good_customer_id;
      private Long num;
-     private Float price;
+     private Double price;
 
 
 
@@ -34,16 +34,14 @@ package com.gesoft.model;
      public void setNum(Long num) {
          this.num = num;
      }
-
-     public Float getPrice() {
+    
+    
+     public Double getPrice() {
          return price;
      }
-
-     public void setPrice(Float price) {
+    
+     public void setPrice(Double price) {
          this.price = price;
      }
-
-
-
  }
 

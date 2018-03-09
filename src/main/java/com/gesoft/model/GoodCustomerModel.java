@@ -25,7 +25,7 @@ public class GoodCustomerModel extends BaseModel
 	private java.lang.Long goodId;
 	private java.lang.Long customerId;
 	private java.lang.String materialNum;
-	private java.lang.Float unitPrice;
+	private double unitPrice;
 	private java.lang.String unit;
 	private java.lang.Float storage;
 	private String data;
@@ -139,16 +139,7 @@ public class GoodCustomerModel extends BaseModel
 	{
 		return this.materialNum;
 	}
-	public void setUnitPrice(java.lang.Float value) 
-	{
-		this.unitPrice = value;
-	}
-	
-	public java.lang.Float getUnitPrice() 
-	{
-		return this.unitPrice;
-	}
-	public void setUnit(java.lang.String value) 
+	public void setUnit(java.lang.String value)
 	{
 		this.unit = value;
 	}
@@ -166,6 +157,13 @@ public class GoodCustomerModel extends BaseModel
 	{
 		return this.storage;
 	}
-
+	
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+	
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
 }
 
