@@ -45,7 +45,7 @@ public class OrderItemModel extends BaseModel{
 
 //tab_inout_stock_item
     private Long inout_stock_id;
-    private Long orderItemId;
+    private String orderItemId;
     private Long goodNum;
     private Long goodId;
     private String treeId;
@@ -260,15 +260,14 @@ public class OrderItemModel extends BaseModel{
         this.goodsId = goodsId;
     }
     
-    public Long getOrderItemId() {
+    public String getOrderItemId() {
         return orderItemId;
     }
-
-    public OrderItemModel setOrderItemId(Long orderItemId) {
+    
+    public void setOrderItemId(String orderItemId) {
         this.orderItemId = orderItemId;
-        return this;
     }
-
+    
     public String getStime() {
         return stime;
     }
@@ -296,16 +295,15 @@ public class OrderItemModel extends BaseModel{
         this.orderType = orderType;
         return this;
     }
-
+    
     public Long getCreateUserId() {
         return createUserId;
     }
-
-    public OrderItemModel setCreateUserId(Long createUserId) {
+    
+    public void setCreateUserId(Long createUserId) {
         this.createUserId = createUserId;
-        return this;
     }
-
+    
     public String getCreateTime() {
         return createTime;
     }

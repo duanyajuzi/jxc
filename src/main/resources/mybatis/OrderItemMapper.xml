@@ -104,13 +104,13 @@
 		modifyTime
         ) VALUES (
         	#{id} ,
-            #{stime},
+            now(),
             #{orderType},
         	#{businessId},
         	#{createUserId},
 		    now(),
 		    #{modifyUserId},
-		    #{modifyTime}
+		    now()
         )
     ]]>
     </insert>
@@ -119,7 +119,6 @@
     <insert id="OrderItemMapper.insertInoutStockItem" useGeneratedKeys="true" keyProperty="id">
          <![CDATA[
         INSERT INTO tab_inout_stock_item(
-		inout_stock_id,
 		orderItemId,
 		price,
 		goodNum,
@@ -130,11 +129,10 @@
 		modifyUserId,
 		modifyTime
         ) VALUES (
-            #{inout_stock_id},
             #{orderItemId},
             #{price},
         	#{goodNum},
-        	#{stime},
+        	now(),
             #{orderType},
         	#{createUserId},
 		    now(),

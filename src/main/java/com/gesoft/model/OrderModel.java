@@ -44,7 +44,7 @@ package com.gesoft.model;
 	private java.lang.String ptel;
 //	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private String ctime;
-	private java.lang.Integer cuserid;
+	private long cuserid;
 	private java.lang.String memo;
 	private String customerName;
 	private String pcustomerName;
@@ -293,17 +293,17 @@ package com.gesoft.model;
 //	{
 //		setCtime(DateConvertUtils.parse(value, FORMAT_CTIME,java.util.Date.class));
 //	}
-
-	public void setCuserid(java.lang.Integer value)
-	{
-		this.cuserid = value;
+	
+	
+	public long getCuserid() {
+		return cuserid;
 	}
 	
-	public java.lang.Integer getCuserid() 
-	{
-		return this.cuserid;
+	public void setCuserid(long cuserid) {
+		this.cuserid = cuserid;
 	}
-	public void setMemo(java.lang.String value) 
+	
+	public void setMemo(java.lang.String value)
 	{
 		this.memo = value;
 	}

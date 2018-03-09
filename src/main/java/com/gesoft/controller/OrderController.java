@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.gesoft.model.OrderItemModel;
 import com.gesoft.service.OrderItemService;
 import com.gesoft.util.Md5Util;
+import org.omg.CORBA.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -187,7 +188,8 @@ public class OrderController extends BaseController
 	{
 
 		MsgModel msgModel = new MsgModel();
-		model.setCuserid((int)getSessionUserId(request));//类型不匹配
+		Long userid = getSessionUserId(request);
+		model.setCuserid(userid);//类型不匹配
 		String id = Md5Util.UUID();
 		model.setId(id);
 		try
@@ -219,7 +221,7 @@ public class OrderController extends BaseController
 					model.setOrderNo("DD"+getStringOrderNo());
 					orderService.save(model);
 					//复制子项
-					editItem2(model);
+					editItem2(model,userid);
 				}
 			}else{//销售订单项保存
 				editSellItem(model);
@@ -421,7 +423,7 @@ public class OrderController extends BaseController
 	 * 描述信息：复制订单子项
 	 * @return
 	 */
-	public void editItem2(OrderModel model)
+	public void editItem2(OrderModel model, long userid)
 	{
 		MsgModel msgModel = new MsgModel();
 		try
@@ -433,6 +435,7 @@ public class OrderController extends BaseController
 			String data = model.getData();
 			JSONArray jsArr = JSONArray.parseArray(data);
 			OrderItemModel itemModel;
+			OrderItemModel inoutStockModel;
 			OrderItemModel itemModelTmp;
 			for(Object obj : jsArr){
 				itemModelTmp = new OrderItemModel();
@@ -463,11 +466,20 @@ public class OrderController extends BaseController
 				itemModel.setUnitPrice(price);
 				itemModel.setCustomerGoodId(blueprintId);
 				itemModel.setTmpNum(0L);
-				itemModel.setEsgouNum(Long.parseLong(jsonObject.get("esgouNum").toString()));
+				long num = Long.parseLong(jsonObject.get("esgouNum").toString());
+				itemModel.setEsgouNum(num);
 				String id = Md5Util.UUID();
 				itemModel.setId(id);
 				orderItemService.save(itemModel);
-				orderItemService.insertInoutStock(itemModel);
+				
+				inoutStockModel = new OrderItemModel();
+				inoutStockModel.setOrderItemId(id);
+				inoutStockModel.setPrice(price);
+				inoutStockModel.setGoodNum(num);
+				inoutStockModel.setOrderType(0);
+				inoutStockModel.setCreateUserId(userid);
+				inoutStockModel.setModifyUserId(userid);
+				orderItemService.insertInoutStockItem(inoutStockModel);
 //				else if("modified".equals(state)){
 //					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
 //					orderItemService.update(itemModel);

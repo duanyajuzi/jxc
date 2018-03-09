@@ -382,7 +382,7 @@ public class OrderItemController extends BaseController
                 orderItemModel.setPrice(Float.parseFloat(list.get(i).get("unitPrice").toString()));
 //                orderItemModel.setInout_stock_id(model.getId());
                 orderItemModel.setOrderId(String.valueOf(obj2));
-                orderItemModel.setOrderItemId(Long.valueOf(String.valueOf(obj)));
+                orderItemModel.setOrderItemId(String.valueOf(obj));
                 orderItemModel.setGoodNum(Long.parseLong(obj1.toString()));
                 orderItemModel.setStime(model.getStime());
                 orderItemModel.setCreateUserId(getSessionUserId(request));
