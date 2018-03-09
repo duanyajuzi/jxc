@@ -19,6 +19,7 @@ public class OrderItemModel extends BaseModel{
     private Integer itemState;
     private String goodsUnit;
     private String materialNum;
+    private String ycmaterialNum;
     private String specUnit;
     private String dictName;
     private Float totalMoney;
@@ -451,6 +452,14 @@ public class OrderItemModel extends BaseModel{
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public String getYcmaterialNum() {
+        return ycmaterialNum;
+    }
+
+    public void setYcmaterialNum(String ycmaterialNum) {
+        this.ycmaterialNum = ycmaterialNum;
     }
 }
 
