@@ -142,6 +142,15 @@
     ]]>
     </insert>
 
+    <update id="OrderItemMapper.updateInoutStockItem">
+        <![CDATA[
+        UPDATE tab_inout_stock_item SET
+		price = #{price},
+		modifyUserId = #{modifyUserId},
+		modifyTime = now()
+        WHERE  id = #{id}
+    ]]>
+    </update>
 
 
     <update id="OrderItemMapper.updateInoutStock">
@@ -532,6 +541,7 @@
         T.orderNo,
         T.orderName,
         F.goodsId as customerGoodId,
+        G.materialNum as ycmaterialNum,
         F.materialNum,
         G.goodId,
         D.goodsName,

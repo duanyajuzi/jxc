@@ -55,10 +55,8 @@
             <table style="width:100%;">
                 <tr>
                     <td style="width:30%;">
-                        <%--<a name="add" class="mini-button block-button" iconCls="icon-add" onclick="PageInoutStock.funAdd()">增加</a>--%>
-                        <%--<a name="modify" class="mini-button block-button" iconCls="icon-edit" onclick="PageInoutStock.funModify()">修改</a>--%>
-                        <%--<a name="delete" class="mini-button block-button" iconCls="icon-remove" onclick="PageInoutStock.funDelete()">删除</a>--%>
                         <a name="setInStockButton" id="setInStockButton" class="mini-button" iconCls="icon-node" onclick="PageInoutStock.funSetInoutStockNum()">入库</a>
+                        <a name="modify" id="modify" class="mini-button block-button" iconCls="icon-edit" onclick="PageInoutStock.funModify()">修改价格</a>
                     </td>
                 </tr>
             </table>

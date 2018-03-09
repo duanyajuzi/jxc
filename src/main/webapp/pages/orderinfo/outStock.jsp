@@ -64,10 +64,8 @@
             <table style="width:100%;">
                 <tr>
                     <td style="width:30%;">
-                        <%--<a name="add" class="mini-button block-button" iconCls="icon-add" onclick="PageOutStock.funAdd()">增加</a>--%>
-                        <%--<a name="modify" class="mini-button block-button" iconCls="icon-edit" onclick="PageOutStock.funModify()">修改</a>--%>
-                        <%--<a name="delete" class="mini-button block-button" iconCls="icon-remove" onclick="PageOutStock.funDelete()">删除</a>--%>
                         <a name="setOutStockButton" id="setOutStockButton" class="mini-button" iconCls="icon-node" onclick="PageOutStock.funSetInoutStockNum()">出库</a>
+                        <a name="modify" id="modify" class="mini-button block-button" iconCls="icon-edit" onclick="PageOutStock.funModify()">修改价格</a>
                     </td>
                 </tr>
             </table>
@@ -81,6 +79,7 @@
                     <div field="orderNo" width="120" allowSort="true" headerAlign="center" align="center">订单编号</div>
                     <div field="orderName" width="120" allowSort="true" headerAlign="center" align="center">客户订单号</div>
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center" align="center">商品名称</div>
+                    <div field="ycmaterialNum" width="120" allowSort="true" headerAlign="center" align="center">原厂料号</div>
                     <div field="materialNum" width="120" allowSort="true" headerAlign="center" align="center">客户料号</div>
                     <div field="goodNum" name="goodNum" width="120" allowSort="true" headerAlign="center" align="center">出库商品数量</div>
                     <div field="price" name="price" width="120" allowSort="true" headerAlign="center" align="center">单价</div>

@@ -54,14 +54,9 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         return orderItemDAO.insertInoutStock(model);
     }
     //修改出入库存信息
-    public int updateInoutStock(OrderItemModel orderItemModel){
-        return orderItemDAO.updateInoutStock(orderItemModel);
+    public int updateInoutStockItem(OrderItemModel orderItemModel){
+        return orderItemDAO.updateInoutStockItem(orderItemModel);
     }
-    //删除出入库存信息
-    public int deleteInoutStock(OrderItemModel model){
-        return orderItemDAO.deleteInoutStock(model);
-    }
-    
     //更新库存
     public int updateStorage(OrderItemModel model){
         return orderItemDAO.updateStorage(model);

@@ -35,18 +35,14 @@ var PageInoutStock=function () {
             inoutStockForm.setData();
             this.inoutItemGrid.load();
         },
-        funAdd : function()
-        {
-            var paramData = {action: "insertTabInoutStock",row:{orderType:PageInoutStock.defaultOption.orderType}, title:"新增数据"};
-            this.funOpenInfo(paramData);
-        },
         funModify : function()
         {
             var row = this.inoutItemGrid.getSelected();
             if(row)
             {
+                row.ycmaterialNum=row.materialNum;
                 row.orderType=PageInoutStock.defaultOption.orderType;
-                var paramData = {action: "updateTabInoutStock", row: row, title:"编辑数据"};
+                var paramData = {action: "updateInoutStockItem", row: row, title:"修改价格"};
                 this.funOpenInfo(paramData);
             }
             else
@@ -58,53 +54,18 @@ var PageInoutStock=function () {
         {
             var me = this;
             mini.open({
-                url: this.basePath + "/pages/orderinfo/inoutStock_add.jsp",
+                url: this.basePath + "/pages/orderinfo/inoutStockItem_add.jsp",
                 title: paramData.title,
-                width: 320,
-                height: 120,
+                width: 400,
+                height: 280,
                 onload:function(){
                     var iframe=this.getIFrameEl();
-                    iframe.contentWindow.PageInoutStockAdd.funSetData(paramData);
+                    iframe.contentWindow.PageInoutStockItemAdd.funSetData(paramData);
                 },
                 ondestroy:function(action){
                     me.inoutItemGrid.reload();
                 }
             })
-        },
-        funDelete:function () {
-            var row = this.inoutItemGrid.getSelected();
-            var me = this;
-            if(row)
-            {
-                mini.confirm("确定要删除这条记录?", "提醒", function (action) {
-                    if (action == "ok")
-                    {
-                        $.ajax({
-                            url : me.basePath + "/orderItem/deleteTabInoutStock",
-                            type: 'POST',
-                            data: {"id": row.id},
-                            dataType: 'json',
-                            success: function (data)
-                            {
-                                mini.alert(data.msg, "提醒", function(){
-                                    if(data.success)
-                                    {
-                                        me.inoutItemGrid.reload();
-                                    }
-                                });
-                            },
-                            error: function ()
-                            {
-                                mini.alert("删除记录失败");
-                            }
-                        });
-                    }
-                })
-            }
-            else
-            {
-                mini.alert("请先选择要删除的记录");
-            }
         },
         //商品入库数量
         funSetInoutStockNum: function () {

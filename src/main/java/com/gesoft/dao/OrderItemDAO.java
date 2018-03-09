@@ -134,7 +134,11 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
     public int insertInoutStockItem(OrderItemModel model){
         return getSqlSession().insert(getMybatisSqlMapNamespace() + ".insertInoutStockItem", model);
     }
-
+    /*修改出入库存细项价格
+      updateInoutStockItem*/
+    public int updateInoutStockItem(OrderItemModel model){
+        return getSqlSession().insert(getMybatisSqlMapNamespace() + ".updateInoutStockItem", model);
+    }
     //修改订单状态
     //入库
     public int updateInOrderStatus(OrderItemModel model){

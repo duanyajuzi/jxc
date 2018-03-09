@@ -407,46 +407,25 @@ public class OrderItemController extends BaseController
         }
     }
 
-    //插入出入库细项信息
-//    @RequestMapping(value = "/insertInoutStockItem")
-//    @ResponseBody
-//    public void insertInoutStockItem(OrderItemModel model){
-//        try {
-//            String data = model.getData();
-//            List<Map<String, Object>> list = (List<Map<String, Object>>) JSONUtils.parse(data);
-//            for (int i = 0; i < list.size(); i++) {
-//                Object obj = list.get(i).get("id");
-//                Object obj1 = list.get(i).get("tmpNum");
-//                model.setOrderItemId(Long.valueOf(String.valueOf(obj)));
-//                model.setGoodNum(Float.parseFloat(obj1.toString()));
-//                orderItemService.insertInoutStockItem(model);
-//            }
-//        }catch (Exception e){
-//            logger.error("OrderItemController insertInoutStockItem error：", e);
-//        }
-//    }
-//    //修改出入库存信息
-//    @RequestMapping(value = "/updateTabInoutStock",method=RequestMethod.POST)
-//    @ResponseBody
-//    public void updateInoutStock(OrderItemModel orderItemModel,HttpServletRequest request){
-//        try{
-//            orderItemModel.setModifyUserId(getSessionUserId(request));
-//            orderItemModel.setModifyTime((new SimpleDateFormat("yyyyMMddhhmmss")).format(new Date()));
-//            orderItemService.updateInoutStock(orderItemModel);
-//        }catch (Exception e){
-//            logger.error("OrderItemController updateInoutStock error：", e);
-//        }
-//    }
-//    //删除出入库存信息
-//    @RequestMapping(value = "/deleteTabInoutStock")
-//    @ResponseBody
-//    public void deleteInoutStock(OrderItemModel model){
-//        try{
-//            orderItemService.deleteInoutStock(model);
-//        }catch (Exception e){
-//            logger.error("OrderItemController deleteInoutStock error：", e);
-//        }
-//    }
+    //修改出入库存价格
+    @RequestMapping(value = "/updateInoutStockItem",method=RequestMethod.POST)
+    public @ResponseBody MsgModel updateInoutStockItem(OrderItemModel orderItemModel,HttpServletRequest request){
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            setSessionUserId(orderItemModel, request);
+            if (orderItemService.updateInoutStockItem(orderItemModel) > 0)
+            {
+                msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+            }
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController updateInoutStockItem error：", e);
+        }
+        return msgModel;
+
+    }
 
     /**
      * 采购订单树
