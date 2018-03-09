@@ -158,6 +158,7 @@ var PageSetInoutStock = function () {
                         "goodsName": data.goodsName,
                         "materialNum": data.materialNum,
                         "tmpNum": data.tmpNum,
+                        "unitPrice": data.unitPrice,
                         "action": "<a href='javascript:void(0);' onclick='PageSetInoutStock.delRight(this)'>删除</a>"
                     };
                     beforeData.push(paramData);
@@ -171,9 +172,6 @@ var PageSetInoutStock = function () {
             var stime=mini.get("stime");
             var value=stime.text;
             var param=this.searchForm.getData();
-            if(this.orderType==1){
-                data.tmpNum=0-parseFloat(data.tmpNum);
-            }
             var paramData={"stime":value,"orderType":this.orderType,"businessId":param.businessId,"data":JSON.stringify(data)};
             $.ajax({
                 url: this.basePath + "/orderItem/updateOrderItemTmpNum",

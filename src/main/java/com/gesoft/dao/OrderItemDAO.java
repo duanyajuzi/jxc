@@ -79,11 +79,16 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryOutStock", orderItemModel);
     }
 
+    //入库细项总数
     public long findCntInoutStockItem(OrderItemModel model)
     {
         return (Long)getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".countInoutItem", model);
     }
-
+    //出库细项总数
+    public long findCntOutStockItem(OrderItemModel model)
+    {
+        return (Long)getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".countOutItem", model);
+    }
 
     /**
      * 入库细项

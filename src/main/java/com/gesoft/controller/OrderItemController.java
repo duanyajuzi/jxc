@@ -135,43 +135,43 @@ public class OrderItemController extends BaseController
     }
 
     /**
-     * 入库细项
+     * 分页查询入库细项
      * @param model
      * @return
      */
-    @RequestMapping(value="/queryInoutStockItem", method=RequestMethod.POST)
-    public @ResponseBody List<OrderItemModel> search3(OrderItemModel model)
+    @RequestMapping(value="/queryInoutStockItem")
+    public @ResponseBody MsgModel search3(OrderItemModel model)
     {
-        List<OrderItemModel> list=new ArrayList<OrderItemModel>();
+        MsgModel msgModel = new MsgModel();
         try
         {
-           list= orderItemService.findListInoutStockItem(model);
+            orderItemService.findPageInoutStockItem(model, msgModel);
         }
         catch (Exception e)
         {
             logger.error("OrderItemController queryInoutStockItem error：", e);
         }
-        return list;
+        return msgModel;
     }
 
     /**
-     * 出库细项
+     *分页查询出库细项
      * @param model
      * @return
      */
-    @RequestMapping(value="/queryOutStockItem", method=RequestMethod.POST)
-    public @ResponseBody List<OrderItemModel> search4(OrderItemModel model)
+    @RequestMapping(value="/queryOutStockItem")
+    public @ResponseBody MsgModel search4(OrderItemModel model)
     {
-        List<OrderItemModel> list=new ArrayList<OrderItemModel>();
+        MsgModel msgModel = new MsgModel();
         try
         {
-            list= orderItemService.findListOutStockItem(model);
+            orderItemService.findPageOutStockItem(model, msgModel);
         }
         catch (Exception e)
         {
             logger.error("OrderItemController queryOutStockItem error：", e);
         }
-        return list;
+        return msgModel;
     }
 
     /**
@@ -360,15 +360,15 @@ public class OrderItemController extends BaseController
     @RequestMapping(value = "/insertTabInoutStock")
     @ResponseBody
     public void insertInoutStock(OrderItemModel model,HttpServletRequest request){
-        try{
-            model.setCreateUserId(getSessionUserId(request));
-            model.setCreateTime((new SimpleDateFormat("yyyy-MM-dd H:mm:ss")).format(new Date()));
-            model.setModifyUserId(getSessionUserId(request));
-            model.setModifyTime((new SimpleDateFormat("yyyy-MM-dd H:mm:ss")).format(new Date()));
-            orderItemService.insertInoutStock(model);
-        }catch (Exception e){
-            logger.error("OrderItemController insertInoutStock error：", e);
-        }
+//        try{
+//            model.setCreateUserId(getSessionUserId(request));
+//            model.setCreateTime((new SimpleDateFormat("yyyy-MM-dd H:mm:ss")).format(new Date()));
+//            model.setModifyUserId(getSessionUserId(request));
+//            model.setModifyTime((new SimpleDateFormat("yyyy-MM-dd H:mm:ss")).format(new Date()));
+//            orderItemService.insertInoutStock(model);
+//        }catch (Exception e){
+//            logger.error("OrderItemController insertInoutStock error：", e);
+//        }
 //        return model.getId();
         try {
             String data = model.getData();
@@ -378,10 +378,15 @@ public class OrderItemController extends BaseController
                 Object obj = list.get(i).get("id");
                 Object obj2= list.get(i).get("orderId");
                 Object obj1 = list.get(i).get("tmpNum");
-                orderItemModel.setInout_stock_id(model.getId());
+                orderItemModel.setPrice(Float.parseFloat(list.get(i).get("unitPrice").toString()));
+//                orderItemModel.setInout_stock_id(model.getId());
                 orderItemModel.setOrderId(String.valueOf(obj2));
                 orderItemModel.setOrderItemId(Long.valueOf(String.valueOf(obj)));
                 orderItemModel.setGoodNum(Float.parseFloat(obj1.toString()));
+                orderItemModel.setStime(model.getStime());
+                orderItemModel.setCreateUserId(getSessionUserId(request));
+                orderItemModel.setModifyUserId(getSessionUserId(request));
+                orderItemModel.setOrderType(model.getOrderType());
                 orderItemService.insertInoutStockItem(orderItemModel);
             }
             List<OrderItemModel> clist = new ArrayList();//查询子节点

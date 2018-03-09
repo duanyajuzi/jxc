@@ -71,66 +71,24 @@
             </table>
         </div>
         <div class="mini-fit">
-            <div id="inoutGrid" class="mini-datagrid"
-                 idField="id" allowResize="false" onshowrowdetail="onShowRowDetail"
+            <div id="inoutItemGrid" class="mini-datagrid" idField="id" allowResize="false"
+                 url="${pageContext.request.contextPath}/orderItem/queryOutStockItem"
                  pagesize="30" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
-                <div property="columns">
-                    <div type="expandcolumn" >出库详情</div>
-                    <div type="indexcolumn" headerAlign="center"  width="20" align="center">序号</div>
-                    <div field="business" width="150" headerAlign="center" allowSort="true" align="center">业务类型</div>
-                    <div field="stime" name="stime" width="150" headerAlign="center" align="center"
-                         dateFormat="yyyy-MM-dd" allowSort="true">出库时间</div>
-                    <div field="isBIll" width="150"  renderer="onStatusRenderer" align="center"
-                         headerAlign="center" allowSort="true">是否开票</div>
-                </div>
-            </div>
-        </div>
-        <%--内嵌出货细项表格--%>
-        <div id="detailGrid_Form" style="display: none;">
-            <div id="inoutItemGrid" class="mini-datagrid" style="width: 100%;" showPager="false"
-                 url="${pageContext.request.contextPath}/orderItem/queryOutStockItem">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="30" align="center">序号</div>
                     <div field="orderNo" width="120" allowSort="true" headerAlign="center" align="center">订单编号</div>
                     <div field="orderName" width="120" allowSort="true" headerAlign="center" align="center">客户订单号</div>
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center" align="center">商品名称</div>
                     <div field="materialNum" width="120" allowSort="true" headerAlign="center" align="center">客户料号</div>
-                    <div field="goodNum" name="goodNum" width="120" allowSort="true" align="center">出库商品数量</div>
+                    <div field="goodNum" name="goodNum" width="120" allowSort="true" headerAlign="center" align="center">出库商品数量</div>
+                    <div field="price" name="price" width="120" allowSort="true" headerAlign="center" align="center">单价</div>
+                    <div field="stime" name="stime" width="150" headerAlign="center" align="center"
+                         dateFormat="yyyy-MM-dd" allowSort="true">出库时间</div>
                 </div>
             </div>
         </div>
-
     </div>
 
 </div>
-<script>
-    mini.parse();
-    var orderType=<%=orderType%>;
-
-    var Genders=[{id:0,text:"未开票"},
-        {id:1,text:"已开票"}];
-    function onStatusRenderer(e) {
-        for (var i = 0, l = Genders.length; i < l; i++) {
-            var g = Genders[i];
-            if (g.id == e.value) return g.text;
-        }
-        return "";
-    }
-
-    var inoutGrid=mini.get("inoutGrid");
-    inoutGrid.setUrl("${pageContext.request.contextPath}/orderItem/queryOutStock?orderType=1");
-    inoutGrid.load();
-    var detailGrid_Form = document.getElementById("detailGrid_Form");
-    var inoutItemGrid=mini.get("inoutItemGrid");
-    function onShowRowDetail(e) {
-        var grid = e.sender;
-        var row = e.record;
-        var td = grid.getRowDetailCellEl(row);
-        td.appendChild(detailGrid_Form);
-        detailGrid_Form.style.display = "block";
-        inoutItemGrid.load({ inout_stock_id: row.id });
-    }
-
-</script>
 </body>
 </html>

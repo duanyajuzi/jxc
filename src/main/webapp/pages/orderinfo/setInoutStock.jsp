@@ -51,10 +51,12 @@
     <div region="center" align="center">
         <input type="button" value=">>" onclick="PageSetInoutStock.setInoutTableAll()" style="margin-top: 250px;text-align: center"/>
     </div>
-    <div title="商品入/出库详情" region="east" allowResize="false" showSplit="false"
+    <div title="商品入库详情" region="east" allowResize="false" showSplit="false"
+         showSplitIcon="false" allowUnselect="false" showHeader="false" showModified="false"
+         allowResize="false" showSplit="false" allowCellSelect="true"  allowCellEdit="true"
          showSplitIcon="false" allowUnselect="false" showHeader="false" showModified="false"
          width="540" style="border:1px solid #cccccc;">
-        <div id="datagrid" class="mini-datagrid" idField="id"  sortMode="client" style="height: 530px"
+        <div id="datagrid" class="mini-datagrid" idField="id"  sortMode="client" style="height: 510px"
              showColumns="true" showPager="false"  region="east">
             <div property="columns">
                 <div field="key" visible="false"  headerAlign="center" allowSort="true">key</div>
@@ -66,6 +68,9 @@
                 <div field="goodsName" width="80" headerAlign="center" allowSort="true">商品名称</div>
                 <div field="materialNum" width="120" headerAlign="center" allowSort="true">原厂料号</div>
                 <div field="tmpNum" name="tmpNum" width="100" headerAlign="center" allowSort="true">入库数量</div>
+                <div field="unitPrice" width="120" headerAlign="center" >价格
+                    <input property="editor" id="price" class="mini-spinner" minValue="0" maxValue="100000000" style="width:100%;"/>
+                </div>
                 <div field="action" width="120" headerAlign="center" allowSort="true">操作</div>
             </div>
         </div>

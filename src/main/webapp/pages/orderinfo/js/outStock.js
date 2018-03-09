@@ -3,15 +3,14 @@ var PageOutStock=function () {
     return {
         defaultOption: {
             basePath: "",
-            inoutGrid:null,
-            orderType:null,
-            inoutItemGrid:null
+            inoutItemGrid:null,
+            orderType:null
         },
         init: function () {
             mini.parse();
             this.basePath = PageMain.basePath;
-            this.inoutGrid=mini.get("inoutGrid");
             this.inoutItemGrid=mini.get("inoutItemGrid");
+            this.inoutItemGrid.load();
             PageOutStock.defaultOption.orderType=PageOutStock.getUrlParam("orderType");
         },
         getUrlParam:function(name){
@@ -27,14 +26,14 @@ var PageOutStock=function () {
             var stimeBegin=mini.get("stimeBegin");
             var stimeEnd=mini.get("stimeEnd");
             var paramData={"businessId":businessId,"orderNo":orderNo,"orderName":orderName,"materialNum":materialNum,"stimeBegin":stimeBegin.text,"stimeEnd":stimeEnd.text};
-            this.inoutGrid.load(paramData, function(res){
+            this.inoutItemGrid.load(paramData, function(res){
                 console.log(res);
             });
         },
         funReset:function () {
             var inoutStockForm=new mini.Form("inoutStockForm");
             inoutStockForm.setData();
-            this.inoutGrid.load();
+            this.inoutItemGrid.load();
         },
         funAdd : function()
         {
@@ -43,7 +42,7 @@ var PageOutStock=function () {
         },
         funModify : function()
         {
-            var row = this.inoutGrid.getSelected();
+            var row = this.inoutItemGrid.getSelected();
             if(row)
             {
                 row.orderType=PageOutStock.defaultOption.orderType;
@@ -68,12 +67,12 @@ var PageOutStock=function () {
                     iframe.contentWindow.PageOutStockAdd.funSetData(paramData);
                 },
                 ondestroy:function(action){
-                    me.inoutGrid.reload();
+                    me.inoutItemGrid.reload();
                 }
             })
         },
         funDelete:function () {
-            var row = this.inoutGrid.getSelected();
+            var row = this.inoutItemGrid.getSelected();
             var me = this;
             if(row)
             {
@@ -90,7 +89,7 @@ var PageOutStock=function () {
                                 mini.alert(data.msg, "提醒", function(){
                                     if(data.success)
                                     {
-                                        me.inoutGrid.reload();
+                                        me.inoutItemGrid.reload();
                                     }
                                 });
                             },
@@ -109,17 +108,17 @@ var PageOutStock=function () {
         },
         //商品出库数量
         funSetInoutStockNum: function () {
-            var data={orderType:PageOutStock.defaultOption.orderType}
+            var data={orderType:PageOutStock.defaultOption.orderType};
             mini.open({
                 url:this.basePath+"/pages/orderinfo/setOutStock.jsp",
                 height:600,
-                width:1000,
+                width:1100,
                 onload:function () {
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageSetOutStock.funGetData(data);
                 },
                 ondestroy:function () {
-                    mini.get("inoutGrid").load();
+                    mini.get("inoutItemGrid").load();
                 }
             });
         }

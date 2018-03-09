@@ -122,6 +122,11 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         }
     }
 
+    /**
+     * 分页查询入库细项
+     * @param model
+     * @param msgModel
+     */
     public void findPageInoutStockItem(OrderItemModel model, MsgModel msgModel) {
         //取总记录数
         long recordCount = model.getTotal();
@@ -138,6 +143,29 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
             }
         }
     }
+
+    /**
+     * 分页查询出库细项
+     * @param model
+     * @param msgModel
+     */
+    public void findPageOutStockItem(OrderItemModel model, MsgModel msgModel) {
+        //取总记录数
+        long recordCount = model.getTotal();
+        if (isSearchPageTotal(model)) {
+            recordCount = orderItemDAO.findCntOutStockItem(model);
+        }
+        //分页加载数据
+        if (recordCount > 0) {
+            setPageModel(recordCount, model);
+            List <OrderItemModel> argArgs = orderItemDAO.findListOutStockItem(model);
+            if (argArgs != null) {
+                msgModel.setData(argArgs);
+                msgModel.setTotal(recordCount);
+            }
+        }
+    }
+
 
     //入库细项
     public List<OrderItemModel> findListInoutStockItem(OrderItemModel model){

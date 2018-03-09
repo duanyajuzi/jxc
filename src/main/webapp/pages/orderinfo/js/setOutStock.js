@@ -128,13 +128,13 @@ var PageSetOutStock = function () {
         funModifyTree: function (data) {
             data.afterNum = parseFloat(data.afterNum) + parseFloat(data.tmpNum);
             this.orderTree.updateNode(data, {afterNum: data.afterNum});
-            this.orderTree.updateNode(data, {text: data.goodsName + "-" + data.materialNum + "(" + parseFloat(data.afterNum) + ")"});
+            this.orderTree.updateNode(data, {text: data.goodsName + "-" + data.ycmaterialNum+ data.materialNum + "(" + parseFloat(data.afterNum) + ")"});
         },
         //添加出库商品数量修改tree
         funUpdateTree: function (data) {
             data.afterNum = parseFloat(data.afterNum) - parseFloat(data.tmpNum);
             this.orderTree.updateNode(data, {afterNum: data.afterNum});
-            this.orderTree.updateNode(data, {text: data.goodsName + "-" + data.materialNum + "(" + parseFloat(data.afterNum) + ")"});
+            this.orderTree.updateNode(data, {text: data.goodsName + "-" + data.ycmaterialNum + data.materialNum + "(" + parseFloat(data.afterNum) + ")"});
         },
         //取消树的选中
         funUncheckTree: function () {
@@ -167,6 +167,7 @@ var PageSetOutStock = function () {
                         "goodsName": data.goodsName,
                         "materialNum": data.materialNum,
                         "tmpNum": data.tmpNum,
+                        "unitPrice": data.unitPrice,
                         "action": "<a href='javascript:void(0);' onclick='PageSetOutStock.delRight(this)'>删除</a>"
                     };
                     beforeData.push(paramData);
@@ -180,6 +181,9 @@ var PageSetOutStock = function () {
             var stime=mini.get("stime");
             var value=stime.text;
             var param=this.searchForm.getData();
+            if(this.orderType==1){
+                data.tmpNum=0-parseFloat(data.tmpNum);
+            }
             var paramData={"stime":value,"orderType":this.orderType,"businessId":param.businessId,"data":JSON.stringify(data)};
             $.ajax({
                 url: this.basePath + "/orderItem/updateOrderItemTmpNumOut",
