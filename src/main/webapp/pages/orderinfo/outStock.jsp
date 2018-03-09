@@ -44,7 +44,9 @@
                 <lable class="form-label">客户料号：</lable>
                 <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:150px;"/>
                 </div>
-                <div style="margin: 0 200px">
+                <div style="margin: 0 78px">
+                <lable class="form-label">原厂料号：</lable>
+                <input name="ycmaterialNum" id="ycmaterialNum" class="mini-textbox" emptyText="原厂料号"  style="width:150px;"/>
                 <lable class="form-label" name="stimeSearch" id="stimeSearch">出库时间：</lable>
                 <input name="stimeBegin" id="stimeBegin" class="mini-datepicker" style="witdth:150px;"
                        format="yyyy-MM-dd" emptyText="开始时间" allowInput="false"  />至

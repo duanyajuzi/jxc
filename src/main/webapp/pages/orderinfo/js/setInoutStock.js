@@ -16,13 +16,11 @@ var PageSetInoutStock = function () {
             this.searchForm=new mini.Form("searchForm");
             var date=new Date();
             mini.get("stime").setValue(date);
-            $("#search_table").find("td input").prop("disabled",true);
-            $("#search_table").find("td input").css("background","#ebebe4");
         },
         funGetData:function (data) {
             if(data!=null && data!="") {
                 this.orderType = data.orderType;
-                // this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
+                this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
             }
         },
 
@@ -43,15 +41,11 @@ var PageSetInoutStock = function () {
                 error: function () {
                 }
             });
-            $("#search_table").find("td input").prop("disabled",false);
-            $("#search_table").find("td input").css("background","none");
         },
         funReset:function(){
             var searchForm = new mini.Form("searchForm");
             searchForm.setData();
-            $("#search_table").find("td input").prop("disabled",true);
-            $("#search_table").find("td input").css("background","#ebebe4");
-            this.orderTree.loadData(null);
+            this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
         },
         setInoutTableAll: function () {
             var valueList = new Array();

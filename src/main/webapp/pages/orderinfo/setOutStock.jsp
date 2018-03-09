@@ -11,11 +11,6 @@
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
     <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/setOutStock.js'/>"></script>
     <title></title>
-    <style>
-        .ywlx{
-            margin-left: 65px;
-        }
-    </style>
 </head>
 <body>
 
@@ -24,28 +19,31 @@
          style="border:1px solid #cccccc;">
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;" showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="searchForm">
-                <lable class="form-label ywlx">请先选择业务类型：</lable>
-                <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
-                idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
-                style="width:150px;"   maxlength="10" emptyText="请输入或选择" valueFromSelect="true" popupHeight="150"
-                onvaluechanged="PageSetOutStock.funSearch()"/>
                 <table id="search_table">
                     <tr>
+                        <td style="width: 75px"><lable class="form-label">业务类型：</lable></td>
+                        <td><input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
+                               idField="id" textField="business" url="${pageContext.request.contextPath}/business/queryBusinessList"
+                               style="width:110px;"   maxlength="10" emptyText="请输入或选择" valueFromSelect="true" popupHeight="150"/></td>
                         <td style="width: 70px"> <lable class="form-label">订单号：</lable></td>
                         <td> <input name="orderNo" id="orderNo" class="mini-textbox" emptyText="订单号"  style="width:110px;"/></td>
-                        <td style="width: 75px"> <lable class="form-label">客户订单号：</lable></td>
-                        <td> <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:110px;"/></td>
                     </tr>
                     <tr>
-                        <td> <lable class="form-label">客户料号：</lable></td>
-                        <td> <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:110px;"/></td>
+                        <td> <lable class="form-label">原厂料号：</lable></td>
+                        <td> <input name="materialNum" id="ycmaterialNum" class="mini-textbox" emptyText="原厂料号"  style="width:110px;"/></td>
+                        <td > <lable class="form-label">客户订单号：</lable></td>
+                        <td> <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:110px;"/></td>
+                    </tr>
+                   <tr>
+                       <td> <lable class="form-label">客户料号：</lable></td>
+                       <td> <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:110px;"/></td>
                         <td><a class="mini-button" iconCls="icon-search" onclick="PageSetOutStock.funSearch()" plain="true"><label>查询</label></a></td>
                         <td><a class="mini-button" iconCls="icon-reset" onclick="PageSetOutStock.funReset()" plain="true"><label>重置</label></a></td>
-                    </tr>
+                   </tr>
                 </table>
             </div>
         </div>
-        <div id="orderTree" class="mini-tree"  style="width:100%;height: calc(100% - 125px)"
+        <div id="orderTree" class="mini-tree"  style="width:100%;height: calc(100% - 114px)"
              showTreeIcon="true" textField="text" idField="treeId" nodesField="children" resultAsTree="true"
              showCheckBox="true" checkOnTextClick="true"
              expandOnLoad="true" contextMenu="#treeMenu">
