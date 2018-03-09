@@ -221,7 +221,7 @@ public class OrderController extends BaseController
 					model.setOrderNo("DD"+getStringOrderNo());
 					orderService.save(model);
 					//复制子项
-					editItem2(model,userid);
+					editItem2(model);
 				}
 			}else{//销售订单项保存
 				editSellItem(model);
@@ -284,14 +284,16 @@ public class OrderController extends BaseController
 			String orderId = model.getId();
 			String iskh = model.getIskh();
 			String data = model.getData();
+			long userid = model.getCuserid();
 			JSONArray jsArr = JSONArray.parseArray(data);
 			OrderItemModel itemModel;
+			OrderItemModel inoutStockModel;
 			for(Object obj : jsArr){
 				itemModel = new OrderItemModel();
 				JSONObject jsonObject = JSONObject.parseObject(obj.toString());
-				
+				float price = Float.parseFloat(jsonObject.get("price").toString());
 				itemModel.setOrderId(orderId);
-				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
+				itemModel.setUnitPrice(price);
 				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
 				Long esgouNum = Long.parseLong(jsonObject.get("esgouNum").toString());
 				itemModel.setEsgouNum(esgouNum);
@@ -306,8 +308,20 @@ public class OrderController extends BaseController
 						itemModel.setAfterNum(esgouNum);
 						orderItemService.updateStorage(itemModel);
 					}
-					itemModel.setId(Md5Util.UUID());
+					String id = Md5Util.UUID();
+					itemModel.setId(id);
 					orderItemService.save(itemModel);
+					if(model.getOrderType() == 0 && "1".equals(model.getZdsc())){
+						inoutStockModel = new OrderItemModel();
+						inoutStockModel.setOrderItemId(id);
+						inoutStockModel.setPrice(price);
+						inoutStockModel.setGoodNum(esgouNum);
+						inoutStockModel.setOrderType(0);
+						inoutStockModel.setCreateUserId(userid);
+						inoutStockModel.setModifyUserId(userid);
+						orderItemService.insertInoutStockItem(inoutStockModel);
+					}
+
 				}else if("modified".equals(state)){
 					itemModel.setId(jsonObject.get("id").toString());
 					//不控货时，数目小于已入库存时，temNum=num,afterNum=num-temNum
@@ -423,7 +437,7 @@ public class OrderController extends BaseController
 	 * 描述信息：复制订单子项
 	 * @return
 	 */
-	public void editItem2(OrderModel model, long userid)
+	public void editItem2(OrderModel model)
 	{
 		MsgModel msgModel = new MsgModel();
 		try
@@ -435,7 +449,6 @@ public class OrderController extends BaseController
 			String data = model.getData();
 			JSONArray jsArr = JSONArray.parseArray(data);
 			OrderItemModel itemModel;
-			OrderItemModel inoutStockModel;
 			OrderItemModel itemModelTmp;
 			for(Object obj : jsArr){
 				itemModelTmp = new OrderItemModel();
@@ -471,22 +484,7 @@ public class OrderController extends BaseController
 				String id = Md5Util.UUID();
 				itemModel.setId(id);
 				orderItemService.save(itemModel);
-				
-				inoutStockModel = new OrderItemModel();
-				inoutStockModel.setOrderItemId(id);
-				inoutStockModel.setPrice(price);
-				inoutStockModel.setGoodNum(num);
-				inoutStockModel.setOrderType(0);
-				inoutStockModel.setCreateUserId(userid);
-				inoutStockModel.setModifyUserId(userid);
-				orderItemService.insertInoutStockItem(inoutStockModel);
-//				else if("modified".equals(state)){
-//					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
-//					orderItemService.update(itemModel);
-//				}else if("removed".equals(state)){
-//					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
-//					orderItemService.delete(itemModel);
-//				}
+
 			}
 			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}
