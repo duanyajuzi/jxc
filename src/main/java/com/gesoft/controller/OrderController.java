@@ -291,9 +291,9 @@ public class OrderController extends BaseController
 				itemModel.setOrderId(orderId);
 				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
 				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
-				Float esgouNum = Float.parseFloat(jsonObject.get("esgouNum").toString());
+				Long esgouNum = Long.parseLong(jsonObject.get("esgouNum").toString());
 				itemModel.setEsgouNum(esgouNum);
-				itemModel.setTmpNum(0f);
+				itemModel.setTmpNum(0L);
 
 				String state = jsonObject.get("_state").toString();
 				if("added".equals(state)){
@@ -304,34 +304,35 @@ public class OrderController extends BaseController
 						itemModel.setAfterNum(esgouNum);
 						orderItemService.updateStorage(itemModel);
 					}
+					itemModel.setId(Md5Util.UUID());
 					orderItemService.save(itemModel);
 				}else if("modified".equals(state)){
-					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					itemModel.setId(jsonObject.get("id").toString());
 					//不控货时，数目小于已入库存时，temNum=num,afterNum=num-temNum
 					//控货时，num>temNum时，temNum不需要赋值，其他同不控货
-					Float orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
+					Long orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
 					if(orderItemTepNum >= esgouNum){//数目小于已入库存时
-						Float afterNum = esgouNum - orderItemTepNum;
+						Long afterNum = esgouNum - orderItemTepNum;
 						itemModel.setAfterNum(afterNum);
 						itemModel.setTmpNum(esgouNum);
 					}else{//数目大于已入库存时
 						if("0".equals(iskh)){//不控货
 							itemModel.setTmpNum(esgouNum);
 							//添加库存
-							Float afterNum = esgouNum - orderItemTepNum;
+							Long afterNum = esgouNum - orderItemTepNum;
 							itemModel.setAfterNum(afterNum);
 						}else{
 							itemModel.setTmpNum(orderItemTepNum);
-							itemModel.setAfterNum(0f);
+							itemModel.setAfterNum(0L);
 						}
 					}
 					orderItemService.updateStorage(itemModel);
 					orderItemService.update(itemModel);
 				}else if("removed".equals(state)){
-					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					itemModel.setId(jsonObject.get("id").toString());
 					//删除时库存处理
 					//查询已入库数量
-					Float orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
+					Long orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
 					itemModel.setAfterNum(-orderItemTepNum);
 					orderItemService.updateStorage(itemModel);
 					
@@ -376,31 +377,32 @@ public class OrderController extends BaseController
 				itemModel.setOrderId(orderId);
 				itemModel.setUnitPrice(Float.parseFloat(jsonObject.get("price").toString()));
 				itemModel.setCustomerGoodId(jsonObject.get("customerGoodId").toString());
-				itemModel.setTmpNum(0f);
-				Float esgouNum = Float.parseFloat(jsonObject.get("esgouNum").toString());
+				itemModel.setTmpNum(0L);
+				Long esgouNum = Long.parseLong(jsonObject.get("esgouNum").toString());
 				itemModel.setEsgouNum(esgouNum);
 				String state = jsonObject.get("_state").toString();
 				if("added".equals(state)){
+					itemModel.setId(Md5Util.UUID());
 					orderItemService.save(itemModel);
 				}else if("modified".equals(state)){
-					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
-					Float orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
+					itemModel.setId(jsonObject.get("id").toString());
+					Long orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
 					if(orderItemTepNum >= esgouNum){//数目小于已出库存时
-						Float afterNum = orderItemTepNum - esgouNum;
+						Long afterNum = orderItemTepNum - esgouNum;
 						itemModel.setAfterNum(afterNum);
 						itemModel.setTmpNum(esgouNum);
 					}else{//数目大于已出库存时
 						itemModel.setTmpNum(orderItemTepNum);
-						itemModel.setAfterNum(0f);
+						itemModel.setAfterNum(0L);
 					}
 					orderItemService.update(itemModel);
 					itemModel.setCustomerGoodId(jsonObject.get("goodsId").toString());
 					orderItemService.updateStorage(itemModel);
 				}else if("removed".equals(state)){
-					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+					itemModel.setId(jsonObject.get("id").toString());
 					//删除时库存处理
 					//查询已出库数量
-					Float orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
+					Long orderItemTepNum = orderItemService.getOrderItemTepNum(itemModel);
 					itemModel.setAfterNum(orderItemTepNum);
 					orderItemService.delete(itemModel);
 					itemModel.setCustomerGoodId(jsonObject.get("goodsId").toString());
@@ -460,18 +462,19 @@ public class OrderController extends BaseController
 				itemModel.setOrderId(orderId);
 				itemModel.setUnitPrice(price);
 				itemModel.setCustomerGoodId(blueprintId);
-				itemModel.setTmpNum(0f);
-				itemModel.setEsgouNum(Float.parseFloat(jsonObject.get("esgouNum").toString()));
-				String state = jsonObject.get("_state").toString();
-				if("added".equals(state)){
-					orderItemService.save(itemModel);
-				}else if("modified".equals(state)){
-					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
-					orderItemService.update(itemModel);
-				}else if("removed".equals(state)){
-					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
-					orderItemService.delete(itemModel);
-				}
+				itemModel.setTmpNum(0L);
+				itemModel.setEsgouNum(Long.parseLong(jsonObject.get("esgouNum").toString()));
+				String id = Md5Util.UUID();
+				itemModel.setId(id);
+				orderItemService.save(itemModel);
+				orderItemService.insertInoutStock(itemModel);
+//				else if("modified".equals(state)){
+//					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+//					orderItemService.update(itemModel);
+//				}else if("removed".equals(state)){
+//					itemModel.setId(Long.parseLong(jsonObject.get("id").toString()));
+//					orderItemService.delete(itemModel);
+//				}
 			}
 			msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
 		}

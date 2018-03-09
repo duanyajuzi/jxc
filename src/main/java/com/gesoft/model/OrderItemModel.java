@@ -7,15 +7,15 @@ import java.util.List;
  */
 public class OrderItemModel extends BaseModel{
     private static final long serialVersionUID = 5454155825314635342L;
-    private Long id;
+    private String id;
     private String orderId;
     private String orderName;
     private String customerGoodId;
     private String goodsName;
-    private Float esgouNum;
+    private Long esgouNum;
     private Float unitPrice;
-    private Float tmpNum;
-    private Float afterNum;
+    private Long tmpNum;
+    private Long afterNum;
     private Integer itemState;
     private String goodsUnit;
     private String materialNum;
@@ -29,7 +29,7 @@ public class OrderItemModel extends BaseModel{
     private Float price;
     private String unit;
     private String pname;
-    private Float storage;
+    private Long storage;
 //tab_inout_stock
     private String stime;
     private String stimeBegin;
@@ -46,7 +46,7 @@ public class OrderItemModel extends BaseModel{
 //tab_inout_stock_item
     private Long inout_stock_id;
     private Long orderItemId;
-    private Float goodNum;
+    private Long goodNum;
     private Long goodId;
     private String treeId;
     private String text;
@@ -57,6 +57,14 @@ public class OrderItemModel extends BaseModel{
     private Integer customerId;
     private String blueprintId;
     private float oneprice;
+    
+    public String getId() {
+        return id;
+    }
+    
+    public void setId(String id) {
+        this.id = id;
+    }
     
     public float getOneprice() {
         return oneprice;
@@ -124,14 +132,9 @@ public class OrderItemModel extends BaseModel{
         this.children = children;
         return this;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public OrderItemModel setId(Long id) {
-        this.id = id;
-        return this;
+    
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
     
     public String getOrderId() {
@@ -165,15 +168,6 @@ public class OrderItemModel extends BaseModel{
 
     public OrderItemModel setGoodsName(String goodsName) {
         this.goodsName = goodsName;
-        return this;
-    }
-
-    public Float getEsgouNum() {
-        return esgouNum;
-    }
-
-    public OrderItemModel setEsgouNum(Float esgouNum) {
-        this.esgouNum = esgouNum;
         return this;
     }
 
@@ -257,15 +251,6 @@ public class OrderItemModel extends BaseModel{
         this.pname = pname;
         return this;
     }
-
-    public Long getGoodsNum() {
-        return goodsNum;
-    }
-
-    public OrderItemModel setGoodsNum(Long goodsNum) {
-        this.goodsNum = goodsNum;
-        return this;
-    }
     
     public String getGoodsId() {
         return goodsId;
@@ -275,15 +260,6 @@ public class OrderItemModel extends BaseModel{
         this.goodsId = goodsId;
     }
     
-    public Float getStorage() {
-        return storage;
-    }
-
-    public OrderItemModel setStorage(Float storage) {
-        this.storage = storage;
-        return this;
-    }
-
     public Long getOrderItemId() {
         return orderItemId;
     }
@@ -302,14 +278,6 @@ public class OrderItemModel extends BaseModel{
         return this;
     }
 
-    public Float getGoodNum() {
-        return goodNum;
-    }
-
-    public OrderItemModel setGoodNum(Float goodNum) {
-        this.goodNum = goodNum;
-        return this;
-    }
 
     public Integer getIsBIll() {
         return isBIll;
@@ -392,30 +360,12 @@ public class OrderItemModel extends BaseModel{
         return this;
     }
 
-    public Float getTmpNum() {
-        return tmpNum;
-    }
-
-    public OrderItemModel setTmpNum(Float tmpNum) {
-        this.tmpNum = tmpNum;
-        return this;
-    }
-
     public Integer getItemState() {
         return itemState;
     }
 
     public OrderItemModel setItemState(Integer itemState) {
         this.itemState = itemState;
-        return this;
-    }
-
-    public Float getAfterNum() {
-        return afterNum;
-    }
-
-    public OrderItemModel setAfterNum(Float afterNum) {
-        this.afterNum = afterNum;
         return this;
     }
 
@@ -460,6 +410,54 @@ public class OrderItemModel extends BaseModel{
 
     public void setYcmaterialNum(String ycmaterialNum) {
         this.ycmaterialNum = ycmaterialNum;
+    }
+    
+    public Long getEsgouNum() {
+        return esgouNum;
+    }
+    
+    public void setEsgouNum(Long esgouNum) {
+        this.esgouNum = esgouNum;
+    }
+    
+    public Long getTmpNum() {
+        return tmpNum;
+    }
+    
+    public void setTmpNum(Long tmpNum) {
+        this.tmpNum = tmpNum;
+    }
+    
+    public Long getAfterNum() {
+        return afterNum;
+    }
+    
+    public void setAfterNum(Long afterNum) {
+        this.afterNum = afterNum;
+    }
+    
+    public Long getGoodsNum() {
+        return goodsNum;
+    }
+    
+    public void setGoodsNum(Long goodsNum) {
+        this.goodsNum = goodsNum;
+    }
+    
+    public Long getStorage() {
+        return storage;
+    }
+    
+    public void setStorage(Long storage) {
+        this.storage = storage;
+    }
+    
+    public Long getGoodNum() {
+        return goodNum;
+    }
+    
+    public void setGoodNum(Long goodNum) {
+        this.goodNum = goodNum;
     }
 }
 

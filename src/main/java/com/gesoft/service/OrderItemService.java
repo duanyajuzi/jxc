@@ -66,7 +66,7 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
     public int updateStorage(OrderItemModel model){
         return orderItemDAO.updateStorage(model);
     }
-    public float getOrderItemTepNum(OrderItemModel model){
+    public Long getOrderItemTepNum(OrderItemModel model){
         return orderItemDAO.getOrderItemTepNum(model);
     }
 

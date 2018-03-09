@@ -56,7 +56,7 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
         return getSqlSession().insert(getMybatisSqlMapNamespace() + ".updateStorage", model);
     }
     
-    public float getOrderItemTepNum(OrderItemModel model){
+    public Long getOrderItemTepNum(OrderItemModel model){
         return getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".getOrderItemTepNum", model);
     }
 

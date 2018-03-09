@@ -184,6 +184,7 @@ public class OrderItemController extends BaseController
         try
         {
             setSessionUserId(model, request);
+            model.setId(Md5Util.UUID());
             if (orderItemService.save(model) > 0)
             {
                 msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
@@ -316,10 +317,10 @@ public class OrderItemController extends BaseController
                 Object obj1=list.get(i).get("tmpNum");
                 Object obj2=list.get(i).get("customerGoodId");
                 Object obj3=list.get(i).get("goodId");
-                model.setId(Long.valueOf(String.valueOf(obj)));
+                model.setId(String.valueOf(obj));
                 model.setGoodId(Long.valueOf(String.valueOf(obj3)));
                 model.setCustomerGoodId(String.valueOf(obj2));
-                model.setTmpNum(Float.parseFloat(obj1.toString()));
+                model.setTmpNum(Long.parseLong(obj1.toString()));
                 orderItemService.updateInoutNum(model);
 //                orderItemService.updateTabGoodsStorage(model);
                 orderItemService.updateTabGoodCustomerStorage(model);
@@ -342,10 +343,10 @@ public class OrderItemController extends BaseController
                 Object obj1=list.get(i).get("tmpNum");
                 Object obj2=list.get(i).get("customerGoodId");
                 Object obj3=list.get(i).get("goodId");
-                model.setId(Long.valueOf(String.valueOf(obj)));
+                model.setId(String.valueOf(obj));
                 model.setGoodId(Long.valueOf(String.valueOf(obj3)));
                 model.setCustomerGoodId(String.valueOf(obj2));
-                model.setTmpNum(Float.parseFloat(obj1.toString()));
+                model.setTmpNum(Long.parseLong(obj1.toString()));
                 orderItemService.updateInoutNum(model);
 //                orderItemService.updateTabGoodsStorageOut(model);
                 orderItemService.updateTabGoodCustomerStorageOut(model);
@@ -382,7 +383,7 @@ public class OrderItemController extends BaseController
 //                orderItemModel.setInout_stock_id(model.getId());
                 orderItemModel.setOrderId(String.valueOf(obj2));
                 orderItemModel.setOrderItemId(Long.valueOf(String.valueOf(obj)));
-                orderItemModel.setGoodNum(Float.parseFloat(obj1.toString()));
+                orderItemModel.setGoodNum(Long.parseLong(obj1.toString()));
                 orderItemModel.setStime(model.getStime());
                 orderItemModel.setCreateUserId(getSessionUserId(request));
                 orderItemModel.setModifyUserId(getSessionUserId(request));

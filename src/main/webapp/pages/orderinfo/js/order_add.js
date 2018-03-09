@@ -176,7 +176,7 @@ var PageOrderAdd = function(){
         OnCellBeginEdit : function (e) {
             var record = e.record, field = e.field;
 
-            if (field == "dictName" || field == "goodsName" || field == "price" || field == "totalMoney" ) {
+            if (field == "dictName" || field == "goodsName"  || field == "totalMoney" ) {
                 e.cancel = true;
             }
 

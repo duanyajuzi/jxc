@@ -25,7 +25,7 @@
         <div id="p1" class="mini-panel" title="检索条件" style="width: 100%;height:100%"
              showCloseButton="false">
             <div style="margin-left: 2%;display:inline;line-height: 32px;" class="searchBar" id="orderForm">
-                <div style="width: 900px;margin: 0 auto">
+                <div style="width: 940px;margin: 0 auto">
                 <div style="width:100%;">
                 <lable class="form-label">业务类型：</lable>
                 <input name="businessId" id="businessId" class="mini-combobox" allowInput="true"
@@ -40,7 +40,9 @@
                        idField="id" textField="customerName" url="${pageContext.request.contextPath}/customer/queryCustomerList"
                        maxlength="50" emptyText="请输入或选择" valueFromSelect="true"/>
                 </div>
-                <div style="margin: 0 40px" >
+                <div>
+                <lable class="form-label">原厂料号：</lable>
+                <input name="materialNum" id="ycmaterialNum" class="mini-textbox" emptyText="原厂料号"  style="width:120px;"/>
                 <lable class="form-label">客户料号：</lable>
                 <input name="materialNum" id="materialNum" class="mini-textbox" emptyText="客户料号"  style="width:120px;"/>
                 <lable class="form-label"  style="padding-left: 23px;" name="stimeSearch" id="stimeSearch">订单时间：</lable>
@@ -91,6 +93,7 @@
                  url="${pageContext.request.contextPath}/orderItem/getList">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="20">序号</div>
+                    <div field="ycmaterialNum" width="100" allowSort="true" headerAlign="center" align="center">原厂料号</div>
                     <div field="materialNum" width="100" allowSort="true" headerAlign="center" align="center">客户料号</div>
                     <div field="esgouNum" width="100" allowSort="true" headerAlign="center" align="center">订单数量</div>
                     <div field="tmpNum" width="100" allowSort="true" headerAlign="center" align="center">已出库数量</div>

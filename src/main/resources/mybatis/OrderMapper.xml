@@ -274,6 +274,9 @@
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
 				AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
 			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(ycmaterialNum)">
+				AND G.materialNum LIKE CONCAT(CONCAT('%', #{ycmaterialNum}), '%')
+			</if>
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderTimeBegin)">
 				AND DATE_FORMAT(A.orderTime,'%Y-%m-%d') >= #{orderTimeBegin}
 			</if>
@@ -348,6 +351,7 @@
 		A.pcustomerId ,
 		D.customerName name2,
 		A.pcontacts ,
+		G.materialNum as ycmaterialNum,
 		A.paddress ,
 		A.ptel ,
 		date_format(A.ctime,'%Y-%m-%d %T') as ctime,

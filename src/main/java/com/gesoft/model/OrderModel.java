@@ -58,7 +58,15 @@ package com.gesoft.model;
 	private String num;
 	private String customerGoodId;
 	private String materialNum;
+	private String ycmaterialNum;
 	
+	public String getYcmaterialNum() {
+		return ycmaterialNum;
+	}
+	
+	public void setYcmaterialNum(String ycmaterialNum) {
+		this.ycmaterialNum = ycmaterialNum;
+	}
 	
 	public String getCustomerGoodId() {
 		return customerGoodId;

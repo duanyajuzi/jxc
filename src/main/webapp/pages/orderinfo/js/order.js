@@ -28,8 +28,12 @@ var PageOrder = function(){
             var orderTimeBegin=mini.get("orderTimeBegin");
             var orderTimeEnd=mini.get("orderTimeEnd");
             var pcustomerId=mini.get("pcustomerId").getValue();
+            var ycmaterialNum="";
+            if(this.type == 1){
+                ycmaterialNum = mini.get("ycmaterialNum").getValue();
+            }
             var paramData={"businessId":businessId,"orderNo":orderNo,"orderName":orderName,"materialNum":materialNum,
-                "orderTimeBegin":orderTimeBegin.text,"orderTimeEnd":orderTimeEnd.text,"pcustomerId":pcustomerId};
+                "orderTimeBegin":orderTimeBegin.text,"orderTimeEnd":orderTimeEnd.text,"pcustomerId":pcustomerId,"ycmaterialNum":ycmaterialNum};
         	this.orderGrid.load(paramData, function(res){
                 console.log(res);
             });
