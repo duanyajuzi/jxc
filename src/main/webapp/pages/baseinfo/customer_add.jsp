@@ -53,7 +53,7 @@
                     <td class="form-label" style="text-align: right;">联系人电话：</td>
                     <td>
                         <input name="tel" id="tel" class="mini-textbox"  required="true" requiredErrorText="联系人电话不能为空"style="width:80%"
-                               vtype="float;maxlength:20" onvalidation="onPhoneValidation"/>
+                               vtype="float;maxlength:20"/>
                     </td>
                 </tr>
                 <tr>
@@ -65,7 +65,7 @@
                     <td class="form-label" style="text-align: right;">收货人电话：</td>
                     <td >
                         <input name="consigneeTel" id="consigneeTel" class="mini-textbox"  required="true"
-                               onvalidation="onPhoneValidation" style="width:80%"
+                               style="width:80%"
                                vtype="float;maxlength:20"  requiredErrorText="收货人电话不能为空"/>
                     </td>
                 </tr>
