@@ -680,6 +680,10 @@
         AND A.orderStatus!=-1 AND A.orderStatus!=5
         <!--AND (A.orderStatus = 1 or A.orderStatus=2 or A.orderStatus=3)-->
         AND B.esgouNum != B.tmpNum
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+            AND F.materialNum  LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+        </if>
+
     </select>
 
     <!--查询销售订单树父节点-->
@@ -745,6 +749,12 @@
         AND B.orderStatus!=-1 AND B.orderStatus!=5
         <!--AND (B.orderStatus = 1 or B.orderStatus=2 or B.orderStatus=3)-->
         AND A.esgouNum != A.tmpNum
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+            AND F.materialNum  LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+        </if>
+        <if test="@com.gesoft.util.Ognl@isNotEmpty(ycmaterialNum)">
+            AND G.materialNum  LIKE CONCAT(CONCAT('%', #{ycmaterialNum}), '%')
+        </if>
     </select>
 
     <update id="OrderItemMapper.updateOutOrderStatus">

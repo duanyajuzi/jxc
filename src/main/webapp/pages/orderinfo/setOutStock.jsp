@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <td> <lable class="form-label">原厂料号：</lable></td>
-                        <td> <input name="materialNum" id="ycmaterialNum" class="mini-textbox" emptyText="原厂料号"  style="width:110px;"/></td>
+                        <td> <input name="ycmaterialNum" id="ycmaterialNum" class="mini-textbox" emptyText="原厂料号"  style="width:110px;"/></td>
                         <td > <lable class="form-label">客户订单号：</lable></td>
                         <td> <input name="orderName" id="orderName" class="mini-textbox" emptyText="客户订单号"  style="width:110px;"/></td>
                     </tr>
