@@ -72,6 +72,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="form-label" style="text-align: right;width:20%">产品描述：</td>
+                        <td>
+                            <input name="memo" id="memo" class="mini-textbox" style="width:83%;" />
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="form-label" style="text-align: right;width:20%">原厂料号：</td>
                         <td>
                             <input name="materialNum" id="materialNum" class="mini-textbox" style="width:83%;"  required="true" maxlength="100"

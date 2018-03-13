@@ -37,6 +37,7 @@
         	materialNum ,
         	unitPrice ,
         	unit,
+        	memo,
         	isHasLadder
         ) VALUES (
         	#{id} ,
@@ -45,6 +46,7 @@
         	#{materialNum} ,
         	#{unitPrice} ,
         	#{unit},
+        	#{memo},
         	#{isHasLadder}
         )
     ]]>
@@ -58,6 +60,7 @@
 	        materialNum = #{materialNum} ,
 	        unitPrice = #{unitPrice} ,
 	        unit = #{unit},
+	        memo = #{memo},
 	        isHasLadder = #{isHasLadder}
         WHERE
 	        id = #{id} 

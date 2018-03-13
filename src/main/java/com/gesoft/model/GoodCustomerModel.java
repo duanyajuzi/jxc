@@ -31,7 +31,16 @@ public class GoodCustomerModel extends BaseModel
 	private String data;
 	private String fid;
 	private java.lang.String fmaterialNum;
-
+	private String memo;
+	
+	public String getMemo() {
+		return memo;
+	}
+	
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	
 	public String getFmaterialNum() {
 		return fmaterialNum;
 	}

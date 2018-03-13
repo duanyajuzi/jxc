@@ -70,11 +70,11 @@
                     <div type="expandcolumn" >#</div>
                     <div field="business" width="120" headerAlign="center" align="center" allowSort="true">业务类型</div>
                     <div field="goodsName" width="120" headerAlign="center" align="center" allowSort="true">所属商品</div>
-                    <div field="customerName" width="120" headerAlign="center" align="center" allowSort="true">所属工厂</div>
+                    <div field="customerName" width="150" headerAlign="center" align="center" allowSort="true">所属工厂</div>
                     <div field="materialNum" width="120" headerAlign="center" align="center" allowSort="true">原厂料号</div>
-                    <div field="unitPrice" width="120" headerAlign="center" align="center" allowSort="true">采购价(未税)</div>
-                    <div field="dictName" width="120" headerAlign="center" align="center" allowSort="true">单位</div>
-                    <div field="storage" width="120" headerAlign="center" align="center" allowSort="true">库存量</div>
+                    <div field="unitPrice" width="90" headerAlign="center" align="center" allowSort="true">采购价(未税)</div>
+                    <div field="dictName" width="40" headerAlign="center" align="center" allowSort="true">单位</div>
+                    <div field="storage" width="60" headerAlign="center" align="center" allowSort="true">库存量</div>
                     <div field="button" width="80" headerAlign="center" align="center"
                          renderer="PageGoodCustomer.viewXiangqing" >操作</div>
                 </div>

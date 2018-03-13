@@ -52,8 +52,7 @@
                     </td>
                     <td class="form-label" style="text-align: right;">联系人电话：</td>
                     <td>
-                        <input name="tel" id="tel" class="mini-textbox"  required="true" requiredErrorText="联系人电话不能为空"style="width:80%"
-                               vtype="float;maxlength:20"/>
+                        <input name="tel" id="tel" class="mini-textbox" maxlength="20"   required="true" requiredErrorText="联系人电话不能为空"style="width:80%"/>
                     </td>
                 </tr>
                 <tr>
@@ -64,9 +63,7 @@
                     </td>
                     <td class="form-label" style="text-align: right;">收货人电话：</td>
                     <td >
-                        <input name="consigneeTel" id="consigneeTel" class="mini-textbox"  required="true"
-                               style="width:80%"
-                               vtype="float;maxlength:20"  requiredErrorText="收货人电话不能为空"/>
+                        <input name="consigneeTel" id="consigneeTel" class="mini-textbox" maxlength="20"  required="true" style="width:80%" requiredErrorText="收货人电话不能为空"/>
                     </td>
                 </tr>
                 <tr>
@@ -86,7 +83,7 @@
                     </td>
                     <td class="form-label" style="text-align: right;">银行帐号：</td>
                     <td>
-                        <input name="bankAccount" id="bankAccount" class="mini-textbox" vtype="float;maxLength:20" style="width:80%"/>
+                        <input name="bankAccount" id="bankAccount" class="mini-textbox" maxlength="50" style="width:80%"/>
                     </td>
                 </tr>
                 <tr>
