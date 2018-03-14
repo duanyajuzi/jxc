@@ -195,27 +195,29 @@ var PageSetOutStock = function () {
                     "businessId": param.businessId,
                     "data": JSON.stringify(data)
                 };
-                // $.ajax({
-                //     url: this.basePath + "/orderItem/updateOrderItemTmpNumOut",
-                //     data: paramData,
-                //     type: "post",
-                //     dataType: "json",
-                //     success: function () {
-                //         PageMain.funCloseWindow("save");
-                //     },
-                //     error: function () {
-                //     }
-                // });
-                // $.ajax({
-                //     url: this.basePath + "/orderItem/insertTabInoutStock",
-                //     data: paramData,
-                //     type: "post",
-                //     dataType: "json",
-                //     success: function () {
-                //     },
-                //     error: function () {
-                //     }
-                // });
+                $.ajax({
+                    url: this.basePath + "/orderItem/updateOrderItemTmpNumOut",
+                    data: paramData,
+                    type: "post",
+                    dataType: "json",
+                    async:false,
+                    success: function () {
+                        PageMain.funCloseWindow("save");
+                    },
+                    error: function () {
+                    }
+                });
+                $.ajax({
+                    url: this.basePath + "/orderItem/insertTabInoutStock",
+                    data: paramData,
+                    type: "post",
+                    dataType: "json",
+                    async:false,
+                    success: function () {
+                    },
+                    error: function () {
+                    }
+                });
             }
         },
         setTempMap:function (goodsId,num) {

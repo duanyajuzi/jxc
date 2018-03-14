@@ -58,7 +58,7 @@
                     <td class="form-label" style="text-align: right;width:20%;">客户料号：</td>
                     <td>
                         <input name="materialNum" id="materialNum" class="mini-textbox" style="width:84%"
-                               onvalidation="PageBlueprintAdd.onSimilarValidation" required="true" requiredErrorText="客户料号不能为空"/>
+                               required="true" requiredErrorText="客户料号不能为空"/>
                     </td>
                 </tr>
                 <tr>
