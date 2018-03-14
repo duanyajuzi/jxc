@@ -1,5 +1,6 @@
 package com.gesoft.service;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.gesoft.common.EntityDAO;
 import com.gesoft.common.EntityService;
 import com.gesoft.dao.OrderItemDAO;
@@ -10,7 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static com.gesoft.util.Constants.GLOBAL_MSG_BOOL_SUCCESS;
 
 /**
  * Created by admin on 2017-07-18.
@@ -187,7 +192,9 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
     }
 
     public int insertInoutStockItem(OrderItemModel model){
+        
         return orderItemDAO.insertInoutStockItem(model);
+        
     }
 
     //修改订单状态
@@ -221,4 +228,82 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
     public int updateTabGoodCustomerStorageOut(OrderItemModel model){
         return  orderItemDAO.updateTabGoodCustomerStorageOut(model);
     }
+    
+    public void updateOrderItemTmpNum(OrderItemModel model){
+        String str=model.getData();
+        List<Map<String,Object>> list= (List<Map<String,Object>>) JSONUtils.parse(str);
+        OrderItemModel itemModel;
+        for(int i=0;i<list.size();i++){
+            itemModel = new OrderItemModel();
+            Object obj=list.get(i).get("id");
+            Object obj1=list.get(i).get("tmpNum");
+            Object obj2=list.get(i).get("customerGoodId");
+            Object obj3=list.get(i).get("goodId");
+            itemModel.setId(String.valueOf(obj));
+            itemModel.setGoodId(Long.valueOf(String.valueOf(obj3)));
+            itemModel.setCustomerGoodId(String.valueOf(obj2));
+            itemModel.setTmpNum(Long.parseLong(obj1.toString()));
+            orderItemDAO.updateInoutNum(itemModel);
+            orderItemDAO.updateTabGoodCustomerStorage(itemModel);
+        }
+    }
+    
+    public void updateOrderItemTmpNumOut(OrderItemModel model){
+        String str=model.getData();
+        List<Map<String,Object>> list= (List<Map<String,Object>>) JSONUtils.parse(str);
+        OrderItemModel itemModel;
+        for(int i=0;i<list.size();i++){
+            itemModel = new OrderItemModel();
+            Object obj=list.get(i).get("id");
+            Object obj1=list.get(i).get("tmpNum");
+            Object obj2=list.get(i).get("customerGoodId");
+            Object obj3=list.get(i).get("goodId");
+            itemModel.setId(String.valueOf(obj));
+            itemModel.setGoodId(Long.valueOf(String.valueOf(obj3)));
+            itemModel.setCustomerGoodId(String.valueOf(obj2));
+            itemModel.setTmpNum(Long.parseLong(obj1.toString()));
+            orderItemDAO.updateInoutNum(itemModel);
+            orderItemDAO.updateTabGoodCustomerStorageOut(itemModel);
+        }
+    }
+    
+    public void insertInoutStock(OrderItemModel model, MsgModel msgModel){
+        String data = model.getData();
+        List<Map<String, Object>> list = (List<Map<String, Object>>) JSONUtils.parse(data);
+        OrderItemModel orderItemModel=new OrderItemModel();
+        for (int i = 0; i < list.size(); i++) {
+            Object obj = list.get(i).get("id");
+            Object obj2= list.get(i).get("orderId");
+            Object obj1 = list.get(i).get("tmpNum");
+            orderItemModel.setPrice(Double.parseDouble(list.get(i).get("unitPrice").toString()));
+            orderItemModel.setOrderId(String.valueOf(obj2));
+            orderItemModel.setOrderItemId(String.valueOf(obj));
+            orderItemModel.setGoodNum(Long.parseLong(obj1.toString()));
+            orderItemModel.setStime(model.getStime());
+            orderItemModel.setCreateUserId(model.getUserId());
+            orderItemModel.setModifyUserId(model.getUserId());
+            orderItemModel.setOrderType(model.getOrderType());
+            orderItemDAO.insertInoutStockItem(orderItemModel);
+        }
+        List<OrderItemModel> clist = new ArrayList();//查询子节点
+        clist = orderItemDAO.queryOrderTree2(orderItemModel);
+        if(clist.size()!=0 ){
+            if(model.getOrderType()==0){//采购订单
+                orderItemDAO.updateInOrderStatus(orderItemModel);
+            }else if(model.getOrderType()==1){//出货订单
+                orderItemDAO.updateOutOrderStatus(orderItemModel);
+            }
+        }else if(clist.size()==0 && orderItemModel.getGoodNum()!=0){
+            orderItemDAO.updateOrderBillStatus(orderItemModel);
+        }
+        if(model.getOrderType()==0){
+            updateOrderItemTmpNum(model);
+        }else{
+            updateOrderItemTmpNumOut(model);
+        }
+        
+        msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+    }
+    
+    
 }

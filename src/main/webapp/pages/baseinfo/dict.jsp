@@ -30,7 +30,7 @@
                 <tr>
                     <td style="width:30%;">
                         <a  class="mini-button block-button" iconCls="icon-add" onclick="PageDict.funAdd()">新增</a>
-                        <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageDict.funModify()">修改</a>
+                        <%--<a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageDict.funModify()">修改</a>--%>
                         <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageDict.funDelete()">删除</a>
                     </td>
                 </tr>

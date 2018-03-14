@@ -54,6 +54,7 @@ var PageGoodsAdd = function(){
             
             var me = this;
             var obj = this.goodsForm.getData(true);
+            var messageBox = mini.loading("保存中......","提示");
             $.ajax({
                url : me.basePath + "/goods/" + me.action + "?a="+Math.random(),
                type : 'POST',
@@ -61,6 +62,7 @@ var PageGoodsAdd = function(){
                dataType: 'json',
                success: function (data) 
                {
+                   mini.hideMessageBox(messageBox);
             	   mini.alert(data.msg, "提醒", function(){
 	               		if(data.success)
 	                    {
@@ -70,6 +72,7 @@ var PageGoodsAdd = function(){
                },
                error: function (jqXHR, textStatus, errorThrown) 
                {
+                   mini.hideMessageBox(messageBox);
             	   PageMain.funShowMessageBox("操作出现异常");
                }
            });

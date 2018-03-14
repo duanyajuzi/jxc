@@ -13,6 +13,7 @@ import com.gesoft.util.Md5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Transactional
 @RequestMapping("/orderItem")
 public class OrderItemController extends BaseController
 {
@@ -308,103 +310,46 @@ public class OrderItemController extends BaseController
     //修改已入库商品数量
     @RequestMapping(value = "/updateOrderItemTmpNum")
     @ResponseBody
-    public void updateOrderItemTmpNum(OrderItemModel model){
+    public MsgModel updateOrderItemTmpNum(OrderItemModel model,HttpServletRequest request){
+        MsgModel msgModel = new MsgModel();
         try{
-            String str=model.getData();
-            List<Map<String,Object>> list= (List<Map<String,Object>>) JSONUtils.parse(str);
-            for(int i=0;i<list.size();i++){
-                Object obj=list.get(i).get("id");
-                Object obj1=list.get(i).get("tmpNum");
-                Object obj2=list.get(i).get("customerGoodId");
-                Object obj3=list.get(i).get("goodId");
-                model.setId(String.valueOf(obj));
-                model.setGoodId(Long.valueOf(String.valueOf(obj3)));
-                model.setCustomerGoodId(String.valueOf(obj2));
-                model.setTmpNum(Long.parseLong(obj1.toString()));
-                orderItemService.updateInoutNum(model);
-//                orderItemService.updateTabGoodsStorage(model);
-                orderItemService.updateTabGoodCustomerStorage(model);
-            }
+            setSessionUserId(model, request);
+//            orderItemService.updateOrderItemTmpNum(model,msgModel);
         }
         catch (Exception e) {
             logger.error("OrderItemController updateOrderItemTmpNum error：", e);
         }
+    
+        return msgModel;
     }
 
     //修改已出库商品数量
     @RequestMapping(value = "/updateOrderItemTmpNumOut")
     @ResponseBody
-    public void updateOrderItemTmpNumOut(OrderItemModel model){
+    public MsgModel updateOrderItemTmpNumOut(OrderItemModel model,HttpServletRequest request){
+        MsgModel msgModel = new MsgModel();
         try{
-            String str=model.getData();
-            List<Map<String,Object>> list= (List<Map<String,Object>>) JSONUtils.parse(str);
-            for(int i=0;i<list.size();i++){
-                Object obj=list.get(i).get("id");
-                Object obj1=list.get(i).get("tmpNum");
-                Object obj2=list.get(i).get("customerGoodId");
-                Object obj3=list.get(i).get("goodId");
-                model.setId(String.valueOf(obj));
-                model.setGoodId(Long.valueOf(String.valueOf(obj3)));
-                model.setCustomerGoodId(String.valueOf(obj2));
-                model.setTmpNum(Long.parseLong(obj1.toString()));
-                orderItemService.updateInoutNum(model);
-//                orderItemService.updateTabGoodsStorageOut(model);
-                orderItemService.updateTabGoodCustomerStorageOut(model);
-            }
+            setSessionUserId(model, request);
+//            orderItemService.updateOrderItemTmpNumOut(model,msgModel);
         }
         catch (Exception e) {
             logger.error("OrderItemController updateOrderItemTmpNumOut error：", e);
         }
+        return msgModel;
     }
 
     //添加出库入库表信息
     @RequestMapping(value = "/insertTabInoutStock")
     @ResponseBody
-    public void insertInoutStock(OrderItemModel model,HttpServletRequest request){
-//        try{
-//            model.setCreateUserId(getSessionUserId(request));
-//            model.setCreateTime((new SimpleDateFormat("yyyy-MM-dd H:mm:ss")).format(new Date()));
-//            model.setModifyUserId(getSessionUserId(request));
-//            model.setModifyTime((new SimpleDateFormat("yyyy-MM-dd H:mm:ss")).format(new Date()));
-//            orderItemService.insertInoutStock(model);
-//        }catch (Exception e){
-//            logger.error("OrderItemController insertInoutStock error：", e);
-//        }
-//        return model.getId();
+    public MsgModel insertInoutStock(OrderItemModel model,HttpServletRequest request){
+        MsgModel msgModel = new MsgModel();
         try {
-            String data = model.getData();
-            List<Map<String, Object>> list = (List<Map<String, Object>>) JSONUtils.parse(data);
-            OrderItemModel orderItemModel=new OrderItemModel();
-            for (int i = 0; i < list.size(); i++) {
-                Object obj = list.get(i).get("id");
-                Object obj2= list.get(i).get("orderId");
-                Object obj1 = list.get(i).get("tmpNum");
-                orderItemModel.setPrice(Double.parseDouble(list.get(i).get("unitPrice").toString()));
-//                orderItemModel.setInout_stock_id(model.getId());
-                orderItemModel.setOrderId(String.valueOf(obj2));
-                orderItemModel.setOrderItemId(String.valueOf(obj));
-                orderItemModel.setGoodNum(Long.parseLong(obj1.toString()));
-                orderItemModel.setStime(model.getStime());
-                orderItemModel.setCreateUserId(getSessionUserId(request));
-                orderItemModel.setModifyUserId(getSessionUserId(request));
-                orderItemModel.setOrderType(model.getOrderType());
-                orderItemService.insertInoutStockItem(orderItemModel);
-            }
-            List<OrderItemModel> clist = new ArrayList();//查询子节点
-            clist = orderItemService.queryOrderTree2(orderItemModel);
-            if(clist.size()!=0 ){
-                if(model.getOrderType()==0){//采购订单
-                    orderItemService.updateInOrderStatus(orderItemModel);
-                }else if(model.getOrderType()==1){//出货订单
-                    orderItemService.updateOutOrderStatus(orderItemModel);
-                }
-            }else if(clist.size()==0 && orderItemModel.getGoodNum()!=0){
-                orderItemService.updateOrderBillStatus(orderItemModel);
-            }
-
+            setSessionUserId(model, request);
+            orderItemService.insertInoutStock(model,msgModel);
         }catch (Exception e){
             logger.error("OrderItemController insertInoutStockItem error：", e);
         }
+        return msgModel;
     }
 
     //修改出入库存价格

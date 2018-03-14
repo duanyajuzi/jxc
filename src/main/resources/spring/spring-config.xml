@@ -58,8 +58,8 @@
     <!-- 配置事务管理器 -->  
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
         <property name="dataSource" ref="dataSource" />  
-    </bean>  
-    
+    </bean>
+
     <!--
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>

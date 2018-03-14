@@ -167,27 +167,38 @@ var PageSetInoutStock = function () {
             var value=stime.text;
             var param=this.searchForm.getData();
             var paramData={"stime":value,"orderType":this.orderType,"businessId":param.businessId,"data":JSON.stringify(data)};
-            $.ajax({
-                url: this.basePath + "/orderItem/updateOrderItemTmpNum",
-                data: paramData,
-                type: "post",
-                dataType: "json",
-                success: function () {
-                    PageMain.funCloseWindow("save");
-                },
-                error: function () {
-                }
-            });
+            var messageBox = mini.loading("保存中......","提示");
             $.ajax({
                 url: this.basePath + "/orderItem/insertTabInoutStock",
                 data: paramData,
                 type: "post",
+                async:false,
                 dataType: "json",
-                success: function () {
+                success: function (data) {
+                    mini.hideMessageBox(messageBox);
+                    mini.alert(data.msg, "提醒", function(){
+                        if(data.success)
+                        {
+                            PageMain.funCloseWindow("save");
+                        }
+                    });
                 },
                 error: function () {
                 }
             });
+            // $.ajax({
+            //     url: this.basePath + "/orderItem/updateOrderItemTmpNum",
+            //     data: paramData,
+            //     type: "post",
+            //     dataType: "json",
+            //     async:false,
+            //     success: function () {
+            //
+            //     },
+            //     error: function () {
+            //     }
+            // });
+
         }
     }
 }();

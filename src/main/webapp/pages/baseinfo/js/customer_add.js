@@ -35,6 +35,7 @@ var PageCustomerAdd = function(){
             
             var me = this;
             var obj = this.customerForm.getData(true);
+            var messageBox = mini.loading("保存中......","提示");
             $.ajax({
                url : me.basePath + "/customer/" + me.action + "?a="+Math.random(),
                type : 'POST',
@@ -42,19 +43,12 @@ var PageCustomerAdd = function(){
                dataType: 'json',
                success: function (data) 
                {
-
-                           PageMain.funCloseWindow("save");
-
-
-            	   /*mini.alert(data.msg, "提醒", function(){
-	               		if(data.success)
-	                    {
-	               			PageMain.funCloseWindow("save");
-	                    }
-                   });*/
+                   mini.hideMessageBox(messageBox);
+                   PageMain.funCloseWindow("save");
                },
                error: function (jqXHR, textStatus, errorThrown) 
                {
+                   mini.hideMessageBox(messageBox);
             	   PageMain.funShowMessageBox("操作出现异常");
                }
            });

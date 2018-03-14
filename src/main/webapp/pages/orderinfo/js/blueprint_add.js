@@ -73,12 +73,14 @@ var PageBlueprintAdd = function(){
                 obj.isHasLadder=0;
             }
             obj.data = json;
+            var messageBox = mini.loading("保存中......","提示");
             $.ajax({
                 url : me.basePath + "/blueprint/" + me.action + "?a="+Math.random(),
                 type : 'POST',
                 data : obj,
                 dataType: 'json',
                 success: function (data) {
+                    mini.hideMessageBox(messageBox);
                     mini.alert(data.msg, "提醒", function(){
                         if(data.success) {
                             PageMain.funCloseWindow("save");
