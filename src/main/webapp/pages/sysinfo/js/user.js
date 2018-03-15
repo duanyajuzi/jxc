@@ -48,8 +48,8 @@ var PageUser = function(){
         	mini.open({
                 url: this.basePath + "/pages/sysinfo/user_add.jsp",
                 title: paramData.title,
-                width: 400,
-                height: 30 *  8 + 80,
+                width: 450,
+                height: 400,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageUserAdd.funSetData(paramData);

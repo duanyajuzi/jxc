@@ -47,10 +47,9 @@
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="60">序号</div>
 					 <div field="userName" width="120" headerAlign="center" align="center" allowSort="true">登录帐号</div>
-					 <div field="userPwd" width="120" headerAlign="center" align="center" allowSort="true">登录密码</div>
-					 <div field="realName" width="120" headerAlign="center" align="center" allowSort="true">姓名</div>
 					 <div field="roleName" width="120" headerAlign="center" align="center" allowSort="true">所属角色</div>
-					 <div field="position" width="120" headerAlign="center" align="center" allowSort="true">职位</div>
+                    <div field="realName" width="120" headerAlign="center" align="center" allowSort="true">姓名</div>
+					 <div field="company" width="120" headerAlign="center" align="center" allowSort="true">公司抬头</div>
 					 <div field="tel" width="120" headerAlign="center" align="center" allowSort="true">联系电话</div>
 					 <div field="memo" width="120" headerAlign="center" align="center" allowSort="true">备注</div>
                 </div>

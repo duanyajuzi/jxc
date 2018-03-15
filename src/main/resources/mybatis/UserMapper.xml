@@ -20,7 +20,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="UserMapper.columns">
 	    <![CDATA[
-		id,userName,userPwd,realName,roleId,position,tel,memo
+		id,userName,realName,roleId,position,tel,memo,orderTitle,company
 	    ]]>
 	</sql>
 
@@ -34,8 +34,10 @@
         	realName ,
         	roleId ,
         	position ,
-        	tel ,
-        	memo 
+        	tel,
+        	memo,
+        	orderTitle,
+        	company
         ) VALUES (
         	#{id} ,
         	#{userName} ,
@@ -44,7 +46,9 @@
         	#{roleId} ,
         	#{position} ,
         	#{tel} ,
-        	#{memo} 
+        	#{memo},
+        	#{orderTitle},
+        	#{company}
         )
     ]]>
 	</insert>
@@ -67,8 +71,10 @@
 	        roleId = #{roleId} ,
 	        position = #{position} ,
 	        tel = #{tel} ,
-	        memo = #{memo} 
-        WHERE 
+	        memo = #{memo},
+	        orderTitle = #{orderTitle},
+	        company = #{company}
+        WHERE
 	        id = #{id} 
     ]]>
 	</update>
@@ -126,7 +132,7 @@
     
     <!-- 分页查询 -->
     <select id="UserMapper.list" resultMap="mRetMapUser">
-    	SELECT A.id,A.userName,A.userPwd,A.realName,A.roleId,role.roleName,A.position,A.tel,A.memo
+    	SELECT A.id,A.userName,A.realName,A.roleId,A.company,A.orderTitle, role.roleName,A.position,A.tel,A.memo
 	    FROM tab_user A,tab_role role
 		<include refid="UserMapper.findPage.where"/>
 		<if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">

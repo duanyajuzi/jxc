@@ -45,13 +45,7 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">登录密码：</td>
                     <td style="width:32%;">
-                        <input name="userPwd" id="userPwd" class="mini-textbox" style="width:200px;"  required="true" maxlength="50" requiredErrorText="登录密码不能为空"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">姓名：</td>
-                    <td style="width:32%;">
-                        <input name="realName" id="realName" class="mini-textbox" style="width:200px;"  required="true" maxlength="50" requiredErrorText="姓名不能为空"/>
+                        <input name="userPwd" id="userPwd" class="mini-password" style="width:200px;"  required="true" maxlength="50" requiredErrorText="登录密码不能为空"/>
                     </td>
                 </tr>
                 <tr>
@@ -63,10 +57,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">职位：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">姓名：</td>
                     <td style="width:32%;">
-                        <input name="position" id="position" class="mini-textbox"
-                               style="width:200px;"  required="true" maxlength="30" requiredErrorText="职位不能为空"/>
+                        <input name="realName" id="realName" class="mini-textbox" style="width:200px;"  required="true" maxlength="50" requiredErrorText="姓名不能为空"/>
                     </td>
                 </tr>
                 <tr>
@@ -76,9 +69,30 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">地址：</td>
+                    <td style="width:32%;">
+                        <input name="position" id="position" class="mini-textbox"
+                               style="width:200px;"  required="true" maxlength="100" requiredErrorText="地址不能为空"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">公司抬头：</td>
+                    <td style="width:32%;">
+                        <input name="company" id="company" class="mini-textbox"
+                               style="width:200px;"  required="true" maxlength="50" requiredErrorText="公司抬头不能为空"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">订单号开头：</td>
+                    <td style="width:32%;">
+                        <input name="orderTitle" id="orderTitle" class="mini-textbox"
+                               style="width:200px;"  required="true" maxlength="10" requiredErrorText="订单号开头不能为空"/>
+                    </td>
+                </tr>
+                <tr>
                     <td class="form-label" style="text-align: right;width:16%;">备注：</td>
                     <td style="width:32%;">
-                        <input name="memo" id="memo" class="mini-textArea" style="width:200px;"  required="true" maxlength="300" requiredErrorText="备注不能为空"/>
+                        <input name="memo" id="memo" class="mini-textArea" style="width:200px;" maxlength="300" requiredErrorText="备注不能为空"/>
                     </td>
                 </tr>
             </table>

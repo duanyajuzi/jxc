@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+import com.gesoft.util.Md5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -74,6 +75,7 @@ public class UserController extends BaseController
 		try
 		{
 			setSessionUserId(model, request);
+			model.setUserPwd(Md5Util.string2MD5(model.getUserPwd()+"a"));
 			if (userService.save(model) > 0)
 			{
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
@@ -101,6 +103,7 @@ public class UserController extends BaseController
 		try
 		{
 			setSessionUserId(model, request);
+			model.setUserPwd(Md5Util.string2MD5(model.getUserPwd()+"a"));
 			if (userService.update(model) > 0)
 			{
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);

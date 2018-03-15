@@ -15,16 +15,34 @@ public class UserModel extends BaseModel
 	private static final long serialVersionUID = 5454155825314635342L;
 
 	
-	private java.lang.Long id;
-	private java.lang.String userName;
-	private java.lang.String userPwd;
-	private java.lang.String realName;
-	private java.lang.Integer roleId;
-	private java.lang.String position;
-	private java.lang.String tel;
-	private java.lang.String memo;
+	private Long id;
+	private String userName;
+	private String userPwd;
+	private String realName;
+	private Integer roleId;
+	private String position;
+	private String tel;
+	private String memo;
 	private String roleName;
-
+	private String company;
+	private String orderTitle;
+	
+	public String getCompany() {
+		return company;
+	}
+	
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	
+	public String getOrderTitle() {
+		return orderTitle;
+	}
+	
+	public void setOrderTitle(String orderTitle) {
+		this.orderTitle = orderTitle;
+	}
+	
 	public String getRoleName() {
 		return roleName;
 	}
