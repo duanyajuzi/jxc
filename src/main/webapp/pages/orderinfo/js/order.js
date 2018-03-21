@@ -11,9 +11,31 @@ var PageOrder = function(){
             mini.parse();
             this.basePath = PageMain.basePath;
             this.orderGrid = mini.get("orderGrid");
+            this.orderInfoGrid = mini.get("orderInfoGrid");
             this.orderGrid.load();
             this.type=PageOrder.getUrlParam("orderType");
+            PageOrder.drawcell();
         },
+
+        drawcell : function(){
+            this.orderInfoGrid.on("drawcell", function (e) {
+                var record = e.record;
+                column = e.column;
+                if (column.field == "esgouNum") {
+                    e.cellHtml = record.esgouNum.toLocaleString();
+                }
+                if (column.field == "tmpNum") {
+                    e.cellHtml = record.tmpNum.toLocaleString();
+                }
+                if (column.field == "price") {
+                    e.cellHtml = record.price.toFixed(4).toLocaleString();
+                }
+                if (column.field == "totalMoney") {
+                    e.cellHtml = record.totalMoney.toFixed(4).toLocaleString();
+                }
+            });
+        },
+
        getUrlParam:function(name){
        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
        var r = window.location.search.substr(1).match(reg);

@@ -95,12 +95,12 @@
                     <div type="indexcolumn" headerAlign="center"  width="20">序号</div>
                     <div field="ycmaterialNum" width="100" allowSort="true" headerAlign="center" align="center">原厂料号</div>
                     <div field="materialNum" width="100" allowSort="true" headerAlign="center" align="center">客户料号</div>
-                    <div field="esgouNum" width="100" allowSort="true" headerAlign="center" align="center">订单数量</div>
-                    <div field="tmpNum" width="100" allowSort="true" headerAlign="center" align="center">已出库数量</div>
+                    <div field="esgouNum" width="100" allowSort="true" headerAlign="right" align="right">订单数量</div>
+                    <div field="tmpNum" width="100" allowSort="true" headerAlign="right" align="right">已出库数量</div>
                     <div field="goodsName" width="100" allowSort="true" headerAlign="center" align="center">商品名称</div>
-                    <div field="price" width="100" allowSort="true" headerAlign="center" align="center">单价（未税）</div>
+                    <div field="price" width="100" allowSort="true" headerAlign="right" align="right">单价（未税）</div>
                     <div field="dictName" width="100" allowSort="true" headerAlign="center" align="center">单位</div>
-                    <div field="totalMoney" width="100" allowSort="true" headerAlign="center" align="center">总价（未税）</div>
+                    <div field="totalMoney" width="100" allowSort="true" headerAlign="right" align="right">总价（未税）</div>
                 </div>
             </div>
         </div>

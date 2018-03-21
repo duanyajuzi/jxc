@@ -288,6 +288,10 @@ var PageOrderAdd = function(){
                     PageOrderAdd.updateTotalPrice();
 
                 }
+            }else if(field == "price"){
+                record.totalMoney = (value * record.esgouNum).toFixed(2);
+                grid.updateRow(record, record);
+                PageOrderAdd.updateTotalPrice();
             }
 
         },

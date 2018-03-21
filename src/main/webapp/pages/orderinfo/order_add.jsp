@@ -160,7 +160,7 @@
                         <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
                     </div>
                     <div field="price" headerAlign="center" width="100" allowSort="true" >销售价（未税）
-                        <input property="editor" class="mini-spinner" minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;"/>
+                        <input property="editor" class="mini-spinner" minValue="0" maxValue="100000000"  maxlength="20" style="width:100%;"/>
                     </div>
                     <div field="dictName" headerAlign="center" width="50" allowSort="true">单位
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
