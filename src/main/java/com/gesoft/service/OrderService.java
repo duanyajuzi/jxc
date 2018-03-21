@@ -12,8 +12,10 @@ import javax.annotation.Resource;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gesoft.dao.OrderItemDAO;
+import com.gesoft.dao.UserDAO;
 import com.gesoft.model.MsgModel;
 import com.gesoft.model.OrderItemModel;
+import com.gesoft.model.UserModel;
 import com.gesoft.util.Md5Util;
 import com.gesoft.util.StringOrderNoUtil;
 import org.springframework.stereotype.Service;
@@ -30,16 +32,18 @@ import static com.gesoft.util.Constants.GLOBAL_MSG_BOOL_SUCCESS;
 
  @Service
  @Transactional
-public class OrderService extends EntityService<OrderModel, Long>
+public class OrderService extends EntityService<OrderModel, String>
 {
 
 	@Resource
 	private OrderDAO orderDAO;
 	@Resource
 	private OrderItemDAO orderItemDAO;
+	@Resource
+	private UserDAO userDAO;
 	
 	@Override
-	protected EntityDAO<OrderModel, Long> getEntityDao()
+	protected EntityDAO<OrderModel, String> getEntityDao()
 	{
 		return this.orderDAO;
 	}
@@ -78,7 +82,10 @@ public class OrderService extends EntityService<OrderModel, Long>
 				model.setOrderStatus(0);
 				model.setIskh("0");
 				model.setZdsc("0");
-				model.setOrderNo("DD"+ StringOrderNoUtil.getOrderNo());
+				long userid = model.getCuserid();
+				UserModel userModel = (UserModel)userDAO.get(userid);
+				String orderTitle = userModel.getOrderTitle();
+				model.setOrderNo(orderTitle+ StringOrderNoUtil.getOrderNo());
 				orderDAO.save(model);
 				//复制子项
 				editItem2(model);
@@ -377,6 +384,10 @@ public class OrderService extends EntityService<OrderModel, Long>
 	
 	public List<OrderModel> queryMaterialNum2(OrderModel model){
 		return orderDAO.queryMaterialNum2(model);
+	}
+	
+	public OrderModel getpMaterialNum(OrderModel model){
+		return orderDAO.getpMaterialNum(model);
 	}
 	
 }

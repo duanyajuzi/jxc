@@ -416,6 +416,9 @@
         F.isHasLadder,
         F.unitPrice as oneprice,
         D.specUnit,
+        G.dictName as specUnitName,
+        F.memo,
+        F.unit,
         E.dictName,
         A.esgouNum * A.unitPrice AS totalMoney
         FROM
@@ -423,6 +426,7 @@
         LEFT JOIN tab_good_customer F ON A.customerGoodId = F.id
         LEFT JOIN tab_goods D ON F.goodId = D.id
         LEFT JOIN tab_dict E ON F.unit = E.dictNo
+        LEFT JOIN tab_dict G ON D.specUnit = G.dictNo
         <include refid="OrderItemMapper.findPage.where"/>
         <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}

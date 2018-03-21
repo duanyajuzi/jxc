@@ -16,7 +16,7 @@ import java.util.List;
 
 
  @Repository
-public class OrderDAO extends EntityDAOImpl<OrderModel, Long>
+public class OrderDAO extends EntityDAOImpl<OrderModel, String>
 {
 	@Override
     public String getMybatisSqlMapNamespace()
@@ -51,6 +51,9 @@ public class OrderDAO extends EntityDAOImpl<OrderModel, Long>
     
     public List<OrderModel> queryMaterialNum2(OrderModel model){
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".queryMaterialNum2", model);
+    }
+    public OrderModel getpMaterialNum(OrderModel model){
+        return getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".getpMaterialNum", model);
     }
     
 }

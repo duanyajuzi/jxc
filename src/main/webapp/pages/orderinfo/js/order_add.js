@@ -33,7 +33,8 @@ var PageOrderAdd = function(){
                     data: {},
                     dataType: "json",
                     success: function (result) {
-                        orderNo.setValue("DD" + result);
+                        var data = result.data;
+                        orderNo.setValue(data[0]);
                     },
                     error: function () {
                     }

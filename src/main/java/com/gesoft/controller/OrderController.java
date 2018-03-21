@@ -17,9 +17,9 @@ import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.gesoft.model.OrderExcelModel;
-import com.gesoft.model.OrderItemModel;
+import com.gesoft.model.*;
 import com.gesoft.service.OrderItemService;
+import com.gesoft.service.UserService;
 import com.gesoft.util.ExportExecl;
 import com.gesoft.util.Md5Util;
 import com.gesoft.util.StringOrderNoUtil;
@@ -32,8 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gesoft.model.OrderModel;
-import com.gesoft.model.MsgModel;
 import com.gesoft.service.OrderService;
 
 import java.io.File;
@@ -54,13 +52,24 @@ public class OrderController extends BaseController
 //获取String类型的订单编号
 	@RequestMapping(value = "/queryOrderNo")
 	@ResponseBody
-	public String getStringOrderNo(){
-		String orderNo = StringOrderNoUtil.getOrderNo();
-		return orderNo;
+	public MsgModel getStringOrderNo(HttpServletRequest request){
+		MsgModel msgModel = new MsgModel();
+		Long userid = getSessionUserId(request);
+		UserModel userModel = userService.get(userid);
+		String orderTitle = userModel.getOrderTitle();
+		String orderNo = orderTitle + StringOrderNoUtil.getOrderNo();
+		List<String> list = new ArrayList<>();
+		list.add(orderNo);
+		msgModel.setData(list);
+		msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+		return msgModel;
 	}
 	
 	@Resource
 	private OrderService orderService;
+	
+	@Resource
+	private UserService userService;
 	
 	@Resource
 	private OrderItemService orderItemService;
@@ -68,32 +77,99 @@ public class OrderController extends BaseController
 	
 	/**
 	 * 描述信息：excel导出
-	 * @param model
+	 * @param model2
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value="/exportExcel", method=RequestMethod.GET)
-	public @ResponseBody MsgModel exportExcel(OrderModel model, HttpServletRequest request,HttpServletResponse response)
+	public @ResponseBody MsgModel exportExcel(OrderModel model2, HttpServletRequest request,HttpServletResponse response)
 	{
 		MsgModel msgModel = new MsgModel();
 		try
 		{
 			Map<String, Object> map = new HashMap<String, Object>();
-			List<OrderExcelModel> orderModels = new ArrayList<>();
-			orderModels.add(new OrderExcelModel("123","abc"));
-			orderModels.add(new OrderExcelModel("avsd","a测试bc"));
-			map.put("orderList", orderModels);
-			map.put("ordername", "订单名称");
+			
+			List<OrderExcelModel> orderItems = new ArrayList<>();
+			
+			OrderModel model = orderService.get(model2.getId());
+
+			//订单信息
+			map.put("deliveryAddress", model.getDeliveryAddress());//交货地址
+			map.put("deliveryTime", model.getDeliveryTime());//交货期
+			map.put("orderTime", model.getOrderTime());//订单时间
+			map.put("orderNo", model.getOrderNo());//订单号
+			String cust_po_no = model.getOrderName();
+			//订单项列表
+			OrderItemModel orderItemModel = new OrderItemModel();
+			orderItemModel.setOrderId(model.getId());
+			List<OrderItemModel> orderItemModels = orderItemService.findList2(orderItemModel);
+			
+			int size = orderItemModels.size();
+			
+			map.put("expandedRowCount", size);
+			map.put("formula", size);
+			map.put("index", size);
+			
+			OrderExcelModel orderExcelModel;
+			OrderModel orderModelTmp;
+			for(OrderItemModel orderItem : orderItemModels){
+				orderExcelModel = new OrderExcelModel();
+				orderExcelModel.setCust_po_no(cust_po_no);
+				orderExcelModel.setPn(orderItem.getMaterialNum());
+				orderExcelModel.setQty(orderItem.getEsgouNum());
+				orderExcelModel.setUnit(orderItem.getSpecUnitName());
+				orderExcelModel.setUnit_price_net(orderItem.getPrice());
+				orderExcelModel.setTotal_price_net(orderItem.getTotalMoney());
+				orderExcelModel.setDescription(orderItem.getMemo());
+				orderModelTmp = new OrderModel();
+				orderModelTmp.setPcustomerId(model.getPcustomerId());
+				orderModelTmp.setCustomerGoodId(orderItem.getCustomerGoodId());
+				
+				//根据客户，customerGoodId查询客户料号
+				OrderModel orderMModel =  orderService.getpMaterialNum(orderModelTmp);
+				if(orderMModel != null){
+					orderExcelModel.setPn2(orderMModel.getMaterialNum());
+				}else {
+					orderExcelModel.setPn2(orderItem.getMaterialNum());
+				}
+				orderItems.add(orderExcelModel);
+			}
+			map.put("orderItems", orderItems);
+			
+			//sysuser
+			Long userid = getSessionUserId(request);
+			UserModel userModel = userService.get(userid);
+			int roleId = userModel.getRoleId();
+			
+			map.put("utel", userModel.getTel());//电话
+			map.put("ucompany", userModel.getCompany());//公司抬头
+			map.put("uposition", userModel.getPosition());//地址
+			map.put("urealName", userModel.getRealName());//姓名
+			
+			//厂商信息
+			map.put("customerName", model.getName1());//名称
+			map.put("caddress", model.getCaddress());//地址
+			map.put("ccontacts", model.getCcontacts());//联系人
+			map.put("ctel", model.getCtel());//联系电话
+			
 			File file = null;
 			InputStream inputStream = null;
 			ServletOutputStream out = null;
 			try {
+				String valueName = null;
+				if(roleId == 3){
+					valueName = "order_ort.ftl";
+				}else if(roleId == 4){
+					valueName = "order_anke.ftl";
+				}else{
+					valueName = "order_tuoding.ftl";
+				}
 				request.setCharacterEncoding("UTF-8");
-				file = ExportExecl.createExcel(map, "myExcel","order.ftl");//调用创建excel帮助类
+				file = ExportExecl.createExcel(map, "myExcel",valueName);//调用创建excel帮助类
 				inputStream = new FileInputStream(file);
 				response.setCharacterEncoding("utf-8");
 				response.setContentType("application/msexcel");
-				response.setHeader("content-disposition", "attachment;filename="+ URLEncoder.encode("订单统计" + ".xls", "UTF-8"));
+				response.setHeader("content-disposition", "attachment;filename="+ URLEncoder.encode(model.getOrderNo() + "订单" + ".xls", "UTF-8"));
 				out = response.getOutputStream();
 				byte[] buffer = new byte[512]; // 缓冲区
 				int bytesToRead = -1;

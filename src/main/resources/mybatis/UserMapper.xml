@@ -54,7 +54,7 @@
 	</insert>
 
 	<select id="UserMapper.getByName" resultMap="mRetMapUser">
-		SELECT <include refid="UserMapper.columns" />
+		SELECT id,userName,realName,roleId,position,tel,memo,orderTitle,company,userPwd
 		<![CDATA[
 		    FROM tab_user
 	        WHERE
@@ -66,7 +66,11 @@
     <![CDATA[
         UPDATE tab_user SET
 	        userName = #{userName} ,
-	        userPwd = #{userPwd} ,
+	         ]]>
+	        <if test="@com.gesoft.util.Ognl@isNotEmpty(userPwd)">
+				userPwd = #{userPwd} ,
+			</if>
+		<![CDATA[
 	        realName = #{realName} ,
 	        roleId = #{roleId} ,
 	        position = #{position} ,

@@ -45,7 +45,7 @@
                 <tr>
                     <td class="form-label" style="text-align: right;width:16%;">登录密码：</td>
                     <td style="width:32%;">
-                        <input name="userPwd" id="userPwd" class="mini-password" style="width:200px;"  required="true" maxlength="50" requiredErrorText="登录密码不能为空"/>
+                        <input name="userPwd" id="userPwd" class="mini-password" style="width:200px;" maxlength="50" requiredErrorText="登录密码不能为空"/>
                     </td>
                 </tr>
                 <tr>

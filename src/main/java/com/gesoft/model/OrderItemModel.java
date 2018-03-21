@@ -57,6 +57,24 @@ public class OrderItemModel extends BaseModel{
     private Integer customerId;
     private String blueprintId;
     private Double oneprice;
+    private String specUnitName;
+    private String memo;
+    
+    public String getMemo() {
+        return memo;
+    }
+    
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+    
+    public String getSpecUnitName() {
+        return specUnitName;
+    }
+    
+    public void setSpecUnitName(String specUnitName) {
+        this.specUnitName = specUnitName;
+    }
     
     public String getId() {
         return id;

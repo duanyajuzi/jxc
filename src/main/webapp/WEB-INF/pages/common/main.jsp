@@ -58,7 +58,7 @@
             <span id="xtname"></span>
         </td>
         <td id="top_sys"></td>
-        <td id="top_right" style="height:100%;width:150px;">
+        <td id="top_right" style="height:100%;width:180px;">
             <div id="user">
                 <div class="user-logo"></div>
                 <b id="jt"></b>

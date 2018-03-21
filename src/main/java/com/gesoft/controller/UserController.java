@@ -103,7 +103,10 @@ public class UserController extends BaseController
 		try
 		{
 			setSessionUserId(model, request);
-			model.setUserPwd(Md5Util.string2MD5(model.getUserPwd()+"a"));
+			if(!"".equals(model.getUserPwd())){
+				model.setUserPwd(Md5Util.string2MD5(model.getUserPwd()+"a"));
+			}
+			
 			if (userService.update(model) > 0)
 			{
 				msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);

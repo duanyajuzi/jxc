@@ -104,6 +104,24 @@ var PageOrder = function(){
                 }
             })
         },
+
+        /**
+         * 导出订单
+         */
+        funExport : function()
+        {
+            var row = this.orderGrid.getSelected();
+            var me = this;
+            if(row)
+            {
+                window.location.href = me.basePath + "/order/exportExcel?id="+row.id;
+            }
+            else
+            {
+                mini.alert("请先选择要导出的记录");
+            }
+        },
+
         funDelete : function()
         {
             var row = this.orderGrid.getSelected();

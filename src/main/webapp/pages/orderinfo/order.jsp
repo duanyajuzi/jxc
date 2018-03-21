@@ -64,6 +64,7 @@
                         <a  class="mini-button block-button" iconCls="icon-add" onclick="PageOrder.funAdd()">新增</a>
                         <a  class="mini-button block-button hide" iconCls="icon-edit" id="edit" onclick="PageOrder.funModify()">修改</a>
                         <a  class="mini-button block-button hide" iconCls="icon-remove" id="remove" onclick="PageOrder.funDelete()">删除</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-redo" id="export" onclick="PageOrder.funExport()">导出订单</a>
                     </td>
                 </tr>
             </table>
