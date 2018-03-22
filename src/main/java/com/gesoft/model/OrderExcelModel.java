@@ -14,6 +14,15 @@ public class OrderExcelModel {
     private String unit;//单位
     private Double unit_price_net;//未税单价
     private Double total_price_net;//未税总价
+    private String deliveryTime;
+    
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+    
+    public void setDeliveryTime(String deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
     
     public String getPn2() {
         return pn2;

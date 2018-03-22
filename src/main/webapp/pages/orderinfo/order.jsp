@@ -97,6 +97,7 @@
                     <div field="esgouNum" width="100" allowSort="true" headerAlign="right" align="right">订单数量</div>
                     <div field="tmpNum" width="100" allowSort="true" headerAlign="right" align="right">已入库数量</div>
                     <div field="goodsName" width="100" allowSort="true" headerAlign="center" align="center">商品名称</div>
+                    <div field="deliveryTime" width="100" allowSort="true" dateFormat="yyyy-MM-dd"  headerAlign="center" align="center">交期</div>
                     <div field="price" width="100" allowSort="true" headerAlign="right" align="right">采购单价</div>
                     <div field="dictName" width="100" allowSort="true" headerAlign="center" align="center">单位</div>
                     <div field="totalMoney" width="100" allowSort="true" headerAlign="right" align="right">总价</div>

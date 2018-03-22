@@ -328,14 +328,14 @@
   <Table ss:ExpandedColumnCount="16137" ss:ExpandedRowCount="${expandedRowCount+26}" x:FullColumns="1"
    x:FullRows="1" ss:StyleID="s29" ss:DefaultColumnWidth="53.25"
    ss:DefaultRowHeight="20.0625">
-   <Column ss:StyleID="s28" ss:AutoFitWidth="0" ss:Width="52.5"/>
-   <Column ss:StyleID="s28" ss:AutoFitWidth="0" ss:Width="84"/>
-   <Column ss:StyleID="s28" ss:AutoFitWidth="0" ss:Width="107" ss:Span="1"/>
-   <Column ss:Index="5" ss:StyleID="s29" ss:AutoFitWidth="0" ss:Width="297.75"/>
+   <Column ss:StyleID="s28" ss:AutoFitWidth="0" ss:Width="39"/>
+   <Column ss:StyleID="s28" ss:AutoFitWidth="0" ss:Width="73.5"/>
+   <Column ss:StyleID="s28" ss:AutoFitWidth="0" ss:Width="90" ss:Span="1"/>
+   <Column ss:Index="5" ss:StyleID="s29" ss:AutoFitWidth="0" ss:Width="107.25"/>
    <Column ss:StyleID="s29" ss:AutoFitWidth="0" ss:Width="99"/>
    <Column ss:StyleID="s31" ss:AutoFitWidth="0" ss:Width="63"/>
    <Column ss:StyleID="s31" ss:AutoFitWidth="0" ss:Width="39.75"/>
-   <Column ss:StyleID="s29" ss:AutoFitWidth="0" ss:Width="100"/>
+   <Column ss:StyleID="s29" ss:AutoFitWidth="0" ss:Width="99.75"/>
    <Column ss:StyleID="s29" ss:Hidden="1" ss:AutoFitWidth="0" ss:Width="77.25"/>
    <Column ss:StyleID="s29" ss:AutoFitWidth="0" ss:Width="90"/>
    <Column ss:Index="257" ss:StyleID="s29" ss:AutoFitWidth="0" ss:Width="32.25"/>

@@ -835,7 +835,7 @@
           <Cell ss:StyleID="s44"><Data ss:Type="Number">${order.qty?if_exists}</Data></Cell>
           <Cell ss:StyleID="s39"><Data ss:Type="String">${order.unit?if_exists}</Data></Cell>
           <Cell ss:StyleID="s39" ss:Formula="=RC[-3]*RC[-2]"><Data ss:Type="Number"></Data></Cell>
-          <Cell ss:StyleID="s58"><Data ss:Type="String">${deliveryTime}</Data></Cell>
+          <Cell ss:StyleID="s58"><Data ss:Type="String">${order.deliveryTime?if_exists}</Data></Cell>
       </Row>
   </#list>
 

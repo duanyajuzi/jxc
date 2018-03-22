@@ -1,5 +1,6 @@
 package com.gesoft.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,6 +60,24 @@ public class OrderItemModel extends BaseModel{
     private Double oneprice;
     private String specUnitName;
     private String memo;
+    private String deliveryTime;
+    private String sortIndex;
+    
+    public String getSortIndex() {
+        return sortIndex;
+    }
+    
+    public void setSortIndex(String sortIndex) {
+        this.sortIndex = sortIndex;
+    }
+    
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+    
+    public void setDeliveryTime(String deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
     
     public String getMemo() {
         return memo;

@@ -121,6 +121,7 @@ public class OrderController extends BaseController
 				orderExcelModel.setUnit_price_net(orderItem.getPrice());
 				orderExcelModel.setTotal_price_net(orderItem.getTotalMoney());
 				orderExcelModel.setDescription(orderItem.getMemo());
+				orderExcelModel.setDeliveryTime(orderItem.getDeliveryTime());
 				orderModelTmp = new OrderModel();
 				orderModelTmp.setPcustomerId(model.getPcustomerId());
 				orderModelTmp.setCustomerGoodId(orderItem.getCustomerGoodId());

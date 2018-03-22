@@ -115,7 +115,7 @@ var PageOrder = function(){
         	mini.open({
                 url: url,
                 title: paramData.title,
-                width: 750,
+                width: 790,
                 height: 550 ,
                 onload:function(){
                     var iframe=this.getIFrameEl();

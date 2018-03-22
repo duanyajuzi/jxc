@@ -497,14 +497,14 @@
     <Worksheet ss:Name="PO-1">
         <Table ss:ExpandedColumnCount="16135" ss:ExpandedRowCount="${expandedRowCount+47}" x:FullColumns="1"
                x:FullRows="1" ss:DefaultColumnWidth="53.25" ss:DefaultRowHeight="18.75">
-            <Column ss:StyleID="s67" ss:AutoFitWidth="0" ss:Width="36.75"/>
-            <Column ss:StyleID="s67" ss:AutoFitWidth="0" ss:Width="91.5"/>
-            <Column ss:AutoFitWidth="0" ss:Width="123"/>
-            <Column ss:AutoFitWidth="0" ss:Width="159.75"/>
-            <Column ss:StyleID="s56" ss:AutoFitWidth="0" ss:Width="68.25"/>
+            <Column ss:StyleID="s67" ss:AutoFitWidth="0" ss:Width="30.75"/>
+            <Column ss:StyleID="s67" ss:AutoFitWidth="0" ss:Width="80.25"/>
+            <Column ss:AutoFitWidth="0" ss:Width="105"/>
+            <Column ss:AutoFitWidth="0" ss:Width="130.5"/>
+            <Column ss:StyleID="s56" ss:AutoFitWidth="0" ss:Width="57.75"/>
             <Column ss:AutoFitWidth="0" ss:Width="55.5"/>
-            <Column ss:StyleID="s26" ss:AutoFitWidth="0" ss:Width="96.75"/>
-            <Column ss:AutoFitWidth="0" ss:Width="102.75"/>
+            <Column ss:StyleID="s26" ss:AutoFitWidth="0" ss:Width="89.25"/>
+            <Column ss:AutoFitWidth="0" ss:Width="107.25"/>
             <Column ss:Index="256" ss:AutoFitWidth="0" ss:Width="32.25"/>
             <Column ss:AutoFitWidth="0" ss:Width="89.25"/>
             <Column ss:AutoFitWidth="0" ss:Width="78.75"/>

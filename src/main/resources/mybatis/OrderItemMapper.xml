@@ -53,6 +53,8 @@
 		orderId,
 		customerGoodId,
 		esgouNum,
+		deliveryTime,
+		sortIndex,
 		unitPrice
 	    ]]>
     </sql>
@@ -66,6 +68,8 @@
 		customerGoodId,
 		esgouNum,
 		tmpNum,
+		deliveryTime,
+		sortIndex,
 		unitPrice
         ) VALUES (
         	#{id} ,
@@ -73,6 +77,8 @@
         	#{customerGoodId} ,
         	#{esgouNum} ,
         	#{tmpNum} ,
+        	#{deliveryTime} ,
+        	#{sortIndex} ,
         	#{unitPrice}
         )
     ]]>
@@ -84,6 +90,8 @@
 	        customerGoodId = #{customerGoodId} ,
 	        esgouNum = #{esgouNum} ,
 	        tmpNum = #{tmpNum} ,
+	        deliveryTime = #{deliveryTime} ,
+	        sortIndex = #{sortIndex} ,
 	        unitPrice = #{unitPrice}
         WHERE
 	        id = #{id}
@@ -182,6 +190,12 @@
         <![CDATA[
         DELETE FROM tab_inout_stock WHERE
         id = #{id}
+    ]]>
+    </delete>
+    <delete id="OrderItemMapper.deleteInoutStockByItemId" >
+        <![CDATA[
+        DELETE FROM tab_inout_stock_item WHERE
+        orderItemId = #{id}
     ]]>
     </delete>
 
@@ -380,6 +394,8 @@
         A.orderId,
         A.customerGoodId,
         A.esgouNum,
+        DATE_FORMAT(A.deliveryTime,'%Y-%m-%d') as deliveryTime,
+        A.sortIndex,
         A.unitPrice as price,
         A.tmpNum,
         D.goodsName,
@@ -398,9 +414,7 @@
         LEFT JOIN tab_goods D ON G.goodId = D.id
         LEFT JOIN tab_dict E ON F.unit = E.dictNo
     <include refid="OrderItemMapper.findPage.where"/>
-    <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
-        ORDER BY ${sortColumns}
-    </if>
+        order by A.sortIndex
 </select>
 
     <select id="OrderItemMapper.list2" resultMap="mRetMapOrderItem">
@@ -409,7 +423,9 @@
         A.orderId,
         A.customerGoodId,
         A.esgouNum,
+        date_format(A.deliveryTime,'%Y-%m-%d') as deliveryTime,
         A.unitPrice as price,
+        A.sortIndex,
         A.tmpNum,
         D.goodsName,
         F.materialNum,
@@ -428,9 +444,7 @@
         LEFT JOIN tab_dict E ON F.unit = E.dictNo
         LEFT JOIN tab_dict G ON D.specUnit = G.dictNo
         <include refid="OrderItemMapper.findPage.where"/>
-        <if test="@com.gesoft.util.Ognl@isNotEmpty(sortColumns)">
-            ORDER BY ${sortColumns}
-        </if>
+        order by A.sortIndex
     </select>
 
     <!--入库细项总数-->
@@ -688,6 +702,10 @@
             AND F.materialNum  LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
         </if>
 
+    </select>
+
+    <select id="OrderItemMapper.getItemIdByOrderId" resultMap="mRetMapOrderItem">
+        select id from tab_orderitem where orderId = #{orderId}
     </select>
 
     <!--查询销售订单树父节点-->

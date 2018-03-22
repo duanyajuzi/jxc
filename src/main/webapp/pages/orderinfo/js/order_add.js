@@ -177,11 +177,12 @@ var PageOrderAdd = function(){
         OnCellBeginEdit : function (e) {
             var record = e.record, field = e.field;
 
+            var editor = e.editor;
+
             if (field == "dictName" || field == "goodsName"  || field == "totalMoney" ) {
                 e.cancel = true;
             }
 
-            var editor = e.editor;
             if (field == "materialNum") {
                 var customerId = mini.get("customerId").getValue();
                 var businessId = mini.get("businessId").getValue();
@@ -237,6 +238,8 @@ var PageOrderAdd = function(){
                             obj.isHasLadder = result[0].isHasLadder;
                             obj.customerGoodId = result[0].blueprintId;
                             obj.goodsId = result[0].goodsId;
+                            obj.deliveryTime = mini.get("deliveryTime").getFormValue();
+                            obj.sortIndex = $(".mini-grid-row").length;
                             if(record.esgouNum > 0){
                                 obj.totalMoney = (obj.price * record.esgouNum).toFixed(2)
                             }
@@ -304,7 +307,7 @@ var PageOrderAdd = function(){
             var tmp = 0;
             setTimeout(function() {
                 $(".mini-grid-row").each(function(){
-                    var price = parseFloat($(this).find(".mini-grid-cell:eq(7)").text());
+                    var price = parseFloat($(this).find(".mini-grid-cell:eq(8)").text());
                     if(price > 0){
                         totalPrice += price;
                     }

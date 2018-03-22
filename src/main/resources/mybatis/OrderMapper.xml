@@ -163,7 +163,7 @@
 	
 	<sql id="OrderMapper.findPage.where">
 		<where>
-			A.orderType = #{orderType}
+			A.orderType = #{orderType} AND A.orderStatus != -1
 	       <if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
 				AND A.id = #{id}
 			</if>
@@ -276,7 +276,7 @@
 
 	<sql id="OrderMapper.findPage.whereSell">
 		<where>
-			A.orderType = #{orderType}
+			A.orderType = #{orderType} AND A.orderStatus != -1
 			<if test="@com.gesoft.util.Ognl@isNotEmpty(id)">
 				AND A.id = #{id}
 			</if>

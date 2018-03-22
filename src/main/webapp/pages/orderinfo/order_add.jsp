@@ -148,22 +148,28 @@
                 <div property="columns">
                     <div type="indexcolumn"></div>
                     <div type="checkcolumn"></div>
-                    <div field="materialNum" name="materialNum"  headerAlign="center" width="150" allowSort="true" >客户料号
+                    <div field="materialNum" name="materialNum"  headerAlign="center" width="130" allowSort="true" >客户料号
                         <input property="editor" class="mini-combobox" style="width:100%;"
                                allowInput="true" valueFromSelect="true" valueField="id" textField="materialNum"
                                required="true" maxlength="50" />
                     </div>
-                    <div field="esgouNum" width="100"  headerAlign="center" allowSort="true">数量
+                    <div field="esgouNum" width="80"  headerAlign="center" allowSort="true">数量
                         <input property="editor" class="mini-spinner"  value="1" minValue="1" maxValue="100000000"  maxlength="20" style="width:100%;"/>
                     </div>
-                    <div  field="goodsName" headerAlign="center" allowSort="true" width="150" >商品名称
+                    <div  field="goodsName" headerAlign="center" allowSort="true" width="130" >商品名称
                         <input property="editor" class="mini-textbox" style="width:100%;" minWidth="200" />
                     </div>
-                    <div field="price" headerAlign="center" width="100" allowSort="true" >销售价（未税）
+                    <div field="price" headerAlign="center" width="90" allowSort="true" >销售价（未税）
                         <input property="editor" class="mini-spinner" minValue="0" maxValue="100000000"  maxlength="20" style="width:100%;"/>
                     </div>
                     <div field="dictName" headerAlign="center" width="50" allowSort="true">单位
                         <input property="editor" class="mini-textbox" style="width:100%;"/>
+                    </div>
+                    <div field="deliveryTime"  headerAlign="center"  width="100" allowSort="true" dateFormat="yyyy-MM-dd">交期
+                        <input property="editor" class="mini-datepicker" style="width:100%;"/>
+                    </div>
+                    <div field="sortIndex" width="40"  headerAlign="center" allowSort="true">排序
+                        <input property="editor" class="mini-spinner"  value="1" minValue="1" maxValue="100000000"  maxlength="2" style="width:100%;"/>
                     </div>
                     <div field="totalMoney" headerAlign="center"  width="100" allowSort="true" >总价（未税）
                         <input property="editor" class="mini-spinner" style="width:100%;"/>
