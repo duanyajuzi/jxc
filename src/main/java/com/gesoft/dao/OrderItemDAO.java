@@ -27,6 +27,10 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
         return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".list2", model);
     }
     
+    public List<OrderItemModel> getOutStockList(OrderItemModel model){
+        return getSqlSession().selectList(getMybatisSqlMapNamespace() + ".getOutStockList", model);
+    }
+    
     public OrderItemModel getBluePrintInfo(OrderItemModel model){
         return getSqlSession().selectOne(getMybatisSqlMapNamespace() + ".getBluePrintInfo", model);
     }

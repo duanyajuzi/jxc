@@ -307,7 +307,7 @@ var PageOrderAdd = function(){
             var tmp = 0;
             setTimeout(function() {
                 $(".mini-grid-row").each(function(){
-                    var price = parseFloat($(this).find(".mini-grid-cell:eq(8)").text());
+                    var price = parseFloat($(this).find(".mini-grid-cell:eq(9)").text());
                     if(price > 0){
                         totalPrice += price;
                     }

@@ -76,7 +76,110 @@ public class OrderController extends BaseController
 	
 	
 	/**
-	 * 描述信息：excel导出
+	 * 描述信息：excel出货单导出
+	 * @param model2
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/exportExcel2", method=RequestMethod.GET)
+	public @ResponseBody MsgModel exportExcel2(OrderModel model2, HttpServletRequest request,HttpServletResponse response)
+	{
+		MsgModel msgModel = new MsgModel();
+		try
+		{
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			List<OrderExcelItemModel> orderItems = new ArrayList<>();
+			
+			OrderModel model = orderService.get(model2.getId());
+			map.put("orderNo", model.getOrderNo());//订单号
+			map.put("orderTime", model.getOrderTime());//订单时间
+			//订单信息
+			String cust_po_no = model.getOrderName();
+			//订单项列表
+			OrderItemModel orderItemModel = new OrderItemModel();
+			orderItemModel.setOrderId(model.getId());
+			List<OrderItemModel> orderItemModels = orderItemService.getOutStockList(orderItemModel);
+			
+			int size = orderItemModels.size();
+			
+			map.put("expandedRowCount", size);
+			
+			OrderExcelItemModel orderExcelModel;
+			for(OrderItemModel orderItem : orderItemModels){
+				orderExcelModel = new OrderExcelItemModel();
+				orderExcelModel.setGoods_name(orderItem.getGoodsName());
+				orderExcelModel.setCust_po_no(cust_po_no);
+				orderExcelModel.setQty(orderItem.getGoodNum());
+				orderExcelModel.setUnit(orderItem.getSpecUnitName());
+				orderExcelModel.setUnit_price_net(orderItem.getPrice());
+				orderExcelModel.setDescription(orderItem.getMemo());
+				orderExcelModel.setPn(orderItem.getMaterialNum());
+				orderItems.add(orderExcelModel);
+			}
+			map.put("orderItems", orderItems);
+			
+			//sysuser
+			Long userid = getSessionUserId(request);
+			UserModel userModel = userService.get(userid);
+			int roleId = userModel.getRoleId();
+			
+			map.put("utel", userModel.getTel());//电话
+			map.put("ucompany", userModel.getCompany());//公司抬头
+			map.put("uposition", userModel.getPosition());//地址
+			map.put("urealName", userModel.getRealName());//姓名
+			
+			//厂商信息
+			map.put("customerName", model.getName1());//名称
+			map.put("caddress", model.getCaddress());//地址
+			map.put("ccontacts", model.getCcontacts());//联系人
+			map.put("ctel", model.getCtel());//联系电话
+			
+			File file = null;
+			InputStream inputStream = null;
+			ServletOutputStream out = null;
+			try {
+				String valueName = null;
+				if(roleId == 2){
+					valueName = "order_list2.ftl";
+				}else{
+					valueName = "order_list.ftl";
+				}
+				request.setCharacterEncoding("UTF-8");
+				file = ExportExecl.createExcel(map, "myExcel",valueName);//调用创建excel帮助类
+				inputStream = new FileInputStream(file);
+				response.setCharacterEncoding("utf-8");
+				response.setContentType("application/msexcel");
+				response.setHeader("content-disposition", "attachment;filename="+ URLEncoder.encode(model.getOrderNo() + "订单" + ".xls", "UTF-8"));
+				out = response.getOutputStream();
+				byte[] buffer = new byte[512]; // 缓冲区
+				int bytesToRead = -1;
+				// 通过循环将读入的Excel文件的内容输出到浏览器中
+				while ((bytesToRead = inputStream.read(buffer)) != -1) {
+					out.write(buffer, 0, bytesToRead);
+				}
+				out.flush();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (inputStream != null)
+					inputStream.close();
+				if (out != null)
+					out.close();
+				if (file != null)
+					file.delete(); // 删除临时文件
+			}
+		}
+		catch (Exception e)
+		{
+			logger.error("OrderController search error：", e);
+		}
+		return msgModel;
+	}
+	
+	
+	/**
+	 * 描述信息：excel订单导出
 	 * @param model2
 	 * @param request
 	 * @return
