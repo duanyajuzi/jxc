@@ -111,6 +111,8 @@ public class OrderService extends EntityService<OrderModel, String>
 		String orderId = model.getId();
 		OrderItemModel itemModel = new OrderItemModel();
 		itemModel.setOrderId(orderId);
+		//根据订单id查询订单项id
+		List<OrderItemModel> itemList2 = orderItemDAO.getItemIdByOrderId(itemModel);
 		//根据已出库/入库数量恢复库存
 		if(model.getOrderType() == 0) {//采购订单
 			//查询子项列表
@@ -119,6 +121,10 @@ public class OrderService extends EntityService<OrderModel, String>
 				item.setAfterNum(-item.getTmpNum());
 				orderItemDAO.updateStorage(item);
 			}
+			for(OrderItemModel item : itemList2){
+				//根据订单项id删除出入库记录
+				orderItemDAO.deleteInStockByItemId(item);
+			}
 		}else{//销售订单
 			List<OrderItemModel> itemList = orderItemDAO.findList(itemModel);
 			for(OrderItemModel item : itemList){
@@ -126,12 +132,10 @@ public class OrderService extends EntityService<OrderModel, String>
 				item.setCustomerGoodId(item.getGoodsId());
 				orderItemDAO.updateStorage(item);
 			}
-		}
-		//根据订单id查询订单项id
-		List<OrderItemModel> itemList = orderItemDAO.getItemIdByOrderId(itemModel);
-		for(OrderItemModel item : itemList){
-			//根据订单项id删除出入库记录
-			orderItemDAO.deleteInoutStockByItemId(item);
+			for(OrderItemModel item : itemList2){
+				//根据订单项id删除出入库记录
+				orderItemDAO.deleteOutStockByItemId(item);
+			}
 		}
 		
 		orderDAO.delete(model);

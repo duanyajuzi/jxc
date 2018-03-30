@@ -189,9 +189,15 @@
         id = #{id}
     ]]>
     </delete>
-    <delete id="OrderItemMapper.deleteInoutStockByItemId" >
+    <delete id="OrderItemMapper.deleteInStockByItemId" >
         <![CDATA[
-        DELETE FROM tab_inout_stock_item WHERE
+        DELETE FROM tab_in_stock_item WHERE
+        orderItemId = #{id}
+    ]]>
+    </delete>
+    <delete id="OrderItemMapper.deleteOutStockByItemId" >
+        <![CDATA[
+        DELETE FROM tab_out_stock_item WHERE
         orderItemId = #{id}
     ]]>
     </delete>

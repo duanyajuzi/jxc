@@ -59,8 +59,11 @@ public class OrderItemDAO extends EntityDAOImpl<OrderItemModel, Long> {
         return getSqlSession().insert(getMybatisSqlMapNamespace() + ".deleteInoutStock", model);
     }
     
-    public int deleteInoutStockByItemId(OrderItemModel model){
-        return getSqlSession().insert(getMybatisSqlMapNamespace() + ".deleteInoutStockByItemId", model);
+    public int deleteInStockByItemId(OrderItemModel model){
+        return getSqlSession().insert(getMybatisSqlMapNamespace() + ".deleteInStockByItemId", model);
+    }
+    public int deleteOutStockByItemId(OrderItemModel model){
+        return getSqlSession().insert(getMybatisSqlMapNamespace() + ".deleteOutStockByItemId", model);
     }
     
     public int updateStorage(OrderItemModel model){
