@@ -24,6 +24,8 @@ public class OrderItemModel extends BaseModel{
     private String specUnit;
     private String dictName;
     private Double totalMoney;
+    private Double intotalMoney;
+    private Double outtotalMoney;
     //方案其他字段
     private String goodsId;
     private Long goodsNum;
@@ -58,10 +60,44 @@ public class OrderItemModel extends BaseModel{
     private Integer customerId;
     private String blueprintId;
     private Double oneprice;
+    private Double inprice;
+    private Double outprice;
     private String specUnitName;
     private String memo;
     private String deliveryTime;
     private String sortIndex;
+    
+    public Double getIntotalMoney() {
+        return intotalMoney;
+    }
+    
+    public void setIntotalMoney(Double intotalMoney) {
+        this.intotalMoney = intotalMoney;
+    }
+    
+    public Double getOuttotalMoney() {
+        return outtotalMoney;
+    }
+    
+    public void setOuttotalMoney(Double outtotalMoney) {
+        this.outtotalMoney = outtotalMoney;
+    }
+    
+    public Double getInprice() {
+        return inprice;
+    }
+    
+    public void setInprice(Double inprice) {
+        this.inprice = inprice;
+    }
+    
+    public Double getOutprice() {
+        return outprice;
+    }
+    
+    public void setOutprice(Double outprice) {
+        this.outprice = outprice;
+    }
     
     public String getSortIndex() {
         return sortIndex;

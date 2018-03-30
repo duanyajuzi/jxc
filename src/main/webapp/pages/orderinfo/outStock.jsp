@@ -6,9 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String orderType = request.getParameter("orderType").trim() ;
-%>
 <html>
 <head>
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
@@ -72,7 +69,7 @@
         </div>
         <div class="mini-fit">
             <div id="inoutItemGrid" class="mini-datagrid" idField="id" allowResize="false"
-                 url="${pageContext.request.contextPath}/orderItem/queryOutStockItem"
+                 url="${pageContext.request.contextPath}/outStockItem/queryOutStockItem"
                  pagesize="30" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="30" align="center">序号</div>
@@ -82,7 +79,8 @@
                     <div field="ycmaterialNum" width="120" allowSort="true" headerAlign="center" align="center">原厂料号</div>
                     <div field="materialNum" width="120" allowSort="true" headerAlign="center" align="center">客户料号</div>
                     <div field="goodNum" name="goodNum" width="120" allowSort="true" headerAlign="center" align="center">出库商品数量</div>
-                    <div field="price" name="price" width="120" allowSort="true" headerAlign="center" align="center">单价</div>
+                    <div field="inprice" name="inprice" width="120" allowSort="true" headerAlign="center" align="center">采购价</div>
+                    <div field="outprice" name="outprice" width="120" allowSort="true" headerAlign="center" align="center">销售价</div>
                     <div field="stime" name="stime" width="150" headerAlign="center" align="center"
                          dateFormat="yyyy-MM-dd" allowSort="true">出库时间</div>
                 </div>

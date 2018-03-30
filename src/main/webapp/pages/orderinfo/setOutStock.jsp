@@ -69,11 +69,14 @@
                 <div field="goodId" visible="false">goodId</div>
                 <div field="goodsName" width="80" headerAlign="center" allowSort="true">商品名称</div>
                 <div field="materialNum" width="120" headerAlign="center" allowSort="true">客户料号</div>
-                <div field="tmpNum" name="tmpNum" width="100" headerAlign="center" allowSort="true">出库数量</div>
-                <div field="unitPrice" width="120" headerAlign="center" >价格
-                    <input property="editor" id="price" class="mini-spinner" minValue="0" maxValue="100000000" style="width:100%;"/>
+                <div field="tmpNum" name="tmpNum" width="70" headerAlign="center" allowSort="true">出库数量</div>
+                <div field="inprice" width="90" headerAlign="center" >采购价
+                    <input property="editor" id="inprice" class="mini-spinner" minValue="0" maxValue="100000000" style="width:100%;"/>
                 </div>
-                <div field="action" width="110" headerAlign="center" allowSort="true">操作</div>
+                <div field="outprice" width="90" headerAlign="center" >销售价
+                    <input property="editor" id="outprice" class="mini-spinner" minValue="0" maxValue="100000000" style="width:100%;"/>
+                </div>
+                <div field="action" width="80" headerAlign="center" allowSort="true">操作</div>
             </div>
         </div>
         <div class="mini-toolbar" style="border-bottom:0;padding:0px;">

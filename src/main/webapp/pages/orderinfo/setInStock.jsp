@@ -2,7 +2,7 @@
 <html>
 <head>
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
-    <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/setInoutStock.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/setInStock.js'/>"></script>
     <title></title>
 </head>
 <body>
@@ -61,9 +61,6 @@
                 <div field="goodsName" width="80" headerAlign="center" allowSort="true">商品名称</div>
                 <div field="materialNum" width="120" headerAlign="center" allowSort="true">原厂料号</div>
                 <div field="tmpNum" name="tmpNum" width="100" headerAlign="center" allowSort="true">入库数量</div>
-                <div field="unitPrice" width="120" headerAlign="center" >价格
-                    <input property="editor" id="price" class="mini-spinner" minValue="0" maxValue="100000000" style="width:100%;"/>
-                </div>
                 <div field="action" width="110" headerAlign="center" allowSort="true">操作</div>
             </div>
         </div>

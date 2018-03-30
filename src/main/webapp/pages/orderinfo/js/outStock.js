@@ -11,7 +11,7 @@ var PageOutStock=function () {
             this.basePath = PageMain.basePath;
             this.inoutItemGrid=mini.get("inoutItemGrid");
             this.inoutItemGrid.load();
-            PageOutStock.defaultOption.orderType=PageOutStock.getUrlParam("orderType");
+            PageOutStock.defaultOption.orderType=1;
         },
         getUrlParam:function(name){
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -57,8 +57,8 @@ var PageOutStock=function () {
             mini.open({
                 url: this.basePath + "/pages/orderinfo/inoutStockItem_add.jsp",
                 title: paramData.title,
-                width: 400,
-                height: 280,
+                width: 430,
+                height: 350,
                 onload:function(){
                     var iframe=this.getIFrameEl();
                     iframe.contentWindow.PageInoutStockItemAdd.funSetData(paramData);
@@ -77,7 +77,7 @@ var PageOutStock=function () {
                 width:1100,
                 onload:function () {
                     var iframe=this.getIFrameEl();
-                    iframe.contentWindow.PageSetOutStock.funGetData(data);
+                    iframe.contentWindow.PageSetOutStock.funGetData();
                 },
                 ondestroy:function () {
                     mini.get("inoutItemGrid").load();

@@ -20,11 +20,9 @@ var PageSetOutStock = function () {
             mini.get("stime").setValue(date);
 
         },
-        funGetData:function (data) {
-            if(data!=null && data!="") {
-                this.orderType = data.orderType;
-                PageSetOutStock.funSearch();
-            }
+        funGetData:function () {
+            this.orderType = 1;
+            PageSetOutStock.funSearch();
         },
         funSearch:function () {
             var businessId=mini.get("businessId").getValue().trim("");
@@ -171,7 +169,8 @@ var PageSetOutStock = function () {
                         "goodsName": data.goodsName,
                         "materialNum": data.materialNum,
                         "tmpNum": data.tmpNum,
-                        "unitPrice": data.unitPrice,
+                        "inprice": data.inprice,
+                        "outprice": data.outprice,
                         "action": "<a href='javascript:void(0);' onclick='PageSetOutStock.delRight(this)'>删除</a>"
                     };
                     beforeData.push(paramData);

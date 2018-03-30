@@ -39,6 +39,13 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         return orderItemDAO.queryNumInfo2(model);
     }
     
+    public List<OrderItemModel> queryCList(OrderItemModel model){
+        return orderItemDAO.queryCList(model);
+    }
+    public List<OrderItemModel> queryPriceList(OrderItemModel model){
+        return orderItemDAO.queryPriceList(model);
+    }
+    
     public List<OrderItemModel> findList2(OrderItemModel model){
         return orderItemDAO.findList2(model);
     }
@@ -58,10 +65,6 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
     public int updateInoutNum(OrderItemModel model){
         return orderItemDAO.updateInoutNum(model);
     }
-    //插入出入库存信息
-    public int insertInoutStock(OrderItemModel model){
-        return orderItemDAO.insertInoutStock(model);
-    }
     //修改出入库存信息
     public int updateInoutStockItem(OrderItemModel orderItemModel){
         return orderItemDAO.updateInoutStockItem(orderItemModel);
@@ -74,111 +77,6 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
         return orderItemDAO.getOrderItemTepNum(model);
     }
 
-    /**
-     * 入库管理分页
-     * @param model
-     * @param msgModel
-     */
-    public void findPageInoutStock(OrderItemModel model, MsgModel msgModel)
-    {
-        //取总记录数
-        long recordCount = model.getTotal();
-        if (isSearchPageTotal(model))
-        {
-            recordCount = orderItemDAO.findCntInoutStock(model);
-        }
-        //分页加载数据
-        if (recordCount > 0)
-        {
-            setPageModel(recordCount, model);
-            List<OrderItemModel> argArgs =  orderItemDAO.findListInoutStock(model);
-            if (argArgs != null)
-            {
-                msgModel.setData(argArgs);
-                msgModel.setTotal(recordCount);
-            }
-        }
-    }
-
-    /**
-     * 出库管理分页
-     * @param model
-     * @param msgModel
-     */
-    public void findPageOutStock(OrderItemModel model, MsgModel msgModel)
-    {
-        //取总记录数
-        long recordCount = model.getTotal();
-        if (isSearchPageTotal(model))
-        {
-            recordCount = orderItemDAO.findCntOutStock(model);
-        }
-        //分页加载数据
-        if (recordCount > 0)
-        {
-            setPageModel(recordCount, model);
-            List<OrderItemModel> argArgs =  orderItemDAO.findListOutStock(model);
-            if (argArgs != null)
-            {
-                msgModel.setData(argArgs);
-                msgModel.setTotal(recordCount);
-            }
-        }
-    }
-
-    /**
-     * 分页查询入库细项
-     * @param model
-     * @param msgModel
-     */
-    public void findPageInoutStockItem(OrderItemModel model, MsgModel msgModel) {
-        //取总记录数
-        long recordCount = model.getTotal();
-        if (isSearchPageTotal(model)) {
-            recordCount = orderItemDAO.findCntInoutStockItem(model);
-        }
-        //分页加载数据
-        if (recordCount > 0) {
-            setPageModel(recordCount, model);
-            List <OrderItemModel> argArgs = orderItemDAO.findListInoutStockItem(model);
-            if (argArgs != null) {
-                msgModel.setData(argArgs);
-                msgModel.setTotal(recordCount);
-            }
-        }
-    }
-
-    /**
-     * 分页查询出库细项
-     * @param model
-     * @param msgModel
-     */
-    public void findPageOutStockItem(OrderItemModel model, MsgModel msgModel) {
-        //取总记录数
-        long recordCount = model.getTotal();
-        if (isSearchPageTotal(model)) {
-            recordCount = orderItemDAO.findCntOutStockItem(model);
-        }
-        //分页加载数据
-        if (recordCount > 0) {
-            setPageModel(recordCount, model);
-            List <OrderItemModel> argArgs = orderItemDAO.findListOutStockItem(model);
-            if (argArgs != null) {
-                msgModel.setData(argArgs);
-                msgModel.setTotal(recordCount);
-            }
-        }
-    }
-
-
-    //入库细项
-    public List<OrderItemModel> findListInoutStockItem(OrderItemModel model){
-        return orderItemDAO.findListInoutStockItem(model);
-    }
-    //出库细项
-    public List<OrderItemModel> findListOutStockItem(OrderItemModel model){
-        return orderItemDAO.findListOutStockItem(model);
-    }
 
     public List<OrderItemModel> queryInOrderTree(OrderItemModel orderItemModel){
         return orderItemDAO.queryInOrderTree(orderItemModel);
@@ -193,12 +91,6 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
     }
     public List<OrderItemModel> queryOrderTree2(OrderItemModel orderItemModel){
         return orderItemDAO.queryOrderTree2(orderItemModel);
-    }
-
-    public int insertInoutStockItem(OrderItemModel model){
-        
-        return orderItemDAO.insertInoutStockItem(model);
-        
     }
 
     //修改订单状态
@@ -279,7 +171,10 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
             Object obj = list.get(i).get("id");
             Object obj2= list.get(i).get("orderId");
             Object obj1 = list.get(i).get("tmpNum");
-            orderItemModel.setPrice(Double.parseDouble(list.get(i).get("unitPrice").toString()));
+            if(model.getOrderType()==1){
+                orderItemModel.setInprice(Double.parseDouble(list.get(i).get("inprice").toString()));
+                orderItemModel.setOutprice(Double.parseDouble(list.get(i).get("outprice").toString()));
+            }
             orderItemModel.setOrderId(String.valueOf(obj2));
             orderItemModel.setOrderItemId(String.valueOf(obj));
             orderItemModel.setGoodNum(Long.parseLong(obj1.toString()));
@@ -287,7 +182,12 @@ public class OrderItemService  extends EntityService<OrderItemModel, Long> {
             orderItemModel.setCreateUserId(model.getUserId());
             orderItemModel.setModifyUserId(model.getUserId());
             orderItemModel.setOrderType(model.getOrderType());
-            orderItemDAO.insertInoutStockItem(orderItemModel);
+            if(model.getOrderType()==0){
+                orderItemDAO.insertInStockItem(orderItemModel);
+            }else{
+                orderItemDAO.insertOutStockItem(orderItemModel);
+            }
+            
         }
         List<OrderItemModel> clist = new ArrayList();//查询子节点
         clist = orderItemDAO.queryOrderTree2(orderItemModel);

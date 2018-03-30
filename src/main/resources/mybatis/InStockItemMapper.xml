@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="InStockItemMapper">
+
+	<resultMap id="mRetMapInStock" type="com.gesoft.model.InStockItemModel">
+	</resultMap>
+
+	<sql id="InStockItemMapper.findPage.where">
+		<where>
+			1=1
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(stimeBegin)">
+				AND A.stime>= #{stimeBegin}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(stimeEnd)">
+				AND A.stime &lt;= #{stimeEnd}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+				AND T.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
+				AND T.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+				AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+				AND T.businessId = #{businessId}
+			</if>
+		</where>
+	</sql>
+
+	<!--入库细项总数-->
+	<select id="InStockItemMapper.countIn" resultType="long">
+		select count(*)
+		from tab_in_stock_item A
+		left join tab_orderitem B on A.orderItemId=B.id
+		left join tab_order T on T.id=B.orderId
+		left join tab_good_customer F on B.customerGoodId=F.id
+		left join tab_goods D on F.goodId=D.id
+		<include refid="InStockItemMapper.findPage.where"/>
+
+	</select>
+
+	<!--分页查询入库信息-->
+	<select id="InStockItemMapper.queryInStock" resultMap="mRetMapInStock">
+		SELECT
+		A.id,
+		T.orderNo,
+		T.orderName,
+		F.materialNum,
+		D.goodsName,
+		A.goodNum,
+		A.stime
+		FROM
+		tab_in_stock_item A
+		LEFT JOIN tab_orderitem B ON A.orderItemId = B.id
+		LEFT JOIN tab_order T ON T.id = B.orderId
+		LEFT JOIN tab_good_customer F ON B.customerGoodId = F.id
+		LEFT JOIN tab_goods D ON F.goodId = D.id
+		<include refid="InStockItemMapper.findPage.where"/>
+		order by A.stime desc
+		LIMIT #{startNum}, #{pageSize}
+	</select>
+
+
+</mapper>
+

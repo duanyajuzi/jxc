@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="OutStockItemMapper">
+
+	<resultMap id="mRetMapOutStock" type="com.gesoft.model.OutStockItemModel">
+	</resultMap>
+
+
+	<sql id="OutStockItemMapper.findPage.where">
+		<where>
+			1=1
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(stimeBegin)">
+				AND A.stime>= #{stimeBegin}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(stimeEnd)">
+				AND A.stime &lt;= #{stimeEnd}
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderNo)">
+				AND T.orderNo LIKE CONCAT(CONCAT('%', #{orderNo}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(orderName)">
+				AND T.orderName LIKE CONCAT(CONCAT('%', #{orderName}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(materialNum)">
+				AND F.materialNum LIKE CONCAT(CONCAT('%', #{materialNum}), '%')
+			</if>
+			<if test="@com.gesoft.util.Ognl@isNotEmpty(businessId)">
+				AND T.businessId = #{businessId}
+			</if>
+		</where>
+	</sql>
+
+	<!--入库细项总数-->
+	<select id="OutStockItemMapper.countOut" resultType="long">
+		select count(*)
+		from tab_out_stock_item A
+		LEFT JOIN tab_orderitem B ON A.orderItemId = B.id
+		LEFT JOIN tab_order T ON T.id = B.orderId
+		LEFT JOIN tab_blueprint F ON B.customerGoodId = F.id
+		LEFT JOIN tab_good_customer G ON F.goodsId = G.id
+		LEFT JOIN tab_goods D ON G.goodId = D.id
+		<include refid="OutStockItemMapper.findPage.where"/>
+
+	</select>
+
+	<!--分页查询入库信息-->
+	<select id="OutStockItemMapper.queryOutStock" resultMap="mRetMapOutStock">
+		SELECT
+		A.id,
+		A.orderItemId,
+		T.orderNo,
+		T.orderName,
+		F.goodsId AS customerGoodId,
+		G.materialNum AS ycmaterialNum,
+		F.materialNum,
+		G.goodId,
+		D.goodsName,
+		A.goodNum,
+		A.inprice,
+		A.outprice,
+		A.stime
+		FROM
+		tab_out_stock_item A
+		LEFT JOIN tab_orderitem B ON A.orderItemId = B.id
+		LEFT JOIN tab_order T ON T.id = B.orderId
+		LEFT JOIN tab_blueprint F ON B.customerGoodId = F.id
+		LEFT JOIN tab_good_customer G ON F.goodsId = G.id
+		LEFT JOIN tab_goods D ON G.goodId = D.id
+		<include refid="OutStockItemMapper.findPage.where"/>
+		order by A.stime desc
+		LIMIT #{startNum}, #{pageSize}
+	</select>
+
+
+	
+
+</mapper>
+

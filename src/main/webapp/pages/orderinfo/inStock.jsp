@@ -1,11 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String orderType = request.getParameter("orderType").trim() ;
-%>
 <html>
 <head>
     <%@ include file="/WEB-INF/pages/common/top-include.jsp" %>
-    <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/inoutStock.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/pages/orderinfo/js/inStock.js'/>"></script>
     <title></title>
     <style>
         #detailGrid_Form .mini-grid-headerCell-outer{
@@ -56,14 +53,13 @@
                 <tr>
                     <td style="width:30%;">
                         <a name="setInStockButton" id="setInStockButton" class="mini-button" iconCls="icon-node" onclick="PageInoutStock.funSetInoutStockNum()">入库</a>
-                        <a name="modify" id="modify" class="mini-button block-button" iconCls="icon-edit" onclick="PageInoutStock.funModify()">修改价格</a>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="mini-fit">
             <div id="inoutItemGrid" class="mini-datagrid" idField="id" allowResize="false"
-                 url="${pageContext.request.contextPath}/orderItem/queryInoutStockItem"
+                 url="${pageContext.request.contextPath}/inStockItem/queryInStockItem"
                  pagesize="30" sizeList="[10,30,50,100]" allowAlternating="true"  sortMode="client" style="height: 100%;">
                 <div property="columns">
                     <div type="indexcolumn" headerAlign="center"  width="30" align="center">序号</div>
@@ -72,7 +68,6 @@
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center" align="center">商品名称</div>
                     <div field="materialNum" width="120" allowSort="true" headerAlign="center" align="center">原厂料号</div>
                     <div field="goodNum" name="goodNum" width="120" allowSort="true" headerAlign="center" align="center">入库商品数量</div>
-                    <div field="price" name="price" width="120" allowSort="true" headerAlign="center" align="center">单价</div>
                     <div field="stime" name="stime" width="150" headerAlign="center" align="center"
                          dateFormat="yyyy-MM-dd" allowSort="true">入库时间</div>
                 </div>

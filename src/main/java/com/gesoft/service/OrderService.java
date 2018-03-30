@@ -209,12 +209,11 @@ public class OrderService extends EntityService<OrderModel, String>
 					if(model.getOrderType() == 0 && "0".equals(model.getIskh())){
 						inoutStockModel = new OrderItemModel();
 						inoutStockModel.setOrderItemId(id);
-						inoutStockModel.setPrice(price);
 						inoutStockModel.setGoodNum(esgouNum);
 						inoutStockModel.setOrderType(0);
 						inoutStockModel.setCreateUserId(userid);
 						inoutStockModel.setModifyUserId(userid);
-						orderItemDAO.insertInoutStockItem(inoutStockModel);
+						orderItemDAO.insertInStockItem(inoutStockModel);
 					}
 					
 				}else if("modified".equals(state)){

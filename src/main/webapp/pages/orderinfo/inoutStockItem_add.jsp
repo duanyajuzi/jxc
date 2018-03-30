@@ -73,9 +73,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="form-label" style="text-align: right;width:16%;">单价：</td>
+                    <td class="form-label" style="text-align: right;width:16%;">采购价：</td>
                     <td style="width:32%;">
-                        <input name="price" id="price" class="mini-spinner" minValue="0" maxValue="100000000"  style="width:200px;" required="true"/>
+                        <input name="inprice" id="inprice" class="mini-spinner" minValue="0" maxValue="100000000"  style="width:200px;" required="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label" style="text-align: right;width:16%;">销售价：</td>
+                    <td style="width:32%;">
+                        <input name="outprice" id="outprice" class="mini-spinner" minValue="0" maxValue="100000000"  style="width:200px;" required="true"/>
                     </td>
                 </tr>
             </table>

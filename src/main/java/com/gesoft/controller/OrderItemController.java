@@ -95,86 +95,50 @@ public class OrderItemController extends BaseController
         }
         return msgModel;
     }
-
+    
     /**
-     * 入库清单
+     * 描述信息：在选择的时间段内，查询某客户的销售金额
      * @param model
      * @return
      */
-    @RequestMapping(value="/queryInoutStock", method=RequestMethod.POST)
-    public @ResponseBody MsgModel queryInoutStock(OrderItemModel model)
+    @RequestMapping(value="/queryCList", method=RequestMethod.GET)
+    public @ResponseBody MsgModel queryCList(OrderItemModel model)
     {
         MsgModel msgModel = new MsgModel();
         try
         {
-            orderItemService.findPageInoutStock(model, msgModel);
+            msgModel.setData(orderItemService.queryCList(model));
+            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
         }
         catch (Exception e)
         {
-            logger.error("OrderItemController queryInoutStock error：", e);
+            logger.error("OrderItemController search error：", e);
         }
         return msgModel;
     }
-
+    
     /**
-     * 出库清单
+     * 描述信息：在选择的时间段内，查询某客户的销售金额
      * @param model
      * @return
      */
-    @RequestMapping(value="/queryOutStock", method=RequestMethod.POST)
-    public @ResponseBody MsgModel queryOutStock(OrderItemModel model)
+    @RequestMapping(value="/queryPriceList", method=RequestMethod.GET)
+    public @ResponseBody MsgModel queryPriceList(OrderItemModel model)
     {
         MsgModel msgModel = new MsgModel();
         try
         {
-            orderItemService.findPageOutStock(model, msgModel);
+            msgModel.setData(orderItemService.queryPriceList(model));
+            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
         }
         catch (Exception e)
         {
-            logger.error("OrderItemController queryOutStock error：", e);
+            logger.error("OrderItemController search error：", e);
         }
         return msgModel;
     }
 
-    /**
-     * 分页查询入库细项
-     * @param model
-     * @return
-     */
-    @RequestMapping(value="/queryInoutStockItem")
-    public @ResponseBody MsgModel search3(OrderItemModel model)
-    {
-        MsgModel msgModel = new MsgModel();
-        try
-        {
-            orderItemService.findPageInoutStockItem(model, msgModel);
-        }
-        catch (Exception e)
-        {
-            logger.error("OrderItemController queryInoutStockItem error：", e);
-        }
-        return msgModel;
-    }
 
-    /**
-     *分页查询出库细项
-     * @param model
-     * @return
-     */
-    @RequestMapping(value="/queryOutStockItem")
-    public @ResponseBody MsgModel search4(OrderItemModel model)
-    {
-        MsgModel msgModel = new MsgModel();
-        try
-        {
-            orderItemService.findPageOutStockItem(model, msgModel);
-        }
-        catch (Exception e)
-        {
-            logger.error("OrderItemController queryOutStockItem error：", e);
-        }
-        return msgModel;
-    }
 
     /**
      * 描述信息：增加

@@ -18,10 +18,8 @@ var PageSetInoutStock = function () {
             mini.get("stime").setValue(date);
         },
         funGetData:function (data) {
-            if(data!=null && data!="") {
-                this.orderType = data.orderType;
-                this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
-            }
+            this.orderType = 0;
+            this.orderTree.load(this.basePath+"/orderItem/queryInOrderTreeList?orderType="+this.orderType);
         },
 
         funSearch:function () {
@@ -152,7 +150,6 @@ var PageSetInoutStock = function () {
                         "goodsName": data.goodsName,
                         "materialNum": data.materialNum,
                         "tmpNum": data.tmpNum,
-                        "unitPrice": data.unitPrice,
                         "action": "<a href='javascript:void(0);' onclick='PageSetInoutStock.delRight(this)'>删除</a>"
                     };
                     beforeData.push(paramData);

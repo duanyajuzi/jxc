@@ -12,7 +12,8 @@ var PageInoutStockItemAdd = function(){
             this.basePath = PageMain.basePath;
             this.InoutStockItemForm = new mini.Form("InoutStockItemForm");
             this.InoutStockItemForm.setEnabled(false);
-            mini.get("price").setEnabled(true)
+            mini.get("inprice").setEnabled(true)
+            mini.get("outprice").setEnabled(true)
         },
         funSetData : function(data)
         {
