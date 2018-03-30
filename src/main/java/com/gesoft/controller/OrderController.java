@@ -140,11 +140,11 @@ public class OrderController extends BaseController
 			ServletOutputStream out = null;
 			try {
 				String valueName = null;
-				if(roleId == 2){
-					valueName = "order_list2.ftl";
-				}else{
+//				if(roleId == 2){
+//					valueName = "order_list2.ftl";
+//				}else{
 					valueName = "order_list.ftl";
-				}
+//				}
 				request.setCharacterEncoding("UTF-8");
 				file = ExportExecl.createExcel(map, "myExcel",valueName);//调用创建excel帮助类
 				inputStream = new FileInputStream(file);

@@ -42,7 +42,7 @@
             <table style="width:100%;">
                 <tr>
                     <td style="width:30%;">
-                        <a  class="mini-button block-button hide" iconCls="icon-redo" id="export" onclick="PageOrder.PageStatement()">导出订单</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-redo" id="export" onclick="PageStatement.exportExcel()">导出订单</a>
                     </td>
                 </tr>
             </table>

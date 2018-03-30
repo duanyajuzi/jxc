@@ -37,7 +37,7 @@
             <table style="width:100%;">
                 <tr>
                     <td style="width:30%;">
-                        <a  class="mini-button block-button hide" iconCls="icon-redo" id="export" onclick="PageOrder.PageStatement()">导出订单</a>
+                        <a  class="mini-button block-button hide" iconCls="icon-redo" id="export" onclick="PagePricelist.exportExcel()">导出订单</a>
                     </td>
                 </tr>
             </table>
@@ -51,7 +51,7 @@
                     <div field="ycmaterialNum" width="120" allowSort="true" headerAlign="center" align="center">原厂料号</div>
                     <div field="materialNum" width="120" allowSort="true" headerAlign="center" align="center">客户料号</div>
                     <div field="goodsName" width="120" allowSort="true" headerAlign="center" align="center">商品名称</div>
-                    <div field="price" name="unitPrice" width="120" allowSort="true" headerAlign="right" align="right">采购单价</div>
+                    <div field="unitPrice" name="unitPrice" width="120" allowSort="true" headerAlign="right" align="right">采购单价</div>
                     <div field="price" name="price" width="120" allowSort="true" headerAlign="right" align="right">销售单价</div>
                     <div field="dictName" width="120" allowSort="true" headerAlign="center" align="center">单位</div>
                 </div>

@@ -546,6 +546,29 @@
         WHERE id = #{id}
     </select>
 
+    <!-- 查询出库记录-->
+    <select id="OrderItemMapper.getOutStockList" resultMap="mRetMapOrderItem">
+        SELECT
+        t.outprice as price,
+        t.goodNum,
+        b.materialNum,
+        d.dictName as specUnitName,
+        c.memo,
+        g.goodsName,
+        r.orderName
+        FROM
+        tab_out_stock_item t
+        LEFT JOIN tab_orderitem o ON o.id = t.orderItemId
+        LEFT JOIN tab_blueprint b ON b.id = o.customerGoodId
+        LEFT JOIN tab_good_customer c ON c.id = b.goodsId
+        LEFT JOIN tab_goods g ON g.id = c.goodId
+        LEFT JOIN tab_order r ON r.id = o.orderId
+        LEFT JOIN tab_dict d ON d.dictNo = g.specUnit
+        WHERE
+        o.orderId = #{orderId}
+        and DATE_FORMAT(t.createTime,'%Y-%m-%d') = DATE_FORMAT(now(),'%Y-%m-%d')
+    </select>
+
     <!-- 在选择的时间段内，查询某客户的销售金额-->
     <select id="OrderItemMapper.queryCList" resultMap="mRetMapOrderItem">
         SELECT

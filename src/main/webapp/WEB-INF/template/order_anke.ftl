@@ -828,7 +828,7 @@
       <Row ss:AutoFitHeight="0" ss:Height="12" ss:StyleID="s28">
           <Cell ss:StyleID="s39"><Data ss:Type="Number">${order_index+1}</Data></Cell>
           <Cell ss:StyleID="s59"><Data ss:Type="String">${order.cust_po_no?if_exists}</Data></Cell>
-          <Cell ss:StyleID="s39"><Data ss:Type="String">${order.pn?if_exists}</Data></Cell>
+          <Cell ss:StyleID="s39"><Data ss:Type="String">${order.pn2?if_exists}</Data></Cell>
           <Cell ss:StyleID="s39"><Data ss:Type="String">${order.pn?if_exists}</Data></Cell>
           <Cell ss:StyleID="s39"><Data ss:Type="String">${order.description?if_exists}</Data></Cell>
           <Cell ss:StyleID="s47"><Data ss:Type="Number">${order.unit_price_net?if_exists}</Data></Cell>

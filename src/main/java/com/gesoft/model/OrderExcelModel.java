@@ -13,8 +13,26 @@ public class OrderExcelModel {
     private Long qty;//数量
     private String unit;//单位
     private Double unit_price_net;//未税单价
+    private Double outprice;//销售单价
+    private String goodsName;//商品名称
     private Double total_price_net;//未税总价
     private String deliveryTime;
+    
+    public Double getOutprice() {
+        return outprice;
+    }
+    
+    public void setOutprice(Double outprice) {
+        this.outprice = outprice;
+    }
+    
+    public String getGoodsName() {
+        return goodsName;
+    }
+    
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
     
     public String getDeliveryTime() {
         return deliveryTime;

@@ -14,6 +14,15 @@ var PageStatement=function () {
             PageStatement.drawcell();
         },
 
+        exportExcel : function () {
+            var customerId = mini.get("customerId").getValue();
+            var pname = mini.get("customerId").getText();
+            var stimeBegin = mini.get("stimeBegin").getFormValue();
+            var stimeEnd = mini.get("stimeEnd").getFormValue();
+            window.location.href = this.basePath + "/orderItem/exportStatement?customerId="+customerId + "&pname="+pname+"&stimeBegin="+stimeBegin + "&stimeEnd="+stimeEnd;
+
+        },
+
         drawcell : function(){
             this.inoutItemGrid.on("drawcell", function (e) {
                 var record = e.record;

@@ -3,12 +3,18 @@ package com.gesoft.controller;
 
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.gesoft.model.OrderExcelItemModel;
+import com.gesoft.model.OrderExcelModel;
 import com.gesoft.model.OrderItemModel;
 import com.gesoft.service.OrderItemService;
+import com.gesoft.util.ExportExecl;
 import com.gesoft.util.Md5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.gesoft.model.MsgModel;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Transactional
@@ -33,7 +41,200 @@ public class OrderItemController extends BaseController
 
     @Resource
     private OrderItemService orderItemService;
-
+    
+    /**
+     * 描述信息：导出对账单
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/exportStatement", method=RequestMethod.GET)
+    public @ResponseBody MsgModel exportStatement(OrderItemModel model, HttpServletRequest request,HttpServletResponse response)
+    {
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            Map<String, Object> map = new HashMap<String, Object>();
+            
+            List<OrderExcelModel> orderItems = new ArrayList<>();
+            
+            //订单项列表
+            OrderItemModel orderItemModel = new OrderItemModel();
+            orderItemModel.setOrderId(model.getId());
+            List<OrderItemModel> orderItemModels = orderItemService.queryCList(model);
+            
+            int size = orderItemModels.size();
+            
+            map.put("expandedRowCount", size);
+            
+            OrderExcelModel orderExcelModel;
+            for(OrderItemModel orderItem : orderItemModels){
+                orderExcelModel = new OrderExcelModel();
+                orderExcelModel.setUnit(orderItem.getUnit());
+                orderExcelModel.setPn(orderItem.getYcmaterialNum());
+                orderExcelModel.setPn2(orderItem.getMaterialNum());
+                orderExcelModel.setUnit_price_net(orderItem.getInprice());
+                orderExcelModel.setOutprice(orderItem.getOutprice());
+                orderExcelModel.setQty(orderItem.getGoodNum());
+                orderExcelModel.setCust_po_no(orderItem.getOrderName());
+                orderExcelModel.setDeliveryTime(orderItem.getDeliveryTime());
+                orderItems.add(orderExcelModel);
+            }
+            map.put("orderItems", orderItems);
+            String pname = model.getPname();
+            
+            File file = null;
+            InputStream inputStream = null;
+            ServletOutputStream out = null;
+            try {
+                request.setCharacterEncoding("UTF-8");
+                file = ExportExecl.createExcel(map, "myExcel", "statement.ftl");//调用创建excel帮助类
+                inputStream = new FileInputStream(file);
+                response.setCharacterEncoding("utf-8");
+                response.setContentType("application/msexcel");
+                response.setHeader("content-disposition", "attachment;filename="+ URLEncoder.encode(pname + "价格列表" + ".xls", "UTF-8"));
+                out = response.getOutputStream();
+                byte[] buffer = new byte[512]; // 缓冲区
+                int bytesToRead = -1;
+                // 通过循环将读入的Excel文件的内容输出到浏览器中
+                while ((bytesToRead = inputStream.read(buffer)) != -1) {
+                    out.write(buffer, 0, bytesToRead);
+                }
+                out.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (inputStream != null)
+                    inputStream.close();
+                if (out != null)
+                    out.close();
+                if (file != null)
+                    file.delete(); // 删除临时文件
+            }
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController search error：", e);
+        }
+        return msgModel;
+    }
+    
+    /**
+     * 描述信息：导出价格列表
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/exportPriceList", method=RequestMethod.GET)
+    public @ResponseBody MsgModel exportPriceList(OrderItemModel model, HttpServletRequest request,HttpServletResponse response)
+    {
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            Map<String, Object> map = new HashMap<String, Object>();
+    
+            List<OrderExcelModel> orderItems = new ArrayList<>();
+    
+            //订单项列表
+            OrderItemModel orderItemModel = new OrderItemModel();
+            orderItemModel.setOrderId(model.getId());
+            List<OrderItemModel> orderItemModels = orderItemService.queryPriceList(model);
+    
+            int size = orderItemModels.size();
+    
+            map.put("expandedRowCount", size);
+    
+            OrderExcelModel orderExcelModel;
+            for(OrderItemModel orderItem : orderItemModels){
+                orderExcelModel = new OrderExcelModel();
+                orderExcelModel.setUnit(orderItem.getUnit());
+                orderExcelModel.setPn(orderItem.getYcmaterialNum());
+                orderExcelModel.setPn2(orderItem.getMaterialNum());
+                orderExcelModel.setUnit_price_net(orderItem.getUnitPrice());
+                orderExcelModel.setOutprice(orderItem.getPrice());
+                orderExcelModel.setGoodsName(orderItem.getGoodsName());
+                orderItems.add(orderExcelModel);
+            }
+            map.put("orderItems", orderItems);
+            String pname = model.getPname();
+    
+            File file = null;
+            InputStream inputStream = null;
+            ServletOutputStream out = null;
+            try {
+                request.setCharacterEncoding("UTF-8");
+                file = ExportExecl.createExcel(map, "myExcel", "price_list.ftl");//调用创建excel帮助类
+                inputStream = new FileInputStream(file);
+                response.setCharacterEncoding("utf-8");
+                response.setContentType("application/msexcel");
+                response.setHeader("content-disposition", "attachment;filename="+ URLEncoder.encode(pname + "价格列表" + ".xls", "UTF-8"));
+                out = response.getOutputStream();
+                byte[] buffer = new byte[512]; // 缓冲区
+                int bytesToRead = -1;
+                // 通过循环将读入的Excel文件的内容输出到浏览器中
+                while ((bytesToRead = inputStream.read(buffer)) != -1) {
+                    out.write(buffer, 0, bytesToRead);
+                }
+                out.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (inputStream != null)
+                    inputStream.close();
+                if (out != null)
+                    out.close();
+                if (file != null)
+                    file.delete(); // 删除临时文件
+            }
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController search error：", e);
+        }
+        return msgModel;
+    }
+    
+    /**
+     * 描述信息：在选择的时间段内，查询某客户的销售金额
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/queryCList", method=RequestMethod.GET)
+    public @ResponseBody MsgModel queryCList(OrderItemModel model)
+    {
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            msgModel.setData(orderItemService.queryCList(model));
+            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController search error：", e);
+        }
+        return msgModel;
+    }
+    
+    /**
+     * 描述信息：查询某客户所有产品销售价格/采购价格
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/queryPriceList", method=RequestMethod.GET)
+    public @ResponseBody MsgModel queryPriceList(OrderItemModel model)
+    {
+        MsgModel msgModel = new MsgModel();
+        try
+        {
+            msgModel.setData(orderItemService.queryPriceList(model));
+            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
+        }
+        catch (Exception e)
+        {
+            logger.error("OrderItemController search error：", e);
+        }
+        return msgModel;
+    }
+    
+    
     /**
      * 描述信息：分页查询
      *  @param model
@@ -95,49 +296,6 @@ public class OrderItemController extends BaseController
         }
         return msgModel;
     }
-    
-    /**
-     * 描述信息：在选择的时间段内，查询某客户的销售金额
-     * @param model
-     * @return
-     */
-    @RequestMapping(value="/queryCList", method=RequestMethod.GET)
-    public @ResponseBody MsgModel queryCList(OrderItemModel model)
-    {
-        MsgModel msgModel = new MsgModel();
-        try
-        {
-            msgModel.setData(orderItemService.queryCList(model));
-            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
-        }
-        catch (Exception e)
-        {
-            logger.error("OrderItemController search error：", e);
-        }
-        return msgModel;
-    }
-    
-    /**
-     * 描述信息：在选择的时间段内，查询某客户的销售金额
-     * @param model
-     * @return
-     */
-    @RequestMapping(value="/queryPriceList", method=RequestMethod.GET)
-    public @ResponseBody MsgModel queryPriceList(OrderItemModel model)
-    {
-        MsgModel msgModel = new MsgModel();
-        try
-        {
-            msgModel.setData(orderItemService.queryPriceList(model));
-            msgModel.setSuccess(GLOBAL_MSG_BOOL_SUCCESS);
-        }
-        catch (Exception e)
-        {
-            logger.error("OrderItemController search error：", e);
-        }
-        return msgModel;
-    }
-
 
 
     /**

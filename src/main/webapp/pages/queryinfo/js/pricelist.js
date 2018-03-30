@@ -13,6 +13,15 @@ var PagePricelist=function () {
             // this.inoutItemGrid.load();
             PagePricelist.drawcell();
         },
+
+
+        exportExcel : function () {
+            var customerId = mini.get("customerId").getValue();
+            var pname = mini.get("customerId").getText();
+            window.location.href = this.basePath + "/orderItem/exportPriceList?customerId="+customerId + "&pname="+pname;
+
+        },
+
         drawcell : function(){
             this.inoutItemGrid.on("drawcell", function (e) {
                 var record = e.record;
@@ -21,7 +30,7 @@ var PagePricelist=function () {
                     e.cellHtml = record.price.toFixed(4).toLocaleString();
                 }
                 if (column.field == "unitPrice") {
-                    e.cellHtml = record.totalMoney.toFixed(4).toLocaleString();
+                    e.cellHtml = record.unitPrice.toFixed(4).toLocaleString();
                 }
             });
         },
