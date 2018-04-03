@@ -9,8 +9,17 @@ public class OrderExcelItemModel {
     private String pn;//客户料号
     private String description;//描述
     private Long qty;//数量
+    private Long sqty;//实际数量
     private String unit;//单位
     private Double unit_price_net;//未税单价
+    
+    public Long getSqty() {
+        return sqty;
+    }
+    
+    public void setSqty(Long sqty) {
+        this.sqty = sqty;
+    }
     
     public String getGoods_name() {
         return goods_name;

@@ -66,6 +66,15 @@ public class OrderItemModel extends BaseModel{
     private String memo;
     private String deliveryTime;
     private String sortIndex;
+    private Long spec;
+    
+    public Long getSpec() {
+        return spec;
+    }
+    
+    public void setSpec(Long spec) {
+        this.spec = spec;
+    }
     
     public Double getIntotalMoney() {
         return intotalMoney;

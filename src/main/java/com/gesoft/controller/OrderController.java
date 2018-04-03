@@ -103,7 +103,6 @@ public class OrderController extends BaseController
 			
 			int size = orderItemModels.size();
 			
-			map.put("expandedRowCount", size);
 			
 			OrderExcelItemModel orderExcelModel;
 			for(OrderItemModel orderItem : orderItemModels){
@@ -111,12 +110,14 @@ public class OrderController extends BaseController
 				orderExcelModel.setGoods_name(orderItem.getGoodsName());
 				orderExcelModel.setCust_po_no(cust_po_no);
 				orderExcelModel.setQty(orderItem.getGoodNum());
+				orderExcelModel.setSqty(orderItem.getSpec());
 				orderExcelModel.setUnit(orderItem.getSpecUnitName());
 				orderExcelModel.setUnit_price_net(orderItem.getPrice());
 				orderExcelModel.setDescription(orderItem.getMemo());
 				orderExcelModel.setPn(orderItem.getMaterialNum());
 				orderItems.add(orderExcelModel);
 			}
+			map.put("expandedRowCount", size);
 			map.put("orderItems", orderItems);
 			
 			//sysuser
@@ -140,11 +141,11 @@ public class OrderController extends BaseController
 			ServletOutputStream out = null;
 			try {
 				String valueName = null;
-//				if(roleId == 2){
-//					valueName = "order_list2.ftl";
-//				}else{
+				if(roleId == 2){
+					valueName = "order_list2.ftl";
+				}else{
 					valueName = "order_list.ftl";
-//				}
+				}
 				request.setCharacterEncoding("UTF-8");
 				file = ExportExecl.createExcel(map, "myExcel",valueName);//调用创建excel帮助类
 				inputStream = new FileInputStream(file);

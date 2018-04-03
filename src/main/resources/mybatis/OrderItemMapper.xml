@@ -561,6 +561,7 @@
         d.dictName as specUnitName,
         c.memo,
         g.goodsName,
+        g.spec,
         r.orderName
         FROM
         tab_out_stock_item t

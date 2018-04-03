@@ -73,7 +73,7 @@ public class LoginController extends BaseController
 		HttpSession session;
 		try
 		{
-			if(user != null)
+			if(user.getUserName() != null)
 			{
 				UserModel mLoginModel = loginService.login(user);
 				if (user.state == GLOBAL_SERVICE_SUCCESS)
